@@ -20,3 +20,124 @@ button {
     display: none;
   }
 }
+
+/* General Styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif; /* Added font-family rule */
+}
+
+.container {
+  position: absolute;
+  top: 50%; /* Adjusted to center vertically */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #FFFFFF;
+  padding: 20px;
+}
+
+/* Logo and Sign In Section */
+.logo-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 120px;
+  height: 120px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.login-form {
+  width: 407px;
+  margin: 0 auto;
+}
+
+.login-form h2 {
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 45px;
+  margin-left: 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Email and Password Containers */
+.email-container, .password-container {
+  background-color: #D4D4D4;
+  border-radius: 15px;
+  padding: 5px;
+  margin-bottom: 10px; /* Added margin-bottom */
+}
+
+.input-group label {
+  padding-left: 20px;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.8);
+  display: block;
+}
+
+.input-group input[type="email"],
+.input-group input[type="password"] {
+  width: calc(100% - 24px); /* Adjusted width */
+  border: none;
+  border-radius: 5px;
+  font-size: 15px;
+  line-height: 22px;
+  background-color: #D4D4D4;
+  outline: none; /* Remove outline */
+  box-shadow: none; /* Remove box shadow */
+  transition: box-shadow 0.3s ease; /* Added transition */
+}
+
+.input-group input[type="email"]:focus,
+.input-group input[type="email"]:not(:placeholder-shown), /* Apply style when input has content */
+.input-group input[type="password"]:focus,
+.input-group input[type="password"]:not(:placeholder-shown) { /* Apply style when input has content */
+  box-shadow: 0 0 0 3px #D4D4D4; /* Apply box shadow */
+}
+
+.input-group input[type="email"]::placeholder,
+.input-group input[type="password"]::placeholder {
+  color: #D4D4D4; /* Set placeholder color */
+}
+
+/* Sign In Button */
+#loginBtn {
+  width: 40%; /* Set width to 50% */
+  display: block; /* Make it a block element */
+  margin: 20px auto; /* Center horizontally */
+  padding: 10px;
+  background-color: #1D434E;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 15px;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+
+/* Vector Adjustment */
+.vector-red, .vector-green {
+  position: absolute;
+}
+
+.vector-red {
+  top: 0;
+  right: 0;
+}
+
+.vector-green {
+  bottom: 0;
+  left: 0;
+}
+
