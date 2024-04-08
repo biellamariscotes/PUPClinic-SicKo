@@ -164,7 +164,7 @@
     <div>
       <!-- Centered Image and Text -->
       <div class="d-flex align-items-center">
-        <img src="images/Sicko Logo.png" alt="" width="50" height="50" class="sicko-header">
+        <img src="src/images/sicko-logo.png" alt="" width="50" height="50" class="sicko-header">
         <div>
           <div style="margin-bottom: -14px;">
             <span class="sicko" style="font-size: 1.2rem; font-weight: bold; color: white;">SicKo</span>
@@ -184,10 +184,10 @@
     <div class="container-fluid main-content">
       <div class="row g-0 no-gutters">
         <div class="col-md-9 p-0">
-          <img src="images/doctor.jpg" alt="" class="w-100 img-fluid">
+          <img src="src/images/ai-header.png" alt="" class="w-100 img-fluid">
         </div>
         <div class="col-md-3 p-0 container">
-          <img src="images/white-bg.jfif" alt="" class="w-100 img-fluid" style="height: 213px;">
+          <img src="src/images/white-bg.jfif" alt="" class="w-100 img-fluid" style="height: 213px;">
           <div class="first-text">AI-Based, <b>Symptoms</b></div>
           <div class="second-text"><b>Diagnostic Tool</b></div>
           <div class="third-text">Detects and generates possible</div>

@@ -13,22 +13,25 @@
             <img class="logo" src="src/images/sicko-logo.png" alt="Sicko Logo">
             <h2><span style="color: #058789;">Sic</span><span style="color: #E13F3D;">Ko</span> | Sign In</h2>
         </div>
-        <div class="login-form">
-            <form id="loginForm" method="post">
-                <div class="input-group email-container">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
+        
+        <div class="form-container">
+            <form>
+                <div class="input-container required">
+                    <input type="email" name="email" id="emailInput" required maxlength="254">
+                    <label for="emailInput">Email</label>
                 </div>
-                <div class="input-group password-container">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
+                <div class="input-container required">
+                    <input type="password" name="password" id="passwordInput" required maxlength="50">
+                    <label for="passwordInput">Password</label>
                 </div>
-                <button type="submit" id="loginBtn">Sign In</button>
+                <div class="button-container">
+                    <button type="submit">Sign In</button>
+                </div>
             </form>
-            <div id="message"></div>
         </div>
     </div>
     <img class="vector-red" src="src/images/vector-red.png" alt="Red Vector">
     <img class="vector-green" src="src/images/vector-green.png" alt="Green Vector">
+    <script src="src/scripts/script.js"></script>
 </body>
 </html>
