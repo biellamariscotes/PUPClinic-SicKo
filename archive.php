@@ -236,7 +236,7 @@
         <div>
           <i class="bi bi-list text-white" style="font-size: 1.5rem; cursor: pointer; margin-right: 00px;"></i>
         </div>
-        <img src="images/Sicko Logo.png" alt="" width="50" height="50" class="sicko-header">
+        <img src="images/sicko-logo.png" alt="" width="50" height="50" class="sicko-header">
         <div>
           <div style="margin-bottom: -14px;">
             <span class="sicko" style="font-size: 1.2rem; font-weight: bold; color: white;">SicKo</span>
