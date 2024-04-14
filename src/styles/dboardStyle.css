@@ -1,7 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+body,
+button {
+  font-family: "Inter", sans-serif;
+}
+:root {
+  --offcanvas-width: 270px;
+  --topNavbarHeight: 56px;
+}
+@media (min-width: 992px) {
+  body {
+    overflow: auto !important;
+  }
+  main {
+    margin: 0;
+    padding: 0;
+  }
+  /* this is to remove the backdrop */
+  .offcanvas-backdrop::before {
+    display: none;
+  }
+}
+
 html, body {
   margin: 0;
   padding: 0;
   width: 100%;
+  height: 100%; /* Set body height to cover entire viewport */
   font-family: 'Poppins', sans-serif;
   overflow-x: hidden; /* Disable horizontal scrolling */
 }
@@ -12,10 +36,188 @@ body {
   background-color: #F2F2F2;
 }
 
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  background-color: #FFFFFF;
+  overflow-x: hidden;
+  transition: width 0.5s; /* Adjust transition duration for smooth closing motion */
+}
+
+.sidebar.active {
+  width: 325px;
+}
+
+.sidebar a {
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 25px;
+  color: black;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.sidebar-header {
+  background-color: #058789;
+  text-align: center;
+  line-height: 90px;
+  height: 90px;
+  width: 100%;
+  border-bottom: none; /* Remove border at the bottom */
+}
+
+.sidebar-design {
+  position: absolute; /* Set position to absolute */
+  top: 0;
+  left: 0;
+  z-index: -1; /* Send the background behind other content */
+}
+
+
+.sidebar-logo {
+  height: 50px; /* Adjust height as needed */
+  width: auto; /* Maintain aspect ratio */
+  margin-top: 20px; /* Adjust margin to center vertically */
+}
+
+.sidebar-content {
+  position: relative; /* Set position to relative */
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Align items in the center horizontally */
+}
+
+.new-treatment-box {
+  position: relative;
+  width: 160px;
+  height: 50px;
+  background-color: #D9D9D9;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 40px 72.5px 20px 72.5px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease; /* Adjust transition for smooth motion */
+}
+
+.new-treatment-box:hover {
+  transform: translateY(-5px); /* Move the box up slightly on hover */
+  background-color: #CCE6E7; /* Change background color on hover */
+}
+
+.add-button-icon:hover {
+  transform: translateY(-5px); /* Move the box up slightly on hover */
+}
+
+.new-treatment-box:hover {
+  transform: translateY(-5px); /* Move the box up slightly on hover */
+  background-color: #CCE6E7;
+}
+
+.new-treatment-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  color: black;
+  text-align: left;
+  padding-left: 10px;
+  margin-right: 5px; /* Adjusted margin */
+}
+
+.add-button-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px; /* Adjusted margin */
+  transition: transform 0.3s ease;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Align items to the start horizontally */
+  margin-top: 20px;
+  width: 100%; /* Ensure full width */
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.menu-item:hover {
+  transform: translateY(-5px); /* Move the box up slightly on hover */
+}
+
+.menu-text:hover {
+  color: #058789;
+}
+
+.dashboard-icon,
+.ai-icon,
+.patients-icon,
+.records-icon,
+.medreports-icon {
+  width: 22px;
+  height: 22px;
+  margin-right: 15px;
+  padding-left: 85px;
+}
+
+.menu-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+}
+
+/* Add styles for the new header title */
+.menu-header {
+  margin-top: 50px; /* Adjust margin as needed */
+  margin-bottom: 10px;
+  align-self: flex-start; /* Align to the start vertically */
+  padding-left: 60px; /* Add padding to the left */
+}
+
+.menu-header-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 550;
+  color: black;
+  letter-spacing: 1px;
+}
+
+/* Add styles for the new menu items */
+.notifications-icon,
+.settings-icon {
+  width: 22px;
+  height: 22px;
+  margin-right: 15px;
+  padding-left: 85px;
+}
+
+.log-out-icon {
+  width: 34px;
+  height: 34px;
+  margin-right: 8px;
+  padding-left: 80px;
+}
+
 .topnav {
   background-color: #058789;
   height: 90px;
   position: relative;
+  transition: margin-left 0.5s;
 }
 
 .logo {
@@ -27,15 +229,80 @@ body {
 
 .menu-toggle {
   color: white;
-  font-size: 35px;
+  font-size: 40px;
   cursor: pointer;
+  font-weight: bold;
   position: absolute;
   top: 50%;
-  left: 20px; /* Adjust as needed */
+  left: 20px;
   transform: translateY(-50%);
-  padding-left: 50px; /* Increase the padding on the left */
-  padding-right: 25px; /* Increase the padding on the right */
+  z-index: 4; /* Ensure the button is above the overlay */
+  padding-left: 25px;
+  padding-right: 25px;
+  transition: 0.5s;
 }
+
+#menu-icon,
+#close-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#close-icon {
+  display: none; /* Initially hide the close icon */
+}
+
+.menu-toggle.active #menu-icon {
+  display: none; /* Hide the menu icon when sidebar is active */
+}
+
+.menu-toggle.active #close-icon {
+  display: block; /* Show the close icon when sidebar is active */
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  z-index: 2; /* Ensure the overlay layer is below the sidebar */
+  transition: 0.5s;
+}
+
+.overlay.active {
+  display: block;
+}
+
+.content {
+  margin-left: 0;
+  transition: margin-left 0.5s;
+}
+
+.content.active {
+  margin-left: 325px;
+}
+
+.overlay.active {
+  display: block;
+}
+
+.topnav.active {
+  margin-left: 325px; /* Shift topnav bar when sidebar is active */
+}
+
+.footer.active {
+  margin-left: 0; /* Shift footer when sidebar is active */
+  padding-left: 50px;
+}
+
+body.sidebar-active {
+  overflow-y: hidden;
+}
+
 
 .dashboard-header-container {
   position: relative;
@@ -186,6 +453,8 @@ body {
   align-items: center;
   justify-content: center;
   position: relative;
+  transition: transform 0.3s ease;
+  cursor: pointer;
 }
 
 .health-icon {
@@ -202,6 +471,10 @@ body {
   margin-bottom: 2px; /* Reduce space between title and subtitle */
 }
 
+.tool-title:hover {
+  transform: translateZ(-5px); /* Move the box up slightly on hover */
+}
+
 .tool-subtitle {
   font-family: 'Poppins', sans-serif;
   font-size: 16px; /* Adjust font size */
@@ -211,18 +484,22 @@ body {
 
 .health-tool:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow on hover */
+  transform: translateY(-5px); /* Move the box up slightly on hover */
 }
 
 .health-tool-1:hover {
   background-color: #CCE6E7; /* Change background color on hover */
+  transform: translateY(-5px); /* Move the box up slightly on hover */
 }
 
 .health-tool-2:hover {
   background-color: #CCE6E7; /* Change background color on hover */
+  transform: translateY(-5px); /* Move the box up slightly on hover */
 }
 
 .health-tool-3:hover {
   background-color: #CCE6E7; /* Change background color on hover */
+  transform: translateY(-5px); /* Move the box up slightly on hover */
 }
 
 .footer {
@@ -285,6 +562,12 @@ body {
   width: 20px;
   height: 20px;
   margin-right: 20px;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.footer-icon:hover {
+  transform: translateY(-5px); /* Move the box up slightly on hover */
 }
 
 .support-text {
