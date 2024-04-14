@@ -1,0 +1,577 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+body,
+button {
+  font-family: "Inter", sans-serif;
+}
+:root {
+  --offcanvas-width: 270px;
+  --topNavbarHeight: 56px;
+}
+@media (min-width: 992px) {
+  body {
+    overflow: auto !important;
+  }
+  main {
+    margin: 0;
+    padding: 0;
+  }
+  /* this is to remove the backdrop */
+  .offcanvas-backdrop::before {
+    display: none;
+  }
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%; /* Set body height to cover entire viewport */
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden; /* Disable horizontal scrolling */
+}
+
+body {
+  height: 100%;
+  overflow-y: auto; /* Enable vertical scrolling */
+  background-color: #F2F2F2;
+}
+
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  background-color: #FFFFFF;
+  overflow-x: hidden;
+  transition: width 0.5s; /* Adjust transition duration for smooth closing motion */
+}
+
+.sidebar.active {
+  width: 325px;
+}
+
+.sidebar a {
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 25px;
+  color: black;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.sidebar-header {
+  background-color: #058789;
+  text-align: center;
+  line-height: 90px;
+  height: 90px;
+  width: 100%;
+  border-bottom: none; /* Remove border at the bottom */
+}
+
+.sidebar-design {
+  position: absolute; /* Set position to absolute */
+  top: 0;
+  left: 0;
+  z-index: -1; /* Send the background behind other content */
+}
+
+
+.sidebar-logo {
+  height: 50px; /* Adjust height as needed */
+  width: auto; /* Maintain aspect ratio */
+  margin-top: 20px; /* Adjust margin to center vertically */
+}
+
+.sidebar-content {
+  position: relative; /* Set position to relative */
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Align items in the center horizontally */
+}
+
+.new-treatment-box {
+  position: relative;
+  width: 160px;
+  height: 50px;
+  background-color: #D9D9D9;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 40px 72.5px 20px 72.5px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease; /* Adjust transition for smooth motion */
+}
+
+.new-treatment-box:hover {
+  transform: translateY(-5px); /* Move the box up slightly on hover */
+  background-color: #CCE6E7; /* Change background color on hover */
+}
+
+.add-button-icon:hover {
+  transform: translateY(-5px); /* Move the box up slightly on hover */
+}
+
+.new-treatment-box:hover {
+  transform: translateY(-5px); /* Move the box up slightly on hover */
+  background-color: #CCE6E7;
+}
+
+.new-treatment-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  color: black;
+  text-align: left;
+  padding-left: 10px;
+  margin-right: 5px; /* Adjusted margin */
+}
+
+.add-button-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px; /* Adjusted margin */
+  transition: transform 0.3s ease;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Align items to the start horizontally */
+  margin-top: 20px;
+  width: 100%; /* Ensure full width */
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.menu-item:hover {
+  transform: translateY(-5px); /* Move the box up slightly on hover */
+}
+
+.menu-text:hover {
+  color: #058789;
+}
+
+.dashboard-icon,
+.ai-icon,
+.patients-icon,
+.records-icon,
+.medreports-icon {
+  width: 22px;
+  height: 22px;
+  margin-right: 15px;
+  padding-left: 85px;
+}
+
+.menu-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+}
+
+/* Add styles for the new header title */
+.menu-header {
+  margin-top: 50px; /* Adjust margin as needed */
+  margin-bottom: 10px;
+  align-self: flex-start; /* Align to the start vertically */
+  padding-left: 60px; /* Add padding to the left */
+}
+
+.menu-header-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 550;
+  color: black;
+  letter-spacing: 1px;
+}
+
+/* Add styles for the new menu items */
+.notifications-icon,
+.settings-icon {
+  width: 22px;
+  height: 22px;
+  margin-right: 15px;
+  padding-left: 85px;
+}
+
+.log-out-icon {
+  width: 34px;
+  height: 34px;
+  margin-right: 8px;
+  padding-left: 80px;
+}
+
+.topnav {
+  background-color: #058789;
+  height: 90px;
+  position: relative;
+  transition: margin-left 0.5s;
+}
+
+.logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.menu-toggle {
+  color: white;
+  font-size: 40px;
+  cursor: pointer;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  z-index: 4; /* Ensure the button is above the overlay */
+  padding-left: 25px;
+  padding-right: 25px;
+  transition: 0.5s;
+}
+
+#menu-icon,
+#close-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#close-icon {
+  display: none; /* Initially hide the close icon */
+}
+
+.menu-toggle.active #menu-icon {
+  display: none; /* Hide the menu icon when sidebar is active */
+}
+
+.menu-toggle.active #close-icon {
+  display: block; /* Show the close icon when sidebar is active */
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  z-index: 2; /* Ensure the overlay layer is below the sidebar */
+  transition: 0.5s;
+}
+
+.overlay.active {
+  display: block;
+}
+
+.content {
+  margin-left: 0;
+  transition: margin-left 0.5s;
+}
+
+.content.active {
+  margin-left: 325px;
+}
+
+.overlay.active {
+  display: block;
+}
+
+.topnav.active {
+  margin-left: 325px; /* Shift topnav bar when sidebar is active */
+}
+
+.footer.active {
+  margin-left: 0; /* Shift footer when sidebar is active */
+  padding-left: 50px;
+}
+
+body.sidebar-active {
+  overflow-y: hidden;
+}
+
+
+.dashboard-header-container {
+  position: relative;
+}
+
+.dashboard-header {
+  width: 100%;
+  height: 311px;
+  border: 3px solid #000;
+}
+
+.dashboard-text {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  color: #058789;
+  font-size: 20px;
+  padding-right: 130px;
+}
+
+.dashboard-text p:nth-child(1) {
+  margin-bottom: 0;
+}
+
+.dashboard-text p:nth-child(2) {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.dashboard-daily-treatment {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.table-container {
+  display: flex;
+  justify-content: center; /* Align the table in the middle */
+  margin-top: 20px; /* Add some top margin */
+  overflow-x: hidden; /* Disable horizontal scrolling */
+}
+
+.dashboard-table {
+  width: 100%; /* Adjust the width to fit the container */
+  max-width: 1085px; /* Set maximum width to maintain responsiveness */
+  height: 499px;
+  border-collapse: collapse;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Add drop shadow */
+  border-radius: 15px; 
+  margin: 20px;
+}
+
+.dashboard-table th, .dashboard-table td {
+  padding: 8px;
+  text-align: center;
+}
+
+.dashboard-table th {
+  background-color: #058789;
+  color: #F4F4F4;
+  font-weight: bold;
+  font-size: 24px;
+  border-right: 2px solid white; /* Color of the line between each column */
+  border-bottom: 2px solid white; /* Add bottom border to table header */
+}
+
+.dashboard-table th:first-child {
+  border-top-left-radius: 15px; /* Add border radius to upper left corner */
+}
+
+.dashboard-table th:last-child {
+  border-top-right-radius: 15px; /* Add border radius to upper right corner */
+  border-right: none; /* Remove the right border of the last header */
+}
+
+.dashboard-table tr:nth-child(even) {
+  background-color: #F4F4F4;
+}
+
+.dashboard-table tr:nth-child(odd) {
+  background-color: white;
+}
+
+.dashboard-table tr:nth-child(n+3) td {
+  border-radius: 0; /* Remove border-radius starting from the 3rd row */
+}
+
+.dashboard-table tr:last-child td {
+  border-bottom-left-radius: 15px; /* Add border radius to the lower-left corner of the last row */
+  border-bottom-right-radius: 15px; /* Add border radius to the lower-right corner of the last row */
+}
+
+.dashboard-table th:first-child {
+  border-top-left-radius: 15px; /* Add border radius to upper left corner */
+}
+
+.dashboard-table th:last-child {
+  border-top-right-radius: 15px; /* Add border radius to upper right corner */
+  border-right: none; /* Remove the right border of the last header */
+}
+
+.dashboard-table tr:last-child td:first-child {
+  border-bottom-left-radius: 15px; /* Add border radius to the lower-left corner of the last row */
+}
+
+.dashboard-table tr:last-child td:last-child {
+  border-bottom-right-radius: 15px; /* Add border radius to the lower-right corner of the last row */
+}
+
+.dashboard-table tr:last-child td:first-child {
+  border-bottom-left-radius: 15px; /* Remove border radius from the right side of the first column (last row) */
+}
+
+.dashboard-table tr:last-child td:nth-child(2) {
+  border-bottom-right-radius: 0; /* Remove border radius from the left side of the second column (last row) */
+}
+
+.dashboard-table tr:last-child td {
+  border-radius: 0; /* Remove border radius from all cells in the last row */
+}
+
+.clinic-tools {
+  text-align: center; /* Align text to the center */
+  margin-top: 20px; /* Add some top margin */
+  padding-top: 10px;
+}
+
+.health-tools-container {
+  display: flex;
+  justify-content: center; /* Center the items horizontally */
+  margin-top: 20px; /* Add some top margin */
+  gap: 40px; /* Add space between the items */
+  padding: 10px;
+  margin-bottom: 80px;
+}
+
+.health-tool {
+  width: 330px;
+  height: 136px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.health-icon {
+  width: 60px;
+  height: 60px;
+  padding-right: 10px;
+}
+
+.tool-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 28px;
+  font-weight: bold;
+  color: #058789;
+  margin-bottom: 2px; /* Reduce space between title and subtitle */
+}
+
+.tool-title:hover {
+  transform: translateZ(-5px); /* Move the box up slightly on hover */
+}
+
+.tool-subtitle {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px; /* Adjust font size */
+  color: black;
+  margin-top: 2px; /* Reduce space between title and subtitle */
+}
+
+.health-tool:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow on hover */
+  transform: translateY(-5px); /* Move the box up slightly on hover */
+}
+
+.health-tool-1:hover {
+  background-color: #CCE6E7; /* Change background color on hover */
+  transform: translateY(-5px); /* Move the box up slightly on hover */
+}
+
+.health-tool-2:hover {
+  background-color: #CCE6E7; /* Change background color on hover */
+  transform: translateY(-5px); /* Move the box up slightly on hover */
+}
+
+.health-tool-3:hover {
+  background-color: #CCE6E7; /* Change background color on hover */
+  transform: translateY(-5px); /* Move the box up slightly on hover */
+}
+
+.footer {
+  background-color: #1D434E;
+  height: auto;
+  padding: 20px 0;
+  position: relative;
+}
+
+.footer-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+}
+
+.sicko-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+}
+
+.separator {
+  width: 4px;
+  height: 60px;
+  background-color: #ffffff;
+  margin: 0 20px;
+}
+
+.pup-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  color: #D9D9D9;
+}
+
+.pup-text p {
+  margin: 5px 0;
+}
+
+.footer-right {
+  display: flex;
+  flex-direction: column; /* Change to column layout */
+  align-items: center; /* Align items to the right */
+  padding-top: 10px;
+}
+
+.footer-icons {
+  display: flex;
+  align-items: center;
+}
+
+.footer-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 20px;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.footer-icon:hover {
+  transform: translateY(-5px); /* Move the box up slightly on hover */
+}
+
+.support-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  color: #D9D9D9;
+}
