@@ -69,7 +69,47 @@ function closeSidebar() {
     menuToggle.setAttribute("onclick", "toggleSidebar()");
 }
 
+// KEYWORD FIELD
+// JavaScript code to handle user interactions and display entered keyword tags
 
+// Get the input field and the container for displaying tags
+const inputField = document.getElementById('symptoms-input');
+const tagsContainer = document.getElementById('tags-container');
 
+// Event listener for the input field
+inputField.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      const keyword = inputField.value.trim();
+      if (keyword !== '') {
+        const tag = document.createElement('div');
+        tag.classList.add('tag');
+        tag.textContent = keyword;
+  
+        // Add remove icon
+        const removeIcon = document.createElement('img');
+        removeIcon.src = 'src/images/remove-icon.svg';
+        removeIcon.alt = 'Remove';
+        removeIcon.classList.add('tag-remove-icon');
+  
+        // Add event listener to remove the tag when clicked
+        removeIcon.addEventListener('click', () => {
+          tag.remove();
+        });
+  
+        tag.appendChild(removeIcon);
+  
+        tagsContainer.appendChild(tag);
+        inputField.value = '';
+      }
+    }
+  });
 
+// Event listener to change input field background color when focused
+inputField.addEventListener('focus', () => {
+  inputField.style.backgroundColor = '#ffffff';
+});
 
+// Event listener to change input field background color when blurred
+inputField.addEventListener('blur', () => {
+  inputField.style.backgroundColor = '#ffffff';
+});
