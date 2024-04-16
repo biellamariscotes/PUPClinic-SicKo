@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 body,
 button {
-  font-family: "Inter", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 :root {
   --offcanvas-width: 270px;
@@ -130,7 +130,7 @@ body {
 
 .new-treatment-text {
   font-family: 'Poppins', sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: bold;
   color: black;
   text-align: left;
@@ -303,7 +303,6 @@ body.sidebar-active {
   overflow-y: hidden;
 }
 
-
 .dashboard-header-container {
   position: relative;
 }
@@ -311,7 +310,16 @@ body.sidebar-active {
 .dashboard-header {
   width: 100%;
   height: 311px;
-  border: 3px solid #000;
+}
+
+.dashboard-text {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  color: #058789;
+  font-size: 20px;
+  padding-right: 130px;
 }
 
 .dashboard-text {
@@ -575,3 +583,147 @@ body.sidebar-active {
   font-size: 15px;
   color: #D9D9D9;
 }
+
+/* AI-BASED SDT PAGE */
+
+.ai-header-content {
+  display: flex;
+  justify-content: space-between; 
+}
+
+.ai-header-image-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex; 
+  align-items: stretch; 
+}
+
+.ai-header-image-container img {
+  width: 100%; 
+  height: 100%; 
+  object-fit: fill; 
+}
+
+.ai-header-text-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  text-align: center; /* Align text to the center */
+  background-color: white;
+  width: calc(60% - 20px);
+  max-width: 920px;
+  height: 320px;
+}
+
+
+.ai-header-text {
+  text-align: left;
+  padding: 20px;
+}
+
+.ai-text {
+  color: #058789;
+  font-size: 20px;
+}
+
+.ai-text p:nth-child(1) {
+  margin-bottom: 0;
+}
+
+.ai-text p:nth-child(2) {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.symptomps-header {
+  text-align: center; /* Center the text horizontally */
+  margin-top: 50px; /* Adjust top margin */
+}
+
+/* KEYWORD FIELD */
+.symptoms-input-container {
+  position: relative;
+  width: 70%;
+  max-width: 1133px;
+  height: auto; /* Change height to auto */
+  background-color: white;
+  border-radius: 15px;
+  margin: 20px auto;
+  padding: 20px; /* Add padding to create space for tags */
+  display: flex;
+  flex-wrap: wrap; /* Allow tags to wrap */
+  align-items: flex-start; /* Align tags to the top */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#symptoms-input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  color: #000000;
+  margin-bottom: 8px; /* Add margin at the bottom */
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-right: -8px; /* Compensate for the gap */
+}
+
+.tag {
+  background-color: #058789;
+  color: white;
+  border-radius: 8px;
+  padding: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 8px; /* Add margin to the right */
+  margin-bottom: 8px; /* Add margin at the bottom */
+  transition: transform 0.3s ease,
+}
+
+.tag:hover {
+  transform: translateY(-5px); /* Move the box up slightly on hover */
+  background-color: #E13F3D;
+}
+
+.tag-remove-icon {
+  margin-left: 5px;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.generate-diagnosis-box {
+  width: 339px;
+  height: 62px;
+  border-radius: 15px;
+  background-color: #1D434E;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 80px;
+  cursor: pointer;
+}
+
+.generate-diagnosis-box:hover {
+  background-color: #058789;
+}
+
+.generate-diagnosis-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+}
+
+
+
