@@ -45,6 +45,7 @@ body {
   left: 0;
   background-color: #FFFFFF;
   overflow-x: hidden;
+  overflow-y: hidden;
   transition: width 0.5s; /* Adjust transition duration for smooth closing motion */
 }
 
@@ -637,8 +638,9 @@ body.sidebar-active {
 }
 
 .symptomps-header {
-  text-align: center; /* Center the text horizontally */
-  margin-top: 50px; /* Adjust top margin */
+  text-align: center;
+  margin-top: 20px; /* Reduce the margin at the top */
+  margin-bottom: 5px; /* Reduce the margin at the bottom */
 }
 
 /* KEYWORD FIELD */
@@ -725,5 +727,164 @@ body.sidebar-active {
   text-align: center;
 }
 
+/* Diagnosis Container */
+
+.diagnosis-header {
+  text-align: center;
+  margin-top: 20px; /* Reduce the margin at the top */
+  margin-bottom: 5px; /* Reduce the margin at the bottom */
+}
+
+.diagnosis-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 0; /* Remove margin at the top */
+}
+
+.diagnosis-box {
+  width: 70%;
+  max-width: 1133px;
+  height: auto;
+  border-radius: 15px;
+  background-color: white;
+  padding: 20px;
+  margin-top: 20px; /* Adjust margin at the top */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.medical-condition,
+.treatment-options {
+  width: 100%;
+  height: auto; /* Adjusted height */
+}
+
+.medical-condition-header {
+  font-family: 'Poppins', sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+  color: #058789;
+  margin-bottom: 10px;
+  margin-left: 40px;
+}
+
+.treatment-options-container {
+  display: flex; /* Make it a flex container */
+  align-items: center; /* Align items vertically */
+  margin-top: 0; /* Adjusted margin */
+  height: auto;
+}
+
+.treatment-options-header {
+  font-family: 'Poppins', sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+  color: #058789;
+  margin: 0;
+}
+
+.sub-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  color: black;
+  text-align: justify;
+  line-height: 1.5; /* Adjust line height for better readability */
+  margin: 0 40px 20px 60px;
+  font-weight: 600;
+}
+
+.treatment-options {
+  text-align: left;
+}
+
+.options-list {
+  list-style-type: disc;
+  padding-left: 0;
+  margin: 0 0 0 50px;
+}
+
+.options-list li {
+  margin-bottom: 5px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  color: black;
+  font-weight: 550;
+}
+
+.vertical-line {
+  width: 10px;
+  height: 150px;
+  background-color: #000000;
+  margin: 0 30px 0 90px;
+  position: relative;
+}
+
+/* 2 Diagnosis Buttons */
+
+.new-boxes-container {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0 80px 0;
+  gap: 20px;
+}
+
+.back-button {
+  width: 263px;
+  height: 62px;
+  border-radius: 15px;
+  background-color: #777777;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
 
 
+.back-button:hover {
+  background-color: #3b3b3b;
+}
+
+.record-treatment-button {
+  width: 339px;
+  height: 62px;
+  border-radius: 15px;
+  background-color: #1D434E;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.record-treatment-button:hover {
+  background-color: #058789;
+}
+
+.record-treatment-button .box-text{
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+  margin-right: 20px;
+}
+
+.new-box:last-child {
+  margin-left: 70px;
+}
+
+.box-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 15px;
+}
+
+.box-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+}
+
+.new-box img {
+  width: 24px;
+  height: 24px;
+}
