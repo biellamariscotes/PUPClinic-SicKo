@@ -146,7 +146,7 @@
                 <p class="tool-subtitle">Treatment Record Form</p>
             </div>
         </div>
-        <div class="health-tool health-tool-2" onclick="window.location.href='ai-sdt.html'">
+        <div class="health-tool health-tool-2" onclick="window.location.href='ai-basedSDT.php'">
             <img src="src/images/drawing.svg" alt="Health Checkup Icon" class="health-icon">
             <div class="tool-text">
                 <p class="tool-title">AI-based SDT</p>
