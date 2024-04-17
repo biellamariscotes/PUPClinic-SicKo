@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SicKo - AI-Based SDT</title>
+    <title>SicKo - Generated Diagnosis</title>
     <link rel="icon" type="image/png" href="src/images/sicko-logo.png"> 
     <link rel="stylesheet" href="src/styles/dboardStyle.css">
 </head>
@@ -101,19 +101,58 @@
     </div>
 
     <div class="symptomps-header">
-        <p class="bold" style="color: #E13F3D; font-size: 40px; font-family: 'Poppins', sans-serif; text-align: left; margin-left: 200px; margin-bottom: 0;">Type symptoms...</p>
+        <p class="bold" style="color: #E13F3D; font-size: 40px; font-family: 'Poppins', sans-serif; text-align: left; margin-left: 200px; margin-bottom: 0;"">Symptoms</p>
     </div>
 
-    <!-- Keyword Tags Container -->
+    <!-- Symptoms Container -->
     <div class="symptoms-input-container">
         <input type="text" id="symptoms-input" placeholder="Type symptoms keywords...">
         <div class="tags-container" id="tags-container"></div>
     </div>
 
-    <div class="generate-diagnosis-box">
-        <div class="generate-diagnosis-text" onclick="window.location.href='generated-diagnosis.php'">Generate Diagnosis</div>
+    <div class="diagnosis-header">
+        <p class="bold" style="color: #E13F3D; font-size: 40px; font-family: 'Poppins', sans-serif; text-align: left; margin-left: 200px; margin-bottom: 0;">Diagnosis</p>
+    </div>
+    
+    <!-- Diagnosis Container -->
+    <div class="diagnosis-container">
+        <div class="diagnosis-box">
+            <div class="medical-condition">
+                <h2 class="medical-condition-header">Medical Condition</h2>
+                <p class="sub-text">Definition of the diagnosed sickness. Further definition of the sickness. And another additional details about the sickness.</p>
+            </div>
+            <div class="treatment-options-container">
+                <div class="vertical-line"></div>
+                    <div class="treatment-options">
+                        <h2 class="treatment-options-header">Treatment Options</h2>
+                        <ul class="options-list">
+                            <li>Treatment Option 1</li>
+                            <li>Treatment Option 2</li>
+                            <li>Treatment Option 3</li>
+                        </ul>
+                    </div>
+            </div>
+        </div>    
     </div>
 
+    <!-- New container for the two boxes -->
+    <div class="new-boxes-container">
+        <!-- First box -->
+        <div class="back-button" onclick="window.location.href='ai-basedSDT.php'">
+            <div class="box-content">
+                <p class="box-text">Back to AI-SDT</p>
+            </div>
+        </div>
+
+        <!-- Second box -->
+        <div class="record-treatment-button" onclick="window.location.href='dashboard.php'">
+            <div class="box-content">
+                <p class="box-text">Record Treatment</p>
+                <img src="src/images/arrow-icon.svg" alt="Arrow Icon">
+            </div>
+
+        </div>
+    </div>
 
     <div class="footer">
     <div class="footer-text">
