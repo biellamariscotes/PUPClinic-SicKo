@@ -113,3 +113,32 @@ inputField.addEventListener('focus', () => {
 inputField.addEventListener('blur', () => {
   inputField.style.backgroundColor = '#ffffff';
 });
+
+function addSymptom() {
+    var symptomInput = document.getElementById('symptoms-input');
+    var newSymptom = symptomInput.value.trim();
+
+    if (newSymptom !== '') {
+        // Create a new tag element
+        var newTag = document.createElement('div');
+        newTag.classList.add('tag');
+        newTag.textContent = newSymptom;
+
+        // Append the new tag to the tags container
+        var tagsContainer = document.getElementById('tags-container');
+        tagsContainer.appendChild(newTag);
+
+        // Clear the input field after adding the symptom
+        symptomInput.value = '';
+    }
+}
+
+// Intercept Enter key press to prevent form submission
+document.getElementById('symptoms-input').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        addSymptom();
+    }
+});
+
+

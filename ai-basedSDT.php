@@ -105,15 +105,16 @@
     </div>
 
     <!-- Keyword Tags Container -->
-    <div class="symptoms-input-container">
-        <input type="text" id="symptoms-input" placeholder="Type symptoms keywords...">
-        <div class="tags-container" id="tags-container"></div>
-    </div>
+    <form id="diagnosis-form" method="post" action="generated-diagnosis.php">
+        <div class="symptoms-input-container">
+            <input type="text" id="symptoms-input" name="symptoms" placeholder="Type symptoms keywords...">
+            <div class="tags-container" id="tags-container"></div>
+        </div>
 
-    <div class="generate-diagnosis-box">
-        <div class="generate-diagnosis-text" onclick="window.location.href='generated-diagnosis.php'">Generate Diagnosis</div>
-    </div>
-
+        <div class="generate-diagnosis-box">
+        <div class="generate-diagnosis-text" id="generate-diagnosis-btn">Generate Diagnosis</div>
+        </div>
+    </form>
 
     <div class="footer">
     <div class="footer-text">
@@ -137,5 +138,10 @@
     </div>
     </div>
     <script src="src/scripts/script.js"></script>
+    <script>
+        document.getElementById('generate-diagnosis-btn').addEventListener('click', function() {
+            document.getElementById('diagnosis-form').submit();
+        });
+    </script>
 </body>
 </html>
