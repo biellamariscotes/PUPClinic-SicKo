@@ -44,7 +44,7 @@
             <!-- Records -->
             <div class="menu-item">
                 <img src="src/images/records.svg" alt="records Icon" class="records-icon">
-                <span class="menu-text" onclick="window.location.href='records.php'">Records</span>
+                <span class="menu-text" onclick="window.location.href='treatment-record.php'">Records</span>
             </div>
 
             <!-- Med Reports -->
@@ -139,7 +139,7 @@
     <div class="clinic-tools">
     <p class="bold" style="color: #E13F3D; font-size: 40px; font-family: 'Poppins', sans-serif; text-align: center;">Clinic Health Tools</p>
     <div class="health-tools-container">
-        <div class="health-tool health-tool-1" onclick="window.location.href='patient-form.html'">
+        <div class="health-tool health-tool-1" onclick="window.location.href='treatment-record.php'">
             <img src="src/images/health-checkup.svg" alt="Health Checkup Icon" class="health-icon">
             <div class="tool-text">
                 <p class="tool-title">Patient Form</p>

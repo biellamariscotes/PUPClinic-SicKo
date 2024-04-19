@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SicKo - AI-Based SDT</title>
+    <title>SicKo - Treatment Record</title>
     <link rel="icon" type="image/png" href="src/images/sicko-logo.png"> 
     <link rel="stylesheet" href="src/styles/dboardStyle.css">
 </head>
@@ -85,34 +85,56 @@
     </div>
 
     <div class="content" id="content">
-        <div class="ai-header-content">
-        <div class="ai-header-image-container">
-            <img src="src/images/ai-header.svg" alt="AI Header" class="ai-header">
-        </div>
-        <div class="ai-header-text-container">
-            <div class="ai-header-text">
-                <div class="ai-text">
-                    <p>AI-Based,<span class="bold"> Symptoms</span></p>
-                    <p class="bold" style="color: #E13F3D; font-size: 50px; font-family: 'Poppins', sans-serif;">Diagnostic Tool</p>
-                    <p style="color: black; font-size: 17px; font-family: 'Poppins', sans-serif; text-align: justify;">Detects and generates possible diagnosis <br> based on patient symptoms.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="symptomps-header">
-        <p class="bold" style="color: #E13F3D; font-size: 40px; font-family: 'Poppins', sans-serif; text-align: left; margin-left: 200px; margin-bottom: 0;">Type symptoms...</p>
+        <p class="bold" style="font-size: 40px; text-align: left; margin-left: 200px; margin-bottom: 0;">
+            <span style="color: #E13F3D;">Treatment</span>
+            <span style="color: #058789;">Record</span>
+        </p>
     </div>
 
-    <!-- Keyword Tags Container -->
-    <div class="symptoms-input-container">
-        <input type="text" id="symptoms-input" placeholder="Type symptoms keywords...">
-        <div class="tags-container" id="tags-container"></div>
+    <!-- Form Container -->
+    <div class="form-container">
+        <form id="treatment-form">
+            <div class="input-row">
+                <input type="text" id="full-name" placeholder="Full Name" autocomplete="off" required>
+                <select id="gender" required>
+                    <option value="" disabled selected hidden>Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+                <input type="number" id="age" placeholder="Age" required>
+            </div>
+            <div class="input-row">
+                <input type="text" id="course" placeholder="Course/Organization" autocomplete="off" required>
+                <select id="section" required>
+                    <option value="" disabled selected hidden>Block Section</option>
+                    <option value="1-1">1-1</option>
+                    <option value="1-2">1-2</option>
+                    <option value="2-1">2-1</option>
+                    <option value="2-2">2-2</option>
+                    <option value="3-1">3-1</option>
+                    <option value="3-2">3-2</option>
+                    <option value="4-1">4-1</option>
+                    <option value="4-2">4-2</option>
+                </select>
+            </div>
+            <div class="right-row">
+            <p class="bold" onclick="window.location.href='ai-basedSDT.php'">Use AI Symptoms Diagnostic Tool</p>
+            </div>
+            <div class="input-row">
+                <input type="text" id="symptoms" placeholder="Symptoms" autocomplete="off" required>
+            </div>
+            <div class="input-row">
+                <input type="text" id="diagnosis" placeholder="Diagnosis" autocomplete="off" required>
+                <input type="text" id="treatments" placeholder="Treatments/Medicines" autocomplete="off"required>
+            </div>
+            <div class="right-row">
+                    <button type="submit" id="submit-form-button" onclick="window.location.href='#'">Submit Form</button>
+            </div>
+        </form>
     </div>
-
-    <div class="generate-diagnosis-box">
-        <div class="generate-diagnosis-text" onclick="window.location.href='generated-diagnosis.php'">Generate Diagnosis</div>
-    </div>
+</div>
 
 
     <div class="footer">
