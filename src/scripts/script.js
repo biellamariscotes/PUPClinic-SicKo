@@ -113,3 +113,17 @@ inputField.addEventListener('focus', () => {
 inputField.addEventListener('blur', () => {
   inputField.style.backgroundColor = '#ffffff';
 });
+
+// Treatment Record
+// If you want the label to stay on top when there's already text in the input field
+document.addEventListener("DOMContentLoaded", function() {
+    const inputs = document.querySelectorAll('.input-wrapper input, .input-wrapper select');
+    inputs.forEach(function(input) {
+      input.addEventListener('focus', function() {
+        input.previousElementSibling.style.top = '0';
+        input.previousElementSibling.style.fontSize = '14px';
+        input.previousElementSibling.style.color = '#333';
+      });
+    });
+  });
+  
