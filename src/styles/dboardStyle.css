@@ -1043,4 +1043,28 @@ body.sidebar-active {
   font-weight: 500;
 }
 
+.middle-row {
+  display: flex;
+  justify-content: center; /* Align items to the end */
+  width: 100%; /* Ensure full width */
+}
 
+#generate-excuse-letter-button {
+  width: 307px;
+  padding: 10px;
+  background-color: #058789;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 15px;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+  margin: 20px 0 50px 0;
+}
+
+#generate-excuse-letter-button:hover {
+  background-color: #1D434E; /* Change background color on hover */
+}
