@@ -114,6 +114,7 @@ inputField.addEventListener('blur', () => {
   inputField.style.backgroundColor = '#ffffff';
 });
 
+<<<<<<< HEAD
 function addSymptom() {
     var symptomInput = document.getElementById('symptoms-input');
     var newSymptom = symptomInput.value.trim();
@@ -142,3 +143,18 @@ document.getElementById('symptoms-input').addEventListener('keydown', function(e
 });
 
 
+=======
+// Treatment Record
+// If you want the label to stay on top when there's already text in the input field
+document.addEventListener("DOMContentLoaded", function() {
+    const inputs = document.querySelectorAll('.input-wrapper input, .input-wrapper select');
+    inputs.forEach(function(input) {
+      input.addEventListener('focus', function() {
+        input.previousElementSibling.style.top = '0';
+        input.previousElementSibling.style.fontSize = '14px';
+        input.previousElementSibling.style.color = '#333';
+      });
+    });
+  });
+  
+>>>>>>> 0c17a45e2c0f1a70e084911c8f58318eea55fe7a

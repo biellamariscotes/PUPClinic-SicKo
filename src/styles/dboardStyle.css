@@ -888,3 +888,183 @@ body.sidebar-active {
   width: 24px;
   height: 24px;
 }
+
+/* TREATMENT RECORD PAGE */
+
+.symptomps-header span {
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+}
+
+.form-container {
+  max-width: 1086px; /* Limit maximum width of form container */
+  width: 100%; /* Ensure full width */
+  margin: 0 auto; /* Center horizontally */
+  margin-bottom: 50px;
+  display: flex;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.form-container input:focus {
+  background-color: white; /* Set background color when input is focused */
+  outline: none;
+}
+
+.form-container input {
+  font-size: 18px;
+  font-family: 'Poppins', sans-serif; /* Added font-family rule */
+}
+
+/* Form Container Input when autofill */
+.form-container input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important; 
+  background-color: white; 
+}
+
+#treatment-form {
+  width: 100%;
+  height: 100%;
+}
+
+.input-row {
+  display: flex;
+  justify-content: space-between; /* Distribute space between elements */
+  align-items: center; /* Align items vertically */
+  margin: 20px; /* Add margin between rows */
+}
+
+
+.input-row input,
+.input-row select {
+  flex-grow: 1; /* Allow inputs to expand and fill available space */
+  margin-right: 10px; /* Add margin between inputs */
+  font-weight: bold;
+  font-size: 21px;
+}
+
+.right-row button {
+  width: auto; /* Set button width to auto */
+}
+
+
+#full-name,
+#gender,
+#age, #course, 
+#section, #symptoms,
+#diagnosis, #treatments {
+  height: 83px;
+  border-radius: 15px;
+  background-color: white;
+  padding: 10px;
+  box-sizing: border-box;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s; /* Added transition for smoother effect */
+}
+
+#full-name {
+  width: 569px;
+}
+
+#gender {
+  width: 305px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+#age {
+  width: 144px;
+}
+
+#course {
+  width: 755px;
+}
+
+#section {
+  width: 296px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.right-row {
+  display: flex;
+  justify-content: flex-end; /* Align items to the end */
+  width: 95%; /* Ensure full width */
+}
+
+.right-row p{
+  font-size: 17px; 
+  text-align: right; 
+  margin-bottom: 0; 
+  color: #E13F3D; 
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.right-row p:hover {
+  color: #D22B2B;
+}
+
+#symptoms {
+  width: 1082px;
+}
+
+#diagnosis, 
+#treatments {
+  width: 527px;
+}
+
+#submit-form-button {
+  width: 207px;
+  padding: 10px;
+  background-color: #058789;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 15px;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+#submit-form-button:hover {
+  background-color: #1D434E; /* Change background color on hover */
+}
+
+::placeholder {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.middle-row {
+  display: flex;
+  justify-content: center; /* Align items to the end */
+  width: 100%; /* Ensure full width */
+}
+
+#generate-excuse-letter-button {
+  width: 307px;
+  padding: 10px;
+  background-color: #058789;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 15px;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+  margin: 20px 0 50px 0;
+}
+
+#generate-excuse-letter-button:hover {
+  background-color: #1D434E; /* Change background color on hover */
+}

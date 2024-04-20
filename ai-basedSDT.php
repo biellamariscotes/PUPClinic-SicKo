@@ -44,7 +44,7 @@
             <!-- Records -->
             <div class="menu-item">
                 <img src="src/images/records.svg" alt="records Icon" class="records-icon">
-                <span class="menu-text" onclick="window.location.href='records.php'">Records</span>
+                <span class="menu-text" onclick="window.location.href='treatment-record.php'">Records</span>
             </div>
 
             <!-- Med Reports -->
