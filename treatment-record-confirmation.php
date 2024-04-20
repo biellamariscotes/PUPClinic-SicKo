@@ -21,7 +21,7 @@
                 <div class="new-treatment-text">
                     Create New <br> Treatment Record
                 </div>
-                <img src="src/images/add-button.svg" alt="Add Button Icon" class="add-button-icon" onclick="window.location.href='ai-sdt.html'">
+                <img src="src/images/add-button.svg" alt="Add Button Icon" class="add-button-icon" onclick="window.location.href='treatment-record.php'">
             </div>
             <!-- Dashboard -->
             <div class="menu-item">
