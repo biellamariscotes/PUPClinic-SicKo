@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SicKo - Treatment Record</title>
+    <title>SicKo - Treatment Record Confirmation </title>
     <link rel="icon" type="image/png" href="src/images/sicko-logo.png"> 
     <link rel="stylesheet" href="src/styles/dboardStyle.css">
 </head>
@@ -119,18 +119,15 @@
                     <option value="4-2">4-2</option>
                 </select>
             </div>
-            <div class="right-row">
-            <p class="bold" onclick="window.location.href='ai-basedSDT.php'">Use AI Symptoms Diagnostic Tool</p>
-            </div>
             <div class="input-row">
                 <input type="text" id="symptoms" placeholder="Symptoms" autocomplete="off" required>
             </div>
             <div class="input-row">
                 <input type="text" id="diagnosis" placeholder="Diagnosis" autocomplete="off" required>
-                <input type="text" id="treatments" placeholder="Treatments/Medicines" autocomplete="off" required>
+                <input type="text" id="treatments" placeholder="Treatments/Medicines" autocomplete="off"required>
             </div>
-            <div class="right-row">
-                    <button type="submit" id="submit-form-button" onclick="window.location.href='treatment-record-confirmation.php'">Submit Form</button>
+            <div class="middle-row">
+                    <button type="submit" id="generate-excuse-letter-button" onclick="window.location.href='#'">Generate Excuse Letter</button>
             </div>
         </form>
     </div>
