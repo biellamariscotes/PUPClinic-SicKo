@@ -1,3 +1,45 @@
+<?php
+session_start();
+
+// Check if the user is logged in, if not, redirect to login page
+if (!isset($_SESSION['email'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Include database connection
+require_once('connect.php');
+
+// Handle form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve form data
+    $full_name = mysqli_real_escape_string($conn, $_POST['full_name']);
+    $gender = mysqli_real_escape_string($conn, $_POST['gender']);
+    $age = mysqli_real_escape_string($conn, $_POST['age']);
+    $course = mysqli_real_escape_string($conn, $_POST['course']);
+    $section = mysqli_real_escape_string($conn, $_POST['section']);
+    $symptoms = mysqli_real_escape_string($conn, $_POST['symptoms']);
+    $diagnosis = mysqli_real_escape_string($conn, $_POST['diagnosis']);
+    $treatments = mysqli_real_escape_string($conn, $_POST['treatments']);
+
+    // Insert treatment record into database
+    $sql = "INSERT INTO treatment_records (full_name, gender, age, course, section, symptoms, diagnosis, treatments) 
+            VALUES ('$full_name', '$gender', '$age', '$course', '$section', '$symptoms', '$diagnosis', '$treatments')";
+
+    if (mysqli_query($conn, $sql)) {
+        // Redirect to success page or display success message
+        header('Location: treatment-record-confirmation.php');
+        exit();
+    } else {
+        // Display error message
+        echo "Error: " . mysqli_error($conn);
+    }
+}
+
+// Close database connection
+mysqli_close($conn);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -96,7 +138,7 @@
     <div class="form-container">
         <form id="treatment-form">
             <div class="input-row">
-                <input type="text" id="full-name" placeholder="Full Name" autocomplete="off" required>
+                <input type="text" id="full_name" placeholder="Full Name" autocomplete="off" required>
                 <select id="gender" required>
                     <option value="" disabled selected hidden>Gender</option>
                     <option value="male">Male</option>
