@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SicKo - AI-Based SDT</title>
+    <title>SicKo - Patients</title>
     <link rel="icon" type="image/png" href="src/images/sicko-logo.png"> 
     <link rel="stylesheet" href="src/styles/dboardStyle.css">
 </head>
@@ -85,45 +85,95 @@
     </div>
 
     <div class="content" id="content">
-        <div class="ai-header-content">
-        <div class="ai-header-image-container">
-            <img src="src/images/ai-header.svg" alt="AI Header" class="ai-header">
-        </div>
-        <div class="ai-header-text-container">
-            <div class="ai-header-text">
-                <div class="ai-text">
-                    <p>AI-Based,<span class="bold"> Symptoms</span></p>
-                    <p class="bold" style="color: #E13F3D; font-size: 50px; font-family: 'Poppins', sans-serif;">Diagnostic Tool</p>
-                    <p style="color: black; font-size: 17px; font-family: 'Poppins', sans-serif; text-align: justify;">Detects and generates possible diagnosis <br> based on patient symptoms.</p>
-                </div>
-            </div>
-        </div>
+    <div class="left-header" style="margin-top: 40px;">
+        <p>
+            <span style="color: #E13F3D;">List of</span>
+            <span style="color: #058789;">Patients</span>
+        </p>
     </div>
 
-    <div class="left-header">
-        <p style="color: #E13F3D" >Type symptoms...</p>
-    </div>
+    <!-- Table Container -->
+        <div class="table-container" id="">
+            <table class="dashboard-table" style="margin-bottom: 80px;">
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Course</th>
+                    <th>Section</th>
+                    <th>Gender</th>
+                </tr>
+                <tr>
+                    <td class="nameColumn" onclick="redirectToInfoPage()">Apolo L. Trasmonte</td>
+                    <td>Information Technology</td>
+                    <td>BSIT 3-1</td>
+                    <td>Male</td>
+                </tr>
+                <tr>
+                    <td class="nameColumn" onclick="redirectToInfoPage()">Mikaela Tahum</td>
+                    <td>Information Technology</td>
+                    <td>BSIT 3-1</td>
+                    <td>Female</td>
+                </tr>
+                <tr>
+                    <td class="nameColumn" onclick="redirectToInfoPage()">Biella Requina</td>
+                    <td>Information Technology</td>
+                    <td>BSIT 3-1</td>
+                    <td>Female</td>
+                </tr>
+                <tr>
+                    <td class="nameColumn" onclick="redirectToInfoPage()">Andrei Matibag</td>
+                    <td>Information Technology</td>
+                    <td>BSIT 3-1</td>
+                    <td>Male</td>
+                </tr>
+                <tr>
+                    <td class="nameColumn" onclick="redirectToInfoPage()">Bobby Morante</td>
+                    <td>Information Technology</td>
+                    <td>BSIT 3-1</td>
+                    <td>Male</td>
+                </tr>
+                <tr>
+                    <td colspan="4"> <!-- Use colspan to span across all columns -->
 
-    <!-- Keyword Tags Container -->
-    <div class="symptoms-input-container">
-        <input type="text" id="symptoms-input" placeholder="Type symptoms keywords..." autocomplete="off">
-        <div class="tags-container" id="tags-container"></div>
-    </div>
+                        <!-- Inside the table button container -->
+                        <div class="table-button-container">
+                            <button class="delete-button">
+                                <img src="src/images/trash-icon.svg" alt="Delete Icon" class="delete-icon">
+                                Delete
+                            </button>
 
-    <div class="generate-diagnosis-box">
-        <div class="generate-diagnosis-text" onclick="window.location.href='generated-diagnosis.php'">Generate Diagnosis</div>
-    </div>
-      
-    <form id="diagnosis-form" method="post" action="generated-diagnosis.php">
-        <div class="symptoms-input-container">
-            <input type="text" id="symptoms-input" name="symptoms" placeholder="Type symptoms keywords...">
-            <div class="tags-container" id="tags-container"></div>
+                            <!-- Sorting and Pagination Container -->
+                            <div class="sorting-pagination-container">
+                                <!-- Sorting button box -->
+                                <div class="sorting-button-box" id="sortingButtonBox">
+                                    <!-- Sort text -->
+                                    Sort by:
+                                    <select id="sortCriteria" style="font-family: 'Poppins', sans-serif; font-weight: bold;">
+                                        <option value="name">Name</option>
+                                        <option value="course">Course</option>
+                                        <option value="section">Section</option>
+                                        <option value="gender">Gender</option>
+                                    </select>
+                                </div>
+                                <!-- Pagination buttons -->
+                                <div class="pagination-buttons">
+                                    <!-- Previous button -->
+                                    <button class="pagination-button" id="previousButton">
+                                        &lt;
+                                    </button>
+                                    <!-- Next button -->
+                                    <button class="pagination-button" id="nextButton">
+                                        &gt;
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
+    </div>
+</div>
 
-        <div class="generate-diagnosis-box">
-        <div class="generate-diagnosis-text" id="generate-diagnosis-btn">Generate Diagnosis</div>
-        </div>
-    </form>
 
     <div class="footer">
     <div class="footer-text">
@@ -147,10 +197,5 @@
     </div>
     </div>
     <script src="src/scripts/script.js"></script>
-    <script>
-        document.getElementById('generate-diagnosis-btn').addEventListener('click', function() {
-            document.getElementById('diagnosis-form').submit();
-        });
-    </script>
 </body>
 </html>

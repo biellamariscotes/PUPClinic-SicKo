@@ -114,7 +114,6 @@ inputField.addEventListener('blur', () => {
   inputField.style.backgroundColor = '#ffffff';
 });
 
-<<<<<<< HEAD
 function addSymptom() {
     var symptomInput = document.getElementById('symptoms-input');
     var newSymptom = symptomInput.value.trim();
@@ -143,7 +142,7 @@ document.getElementById('symptoms-input').addEventListener('keydown', function(e
 });
 
 
-=======
+
 // Treatment Record
 // If you want the label to stay on top when there's already text in the input field
 document.addEventListener("DOMContentLoaded", function() {
@@ -156,5 +155,55 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     });
   });
-  
->>>>>>> 0c17a45e2c0f1a70e084911c8f58318eea55fe7a
+
+
+//Sorting Button
+// JavaScript code
+document.addEventListener("DOMContentLoaded", function() {
+  // Get the table
+  const table = document.querySelector(".dashboard-table");
+
+  // Get the sorting button and select element
+  const sortingButtonBox = document.getElementById("sortingButtonBox");
+  const sortCriteriaSelect = document.getElementById("sortCriteria");
+
+  // Add event listener to the sorting button
+  sortingButtonBox.addEventListener("change", function() {
+      // Get the selected criteria
+      const selectedCriteria = sortCriteriaSelect.value;
+      
+      // Get all rows except the header row
+      const rows = Array.from(table.querySelectorAll("tr:not(:first-child)"));
+
+      // Sort the rows based on the selected criteria
+      rows.sort((a, b) => {
+          const textA = a.cells[getIndex(selectedCriteria)].textContent.trim().toLowerCase();
+          const textB = b.cells[getIndex(selectedCriteria)].textContent.trim().toLowerCase();
+          return textA.localeCompare(textB);
+      });
+
+      // Re-append sorted rows to the table
+      rows.forEach(row => {
+          table.appendChild(row);
+      });
+  });
+
+// Function to get the index of the selected criteria
+  function getIndex(criteria) {
+      const headerRow = table.querySelector("tr:first-child");
+      const headers = Array.from(headerRow.querySelectorAll("th"));
+      return headers.findIndex(header => header.textContent.trim().toLowerCase() === criteria);
+  }
+});
+
+//Function when the user click the name from the patient table
+function redirectToInfoPage() {
+  // Get the name of the student from the clicked table cell
+  var nameCell = event.target;
+  var name = nameCell.textContent;
+
+  // Redirect to the information page with the name as a query parameter
+  window.location.href = 'info_page.html?name=' + encodeURIComponent(name);
+}
+
+

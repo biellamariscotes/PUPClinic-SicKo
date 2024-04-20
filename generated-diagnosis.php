@@ -21,7 +21,7 @@
                 <div class="new-treatment-text">
                     Create New <br> Treatment Record
                 </div>
-                <img src="src/images/add-button.svg" alt="Add Button Icon" class="add-button-icon" onclick="window.location.href='ai-sdt.html'">
+                <img src="src/images/add-button.svg" alt="Add Button Icon" class="add-button-icon" onclick="window.location.href='treatment-record.php'">
             </div>
             <!-- Dashboard -->
             <div class="menu-item">
@@ -100,16 +100,40 @@
         </div>
     </div>
 
-    <div class="symptomps-header">
-        <p class="bold" style="color: #E13F3D; font-size: 40px; font-family: 'Poppins', sans-serif; text-align: left; margin-left: 200px; margin-bottom: 0;"">Symptoms</p>
+    <div class="left-header">
+        <p style="color: #E13F3D; font-size: 40px;">Symptoms</p>
     </div>
 
     <!-- Symptoms Container -->
     <div class="symptoms-input-container">
-        <input type="text" id="symptoms-input" placeholder="Type symptoms keywords...">
+        <input type="text" id="symptoms-input" placeholder="Type symptoms keywords..." autocomplete="off">
         <div class="tags-container" id="tags-container"></div>
     </div>
 
+    <div class="left-header">
+        <p style="color: #E13F3D; font-size: 40px;">Diagnosis</p>
+    </div>
+    
+    <!-- Diagnosis Container -->
+    <div class="diagnosis-container">
+        <div class="diagnosis-box">
+            <div class="medical-condition">
+                <h2 class="medical-condition-header">Medical Condition</h2>
+                <p class="sub-text">Definition of the diagnosed sickness. Further definition of the sickness. And another additional details about the sickness.</p>
+            </div>
+            <div class="treatment-options-container">
+                <div class="vertical-line"></div>
+                    <div class="treatment-options">
+                        <h2 class="treatment-options-header">Treatment Options</h2>
+                        <ul class="options-list">
+                            <li>Treatment Option 1</li>
+                            <li>Treatment Option 2</li>
+                            <li>Treatment Option 3</li>
+                        </ul>
+                    </div>
+            </div>
+        </div>    
+      
     <!-- Keyword Tags Container -->
     <div class="symptoms-input-container">
             <?php
@@ -172,7 +196,7 @@
         </div>
 
         <!-- Second box -->
-        <div class="record-treatment-button" onclick="window.location.href='dashboard.php'">
+        <div class="record-treatment-button" onclick="window.location.href='treatment-record.php'">
             <div class="box-content">
                 <p class="box-text">Record Treatment</p>
                 <img src="src/images/arrow-icon.svg" alt="Arrow Icon">

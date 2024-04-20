@@ -21,7 +21,7 @@
                 <div class="new-treatment-text">
                     Create New <br> Treatment Record
                 </div>
-                <img src="src/images/add-button.svg" alt="Add Button Icon" class="add-button-icon" onclick="window.location.href='ai-sdt.html'">
+                <img src="src/images/add-button.svg" alt="Add Button Icon" class="add-button-icon" onclick="window.location.href='treatment-record.php'">
             </div>
             <!-- Dashboard -->
             <div class="menu-item">
@@ -92,9 +92,7 @@
             <p style="color: black; font-size: 17px; font-family: 'Poppins', sans-serif; text-align: justify;">See today’s health reports. Lorem ipsum,<br> lore ipsum. Lorem iupsum.</p>
         </div>
     </div>
-    <div class="dashboard-daily-treatment">
-        <p class="bold" style="color: #E13F3D; font-size: 40px; font-family: 'Poppins', sans-serif; text-align: center;">Daily Treatment Record</p>
-    </div>
+    <div class="header-middle">Daily Treatment Record</div>
     <div class="table-container">
         <table class="dashboard-table">
             <tr>
@@ -136,8 +134,7 @@
         </table>
     </div>
 
-    <div class="clinic-tools">
-    <p class="bold" style="color: #E13F3D; font-size: 40px; font-family: 'Poppins', sans-serif; text-align: center;">Clinic Health Tools</p>
+    <div class="header-middle">Clinic Health Tools</div>
     <div class="health-tools-container">
         <div class="health-tool health-tool-1" onclick="window.location.href='treatment-record.php'">
             <img src="src/images/health-checkup.svg" alt="Health Checkup Icon" class="health-icon">

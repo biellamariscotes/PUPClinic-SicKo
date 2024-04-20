@@ -346,26 +346,32 @@ body.sidebar-active {
   font-weight: bold;
 }
 
-.dashboard-daily-treatment {
+.header-middle {
+  justify-content: center;
   text-align: center;
-  margin-top: 20px;
+  color: #E13F3D; 
+  font-size: 40px; 
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  margin: 40px 0 20px 0;
 }
 
 .table-container {
   display: flex;
   justify-content: center; /* Align the table in the middle */
-  margin-top: 20px; /* Add some top margin */
   overflow-x: hidden; /* Disable horizontal scrolling */
+
 }
 
 .dashboard-table {
   width: 100%; /* Adjust the width to fit the container */
   max-width: 1085px; /* Set maximum width to maintain responsiveness */
   height: 499px;
-  border-collapse: collapse;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Add drop shadow */
   border-radius: 15px; 
   margin: 20px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
 }
 
 .dashboard-table th, .dashboard-table td {
@@ -437,12 +443,6 @@ body.sidebar-active {
   border-radius: 0; /* Remove border radius from all cells in the last row */
 }
 
-.clinic-tools {
-  text-align: center; /* Align text to the center */
-  margin-top: 20px; /* Add some top margin */
-  padding-top: 10px;
-}
-
 .health-tools-container {
   display: flex;
   justify-content: center; /* Center the items horizontally */
@@ -477,7 +477,7 @@ body.sidebar-active {
   font-size: 28px;
   font-weight: bold;
   color: #058789;
-  margin-bottom: 2px; /* Reduce space between title and subtitle */
+  margin-bottom: 1px; /* Reduce space between title and subtitle */
 }
 
 .tool-title:hover {
@@ -488,7 +488,8 @@ body.sidebar-active {
   font-family: 'Poppins', sans-serif;
   font-size: 16px; /* Adjust font size */
   color: black;
-  margin-top: 2px; /* Reduce space between title and subtitle */
+  margin-top: 1px; /* Reduce space between title and subtitle */
+  font-weight: 600;
 }
 
 .health-tool:hover {
@@ -637,10 +638,17 @@ body.sidebar-active {
   margin-bottom: 0;
 }
 
-.symptomps-header {
-  text-align: center;
-  margin-top: 20px; /* Reduce the margin at the top */
-  margin-bottom: 5px; /* Reduce the margin at the bottom */
+.left-header {
+  margin-bottom: 0;
+}
+
+.left-header p{
+  font-size: 40px; 
+  margin: 30px 0 20px 200px; 
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  letter-spacing: 1px;
+
 }
 
 /* KEYWORD FIELD */
@@ -1067,4 +1075,102 @@ body.sidebar-active {
 
 #generate-excuse-letter-button:hover {
   background-color: #1D434E; /* Change background color on hover */
+}
+
+
+/* Table Delete Button  */
+
+.table-button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 20px 20px 20px;
+}
+
+.delete-button {
+  width: 90px;
+  height: 31px;
+  background-color: #E13F3D;
+  border-radius: 6px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  padding: 5px 10px;
+  font-size: 16px;
+  border: none;
+}
+
+.delete-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+
+.delete-button:hover {
+  background-color: #cc0000;
+}
+
+/*Sorting Button*/
+
+.sorting-pagination-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.sorting-button-box select {
+  padding: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.sorting-button {
+  width: 78px;
+  height: 21px;
+  border-radius: 5px;
+  background-color: white;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.sort-text {
+  font-size: 12px;
+  color: #333;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Pagination buttons */
+.pagination-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.pagination-button {
+  background-color: transparent;
+  border: none;
+  color: #000;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-left: 10px; /* Add margin between buttons */
+}
+
+.pagination-button:hover {
+  color: #058789; /* Change color on hover */
+}
+
+.nameColumn:hover{
+  cursor: pointer;
+  color: #058789;
 }
