@@ -85,8 +85,8 @@
     </div>
 
     <div class="content" id="content">
-    <div class="symptomps-header">
-        <p class="bold" style="font-size: 40px; text-align: left; margin-left: 200px; margin-bottom: 0;">
+    <div class="left-header">
+        <p>
             <span style="color: #E13F3D;">Treatment</span>
             <span style="color: #058789;">Record</span>
         </p>

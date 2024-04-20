@@ -100,18 +100,18 @@
         </div>
     </div>
 
-    <div class="symptomps-header">
-        <p class="bold" style="color: #E13F3D; font-size: 40px; font-family: 'Poppins', sans-serif; text-align: left; margin-left: 200px; margin-bottom: 0;"">Symptoms</p>
+    <div class="left-header">
+        <p style="color: #E13F3D; font-size: 40px;">Symptoms</p>
     </div>
 
     <!-- Symptoms Container -->
     <div class="symptoms-input-container">
-        <input type="text" id="symptoms-input" placeholder="Type symptoms keywords...">
+        <input type="text" id="symptoms-input" placeholder="Type symptoms keywords..." autocomplete="off">
         <div class="tags-container" id="tags-container"></div>
     </div>
 
-    <div class="diagnosis-header">
-        <p class="bold" style="color: #E13F3D; font-size: 40px; font-family: 'Poppins', sans-serif; text-align: left; margin-left: 200px; margin-bottom: 0;">Diagnosis</p>
+    <div class="left-header">
+        <p style="color: #E13F3D; font-size: 40px;">Diagnosis</p>
     </div>
     
     <!-- Diagnosis Container -->
@@ -145,7 +145,7 @@
         </div>
 
         <!-- Second box -->
-        <div class="record-treatment-button" onclick="window.location.href='dashboard.php'">
+        <div class="record-treatment-button" onclick="window.location.href='treatment-record.php'">
             <div class="box-content">
                 <p class="box-text">Record Treatment</p>
                 <img src="src/images/arrow-icon.svg" alt="Arrow Icon">
