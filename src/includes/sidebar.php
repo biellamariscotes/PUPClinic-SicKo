@@ -48,7 +48,7 @@
             <!-- Med Reports -->
             <div class="menu-item">
                 <img src="src/images/med-reports.svg" alt="medreports Icon" class="medreports-icon">
-                <span class="menu-text" onclick="window.location.href='archive.php'">Med Reports</span>
+                <span class="menu-text" onclick="window.location.href='med-reports.php'">Med Reports</span>
             </div>
 
             <!-- New header title for "Accounts" -->

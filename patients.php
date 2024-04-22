@@ -2,6 +2,7 @@
 require_once('src/includes/session-nurse.php');
 require_once('src/includes/connect.php');
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
