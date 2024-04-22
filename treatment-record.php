@@ -1,3 +1,37 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['email'])) {
+    header("Location: login.php");
+    exit();
+}
+
+require_once('connect.php');
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $full_name = mysqli_real_escape_string($conn, $_POST['full_name']);
+    $gender = mysqli_real_escape_string($conn, $_POST['gender']);
+    $age = mysqli_real_escape_string($conn, $_POST['age']);
+    $course = mysqli_real_escape_string($conn, $_POST['course']);
+    $section = mysqli_real_escape_string($conn, $_POST['section']);
+    $symptoms = mysqli_real_escape_string($conn, $_POST['symptoms']);
+    $diagnosis = mysqli_real_escape_string($conn, $_POST['diagnosis']);
+    $treatments = mysqli_real_escape_string($conn, $_POST['treatments']);
+
+    $sql = "INSERT INTO treatment_records (full_name, gender, age, course, section, symptoms, diagnosis, treatments) 
+            VALUES ('$full_name', '$gender', '$age', '$course', '$section', '$symptoms', '$diagnosis', '$treatments')";
+
+    if (mysqli_query($conn, $sql)) {
+        header('Location: treatment-record-confirmation.php');
+        exit();
+    } else {
+        echo "Error: " . mysqli_error($conn);
+    }
+}
+
+mysqli_close($conn);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -96,7 +130,7 @@
     <div class="form-container">
         <form id="treatment-form">
             <div class="input-row">
-                <input type="text" id="full-name" placeholder="Full Name" autocomplete="off" required>
+                <input type="text" id="full_name" placeholder="Full Name" autocomplete="off" required>
                 <select id="gender" required>
                     <option value="" disabled selected hidden>Gender</option>
                     <option value="male">Male</option>
