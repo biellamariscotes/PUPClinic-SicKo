@@ -102,7 +102,7 @@
                     <th>Gender</th>
                 </tr>
                 <tr>
-                    <td class="nameColumn" onclick="redirectToInfoPage()">Apolo L. Trasmonte</td>
+                    <td class="nameColumn" onclick="window.location.href='patients-treatment-record.php'">Apolo L. Trasmonte</td>
                     <td>Information Technology</td>
                     <td>BSIT 3-1</td>
                     <td>Male</td>

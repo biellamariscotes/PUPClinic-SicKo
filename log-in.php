@@ -8,18 +8,18 @@ if (isset($_SESSION['email'])) {
 require_once('connect.php');
 
 // Check if the connection was successful
-if (!$db) {
+if (!$conn) {
     die("Database connection failed: " . mysqli_connect_error());
 }
 
 if (isset($_POST['login_btn'])) {
-    $email = mysqli_real_escape_string($db, $_POST['email']);
-    $password = mysqli_real_escape_string($db, $_POST['password']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
     $hashed_password = md5($password);
 
-    $sql = "SELECT * FROM users WHERE email='$email' AND password='$hashed_password'";
+    $sql = "SELECT * FROM nurse WHERE email='$email' AND password='$hashed_password'";
 
-    $result = mysqli_query($db, $sql);
+    $result = mysqli_query($conn, $sql);
 
     if ($result) {
 
@@ -49,7 +49,7 @@ if (isset($_POST['login_btn'])) {
         }
     } else {
         // Debugging message
-        echo "Login query failed: " . mysqli_error($db) . "<br>";
+        echo "Login query failed: " . mysqli_error($conn) . "<br>";
     }
 }
 ?>
