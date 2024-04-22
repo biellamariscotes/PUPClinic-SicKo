@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 //Function when the user click the name from the patient table
 function redirectToInfoPage() {
-  // Get the name of the student from the clicked table cell
+  // Get the name of the patient from the clicked table cell
   var nameCell = event.target;
   var name = nameCell.textContent;
 

@@ -39,16 +39,7 @@ require_once('src/includes/connect.php');
         <p style="color: #E13F3D" >Type symptoms...</p>
     </div>
 
-    <!-- Keyword Tags Container -->
-    <div class="symptoms-input-container">
-        <input type="text" id="symptoms-input" placeholder="Type symptoms keywords..." autocomplete="off">
-        <div class="tags-container" id="tags-container"></div>
-    </div>
-
-    <div class="generate-diagnosis-box">
-        <div class="generate-diagnosis-text" onclick="window.location.href='generated-diagnosis.php'">Generate Diagnosis</div>
-    </div>
-      
+    <!-- Keyword Tags Container -->  
     <form id="diagnosis-form" method="post" action="generated-diagnosis.php">
         <div class="symptoms-input-container">
             <input type="text" id="symptoms-input" name="symptoms" placeholder="Type symptoms keywords...">

@@ -1174,3 +1174,174 @@ body.sidebar-active {
   cursor: pointer;
   color: #058789;
 }
+
+.two-container {
+  width: auto;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin: 50px 25px 50px 25px;
+}
+
+.box-container {
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.left-box {
+  width: 412px;
+  height: 756px;
+}
+
+.profile-avatar {
+  width: 100%;
+  text-align: center; /* Center the avatar horizontally */
+  margin-top: 30px; /* Adjust margin top as needed */ 
+}
+
+.avatar-image {
+  width: 202px;
+  height: 202px;
+  border-radius: 50%; /* Ensure the image appears as a circle */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+  margin: 20px;
+}
+
+.patient-info {
+  text-align: center;
+}
+
+.patient-name {
+  font-family: 'Poppins', sans-serif;
+  font-size: 25px;
+  font-weight: bold;
+  color: #058789;
+  margin-top: 15px; /* Adjust margin as needed */
+}
+
+.patient-id {
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: black;
+}
+
+.horizontal-line-separator {
+  width: 75%;
+  border: 1px solid #D9D9D9;
+  color: #D9D9D9;
+  margin: 20px auto;
+}
+
+.additional-info-container {
+  display: flex;
+  justify-content: center; /* Center align the content horizontally */
+}
+
+.additional-info {
+  text-align: left; /* Align the content within the container to the left */
+  margin: 20px;
+}
+
+.info-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: #058789;
+  font-weight: 600;
+}
+
+.info-value {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  letter-spacing: 1px;
+  font-weight: 600;
+  color: black;
+  margin-bottom: 15px;
+}
+
+
+.right-box {
+  width: 627px;
+  height: 756px;
+}
+
+.treatment-history-header {
+  text-align: left; /* Center the avatar horizontally */
+  margin: 30px 20px 20px 50px; /* Adjust margin top as needed */ 
+}
+
+.treatment-history-header span{
+  font-family: 'Poppins', sans-serif;
+  font-size: 40px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.history-info-container {
+  display: flex;
+  justify-content: left;
+  margin: 20px;
+  width: 627px;
+  height: 756px;
+}
+
+.vertical-line-separator {
+  width: 8px;
+  height: 82px;
+  background-color: #E9E9E9;
+  position: relative;
+}
+
+.treatment-history-info {
+  margin: 20px 20px 20px 40px;
+}
+
+.history-row {
+  display: flex;
+  justify-content: left;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.history-date {
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  letter-spacing: 1px;
+  color: #494949;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.history-diagnosis {
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  letter-spacing: 1px;
+  font-weight: 600;
+  color: #494949;
+  margin: 10px 0 10px 0;
+}
+
+.diagnosis-tag {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  color: #494949;
+  font-weight: 600;
+  margin: 10px 0 10px 0;
+}
+
+.diagnosis-tag-box {
+  background-color: rgba(255, 0, 0, 0.4);
+  color: black;
+  border-radius: 15px;
+  padding: 2px 8px 2px 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+}
+
