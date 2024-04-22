@@ -1,3 +1,8 @@
+<?php
+require_once('src/includes/session-nurse.php');
+require_once('src/includes/connect.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -211,13 +216,9 @@
   </header><!-- End Header -->
 
   <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Profile</a></li>
-      <li><a href="#">Settings</a></li>
-    </ul>
-  </div>
+  <?php
+    include ('src/includes/sidebar.php');
+    ?>
 
   <main class="mt-5">
     <div class="container-fluid main-content">
@@ -280,12 +281,9 @@
   </main> 
 
   <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer" style="background-color: #058789;">
-    <div class="copyright text-white">
-      <b>Sicko |</b>
-      &copy;
-    </div>
-  </footer><!-- End Footer -->
+  <?php
+    include ('src/includes/footer.php');
+    ?><!-- End Footer -->
 
   <script src="./js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
