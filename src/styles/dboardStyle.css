@@ -360,7 +360,6 @@ body.sidebar-active {
   display: flex;
   justify-content: center; /* Align the table in the middle */
   overflow-x: hidden; /* Disable horizontal scrolling */
-
 }
 
 .dashboard-table {
@@ -1285,7 +1284,7 @@ body.sidebar-active {
   justify-content: left;
   margin: 20px;
   width: 627px;
-  height: 756px;
+  height: auto;
 }
 
 .vertical-line-separator {
@@ -1345,3 +1344,183 @@ body.sidebar-active {
   font-weight: 600;
 }
 
+.treatment-history-buttons {
+  margin: 10px 50px 20px 20px; /* Adjust margin top as needed */ 
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: 20px;
+}
+
+.history-prev-button {
+  width: 96px;
+  height: 32px;
+  background-color: #D4D4D4;
+  border-radius: 6px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  padding: 5px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+}
+
+.history-next-button {
+  width: 65px;
+  height: 32px;
+  background-color: #058789;
+  border-radius: 6px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  padding: 5px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+}
+
+/* MED-REPORTS PAGE */ 
+
+.med-reports-header {
+  display: flex;
+  justify-content: center;
+  margin: 40px 20px 40px 20px;
+}
+
+.med-reports-header-box {
+  max-width: 100%;
+  width: 1221px;
+  height: 140px;
+  border-radius: 6px;
+  background-color: #FCFCFC;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.medreports-header-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 43px;
+  font-weight: bold;
+  color: #058789;
+  text-align: left;
+  margin-left: 30px;
+  max-width: calc(100% - 260px); /* Adjust according to your needs */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.medreports-sorting-button select {
+  padding: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #058789;
+  color: white;
+  cursor: pointer;
+}
+
+.medreports-sorting-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 30px;
+}
+
+.edit-delete-records {
+  font-family: 'Poppins', sans-serif; 
+  text-decoration: underline;
+  font-size: 16px;
+  font-weight: 400;
+  align-items: center;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.edit-delete-records:hover {
+  color: #D22B2B;
+}
+
+.quarterly-report-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.quarterly-report-row {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+
+.quarterly-report-row-box {
+  max-width: 100%;
+  width: 838px;
+  height: 136px;
+  border-radius: 15px;
+  background-color: #FCFCFC;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.row-first-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+
+.extend-down-icon {
+  width: 50px;
+  height: 50px;
+  margin: 0 20px 0 20px;
+  cursor: pointer;
+}
+
+.quarter-number {
+    font-family: 'Poppins', sans-serif;
+    font-size: 35px;
+    color: #058789;
+    font-weight: bold;
+  }
+
+  .month-name {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: black;
+    font-weight: 600;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+  }
+
+  .total-diagnosis-box {
+    width: 86px;
+    height: 78px;
+    background-color: #D9D9D9;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin: 0 20px 0 20px;
+
+  }
+
+  .total-diagnosis-box-text {
+    font-family: 'Poppins', sans-serif;
+    color: black;
+    font-weight: bold;
+  }
