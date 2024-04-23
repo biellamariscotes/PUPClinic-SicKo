@@ -1,6 +1,10 @@
 <?php
 require_once('src/includes/session-nurse.php');
 require_once('src/includes/connect.php');
+
+$sql = "SELECT * FROM treatment_record";
+$result = mysqli_query($conn, $sql);
+
 ?>
 
 <!DOCTYPE html>
@@ -41,36 +45,22 @@ require_once('src/includes/connect.php');
                     <th>Diagnosis</th>
                     <th>Time</th>
                 </tr>
-                <tr>
-                    <td>John Doe</td>
-                    <td>BSIT 3-1</td>
-                    <td>Fever</td>
-                    <td>10:00 AM</td>
-                </tr>
-                <tr>
-                    <td>Jane Smith</td>
-                    <td>BSP 1-2</td>
-                    <td>Common Cold</td>
-                    <td>11:30 AM</td>
-                </tr>
-                <tr>
-                    <td>Michael Johnson</td>
-                    <td>BSED 4-1</td>
-                    <td>Headache</td>
-                    <td>01:45 PM</td>
-                </tr>
-                <tr>
-                    <td>Sarah Lee</td>
-                    <td>BSECE 2-2</td>
-                    <td>Toothache</td>
-                    <td>03:20 PM</td>
-                </tr>
-                <tr>
-                    <td>David Brown</td>
-                    <td>BSA 3-2</td>
-                    <td>Eye Strain</td>
-                    <td>04:50 PM</td>
-                </tr>
+                <?php
+                // Check if there are any records
+                if (mysqli_num_rows($result) > 0) {
+                    // Output data of each row
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo "<tr>";
+                        echo "<td>" . $row["full_name"] . "</td>";
+                        echo "<td>" . $row["course"] . "</td>";
+                        echo "<td>" . $row["diagnosis"] . "</td>";
+                        echo "<td>" . $row["created_at"] . "</td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='4'>No records found</td></tr>";
+                }
+                ?>
             </table>
         </div>
 

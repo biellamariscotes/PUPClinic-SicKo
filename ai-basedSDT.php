@@ -59,6 +59,24 @@ require_once('src/includes/connect.php');
         document.getElementById('generate-diagnosis-btn').addEventListener('click', function() {
             document.getElementById('diagnosis-form').submit();
         });
+
+        document.getElementById('generate-diagnosis-btn').addEventListener('click', function() {
+                // Get the text content of each tag box
+                var tagsContainer = document.getElementById('tags-container');
+                var tags = tagsContainer.querySelectorAll('.tag');
+                var symptomsString = '';
+                tags.forEach(function(tag) {
+                    symptomsString += tag.textContent.trim() + ', '; // Concatenate the symptoms with comma
+                });
+                // Remove the trailing comma and whitespace
+                symptomsString = symptomsString.replace(/,\s*$/, '');
+
+                // Set the concatenated symptoms string as the value of the hidden input field
+                document.getElementById('symptoms-input').value = symptomsString;
+
+                // Submit the form
+                document.getElementById('diagnosis-form').submit();
+            });
     </script>
 </body>
 </html>

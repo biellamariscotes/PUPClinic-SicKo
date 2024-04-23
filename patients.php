@@ -1,6 +1,9 @@
 <?php
 require_once('src/includes/session-nurse.php');
 require_once('src/includes/connect.php');
+
+$sql = "SELECT * FROM patient";
+$result = mysqli_query($conn, $sql);
 ?>
 
 <!DOCTYPE html>
@@ -36,36 +39,22 @@ require_once('src/includes/connect.php');
                     <th>Section</th>
                     <th>Gender</th>
                 </tr>
-                <tr>
-                    <td class="nameColumn" onclick="window.location.href='patients-treatment-record.php'">Apolo L. Trasmonte</td>
-                    <td>Information Technology</td>
-                    <td>BSIT 3-1</td>
-                    <td>Male</td>
-                </tr>
-                <tr>
-                    <td class="nameColumn" onclick="redirectToInfoPage()">Mikaela Tahum</td>
-                    <td>Information Technology</td>
-                    <td>BSIT 3-1</td>
-                    <td>Female</td>
-                </tr>
-                <tr>
-                    <td class="nameColumn" onclick="redirectToInfoPage()">Biella Requina</td>
-                    <td>Information Technology</td>
-                    <td>BSIT 3-1</td>
-                    <td>Female</td>
-                </tr>
-                <tr>
-                    <td class="nameColumn" onclick="redirectToInfoPage()">Andrei Matibag</td>
-                    <td>Information Technology</td>
-                    <td>BSIT 3-1</td>
-                    <td>Male</td>
-                </tr>
-                <tr>
-                    <td class="nameColumn" onclick="redirectToInfoPage()">Bobby Morante</td>
-                    <td>Information Technology</td>
-                    <td>BSIT 3-1</td>
-                    <td>Male</td>
-                </tr>
+                    <?php
+                    // Check if there are any records
+                    if (mysqli_num_rows($result) > 0) {
+                        // Output data of each row
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "<tr>";
+                            echo "<td class='nameColumn'><a href='patients-treatment-record.php?patient_id=" . $row["patient_id"] . "'>" . $row["first_name"] . " " . $row["last_name"] . "</a></td>";
+                            echo "<td>" . $row["course"] . "</td>";
+                            echo "<td>" . $row["section"] . "</td>";
+                            echo "<td>" . $row["gender"] . "</td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='4'>No records found</td></tr>";
+                    }
+                    ?>
                 <tr>
                     <td colspan="4"> <!-- Use colspan to span across all columns -->
 

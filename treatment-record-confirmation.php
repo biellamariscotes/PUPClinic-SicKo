@@ -71,7 +71,7 @@ require_once('src/includes/connect.php');
 
     <?php
     include ('src/includes/footer.php');
-    ?>
+    ?>  
     <script src="src/scripts/script.js"></script>
 </body>
 </html>
