@@ -19,7 +19,7 @@ require_once('src/includes/connect.php');
     include ('src/includes/sidebar.php');
     ?>
 
-    <div class="content" id="content">
+    <div class="content" id="content" style="margin-bottom: 100px;">
         <div class="med-reports-header">
             <div class="med-reports-header-box">
                 <div class="medreports-header-text">Medical Records Archive</div>
@@ -113,40 +113,103 @@ require_once('src/includes/connect.php');
 
 
         <div class="header-middle" style="margin: 0 20px 0 20px;">Quarterly Report</div>
+
             <!-- First Quarter -->
-            <div class="quarterly-report-row">
+            <div class="quarterly-report-row" id="firstQuarter">
+                <div class="quarterly-report-content">
                 <div class="quarterly-report-row-box">
-                    <div class="row-first-content">
-                        <div class="extend-down-icon">
-                            <img src="src/images/extend-down.svg" alt="Extend Down Icon" class="extend-down-icon">
-                        </div>
+                        <div class="row-first-content">
+                            <div class="extend-down-icon" onclick="toggleQuarter('firstQuarter')">
+                                <img src="src/images/extend-down.svg" alt="Extend Down Icon" class="extend-down-icon">
+                            </div>
                             <div class="quarterly-report-title">
                                 <div class="quarter-number" id="">First Quarter</div>
-                                    <div class="month-name">JANUARY - MARCH</div>
+                                <div class="month-name">JANUARY - MARCH</div>
                             </div>
+                        </div>
+                        <div class="total-diagnosis-box">
+                            <div class="total-diagnosis-box-text">
+                                <div class="total-number" style="font-size: 35px;">35</div>
+                                <div class="total-sub-text" style="font-size: 10px;">DIAGNOSIS</div>
+                            </div>
+                        </div>
+                </div>
+
+                <div class="quarterly-report-alter collapsed">
+                    <div class="alter-report-content">
+                    <div class="alter-first-row">
+                        <div class="alter-report-header"> 
+                                <div class="alter-header-content">
+                                    <div class="extended-down-icon" onclick="toggleQuarter('firstQuarter')">
+                                    <img src="src/images/extended-down.svg" alt="Extended Down Icon" class="extended-down-icon">
+                                </div>
+                                <div class="alter-header-title">
+                                    <div class="alter-title" id="">First Quarter</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                            <div class="total-diagnosis-box">
-                                <div class="total-diagnosis-box-text">
+
+                    <div class="alter-second-row">
+                            <div class="leading-diagnosis-box">
+                                <div class="leading-diagnosis-box-text">
+                                    <div class="leading-diagnosis-text" style="font-size: 35px;">LEADING DIAGNOSIS</div>
+                                    <div class="leading-diagnosis-subtext" style="font-size: 10px;">MOST COMMON MEDICAL CONDITION FOR THE QUARTER</div>
+                                </div>
+                            </div>
+
+                            <div class="total-diagnosis-box" style="background-color: #E13F3D;">
+                                <div class="total-diagnosis-box-text" style="color: white;">
                                     <div class="total-number" style="font-size: 35px;">35</div>
                                     <div class="total-sub-text" style="font-size: 10px;">DIAGNOSIS</div>
                                 </div>
                             </div>
                     </div>
+
+                    <div class="alter-third-row">
+                                <div class="alter-third-row-label">
+                                    <div class="alter-patient-diagnosed">Patient Diagnosed</div>
+                                    <div class="alter-leading-diagnosis">Leading Diagnosis</div>
+                                </div>
+
+                                <div class="alter-third-row-result">
+                                    <div class="alter-month" style="font-size: 25px; font-weight: bold;">January</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">18</div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 1</div>
+                                </div>
+
+                                <div class="alter-third-row-result">
+                                    <div class="alter-month" style="font-size: 25px; font-weight: bold;">February</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">7</div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 2</div>
+                                </div>
+
+                                <div class="alter-third-row-result">
+                                    <div class="alter-month" style="font-size: 25px; font-weight: bold;">March</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">10</div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 3</div>
+                                </div>
+                        </div>
+                    </div>
+
+
+                    </div>
                 </div>
             </div>
 
             <!-- Second Quarter -->
-            <div class="quarterly-report-row">
+                <div class="quarterly-report-row" id="secondQuarter">
+                <div class="quarterly-report-content">
                 <div class="quarterly-report-row-box">
-                <div class="row-first-content">
-                    <div class="extend-down-icon">
-                        <img src="src/images/extend-down.svg" alt="Extend Down Icon" class="extend-down-icon">
-                    </div>
-                        <div class="quarterly-report-title">
-                            <div class="quarter-number" id="">First Quarter</div>
-                                <div class="month-name">JANUARY - MARCH</div>
+                        <div class="row-first-content">
+                            <div class="extend-down-icon" onclick="toggleQuarter('secondQuarter')">
+                                <img src="src/images/extend-down.svg" alt="Extend Down Icon" class="extend-down-icon">
+                            </div>
+                            <div class="quarterly-report-title">
+                                <div class="quarter-number" id="">Second Quarter</div>
+                                <div class="month-name">APRIL - JUNE</div>
+                            </div>
                         </div>
-                </div>
                         <div class="total-diagnosis-box">
                             <div class="total-diagnosis-box-text">
                                 <div class="total-number" style="font-size: 35px;">35</div>
@@ -154,21 +217,83 @@ require_once('src/includes/connect.php');
                             </div>
                         </div>
                 </div>
+
+                <div class="quarterly-report-alter collapsed">
+                    <div class="alter-report-content">
+                    <div class="alter-first-row">
+                        <div class="alter-report-header"> 
+                                <div class="alter-header-content">
+                                    <div class="extended-down-icon" onclick="toggleQuarter('secondQuarter')">
+                                    <img src="src/images/extended-down.svg" alt="Extended Down Icon" class="extended-down-icon">
+                                </div>
+                                <div class="alter-header-title">
+                                    <div class="alter-title" id="">Second Quarter</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alter-second-row">
+                            <div class="leading-diagnosis-box">
+                                <div class="leading-diagnosis-box-text">
+                                    <div class="leading-diagnosis-text" style="font-size: 35px;">LEADING DIAGNOSIS</div>
+                                    <div class="leading-diagnosis-subtext" style="font-size: 10px;">MOST COMMON MEDICAL CONDITION FOR THE QUARTER</div>
+                                </div>
+                            </div>
+
+                            <div class="total-diagnosis-box" style="background-color: #E13F3D;">
+                                <div class="total-diagnosis-box-text" style="color: white;">
+                                    <div class="total-number" style="font-size: 35px;">35</div>
+                                    <div class="total-sub-text" style="font-size: 10px;">DIAGNOSIS</div>
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="alter-third-row">
+                                <div class="alter-third-row-label">
+                                    <div class="alter-patient-diagnosed">Patient Diagnosed</div>
+                                    <div class="alter-leading-diagnosis">Leading Diagnosis</div>
+                                </div>
+
+                                <div class="alter-third-row-result">
+                                    <div class="alter-month" style="font-size: 25px; font-weight: bold;">April</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">18</div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 1</div>
+                                </div>
+
+                                <div class="alter-third-row-result">
+                                    <div class="alter-month" style="font-size: 25px; font-weight: bold;">May</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">7</div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 2</div>
+                                </div>
+
+                                <div class="alter-third-row-result">
+                                    <div class="alter-month" style="font-size: 25px; font-weight: bold;">June</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">10</div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 3</div>
+                                </div>
+                        </div>
+                    </div>
+
+
+                    </div>
                 </div>
             </div>
+
 
             <!-- Third Quarter -->
-            <div class="quarterly-report-row">
+            <div class="quarterly-report-row" id="thirdQuarter">
+                <div class="quarterly-report-content">
                 <div class="quarterly-report-row-box">
-                <div class="row-first-content">
-                    <div class="extend-down-icon">
-                        <img src="src/images/extend-down.svg" alt="Extend Down Icon" class="extend-down-icon">
-                    </div>
-                        <div class="quarterly-report-title">
-                            <div class="quarter-number" id="">First Quarter</div>
-                                <div class="month-name">JANUARY - MARCH</div>
+                        <div class="row-first-content">
+                            <div class="extend-down-icon" onclick="toggleQuarter('thirdQuarter')">
+                                <img src="src/images/extend-down.svg" alt="Extend Down Icon" class="extend-down-icon">
+                            </div>
+                            <div class="quarterly-report-title">
+                                <div class="quarter-number" id="">Third Quarter</div>
+                                <div class="month-name">JULY - SEPTEMBER</div>
+                            </div>
                         </div>
-                </div>
                         <div class="total-diagnosis-box">
                             <div class="total-diagnosis-box-text">
                                 <div class="total-number" style="font-size: 35px;">35</div>
@@ -176,21 +301,83 @@ require_once('src/includes/connect.php');
                             </div>
                         </div>
                 </div>
+
+                <div class="quarterly-report-alter collapsed">
+                    <div class="alter-report-content">
+                    <div class="alter-first-row">
+                        <div class="alter-report-header"> 
+                                <div class="alter-header-content">
+                                    <div class="extended-down-icon" onclick="toggleQuarter('thirdQuarter')">
+                                    <img src="src/images/extended-down.svg" alt="Extended Down Icon" class="extended-down-icon">
+                                </div>
+                                <div class="alter-header-title">
+                                    <div class="alter-title" id="">Third Quarter</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alter-second-row">
+                            <div class="leading-diagnosis-box">
+                                <div class="leading-diagnosis-box-text">
+                                    <div class="leading-diagnosis-text" style="font-size: 35px;">LEADING DIAGNOSIS</div>
+                                    <div class="leading-diagnosis-subtext" style="font-size: 10px;">MOST COMMON MEDICAL CONDITION FOR THE QUARTER</div>
+                                </div>
+                            </div>
+
+                            <div class="total-diagnosis-box" style="background-color: #E13F3D;">
+                                <div class="total-diagnosis-box-text" style="color: white;">
+                                    <div class="total-number" style="font-size: 35px;">35</div>
+                                    <div class="total-sub-text" style="font-size: 10px;">DIAGNOSIS</div>
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="alter-third-row">
+                                <div class="alter-third-row-label">
+                                    <div class="alter-patient-diagnosed">Patient Diagnosed</div>
+                                    <div class="alter-leading-diagnosis">Leading Diagnosis</div>
+                                </div>
+
+                                <div class="alter-third-row-result">
+                                    <div class="alter-month" style="font-size: 25px; font-weight: bold;">July</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">18</div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 1</div>
+                                </div>
+
+                                <div class="alter-third-row-result">
+                                    <div class="alter-month" style="font-size: 25px; font-weight: bold;">August</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">7</div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 2</div>
+                                </div>
+
+                                <div class="alter-third-row-result">
+                                    <div class="alter-month" style="font-size: 25px; font-weight: bold;">September</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">10</div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 3</div>
+                                </div>
+                        </div>
+                    </div>
+
+
+                    </div>
                 </div>
             </div>
 
+
             <!-- Fourth Quarter -->
-            <div class="quarterly-report-row" style="margin-bottom: 100px;">
+            <div class="quarterly-report-row" id="fourthQuarter">
+                <div class="quarterly-report-content">
                 <div class="quarterly-report-row-box">
-                <div class="row-first-content">
-                    <div class="extend-down-icon">
-                        <img src="src/images/extend-down.svg" alt="Extend Down Icon" class="extend-down-icon">
-                    </div>
-                        <div class="quarterly-report-title">
-                            <div class="quarter-number" id="">First Quarter</div>
-                                <div class="month-name">JANUARY - MARCH</div>
+                        <div class="row-first-content">
+                            <div class="extend-down-icon" onclick="toggleQuarter('fourthQuarter')">
+                                <img src="src/images/extend-down.svg" alt="Extend Down Icon" class="extend-down-icon">
+                            </div>
+                            <div class="quarterly-report-title">
+                                <div class="quarter-number" id="">Fourth Quarter</div>
+                                <div class="month-name">OCTOBER - DECEMBER</div>
+                            </div>
                         </div>
-                </div>
                         <div class="total-diagnosis-box">
                             <div class="total-diagnosis-box-text">
                                 <div class="total-number" style="font-size: 35px;">35</div>
@@ -198,7 +385,69 @@ require_once('src/includes/connect.php');
                             </div>
                         </div>
                 </div>
+
+                <div class="quarterly-report-alter collapsed">
+                    <div class="alter-report-content">
+                    <div class="alter-first-row">
+                        <div class="alter-report-header"> 
+                                <div class="alter-header-content">
+                                    <div class="extended-down-icon" onclick="toggleQuarter('fourthQuarter')">
+                                    <img src="src/images/extended-down.svg" alt="Extended Down Icon" class="extended-down-icon">
+                                </div>
+                                <div class="alter-header-title">
+                                    <div class="alter-title" id="">Fourth Quarter</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alter-second-row">
+                            <div class="leading-diagnosis-box">
+                                <div class="leading-diagnosis-box-text">
+                                    <div class="leading-diagnosis-text" style="font-size: 35px;">LEADING DIAGNOSIS</div>
+                                    <div class="leading-diagnosis-subtext" style="font-size: 10px;">MOST COMMON MEDICAL CONDITION FOR THE QUARTER</div>
+                                </div>
+                            </div>
+
+                            <div class="total-diagnosis-box" style="background-color: #E13F3D;">
+                                <div class="total-diagnosis-box-text" style="color: white;">
+                                    <div class="total-number" style="font-size: 35px;">35</div>
+                                    <div class="total-sub-text" style="font-size: 10px;">DIAGNOSIS</div>
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="alter-third-row">
+                                <div class="alter-third-row-label">
+                                    <div class="alter-patient-diagnosed">Patient Diagnosed</div>
+                                    <div class="alter-leading-diagnosis">Leading Diagnosis</div>
+                                </div>
+
+                                <div class="alter-third-row-result">
+                                    <div class="alter-month" style="font-size: 25px; font-weight: bold;">October</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">18</div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 1</div>
+                                </div>
+
+                                <div class="alter-third-row-result">
+                                    <div class="alter-month" style="font-size: 25px; font-weight: bold;">November</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">7</div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 2</div>
+                                </div>
+
+                                <div class="alter-third-row-result">
+                                    <div class="alter-month" style="font-size: 25px; font-weight: bold;">December</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">10</div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 3</div>
+                                </div>
+                        </div>
+                    </div>
+
+
+                    </div>
+                </div>
             </div>
+ 
         </div>
     </div>
 </div>

@@ -206,4 +206,45 @@ function redirectToInfoPage() {
   window.location.href = 'info_page.html?name=' + encodeURIComponent(name);
 }
 
+// MED-REPORTS COLLAPSIBLE
+
+// Hide quarterly report alter initially
+document.addEventListener('DOMContentLoaded', function () {
+  var allQuarters = document.querySelectorAll('.quarterly-report-row');
+  allQuarters.forEach(function (quarter) {
+      var alterBox = quarter.querySelector('.quarterly-report-alter');
+      // Initially hide the alter box by adding the 'collapsed' class
+      alterBox.classList.add('collapsed');
+  });
+});
+
+function toggleQuarter(quarterId) {
+  var quarter = document.getElementById(quarterId);
+  var rowBox = quarter.querySelector('.quarterly-report-row-box');
+  var alterBox = quarter.querySelector('.quarterly-report-alter');
+
+  // Check if the alter box is currently hidden
+  var isCollapsed = alterBox.classList.contains('collapsed');
+
+  // Toggle the visibility of the alter box and the row box based on current state
+  if (isCollapsed) {
+      rowBox.classList.add('collapsed'); // Hide the row box
+      alterBox.classList.remove('collapsed'); // Show the alter box
+  } else {
+      rowBox.classList.remove('collapsed'); // Show the row box
+      alterBox.classList.add('collapsed'); // Hide the alter box
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
