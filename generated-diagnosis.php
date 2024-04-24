@@ -95,7 +95,7 @@ if(isset($_POST['symptoms'])) {
             <div class="diagnosis-container">
                 <div class="diagnosis-box">
                     <div class="medical-condition">
-                        <h2 class="medical-condition-header">Medical Condition</h2>
+                    <h2 class="medical-condition-header">Medical Condition: <span style="color: #E13F3D;"><?= ucfirst(htmlspecialchars($predictedSickness)) ?></span></h2>
                         <p class="sub-text">Predicted Sickness: <?= htmlspecialchars($predictedSickness) ?></p>
                     </div>
                     <div class="treatment-options-container">
