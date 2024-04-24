@@ -385,6 +385,8 @@ body.sidebar-active {
   font-size: 24px;
   border-right: 2px solid white; /* Color of the line between each column */
   border-bottom: 2px solid white; /* Add bottom border to table header */
+  width: 1081px;
+  height: 97px;
 }
 
 .dashboard-table th:first-child {

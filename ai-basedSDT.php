@@ -42,7 +42,7 @@ require_once('src/includes/connect.php');
     <!-- Keyword Tags Container -->  
     <form id="diagnosis-form" method="post" action="generated-diagnosis.php">
         <div class="symptoms-input-container">
-            <input type="text" id="symptoms-input" name="symptoms" placeholder="Type symptoms keywords...">
+            <input type="text" id="symptoms-input" name="symptoms" placeholder="Type symptoms keywords..." autocomplete="off">
             <div class="tags-container" id="tags-container"></div>
         </div>
 

@@ -3,7 +3,7 @@
 session_start();
 
 if (!isset($_SESSION['nurse_id'])) {
-    header("Location: login-nurse.php");
+    header("Location: nurse-login.php");
     exit();
 }
 
