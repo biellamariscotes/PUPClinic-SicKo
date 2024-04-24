@@ -131,7 +131,7 @@ function recommendTreatment($predictedSicknesses) {
                 <div class="diagnosis-container">
                     <div class="diagnosis-box">
                         <div class="medical-condition">
-                            <h2 class="medical-condition-header">Medical Condition</h2>
+                            <h2 class="medical-condition-header">Medical Condition: <span style="color: #E13F3D;"><?= htmlspecialchars($sickness) ?></span></h2>
                             <p class="sub-text">Predicted Sickness: <?= htmlspecialchars($sickness) ?></p>
                         </div>
                         <div class="treatment-options-container">

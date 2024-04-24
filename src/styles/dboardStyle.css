@@ -380,7 +380,7 @@ body.sidebar-active {
 
 .dashboard-table th {
   background-color: #058789;
-  color: #F4F4F4;
+  color: #fff;
   font-weight: bold;
   font-size: 24px;
   border-right: 2px solid white; /* Color of the line between each column */
@@ -399,7 +399,7 @@ body.sidebar-active {
 }
 
 .dashboard-table tr:nth-child(even) {
-  background-color: #F4F4F4;
+  background-color: #fff;
 }
 
 .dashboard-table tr:nth-child(odd) {

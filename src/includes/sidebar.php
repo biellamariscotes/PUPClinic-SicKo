@@ -64,7 +64,7 @@
 
             <div class="menu-item">
                 <img src="src/images/settings.svg" alt="settings Icon" class="settings-icon">
-                <span class="menu-text" onclick="window.location.href='settings.php'">Settings</span>
+                <span class="menu-text" onclick="window.location.href='edit-profile.php'">Settings</span>
             </div>
 
             <div class="menu-item">

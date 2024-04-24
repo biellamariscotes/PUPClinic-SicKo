@@ -2,8 +2,11 @@
 require_once('src/includes/session-nurse.php');
 require_once('src/includes/connect.php');
 
-$sql = "SELECT * FROM treatment_record";
+$sql = "SELECT * 
+        FROM treatment_record
+        JOIN patient ON treatment_record.patient_id = patient.patient_id";
 $result = mysqli_query($conn, $sql);
+
 
 ?>
 
@@ -33,7 +36,7 @@ $result = mysqli_query($conn, $sql);
                 <p class="bold" style="color: #E13F3D; font-size: 50px; font-family: 'Poppins', sans-serif;">Anong
                     SicKo?</p>
                 <p style="color: black; font-size: 17px; font-family: 'Poppins', sans-serif; text-align: justify;">See
-                    today’s health reports. Lorem ipsum,<br> lore ipsum. Lorem iupsum.</p>
+                    today’s health reports. Record daily treatments,<br> and generate diagnosis.</p>
             </div>
         </div>
         <div class="header-middle">Daily Treatment Record</div>
@@ -51,10 +54,10 @@ $result = mysqli_query($conn, $sql);
                     // Output data of each row
                     while ($row = mysqli_fetch_assoc($result)) {
                         echo "<tr>";
-                        echo "<td>" . $row["full_name"] . "</td>";
+                        echo "<td>" . $row["first_name"] . "</td>";
                         echo "<td>" . $row["course"] . "</td>";
                         echo "<td>" . $row["diagnosis"] . "</td>";
-                        echo "<td>" . $row["created_at"] . "</td>";
+                        echo "<td>" . $row["acc_created"] . "</td>";
                         echo "</tr>";
                     }
                 } else {
