@@ -5,6 +5,6 @@ $_SESSION = array();
 
 session_destroy();
 
-header("Location: login-nurse.php");
+header("Location: nurse-login.php");
 exit();
 ?>

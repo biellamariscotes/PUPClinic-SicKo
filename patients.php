@@ -56,7 +56,7 @@ $result = mysqli_query($conn, $sql);
                     }
                     ?>
                 <tr>
-                    <td colspan="4"> <!-- Use colspan to span across all columns -->
+                    <td colspan="4" style="height: 97px;"> <!-- Use colspan to span across all columns -->
 
                         <!-- Inside the table button container -->
                         <div class="table-button-container">

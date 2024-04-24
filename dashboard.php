@@ -80,7 +80,7 @@ $result = mysqli_query($conn, $sql);
                     <p class="tool-subtitle">Symptoms Diagnostic Tool</p>
                 </div>
             </div>
-            <div class="health-tool health-tool-3" onclick="window.location.href='med-reports.html'">
+            <div class="health-tool health-tool-3" onclick="window.location.href='med-reports.php'">
                 <img src="src/images/health-calendar.svg" alt="Health Checkup Icon" class="health-icon">
                 <div class="tool-text">
                     <p class="tool-title">Med Reports</p>
