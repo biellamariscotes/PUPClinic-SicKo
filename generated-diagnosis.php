@@ -1,81 +1,46 @@
 <?php
 require_once('src/includes/session-nurse.php');
 require_once('src/includes/connect.php');
+require_once('src/includes/algorithm/naive-bayes.php');
 
-// Define the PHP logic for symptom diagnosis and treatment recommendation
-if (isset($_POST['symptoms'])) {
-        
-    // Format the symptoms input by replacing spaces with underscores and converting to lowercase
-    $formattedSymptoms = str_replace(' ', '_', strtolower($_POST['symptoms']));
+// Assuming you have a function to perform diagnosis
+// and return predicted sicknesses and suggested treatments
+function performDiagnosis($symptoms) {
+    global $naiveBayes;
+    $predictedSicknesses = [];
+    $suggestedTreatments = [];
 
-    // Define the symptoms data array
-    $symptomsData = [
-        "dizziness" => strpos($formattedSymptoms, 'dizziness') !== false,
-        "fever" => strpos($formattedSymptoms, 'fever') !== false,
-        "cough" => strpos($formattedSymptoms, 'cough') !== false,
-        "pale_lips" => strpos($formattedSymptoms, 'pale_lips') !== false,
-        "pale_skin" => strpos($formattedSymptoms, 'pale_skin') !== false,
-        "headache" => strpos($formattedSymptoms, 'headache') !== false,
-        "abdominal_pain" => strpos($formattedSymptoms, 'abdominal_pain') !== false,
-        "shortness_of_breath" => strpos($formattedSymptoms, 'shortness_of_breath') !== false,
-        "nausea" => strpos($formattedSymptoms, 'nausea') !== false,
-        "vomiting" => strpos($formattedSymptoms, 'vomiting') !== false
-    ];
-
-    // Analyze symptoms and predict sickness
-    $predictedSicknesses = predictSickness($symptomsData);
-
+    // Predict sickness based on symptoms
+    $predictedSickness = $naiveBayes->predict($symptoms);
+    
     // Recommend treatment based on predicted sickness
-    $suggestedTreatments = recommendTreatment($predictedSicknesses);
+    switch ($predictedSickness) {
+        case "Common Cold":
+            $suggestedTreatments[] = "Rest, drink fluids, and take over-the-counter cold medications.";
+            break;
+        case "Flu":
+            $suggestedTreatments[] = "Rest, drink fluids, and take antiviral medications if prescribed.";
+            break;
+        case "Fatigue Syndrome":
+            $suggestedTreatments[] = "Maintain a healthy lifestyle, including regular exercise and proper nutrition.";
+            break;
+        default:
+            $suggestedTreatments[] = "No specific treatment recommended.";
+            break;
+    }
+
+    return [$predictedSickness, $suggestedTreatments];
 }
 
-// Function to predict sickness based on symptoms
-function predictSickness($symptomsData) {
-    // Example logic: if certain symptoms are present, predict a specific sickness
-    if ($symptomsData['dizziness'] && $symptomsData['pale_skin']) {
-        return ["Low Blood Pressure or Anemia"];
-    } elseif ($symptomsData['fever'] && $symptomsData['cough']) {
-        return ["Flu"];
-    } elseif ($symptomsData['headache']) {
-        return ["Migraine"];
-    } elseif ($symptomsData['abdominal_pain']) {
-        return ["Gastroenteritis"];
-    } elseif ($symptomsData['shortness_of_breath']) {
-        return ["Asthma"];
-    } elseif ($symptomsData['nausea'] && $symptomsData['vomiting']) {
-        return ["Gastroenteritis"];
-    } else {
-        return ["Unknown"]; // If sickness cannot be confidently predicted
-    }
-}
+$predictedSickness = "";
+$suggestedTreatments = [];
 
-// Function to recommend treatment based on predicted sickness
-function recommendTreatment($predictedSicknesses) {
-    // Example treatment recommendations based on predicted sickness
-    $treatments = [];
-    foreach ($predictedSicknesses as $sickness) {
-        switch ($sickness) {
-            case "Low Blood Pressure or Anemia":
-                $treatments[] = "Take prescribed medication and visit a doctor. Consider iron supplements and proper sleep.";
-                break;
-            case "Flu":
-                $treatments[] = "Rest, drink plenty of fluids, and take over-the-counter flu medications.";
-                break;
-            case "Migraine":
-                $treatments[] = "Pain-relieving medications, preventive medications, lifestyle changes such as stress management and regular sleep schedule.";
-                break;
-            case "Gastroenteritis":
-                $treatments[] = "Fluid and electrolyte replacement, antiemetic medications, bland diet.";
-                break;
-            case "Asthma":
-                $treatments[] = "Bronchodilator medications like albuterol, corticosteroids, and avoidance of triggers such as allergens and smoke).";
-                break;
-            default:
-                $treatments[] = "No specific treatment recommended.";
-                break;
-        }
-    }
-    return $treatments;
+if(isset($_POST['symptoms'])) {
+    // Get symptoms input
+    $symptoms = explode(",", $_POST['symptoms']); // Assuming symptoms are comma-separated
+    
+    // Perform diagnosis
+    list($predictedSickness, $suggestedTreatments) = performDiagnosis($symptoms);
 }
 ?>
 
@@ -126,26 +91,26 @@ function recommendTreatment($predictedSicknesses) {
         </div>
 
         <!-- Diagnosis Container -->
-        <?php if(isset($predictedSicknesses)): ?>
-            <?php foreach ($predictedSicknesses as $index => $sickness): ?>
-                <div class="diagnosis-container">
-                    <div class="diagnosis-box">
-                        <div class="medical-condition">
-                            <h2 class="medical-condition-header">Medical Condition: <span style="color: #E13F3D;"><?= htmlspecialchars($sickness) ?></span></h2>
-                            <p class="sub-text">Predicted Sickness: <?= htmlspecialchars($sickness) ?></p>
-                        </div>
-                        <div class="treatment-options-container">
-                            <div class="vertical-line"></div>
-                            <div class="treatment-options">
-                                <h2 class="treatment-options-header">Treatment Options</h2>
-                                <ul class="options-list">
-                                    <li><?= htmlspecialchars($suggestedTreatments[$index]) ?></li>
-                                </ul>
-                            </div>
+        <?php if(!empty($predictedSickness)): ?>
+            <div class="diagnosis-container">
+                <div class="diagnosis-box">
+                    <div class="medical-condition">
+                        <h2 class="medical-condition-header">Medical Condition</h2>
+                        <p class="sub-text">Predicted Sickness: <?= htmlspecialchars($predictedSickness) ?></p>
+                    </div>
+                    <div class="treatment-options-container">
+                        <div class="vertical-line"></div>
+                        <div class="treatment-options">
+                            <h2 class="treatment-options-header">Treatment Options</h2>
+                            <ul class="options-list">
+                                <?php foreach ($suggestedTreatments as $treatment): ?>
+                                    <li><?= htmlspecialchars($treatment) ?></li>
+                                <?php endforeach; ?>
+                            </ul>
                         </div>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            </div>
         <?php else: ?>
             <p>No diagnosis found for the given symptoms.</p>
         <?php endif; ?>
@@ -176,7 +141,7 @@ function recommendTreatment($predictedSicknesses) {
             <?php
             // Get the symptoms, diagnosis, and treatments
             $symptoms = isset($_POST['symptoms']) ? $_POST['symptoms'] : '';
-            $diagnosis = isset($predictedSicknesses) ? implode(",", $predictedSicknesses) : '';
+            $diagnosis = isset($predictedSickness) ? $predictedSickness : '';
             $treatments = isset($suggestedTreatments) ? implode(",", $suggestedTreatments) : '';
 
             // Encode the data for passing in the URL
