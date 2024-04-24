@@ -49,9 +49,7 @@ $result = mysqli_query($conn, $sql);
                     <th>Time</th>
                 </tr>
                 <?php
-                // Check if there are any records
                 if (mysqli_num_rows($result) > 0) {
-                    // Output data of each row
                     while ($row = mysqli_fetch_assoc($result)) {
                         echo "<tr>";
                         echo "<td>" . $row["first_name"] . "</td>";
