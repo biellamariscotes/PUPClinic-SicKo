@@ -47,23 +47,26 @@ if (isset($_POST['login_btn'])) {
     <title>SicKo - Sign In</title>
     <link rel="icon" type="image/png" href="src/images/sicko-logo.png"> 
     <link rel="stylesheet" href="src/styles/style.css">
+    <link rel="stylesheet" href="vendors\bootstrap-5.0.2\dist\css\bootstrap.min.css">
+
 </head>
 <body>
-    <div class="container">
+    <div class="container-login-cst">
         <div class="logo-container">
             <img class="logo" src="src/images/sicko-logo.png" alt="Sicko Logo">
             <h2><span style="color: #058789;">Sic</span><span style="color: #E13F3D;">Ko</span> | Sign In</h2>
         </div>
         
-        <div class="form-container">
+        <div class="form-container-cst">
             <form method="post" action="nurse-login.php" class="needs-validation" novalidate>
-                <div class="input-container asterisk">
+                <div class="input-container">
                     <input type="email" name="email" id="emailInput"  maxlength="254" required>
                     <label for="emailInput">Email</label>
                 </div>
-                <div class="input-container asterisk">
+                <div class="input-container">
                     <input type="password" name="password" id="passwordInput"  maxlength="50" required>
                     <label for="passwordInput">Password</label>
+                    <span class="toggle-password" onclick="togglePassword()">Show</span>
                 </div>
                 <div class="button-container">
                     <button type="submit" name="login_btn">Sign In</button>
@@ -72,13 +75,23 @@ if (isset($_POST['login_btn'])) {
         </div>
     </div>
 
-    <!-- Log in Success Modal -->
-    <div class="modal" id="successModal" tabindex="-1" role="dialog">
-    </div>
 
     <img class="vector-red" src="src/images/vector-red.png" alt="Red Vector">
     <img class="vector-green" src="src/images/vector-green.png" alt="Green Vector">
-    <script src="vendors\bootstrap-5.0.2\dist\js\bootstrap.bundle.min.js"></script>
+    <script src="vendors\bootstrap-5.0.2/dist/css/js/bootstrap.bundle.min.js"></script>
     <script src="src/scripts/script.js"></script>
+    <script>
+        function togglePassword() {
+            var passwordInput = document.getElementById("passwordInput");
+            var toggleIcon = document.querySelector(".toggle-password");
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleIcon.textContent = "Hide";
+            } else {
+                passwordInput.type = "password";
+                toggleIcon.textContent = "Show";
+            }
+        }
+    </script>
 </body>
 </html>

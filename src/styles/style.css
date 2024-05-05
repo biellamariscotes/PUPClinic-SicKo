@@ -31,7 +31,7 @@ html, body {
   font-family: 'Poppins', sans-serif; /* Added font-family rule */
 }
 
-.container {
+.container-login-cst {
   position: absolute;
   width: 350px;
   top: 50%;
@@ -55,19 +55,19 @@ html, body {
 }
 
 /* Form Container */
-.form-container {
+.form-container-cst {
   border-radius: 15px;
   padding: 10px 20px; /* Adjusted padding to reduce space in the upper part */
   text-align: center;
 }
 
-.form-container form {
+.form-container-cst form {
   display: flex;
   flex-direction: column;
 }
 
 /* Email and Password Form */
-.form-container input {
+.form-container-cst input {
   background-color: #E9E9E9;
   width: 90%;
   font-size: medium;
@@ -79,7 +79,7 @@ html, body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add drop shadow */
 }
 
-.form-container input:focus {
+.form-container-cst input:focus {
   background-color: #D4D4D4; /* Set background color when input is focused */
   outline: none;
 }
@@ -108,19 +108,19 @@ html, body {
 }
 
 /* Form Container Input */
-.form-container input:focus {
+.form-container-cst input:focus {
   background-color: #D4D4D4; /* Set background color when input is focused */
   outline: none; /* Remove default focus outline */
 }
 
 /* Form Container Input when autofill */
-.form-container input:-webkit-autofill {
+.form-container-cst input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px #D4D4D4 inset !important; /* Reset autofill background color */
   background-color: #D4D4D4; /* Set background color */
 }
 
 /* Sign In Button */
-.form-container button {
+.form-container-cst button {
   width: 50%;
   display: block;
   margin: 0 auto; /* Center the button */
@@ -137,7 +137,7 @@ html, body {
   transition: background-color 0.3s ease; /* Smooth transition for background color */
 }
 
-.form-container button:hover {
+.form-container-cst button:hover {
   background-color: #058789; /* Change background color on hover */
 }
 
@@ -165,3 +165,28 @@ html, body {
   right: 15px; /* Align to the right side */
   transform: translateY(-50%); /* Adjust vertical alignment */
 }
+
+/* EYE TOGGLE BUTTON TO HIDE AND SHOW THE PASSWORD */
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 25px; /* Adjust as needed */
+  cursor: pointer;
+  color: #999; /* Color for the eye icon */
+}
+
+
+/* You can style the eye icon here */
+.toggle-password::after {
+  /*content: "\1F441"; Unicode for eye icon */
+  font-family: "Poppins"; 
+  font-weight: 900; /* Adjust as needed */
+  font-size: 16px; /* Adjust as needed */
+}
+
+/* Style for the eye icon when the password is visible */
+/*#passwordInput[type="text"] + .toggle-password::after {*/
+  /*content: "F070";  Unicode for eye-slash icon */
+/*}*/
