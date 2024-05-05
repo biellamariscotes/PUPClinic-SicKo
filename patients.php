@@ -14,6 +14,7 @@ $result = mysqli_query($conn, $sql);
     <title>SicKo - Patients</title>
     <link rel="icon" type="image/png" href="src/images/sicko-logo.png"> 
     <link rel="stylesheet" href="src/styles/dboardStyle.css">
+    <link rel="stylesheet" href="vendors\bootstrap-5.0.2\dist\css\bootstrap.min.css">
 </head>
 <body>
     <div class="overlay" id="overlay"></div>

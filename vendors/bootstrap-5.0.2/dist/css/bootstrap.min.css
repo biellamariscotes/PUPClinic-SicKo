@@ -38,8 +38,8 @@
   );
 }
 *,
-::after,
-::before {
+::after-bt,
+::before-bt {
   box-sizing: border-box;
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -47,7 +47,7 @@
     scroll-behavior: smooth;
   }
 }
-body {
+body-bt {
   margin: 0;
   font-family: var(--bs-font-sans-serif);
   font-size: 1rem;
@@ -58,7 +58,7 @@ body {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
 }
-hr {
+hr-bt {
   margin: 1rem 0;
   color: inherit;
   background-color: currentColor;
@@ -68,72 +68,72 @@ hr {
 hr:not([size]) {
   height: 1px;
 }
-.h1,
-.h2,
-.h3,
-.h4,
-.h5,
-.h6,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+.h1-bt,
+.h2-bt,
+.h3-bt,
+.h4-bt,
+.h5-bt,
+.h6-bt,
+h1-bt,
+h2-bt,
+h3-bt,
+h4-bt,
+h5-bt,
+h6-bt {
   margin-top: 0;
   margin-bottom: 0.5rem;
   font-weight: 500;
   line-height: 1.2;
 }
-.h1,
-h1 {
+.h1-bt,
+h1-bt {
   font-size: calc(1.375rem + 1.5vw);
 }
 @media (min-width: 1200px) {
-  .h1,
-  h1 {
+  .h1-bt,
+  h1-bt {
     font-size: 2.5rem;
   }
 }
-.h2,
-h2 {
+.h2-bt,
+h2-bt {
   font-size: calc(1.325rem + 0.9vw);
 }
 @media (min-width: 1200px) {
-  .h2,
-  h2 {
+  .h2-bt,
+  h2-bt {
     font-size: 2rem;
   }
 }
-.h3,
-h3 {
+.h3-bt,
+h3-bt {
   font-size: calc(1.3rem + 0.6vw);
 }
 @media (min-width: 1200px) {
-  .h3,
-  h3 {
+  .h3-bt,
+  h3-bt {
     font-size: 1.75rem;
   }
 }
-.h4,
-h4 {
+.h4-bt,
+h4-bt {
   font-size: calc(1.275rem + 0.3vw);
 }
 @media (min-width: 1200px) {
-  .h4,
-  h4 {
+  .h4-bt,
+  h4-bt {
     font-size: 1.5rem;
   }
 }
-.h5,
-h5 {
+.h5-bt,
+h5-bt {
   font-size: 1.25rem;
 }
-.h6,
-h6 {
+.h6-bt,
+h6-bt {
   font-size: 1rem;
 }
-p {
+p-bt {
   margin-top: 0;
   margin-bottom: 1rem;
 }
@@ -207,7 +207,7 @@ a {
   text-decoration: underline;
 }
 a:hover {
-  color: #0a58ca;
+  color: #058789;
 }
 a:not([href]):not([class]),
 a:not([href]):not([class]):hover {
@@ -258,8 +258,8 @@ kbd kbd {
 figure {
   margin: 0 0 1rem;
 }
-img,
-svg {
+img-bt,
+svg-bt {
   vertical-align: middle;
 }
 table {
@@ -296,7 +296,7 @@ button:focus:not(:focus-visible) {
   outline: 0;
 }
 button,
-input,
+input-bt,
 optgroup,
 select,
 textarea {
