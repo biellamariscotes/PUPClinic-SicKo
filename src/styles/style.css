@@ -157,7 +157,7 @@ html, body {
 }
 
 /* Required input indicator */
-.input-container.required::after {
+.input-container.asterisk::after {
   content: "*"; /* Insert asterisk */
   color: #E13F3D; /* Set color to red */
   position: absolute; /* Position relative to the input container */

@@ -30,7 +30,7 @@
             <!-- Ai-based SDT -->
             <div class="menu-item">
                 <img src="src/images/pill.svg" alt="ai Icon" class="ai-icon">
-                <span class="menu-text" onclick="window.location.href='ai-basedSDT.php'">AI-based SDT</span>
+                <span class="menu-text" onclick="window.location.href='ai-basedSDT.php'" style="color: #058789;">AI-based SDT</span>
             </div>
 
             <!-- Patients -->

@@ -25,7 +25,7 @@ $result = mysqli_query($conn, $sql);
     <div class="overlay" id="overlay"></div>
 
     <?php
-    include ('src/includes/sidebar.php');
+    include ('src/includes/sidebar/dashboard.php');
     ?>
 
     <div class="content" id="content">

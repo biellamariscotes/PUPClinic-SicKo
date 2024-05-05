@@ -57,12 +57,12 @@ if (isset($_POST['login_btn'])) {
         
         <div class="form-container">
             <form method="post" action="nurse-login.php" class="needs-validation" novalidate>
-                <div class="input-container required">
-                    <input type="email" name="email" id="emailInput" required maxlength="254">
+                <div class="input-container asterisk">
+                    <input type="email" name="email" id="emailInput"  maxlength="254" required>
                     <label for="emailInput">Email</label>
                 </div>
-                <div class="input-container required">
-                    <input type="password" name="password" id="passwordInput" required maxlength="50">
+                <div class="input-container asterisk">
+                    <input type="password" name="password" id="passwordInput"  maxlength="50" required>
                     <label for="passwordInput">Password</label>
                 </div>
                 <div class="button-container">
@@ -71,8 +71,14 @@ if (isset($_POST['login_btn'])) {
             </form>
         </div>
     </div>
+
+    <!-- Log in Success Modal -->
+    <div class="modal" id="successModal" tabindex="-1" role="dialog">
+    </div>
+
     <img class="vector-red" src="src/images/vector-red.png" alt="Red Vector">
     <img class="vector-green" src="src/images/vector-green.png" alt="Green Vector">
+    <script src="vendors\bootstrap-5.0.2\dist\js\bootstrap.bundle.min.js"></script>
     <script src="src/scripts/script.js"></script>
 </body>
 </html>
