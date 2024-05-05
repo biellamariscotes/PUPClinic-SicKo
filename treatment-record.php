@@ -84,7 +84,7 @@ mysqli_close($conn);
     <div class="overlay" id="overlay"></div>
 
     <?php
-    include ('src/includes/sidebar.php');
+    include ('src/includes/sidebar/patients-treatment-record.php');
     ?>
 
     <div class="content" id="content">
@@ -103,12 +103,11 @@ mysqli_close($conn);
                 <input type="text" id="full-name" name="full_name" placeholder="Full Name" autocomplete="off" required onkeyup="searchPatients(this.value)">
                 <div id="search-results"></div>
                     <select id="gender" name="gender" required>
-                        <option value="" disabled selected hidden>Gender</option>
+                        <option value="" disabled selected hidden>Birth Sex</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
-                        <option value="other">Other</option>
                     </select>
-                    <input type="number" name="age" id="age" placeholder="Age" required>
+                    <input type="number" name="age" id="age" placeholder="Age" maxlength="2" required>
                 </div>
                 <div class="input-row">
                     <input type="text" id="course" name="course" placeholder="Course/Organization" autocomplete="off" required>
@@ -173,6 +172,34 @@ function selectPatient(patient_id, fullName, gender, age, course, section) {
     document.getElementById("patient_id").value = patient_id;
 }
 </script>
+
+<script>
+    function validateForm() {
+        // Validate Full Name
+        var fullName = document.getElementById("full-name").value.trim();
+        if (fullName.length === 0 || fullName.length > 30 || /^\s+$/.test(fullName)) {
+            alert("Please enter a valid full name (up to 30 characters without leading or trailing spaces).");
+            return false;
+        }
+
+        // Validate Age
+        var age = document.getElementById("age").value.trim();
+        if (!/^\d{2}$/.test(age) || parseInt(age) < 17 || parseInt(age) > 65) {
+            alert("Please enter a valid age (between 17 and 65 years old).");
+            return false;
+        }
+
+        return true; // Form is valid
+    }
+
+    // Add event listener to form submission
+    document.getElementById("treatment-form").addEventListener("submit", function(event) {
+        if (!validateForm()) {
+            event.preventDefault(); // Prevent form submission if validation fails
+        }
+    });
+</script>
+
 </body>
 
 </html>

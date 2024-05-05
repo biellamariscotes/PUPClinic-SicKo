@@ -236,9 +236,7 @@ function toggleQuarter(quarterId) {
   }
 }
 
-
-
-
+//FORM VALIDATION
 
 
 

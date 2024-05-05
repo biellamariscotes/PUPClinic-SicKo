@@ -16,7 +16,7 @@ require_once('src/includes/connect.php');
     <div class="overlay" id="overlay"></div>
 
 <?php
-    include ('src/includes/sidebar.php');
+    include ('src/includes/sidebar/med-reports.php');
     ?>
 
     <div class="content" id="content" style="margin-bottom: 100px;">
