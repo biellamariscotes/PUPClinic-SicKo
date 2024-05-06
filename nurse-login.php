@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once('src/includes/connect.php');
+require_once ('src/includes/connect.php');
 
 if (!$conn) {
     die("Database connection failed");
@@ -28,7 +28,7 @@ if (isset($_POST['login_btn'])) {
             exit();
         } else {
             $_SESSION['message'] = "Email and password combination incorrect";
-            header("Location: nurse-login.php"); 
+            header("Location: nurse-login.php");
             exit();
         }
     } else {
@@ -41,30 +41,33 @@ if (isset($_POST['login_btn'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SicKo - Sign In</title>
-    <link rel="icon" type="image/png" href="src/images/sicko-logo.png"> 
+    <link rel="icon" type="image/png" href="src/images/sicko-logo.png">
     <link rel="stylesheet" href="src/styles/style.css">
-    <link rel="stylesheet" href="vendors\bootstrap-5.0.2\dist\css\bootstrap.min.css">
+    <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
+
 <body>
     <div class="container-login-cst">
         <div class="logo-container">
             <img class="logo" src="src/images/sicko-logo.png" alt="Sicko Logo">
             <h2><span style="color: #058789;">Sic</span><span style="color: #E13F3D;">Ko</span> | Sign In</h2>
         </div>
-        
+
         <div class="form-container-cst">
             <form method="post" action="nurse-login.php" class="needs-validation" novalidate>
                 <div class="input-container">
-                    <input type="email" name="email" id="emailInput"  maxlength="254" required>
+                    <input type="email" name="email" id="emailInput" maxlength="254" required>
                     <label for="emailInput">Email</label>
                 </div>
                 <div class="input-container">
-                    <input type="password" name="password" id="passwordInput"  maxlength="50" required>
+                    <input type="password" name="password" id="passwordInput" maxlength="50" required>
                     <label for="passwordInput">Password</label>
                     <span class="toggle-password" onclick="togglePassword()">Show</span>
                 </div>
@@ -75,10 +78,35 @@ if (isset($_POST['login_btn'])) {
         </div>
     </div>
 
+    <button type="button" class="btn btn-primary" id="login-failed" data-toggle="modal" data-target="#loginFailed">
+        Launch demo modal
+    </button>
+
+
+    <!-- Log In Failed Modal -->
+    <div class="modal" id="loginFailed" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" id="close-modal" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <img class="vector-red" src="src/images/vector-red.png" alt="Red Vector">
     <img class="vector-green" src="src/images/vector-green.png" alt="Green Vector">
-    <script src="vendors\bootstrap-5.0.2/dist/css/js/bootstrap.bundle.min.js"></script>
+    <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/scripts/script.js"></script>
     <script>
         function togglePassword() {
@@ -93,5 +121,21 @@ if (isset($_POST['login_btn'])) {
             }
         }
     </script>
+
+    <script>
+        $(document).ready(function () {
+
+            // Show Modal
+            $("#login-failed").click(function (event) {
+                $("#loginFailed").modal("show");
+            });
+
+            // Close the Modal with the close button
+            $("#close-modal").click(function (event) {
+                $("#loginFailed").modal("hide");
+            });
+        });
+    </script>
 </body>
+
 </html>
