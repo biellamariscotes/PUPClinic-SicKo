@@ -57,7 +57,7 @@ if(isset($_POST['symptoms'])) {
 <body>
     <div class="overlay" id="overlay"></div>
 
-    <?php include ('src/includes/sidebar.php'); ?>
+    <?php include ('src/includes/sidebar/ai-basedSDT.php'); ?>
 
     <div class="content" id="content">
         <div class="ai-header-content">

@@ -2,6 +2,7 @@
 require_once('src/includes/session-nurse.php');
 require_once('src/includes/connect.php');
 
+$patient_id = isset($_GET['patient_id']) ? $_GET['patient_id'] : '';
 $full_name = isset($_GET['full_name']) ? $_GET['full_name'] : '';
 $sex = isset($_GET['sex']) ? $_GET['sex'] : '';
 $age = isset($_GET['age']) ? $_GET['age'] : '';
@@ -10,12 +11,6 @@ $section = isset($_GET['section']) ? $_GET['section'] : '';
 $symptoms = isset($_GET['symptoms']) ? $_GET['symptoms'] : '';
 $diagnosis = isset($_GET['diagnosis']) ? $_GET['diagnosis'] : '';
 $treatments = isset($_GET['treatments']) ? $_GET['treatments'] : '';
-
-echo "<pre>";
-print_r($_POST);
-echo "</pre>";
-echo "Full Name: $full_name<br>";
-echo "Sex: $sex<br>";
 
 ?>
 
@@ -62,6 +57,7 @@ echo "Sex: $sex<br>";
         <form id="treatment-form" action="treatment-record.php" method="post">
             <div class="input-row">
             <input type="text" id="full-name" name="full_name" placeholder="Full Name" autocomplete="off" required value="<?php echo $full_name; ?>">
+            <input type="hidden" name="patient_id" value="<?php echo $patient_id; ?>">
                 <select id="sex" name="sex" required value="<?php echo $sex; ?>">
                     <option value="" disabled selected hidden>Gender</option>
                     <option value="male" <?php if($sex == 'male') echo 'selected'; ?>>Male</option>

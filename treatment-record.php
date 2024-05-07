@@ -3,13 +3,23 @@ require_once ('src/includes/session-nurse.php');
 require_once ('src/includes/connect.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $patient_id = mysqli_real_escape_string($conn, $_POST['patient_id']);
-    $check_patient_query = "SELECT * FROM patient WHERE patient_id = '$patient_id'";
-    $result = mysqli_query($conn, $check_patient_query);
-    if (mysqli_num_rows($result) == 0) {
-        // Patient does not exist
-        echo "Error: Patient does not exist!";
-        echo "Patient ID: " . $patient_id;
+    // Check if patient_id is set in the POST data
+    if(isset($_POST['patient_id'])) {
+        $patient_id = mysqli_real_escape_string($conn, $_POST['patient_id']);
+        
+        // Query to check if the patient exists
+        $check_patient_query = "SELECT * FROM patient WHERE patient_id = '$patient_id'";
+        $result = mysqli_query($conn, $check_patient_query);
+        
+        // If no rows are returned, patient does not exist
+        if (mysqli_num_rows($result) == 0) {
+            echo "Error: Patient does not exist!";
+            echo "Patient ID: " . $patient_id;
+            exit();
+        }
+    } else {
+        // If patient_id is not set in the POST data, exit with an error
+        echo "Error: Patient ID is missing!";
         exit();
     }
     
@@ -28,6 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 if (mysqli_query($conn, $sql)) {
     // Redirect to confirmation page with form data
     $url = "treatment-record-confirmation.php?";
+    $url .= "patient_id=" . urlencode($patient_id) . "&";
     $url .= "full_name=" . urlencode($full_name) . "&";
     $url .= "sex=" . urlencode($sex) . "&";
     $url .= "age=" . urlencode($age) . "&";

@@ -16,7 +16,7 @@ require_once('src/includes/connect.php');
     <div class="overlay" id="overlay"></div>
 
 <?php
-    include ('src/includes/sidebar.php');
+    include ('src/includes/sidebar/med-reports.php');
     ?>
 
     <div class="content" id="content" style="margin-bottom: 100px;">
@@ -44,36 +44,30 @@ require_once('src/includes/connect.php');
                     <th>Section</th>
                     <th>Gender</th>
                 </tr>
+                <?php
+        // Assuming $conn is your mysqli connection object
+        $query = "SELECT * FROM patient";
+        $result = mysqli_query($conn, $query);
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                ?>
                 <tr>
-                    <td class="nameColumn" onclick="window.location.href='patients-treatment-record.php'">Apolo L. Trasmonte</td>
-                    <td>Information Technology</td>
-                    <td>BSIT 3-1</td>
-                    <td>Male</td>
+                    <td><?php echo "<a href='patients-treatment-record.php?patient_id=" . $row["patient_id"] . "'>" . $row["first_name"] . " " . $row["last_name"] ?> </a></td>
+                    
+                    <td><?php echo $row['course']; ?></td>
+                    <td><?php echo $row['section']; ?></td>
+                    <td><?php echo $row['sex']; ?></td>
                 </tr>
-                <tr>
-                    <td class="nameColumn" onclick="redirectToInfoPage()">Mikaela Tahum</td>
-                    <td>Information Technology</td>
-                    <td>BSIT 3-1</td>
-                    <td>Female</td>
-                </tr>
-                <tr>
-                    <td class="nameColumn" onclick="redirectToInfoPage()">Biella Requina</td>
-                    <td>Information Technology</td>
-                    <td>BSIT 3-1</td>
-                    <td>Female</td>
-                </tr>
-                <tr>
-                    <td class="nameColumn" onclick="redirectToInfoPage()">Andrei Matibag</td>
-                    <td>Information Technology</td>
-                    <td>BSIT 3-1</td>
-                    <td>Male</td>
-                </tr>
-                <tr>
-                    <td class="nameColumn" onclick="redirectToInfoPage()">Bobby Morante</td>
-                    <td>Information Technology</td>
-                    <td>BSIT 3-1</td>
-                    <td>Male</td>
-                </tr>
+                <?php
+            }
+        } else {
+            ?>
+            <tr>
+                <td colspan="4">No records found</td>
+            </tr>
+            <?php
+        }
+        ?>
                 <tr>
                     <td colspan="4"> <!-- Use colspan to span across all columns -->
 
@@ -118,6 +112,23 @@ require_once('src/includes/connect.php');
             <div class="quarterly-report-row" id="firstQuarter">
                 <div class="quarterly-report-content">
                 <div class="quarterly-report-row-box">
+                        <?php
+                        // Fetch and display data for Second Quarter
+                        $query = "SELECT diagnosis, COUNT(*) AS diagnosis_count 
+                                FROM treatment_record 
+                                WHERE MONTH(date) IN (1, 2, 3) 
+                                GROUP BY diagnosis 
+                                ORDER BY diagnosis_count DESC 
+                                LIMIT 1";
+                        $result = mysqli_query($conn, $query);
+                        if ($row = mysqli_fetch_assoc($result)) {
+                            $leading_diagnosis = $row['diagnosis'];
+                            $diagnosis_count = $row['diagnosis_count'];
+                        } else {
+                            $leading_diagnosis = "No data";
+                            $diagnosis_count = 0;
+                        }
+                        ?>
                         <div class="row-first-content">
                             <div class="extend-down-icon" onclick="toggleQuarter('firstQuarter')">
                                 <img src="src/images/extend-down.svg" alt="Extend Down Icon" class="extend-down-icon">
@@ -129,8 +140,8 @@ require_once('src/includes/connect.php');
                         </div>
                         <div class="total-diagnosis-box">
                             <div class="total-diagnosis-box-text">
-                                <div class="total-number" style="font-size: 35px;">35</div>
-                                <div class="total-sub-text" style="font-size: 10px;">DIAGNOSIS</div>
+                                <div class="total-number" style="font-size: 35px;"><?php echo $diagnosis_count; ?></div>
+                                <div class="total-sub-text" style="font-size: 10px;"><?php echo $leading_diagnosis; ?></div>
                             </div>
                         </div>
                 </div>
@@ -160,8 +171,8 @@ require_once('src/includes/connect.php');
 
                             <div class="total-diagnosis-box" style="background-color: #E13F3D;">
                                 <div class="total-diagnosis-box-text" style="color: white;">
-                                    <div class="total-number" style="font-size: 35px;">35</div>
-                                    <div class="total-sub-text" style="font-size: 10px;">DIAGNOSIS</div>
+                                    <div class="total-number" style="font-size: 35px;"><?php echo $diagnosis_count; ?></div>
+                                    <div class="total-sub-text" style="font-size: 10px;"><?php echo $leading_diagnosis; ?></div>
                                 </div>
                             </div>
                     </div>
@@ -174,19 +185,43 @@ require_once('src/includes/connect.php');
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">January</div>
-                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">18</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">
+                                        <?php
+                                        // Fetch and display the count of unique patient IDs for April
+                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 1";
+                                        $result = mysqli_query($conn, $query);
+                                        $row = mysqli_fetch_assoc($result);
+                                        echo $row['count'];
+                                        ?>
+                                    </div>
                                     <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 1</div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">February</div>
-                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">7</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">
+                                        <?php
+                                        // Fetch and display the count of unique patient IDs for April
+                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 2";
+                                        $result = mysqli_query($conn, $query);
+                                        $row = mysqli_fetch_assoc($result);
+                                        echo $row['count'];
+                                        ?>
+                                    </div>
                                     <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 2</div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">March</div>
-                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">10</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">
+                                        <?php
+                                        // Fetch and display the count of unique patient IDs for April
+                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 3";
+                                        $result = mysqli_query($conn, $query);
+                                        $row = mysqli_fetch_assoc($result);
+                                        echo $row['count'];
+                                        ?>
+                                    </div>
                                     <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 3</div>
                                 </div>
                         </div>
@@ -201,6 +236,23 @@ require_once('src/includes/connect.php');
                 <div class="quarterly-report-row" id="secondQuarter">
                 <div class="quarterly-report-content">
                 <div class="quarterly-report-row-box">
+                    <?php
+                    // Fetch and display data for Second Quarter
+                    $query = "SELECT diagnosis, COUNT(*) AS diagnosis_count 
+                            FROM treatment_record 
+                            WHERE MONTH(date) IN (4, 5, 6) 
+                            GROUP BY diagnosis 
+                            ORDER BY diagnosis_count DESC 
+                            LIMIT 1";
+                    $result = mysqli_query($conn, $query);
+                    if ($row = mysqli_fetch_assoc($result)) {
+                        $leading_diagnosis = $row['diagnosis'];
+                        $diagnosis_count = $row['diagnosis_count'];
+                    } else {
+                        $leading_diagnosis = "No data";
+                        $diagnosis_count = 0;
+                    }
+                    ?>
                         <div class="row-first-content">
                             <div class="extend-down-icon" onclick="toggleQuarter('secondQuarter')">
                                 <img src="src/images/extend-down.svg" alt="Extend Down Icon" class="extend-down-icon">
@@ -212,8 +264,8 @@ require_once('src/includes/connect.php');
                         </div>
                         <div class="total-diagnosis-box">
                             <div class="total-diagnosis-box-text">
-                                <div class="total-number" style="font-size: 35px;">35</div>
-                                <div class="total-sub-text" style="font-size: 10px;">DIAGNOSIS</div>
+                                <div class="total-number" style="font-size: 35px;"><?php echo $diagnosis_count; ?></div>
+                                <div class="total-sub-text" style="font-size: 10px;"><?php echo $leading_diagnosis; ?></div>
                             </div>
                         </div>
                 </div>
@@ -243,8 +295,8 @@ require_once('src/includes/connect.php');
 
                             <div class="total-diagnosis-box" style="background-color: #E13F3D;">
                                 <div class="total-diagnosis-box-text" style="color: white;">
-                                    <div class="total-number" style="font-size: 35px;">35</div>
-                                    <div class="total-sub-text" style="font-size: 10px;">DIAGNOSIS</div>
+                                    <div class="total-number" style="font-size: 35px;"><?php echo $diagnosis_count; ?></div>
+                                    <div class="total-sub-text" style="font-size: 10px;"><?php echo $leading_diagnosis; ?></div>
                                 </div>
                             </div>
                     </div>
@@ -257,19 +309,43 @@ require_once('src/includes/connect.php');
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">April</div>
-                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">18</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">
+                                        <?php
+                                        // Fetch and display the count of unique patient IDs for April
+                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 4";
+                                        $result = mysqli_query($conn, $query);
+                                        $row = mysqli_fetch_assoc($result);
+                                        echo $row['count'];
+                                        ?>
+                                    </div>
                                     <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 1</div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">May</div>
-                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">7</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">
+                                        <?php
+                                        // Fetch and display the count of unique patient IDs for April
+                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 5";
+                                        $result = mysqli_query($conn, $query);
+                                        $row = mysqli_fetch_assoc($result);
+                                        echo $row['count'];
+                                        ?>
+                                    </div>
                                     <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 2</div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">June</div>
-                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">10</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">
+                                        <?php
+                                        // Fetch and display the count of unique patient IDs for April
+                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 6";
+                                        $result = mysqli_query($conn, $query);
+                                        $row = mysqli_fetch_assoc($result);
+                                        echo $row['count'];
+                                        ?>
+                                    </div>
                                     <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 3</div>
                                 </div>
                         </div>
@@ -285,6 +361,23 @@ require_once('src/includes/connect.php');
             <div class="quarterly-report-row" id="thirdQuarter">
                 <div class="quarterly-report-content">
                 <div class="quarterly-report-row-box">
+                    <?php
+                    // Fetch and display data for Second Quarter
+                    $query = "SELECT diagnosis, COUNT(*) AS diagnosis_count 
+                            FROM treatment_record 
+                            WHERE MONTH(date) IN (7, 8, 9) 
+                            GROUP BY diagnosis 
+                            ORDER BY diagnosis_count DESC 
+                            LIMIT 1";
+                    $result = mysqli_query($conn, $query);
+                    if ($row = mysqli_fetch_assoc($result)) {
+                        $leading_diagnosis = $row['diagnosis'];
+                        $diagnosis_count = $row['diagnosis_count'];
+                    } else {
+                        $leading_diagnosis = "No data";
+                        $diagnosis_count = 0;
+                    }
+                    ?>
                         <div class="row-first-content">
                             <div class="extend-down-icon" onclick="toggleQuarter('thirdQuarter')">
                                 <img src="src/images/extend-down.svg" alt="Extend Down Icon" class="extend-down-icon">
@@ -296,8 +389,8 @@ require_once('src/includes/connect.php');
                         </div>
                         <div class="total-diagnosis-box">
                             <div class="total-diagnosis-box-text">
-                                <div class="total-number" style="font-size: 35px;">35</div>
-                                <div class="total-sub-text" style="font-size: 10px;">DIAGNOSIS</div>
+                                <div class="total-number" style="font-size: 35px;"><?php echo $diagnosis_count; ?></div>
+                                <div class="total-sub-text" style="font-size: 10px;"><?php echo $leading_diagnosis; ?></div>
                             </div>
                         </div>
                 </div>
@@ -327,8 +420,8 @@ require_once('src/includes/connect.php');
 
                             <div class="total-diagnosis-box" style="background-color: #E13F3D;">
                                 <div class="total-diagnosis-box-text" style="color: white;">
-                                    <div class="total-number" style="font-size: 35px;">35</div>
-                                    <div class="total-sub-text" style="font-size: 10px;">DIAGNOSIS</div>
+                                    <div class="total-number" style="font-size: 35px;"><?php echo $diagnosis_count; ?></div>
+                                    <div class="total-sub-text" style="font-size: 10px;"><?php echo $leading_diagnosis; ?></div>
                                 </div>
                             </div>
                     </div>
@@ -341,19 +434,43 @@ require_once('src/includes/connect.php');
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">July</div>
-                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">18</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">
+                                        <?php
+                                        // Fetch and display the count of unique patient IDs for April
+                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 7";
+                                        $result = mysqli_query($conn, $query);
+                                        $row = mysqli_fetch_assoc($result);
+                                        echo $row['count'];
+                                        ?>
+                                    </div>
                                     <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 1</div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">August</div>
-                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">7</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">
+                                        <?php
+                                        // Fetch and display the count of unique patient IDs for April
+                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 8";
+                                        $result = mysqli_query($conn, $query);
+                                        $row = mysqli_fetch_assoc($result);
+                                        echo $row['count'];
+                                        ?>
+                                    </div>
                                     <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 2</div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">September</div>
-                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">10</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">
+                                        <?php
+                                        // Fetch and display the count of unique patient IDs for April
+                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 9";
+                                        $result = mysqli_query($conn, $query);
+                                        $row = mysqli_fetch_assoc($result);
+                                        echo $row['count'];
+                                        ?>
+                                    </div>
                                     <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 3</div>
                                 </div>
                         </div>
@@ -369,6 +486,23 @@ require_once('src/includes/connect.php');
             <div class="quarterly-report-row" id="fourthQuarter">
                 <div class="quarterly-report-content">
                 <div class="quarterly-report-row-box">
+                    <?php
+                    // Fetch and display data for Second Quarter
+                    $query = "SELECT diagnosis, COUNT(*) AS diagnosis_count 
+                            FROM treatment_record 
+                            WHERE MONTH(date) IN (10, 11, 12) 
+                            GROUP BY diagnosis 
+                            ORDER BY diagnosis_count DESC 
+                            LIMIT 1";
+                    $result = mysqli_query($conn, $query);
+                    if ($row = mysqli_fetch_assoc($result)) {
+                        $leading_diagnosis = $row['diagnosis'];
+                        $diagnosis_count = $row['diagnosis_count'];
+                    } else {
+                        $leading_diagnosis = "No data";
+                        $diagnosis_count = 0;
+                    }
+                    ?>
                         <div class="row-first-content">
                             <div class="extend-down-icon" onclick="toggleQuarter('fourthQuarter')">
                                 <img src="src/images/extend-down.svg" alt="Extend Down Icon" class="extend-down-icon">
@@ -380,8 +514,8 @@ require_once('src/includes/connect.php');
                         </div>
                         <div class="total-diagnosis-box">
                             <div class="total-diagnosis-box-text">
-                                <div class="total-number" style="font-size: 35px;">35</div>
-                                <div class="total-sub-text" style="font-size: 10px;">DIAGNOSIS</div>
+                                <div class="total-number" style="font-size: 35px;"><?php echo $diagnosis_count; ?></div>
+                                <div class="total-sub-text" style="font-size: 10px;"><?php echo $leading_diagnosis; ?></div>
                             </div>
                         </div>
                 </div>
@@ -411,8 +545,8 @@ require_once('src/includes/connect.php');
 
                             <div class="total-diagnosis-box" style="background-color: #E13F3D;">
                                 <div class="total-diagnosis-box-text" style="color: white;">
-                                    <div class="total-number" style="font-size: 35px;">35</div>
-                                    <div class="total-sub-text" style="font-size: 10px;">DIAGNOSIS</div>
+                                    <div class="total-number" style="font-size: 35px;"><?php echo $diagnosis_count; ?></div>
+                                    <div class="total-sub-text" style="font-size: 10px;"><?php echo $leading_diagnosis; ?></div>
                                 </div>
                             </div>
                     </div>
@@ -425,19 +559,43 @@ require_once('src/includes/connect.php');
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">October</div>
-                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">18</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">
+                                        <?php
+                                        // Fetch and display the count of unique patient IDs for April
+                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 10";
+                                        $result = mysqli_query($conn, $query);
+                                        $row = mysqli_fetch_assoc($result);
+                                        echo $row['count'];
+                                        ?>
+                                    </div>
                                     <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 1</div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">November</div>
-                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">7</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">
+                                        <?php
+                                        // Fetch and display the count of unique patient IDs for April
+                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 11";
+                                        $result = mysqli_query($conn, $query);
+                                        $row = mysqli_fetch_assoc($result);
+                                        echo $row['count'];
+                                        ?>
+                                    </div>
                                     <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 2</div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">December</div>
-                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">10</div>
+                                    <div class="alter-count" style="font-size: 15px; font-weight: 500;">
+                                        <?php
+                                        // Fetch and display the count of unique patient IDs for April
+                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 12";
+                                        $result = mysqli_query($conn, $query);
+                                        $row = mysqli_fetch_assoc($result);
+                                        echo $row['count'];
+                                        ?>
+                                    </div>
                                     <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 3</div>
                                 </div>
                         </div>

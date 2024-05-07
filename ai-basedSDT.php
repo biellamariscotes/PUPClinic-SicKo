@@ -16,7 +16,7 @@ require_once('src/includes/connect.php');
     <div class="overlay" id="overlay"></div>
 
 <?php
-    include ('src/includes/sidebar.php');
+     include ('src/includes/sidebar/ai-basedSDT.php');
     ?>
 
     <div class="content" id="content">

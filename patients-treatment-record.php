@@ -51,8 +51,8 @@ if(isset($_GET['patient_id'])) {
 <body>
     <div class="overlay" id="overlay"></div>
 
-    <?php include ('src/includes/sidebar.php'); ?>
-
+    <?php include ('src/includes/sidebar/patients-treatment-record.php'); ?>
+    
     <div class="content" id="content">
         <div class="two-container">
             <div class="box-container left-box">
