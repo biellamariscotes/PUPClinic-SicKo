@@ -66,10 +66,12 @@
                 <span class="menu-text" onclick="window.location.href='edit-profile.php'">Settings</span>
             </div>
 
-            <div class="menu-item">
+            <!-- Log Out menu item -->
+            <div class="menu-item" id="logout-menu-item">
                 <img src="src/images/log-out.svg" alt="log-out Icon" class="log-out-icon">
-                <span class="menu-text" onclick="window.location.href='logout.php'">Log Out</span>
+                <span class="menu-text">Log Out</span>
             </div>
+
         </div>
     </div>
     <div class="topnav" id="topnav">

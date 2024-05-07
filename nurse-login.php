@@ -7,6 +7,8 @@ if (!$conn) {
     die("Database connection failed");
 }
 
+$login_failed = false; // Initialize the variable
+
 if (isset($_POST['login_btn'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -27,16 +29,13 @@ if (isset($_POST['login_btn'])) {
             header("Location: dashboard.php");
             exit();
         } else {
-            $_SESSION['message'] = "Email and password combination incorrect";
-            header("Location: nurse-login.php");
-            exit();
+            $login_failed = true; // Set the flag to true
         }
     } else {
-        $_SESSION['message'] = "Email not found";
-        header("Location: nurse-login.php");
-        exit();
+        $login_failed = true; // Set the flag to true
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -48,9 +47,10 @@ if (isset($_POST['login_btn'])) {
     <title>SicKo - Sign In</title>
     <link rel="icon" type="image/png" href="src/images/sicko-logo.png">
     <link rel="stylesheet" href="src/styles/style.css">
+    <link rel="stylesheet" href="src/styles/modals.css">
     <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 </head>
 
 <body>
@@ -78,27 +78,20 @@ if (isset($_POST['login_btn'])) {
         </div>
     </div>
 
-    <button type="button" class="btn btn-primary" id="login-failed" data-toggle="modal" data-target="#loginFailed">
-        Launch demo modal
-    </button>
-
-
     <!-- Log In Failed Modal -->
-    <div class="modal" id="loginFailed" tabindex="-1" role="dialog">
+    <div class="modal" id="loginFailed" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" >
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
                 <div class="modal-body">
-                    <p>Modal body text goes here.</p>
+                    <div class="modal-middle-icon">
+                        <i class="bi bi-x-circle-fill" style="color:#E13F3D; font-size:5rem"></i>
+                    </div>
+                    <div class="modal-title">Login Failed</div>
+                    <div class="modal-subtitle" style="text-wrap: pretty;">Authentication failed. Please check your credentials and try again.</div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                    <button type="button" class="btn btn-secondary" id="close-modal" data-dismiss="modal">Close</button>
+                <div class="modal-buttons">
+                    <button type="button" class="btn btn-secondary" id="login-close-modal" data-dismiss="modal" style="background-color: #E13F3D; 
+                    font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Close</button>
                 </div>
             </div>
         </div>
@@ -109,6 +102,17 @@ if (isset($_POST['login_btn'])) {
     <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/scripts/script.js"></script>
     <script>
+        $(document).ready(function () {
+            <?php if ($login_failed): ?> // Check if login failed
+                $("#loginFailed").modal("show"); // Show modal if login failed
+            <?php endif; ?>
+
+            // Close the Modal with the close button
+            $("#login-close-modal").click(function (event) {
+                $("#loginFailed").modal("hide");
+            });
+        });
+
         function togglePassword() {
             var passwordInput = document.getElementById("passwordInput");
             var toggleIcon = document.querySelector(".toggle-password");
@@ -122,20 +126,6 @@ if (isset($_POST['login_btn'])) {
         }
     </script>
 
-    <script>
-        $(document).ready(function () {
-
-            // Show Modal
-            $("#login-failed").click(function (event) {
-                $("#loginFailed").modal("show");
-            });
-
-            // Close the Modal with the close button
-            $("#close-modal").click(function (event) {
-                $("#loginFailed").modal("hide");
-            });
-        });
-    </script>
 </body>
 
 </html>
