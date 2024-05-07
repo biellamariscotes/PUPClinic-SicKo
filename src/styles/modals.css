@@ -1,0 +1,29 @@
+.modal-middle-icon {
+    justify-content: center;
+    display: flex;
+}
+
+.modal-title {
+    color: #E13F3D;
+    letter-spacing: normal;
+    font-weight: bold;
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+.modal-subtitle {
+    color: #000000;
+    letter-spacing: normal;
+    text-align: center;
+    font-size: 0.875rem;
+    text-wrap: balance;
+    display: flex;
+    width: 98%;
+}
+
+.modal-buttons {
+    justify-content: center;
+    display: flex;
+    margin-bottom: 3.125rem;
+    margin-top: 0.625rem;
+}
