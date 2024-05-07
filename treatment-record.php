@@ -2,12 +2,29 @@
 require_once ('src/includes/session-nurse.php');
 require_once ('src/includes/connect.php');
 
-// NOT YET WORKING.
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $patient_id = mysqli_real_escape_string($conn, $_POST['patient_id']);
-    $full_name = mysqli_real_escape_string($conn, $_POST['full_name']);
-    $gender = mysqli_real_escape_string($conn, $_POST['gender']);
+    // Check if patient_id is set in the POST data
+    if(isset($_POST['patient_id'])) {
+        $patient_id = mysqli_real_escape_string($conn, $_POST['patient_id']);
+        
+        // Query to check if the patient exists
+        $check_patient_query = "SELECT * FROM patient WHERE patient_id = '$patient_id'";
+        $result = mysqli_query($conn, $check_patient_query);
+        
+        // If no rows are returned, patient does not exist
+        if (mysqli_num_rows($result) == 0) {
+            echo "Error: Patient does not exist!";
+            echo "Patient ID: " . $patient_id;
+            exit();
+        }
+    } else {
+        // If patient_id is not set in the POST data, exit with an error
+        echo "Error: Patient ID is missing!";
+        exit();
+    }
+    
+    $full_name = isset($_POST['full_name']) ? $_POST['full_name'] : '';
+    $sex = isset($_POST['sex']) ? $_POST['sex'] : '';
     $age = mysqli_real_escape_string($conn, $_POST['age']);
     $course = mysqli_real_escape_string($conn, $_POST['course']);
     $section = mysqli_real_escape_string($conn, $_POST['section']);
@@ -15,29 +32,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $diagnosis = mysqli_real_escape_string($conn, $_POST['diagnosis']);
     $treatments = mysqli_real_escape_string($conn, $_POST['treatments']);
 
-    $sql = "INSERT INTO treatment_record (patient_id, full_name, gender, age, course, section, symptoms, diagnosis, treatments) 
-            VALUES ('$patient_id', '$full_name', '$gender', '$age', '$course', '$section', '$symptoms', '$diagnosis', '$treatments')";
+    $sql = "INSERT INTO treatment_record (patient_id, full_name, sex, age, course, section, symptoms, diagnosis, treatments) 
+            VALUES ('$patient_id', '$full_name', '$sex', '$age', '$course', '$section', '$symptoms', '$diagnosis', '$treatments')";
 
-    if (mysqli_query($conn, $sql)) {
-        header("Location: treatment-record-confirmation.php");
-        exit();
-    } else {
-        echo "Error: " . mysqli_error($conn);
-    }
-
-    $query_params = http_build_query([
-        'patient_id' => $patient_id,
-        'full_name' => $full_name,
-        'gender' => $gender,
-        'age' => $age,
-        'course' => $course,
-        'section' => $section,
-        'symptoms' => $symptoms,
-        'diagnosis' => $diagnosis,
-        'treatments' => $treatments
-    ]);
-    header("Location: treatment-record-confirmation.php?$query_params");
+if (mysqli_query($conn, $sql)) {
+    // Redirect to confirmation page with form data
+    $url = "treatment-record-confirmation.php?";
+    $url .= "patient_id=" . urlencode($patient_id) . "&";
+    $url .= "full_name=" . urlencode($full_name) . "&";
+    $url .= "sex=" . urlencode($sex) . "&";
+    $url .= "age=" . urlencode($age) . "&";
+    $url .= "course=" . urlencode($course) . "&";
+    $url .= "section=" . urlencode($section) . "&";
+    $url .= "symptoms=" . urlencode($symptoms) . "&";
+    $url .= "diagnosis=" . urlencode($diagnosis) . "&";
+    $url .= "treatments=" . urlencode($treatments);
+    header("Location: $url");
     exit();
+} else {
+    echo "Error: " . mysqli_error($conn);
+}
+
 }
 
 mysqli_close($conn);
@@ -58,31 +73,48 @@ mysqli_close($conn);
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 </head>
 
-<!-- <style>
-    #search-results {
-    position: absolute;
-    top: calc(100% + 5px);
-    width: 30%;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    max-height: 200px;
-    overflow-y: auto;
-    z-index: 9999; /* Ensure the dropdown appears above other elements */
+<style>
+    /* Add custom styles for the autocomplete list */
+    .list {
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 5px;
+        list-style-type: none;
+        margin-top: 5px; /* Adjust margin to give space between input field and list */
+        width: calc(100% - 10px); /* Adjust width to match the input field */
+        max-height: 150px;
+        overflow-y: auto;
+        font-size: 14px;
+        position: absolute;
+        z-index: 1;
     }
 
-    .input-row {
-        position: relative; /* Ensure relative positioning for the parent */
+    .list li {
+        cursor: pointer;
+        padding: 8px 12px;
     }
 
-    /* Adjust input field position */
-    .input-row input[type="text"],
-    .input-row input[type="number"],
-    .input-row select {
-        width: calc(100% - 30px); /* Adjust the width to accommodate the dropdown */
-        padding-right: 30px; /* Space for dropdown icon */
+    .list li:hover {
+        background-color: #f9f9f9;
     }
 
-</style> -->
+    .input-container {
+        position: relative;
+    }
+
+    #sex {
+        height: 83px;
+        border-radius: 15px;
+        background-color: white;
+        padding: 10px;
+        box-sizing: border-box;
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: border-color 0.3s; /* Added transition for smoother effect */
+        }
+</style>
 
 <body>
     <div class="overlay" id="overlay"></div>
@@ -134,7 +166,7 @@ mysqli_close($conn);
                     </div>
                 </div>
 
-    <div class="content" id="content">
+                <div class="content" id="content">
         <div class="left-header">
             <p>
                 <span style="color: #E13F3D;">Treatment</span>
@@ -146,15 +178,18 @@ mysqli_close($conn);
         <div class="form-container">
             <form id="treatment-form" action="treatment-record.php" method="post">
                 <div class="input-row">
+                <div class="input-container">
+                    <input type="text" id="full-name" name="full_name" placeholder="Full Name" autocomplete="off" required onkeyup="searchPatients(this.value)">
+                    <ul id="search-results" class="list" style="display: none;"></ul>
+                </div>
                 <input type="hidden" id="patient_id" name="patient_id">
-                <input type="text" id="full-name" name="full_name" placeholder="Full Name" autocomplete="off" required onkeyup="searchPatients(this.value)">
-                <div id="search-results"></div>
-                    <select id="gender" name="gender" required>
-                        <option value="" disabled selected hidden>Birth Sex</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                    </select>
-                    <input type="number" name="age" id="age" placeholder="Age" maxlength="2" required>
+                        <select id="sex" name="sex" required>
+                            <option value="" disabled selected hidden>Sex</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <input type="number" name="age" id="age" placeholder="Age" required>
                 </div>
                 <div class="input-row">
                     <input type="text" id="course" name="course" placeholder="Course/Organization" autocomplete="off" required>
@@ -181,7 +216,8 @@ mysqli_close($conn);
                     <input type="text" id="treatments" name="treatments" placeholder="Treatments/Medicines" autocomplete="off" value="<?php echo isset($_GET['treatments']) ? $_GET['treatments'] : ''; ?>" required>
                 </div>
                 <div class="right-row">
-                    <button type="submit" id="submit-form-button" name="record-btn">Submit Form</button>
+                    <button type="submit" id="submit-form-button"
+                        name="record-btn">Submit Form</button>
                 </div>
             </form>
         </div>
@@ -285,6 +321,83 @@ mysqli_close($conn);
                 event.preventDefault(); // Prevent form submission if validation fails
             }
         });
+
+        // JavaScript
+    function searchPatients(input) {
+        if (input.length == 0) {
+            document.getElementById("search-results").innerHTML = "";
+            document.getElementById("search-results").style.display = "none";
+            return;
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: 'autocomplete.php',
+                data: { input: input },
+                success: function(data) {
+                    console.log(data); 
+                    try {
+                        var suggestions = JSON.parse(data);
+                        if (Array.isArray(suggestions) && suggestions.length > 0) {
+                            var listHtml = '';
+                            suggestions.forEach(function(person) {
+                                var fullName = person.first_name + ' ' + person.last_name;
+                                listHtml += '<li onclick="selectFullName(\'' + fullName + '\', \'' + person.patient_id + '\')">' + fullName + '</li>';
+                            });
+                            $('#search-results').html(listHtml);
+                            document.getElementById("search-results").style.display = "block";
+                        } else {
+                            document.getElementById("search-results").innerHTML = "";
+                            document.getElementById("search-results").style.display = "none"; // Hide the list box if there are no suggestions
+                        }
+                    } catch (error) {
+                        console.error('Error parsing JSON:', error);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        }
+    }
+    
+    function selectFullName(fullName, patientId) {
+    document.getElementById("full-name").value = fullName;
+    document.getElementById("patient_id").value = patientId; // Set the patient_id
+    document.getElementById("search-results").innerHTML = ""; // Clear suggestions
+    // Now, fetch additional patient data from the server using patientId
+    $.ajax({
+        type: 'POST',
+        url: 'autocomplete.php',
+        data: { patient_id: patientId },
+        success: function(data) {
+            // Assuming 'data' contains JSON with patient details
+            try {
+                var patientData = JSON.parse(data);
+                document.getElementById("sex").value = patientData.sex;
+                document.getElementById("age").value = patientData.age;
+                document.getElementById("course").value = patientData.course;
+                document.getElementById("section").value = patientData.section;
+                document.getElementById("symptoms").focus(); // Move focus to the next input field
+            } catch (error) {
+                console.error('Error parsing JSON:', error);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText); // Log any errors to the console
+        }
+    });
+}
+
+
+    // Trigger autocomplete only when input length > 0
+    $(document).ready(function() {
+        $('#full-name').keyup(function() {
+            var input = $(this).val().trim();
+            if (input.length > 0) {
+                searchPatients(input);
+            }
+        });
+    });
     </script>
 
 </body>
