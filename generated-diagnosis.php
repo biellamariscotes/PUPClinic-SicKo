@@ -15,13 +15,13 @@ function performDiagnosis($symptoms) {
     
     // Recommend treatment based on predicted sickness
     switch ($predictedSickness) {
-        case "Common Cold":
+        case "common cold":
             $suggestedTreatments[] = "Rest, drink fluids, and take over-the-counter cold medications.";
             break;
-        case "Flu":
+        case "flu":
             $suggestedTreatments[] = "Rest, drink fluids, and take antiviral medications if prescribed.";
             break;
-        case "Fatigue Syndrome":
+        case "fatigue syndrome":
             $suggestedTreatments[] = "Maintain a healthy lifestyle, including regular exercise and proper nutrition.";
             break;
         default:
@@ -37,7 +37,8 @@ $suggestedTreatments = [];
 
 if(isset($_POST['symptoms'])) {
     // Get symptoms input
-    $symptoms = explode(",", $_POST['symptoms']); // Assuming symptoms are comma-separated
+    $symptoms = explode(",", strtolower($_POST['symptoms']));
+
     
     // Perform diagnosis
     list($predictedSickness, $suggestedTreatments) = performDiagnosis($symptoms);
