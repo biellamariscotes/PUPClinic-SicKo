@@ -41,7 +41,7 @@ $treatments = isset($_GET['treatments']) ? $_GET['treatments'] : '';
     <div class="overlay" id="overlay"></div>
 
 <?php
-    include ('src/includes/sidebar.php');
+    include ('src/includes/sidebar/patients-treatment-record.php');
     ?>
 
     <div class="content" id="content">

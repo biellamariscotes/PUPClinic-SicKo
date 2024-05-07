@@ -47,12 +47,13 @@ if(isset($_GET['patient_id'])) {
     <title>SicKo - Patient Treatment Record</title>
     <link rel="icon" type="image/png" href="src/images/sicko-logo.png"> 
     <link rel="stylesheet" href="src/styles/dboardStyle.css">
+    <link rel="stylesheet" href="vendors\bootstrap-5.0.2\dist\css\bootstrap.min.css">
 </head>
 <body>
     <div class="overlay" id="overlay"></div>
 
-    <?php include ('src/includes/sidebar/patients-treatment-record.php'); ?>
-    
+    <?php include ('src/includes/sidebar.php'); ?>
+
     <div class="content" id="content">
         <div class="two-container">
             <div class="box-container left-box">

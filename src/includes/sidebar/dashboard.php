@@ -18,13 +18,12 @@
                 <div class="new-treatment-text">
                     Create New <br> Treatment Record
                 </div>
-                <img src="src/images/add-button.svg" alt="Add Button Icon" class="add-button-icon"
-                    >
+                <img src="src/images/add-button.svg" alt="Add Button Icon" class="add-button-icon">
             </div>
             <!-- Dashboard -->
             <div class="menu-item">
                 <img src="src/images/dashboard-icon.svg" alt="dashboard Icon" class="dashboard-icon">
-                <span class="menu-text" onclick="window.location.href='dashboard.php'">Dashboard</span>
+                <span class="menu-text" onclick="window.location.href='dashboard.php'" style="color: #058789;">Dashboard</span>
             </div>
 
             <!-- Ai-based SDT -->
@@ -67,10 +66,12 @@
                 <span class="menu-text" onclick="window.location.href='edit-profile.php'">Settings</span>
             </div>
 
-            <div class="menu-item">
+            <!-- Log Out menu item -->
+            <div class="menu-item" id="logout-menu-item">
                 <img src="src/images/log-out.svg" alt="log-out Icon" class="log-out-icon">
-                <span class="menu-text" onclick="window.location.href='logout.php'">Log Out</span>
+                <span class="menu-text">Log Out</span>
             </div>
+
         </div>
     </div>
     <div class="topnav" id="topnav">

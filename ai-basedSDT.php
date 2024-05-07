@@ -9,15 +9,41 @@ require_once('src/includes/connect.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SicKo - AI-Based SDT</title>
-    <link rel="icon" type="image/png" href="src/images/sicko-logo.png"> 
+    <link rel="icon" type="image/png" href="src/images/sicko-logo.png">
     <link rel="stylesheet" href="src/styles/dboardStyle.css">
+    <link rel="stylesheet" href="src/styles/modals.css">
+    <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 </head>
 <body>
     <div class="overlay" id="overlay"></div>
 
 <?php
-     include ('src/includes/sidebar/ai-basedSDT.php');
+    include ('src/includes/sidebar.php');
     ?>
+
+                <!-- Log Out Modal -->
+                <div class="modal" id="logOut" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <!-- Modal content -->
+                            <div class="modal-middle-icon">
+                                <i class="bi bi-box-arrow-right" style="color:#058789; font-size:5rem"></i>
+                            </div>
+                            <div class="modal-title" style="color: black;">Are you leaving?</div>
+                            <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to log out?</div>
+                        </div>
+                        <div class="modal-buttons">
+                            <button type="button" class="btn btn-secondary" id="logout-close-modal" data-dismiss="modal" style="background-color: #777777; 
+                            font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
+                            <button type="button" class="btn btn-secondary" id="logout-confirm-button" style="background-color: #058789; 
+                            font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Log Out</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
     <div class="content" id="content">
         <div class="ai-header-content">
@@ -54,7 +80,27 @@ require_once('src/includes/connect.php');
     <?php
     include ('src/includes/footer.php');
     ?>
+    <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/scripts/script.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Show Modal when Log Out menu item is clicked
+            $("#logout-menu-item").click(function (event) {
+                $("#logOut").modal("show");
+            });
+
+            // Close the Modal with the close button
+                $("#logout-close-modal").click(function (event) {
+                $("#logOut").modal("hide");
+            });
+
+            // Handle logout when Log Out button on modal is clicked
+            $("#logout-confirm-button").click(function (event) {
+                // Perform logout action
+                window.location.href = "logout.php";
+            });
+        });
+    </script>
     <script>
         document.getElementById('generate-diagnosis-btn').addEventListener('click', function() {
             document.getElementById('diagnosis-form').submit();
@@ -78,5 +124,6 @@ require_once('src/includes/connect.php');
                 document.getElementById('diagnosis-form').submit();
             });
     </script>
+    
 </body>
 </html>

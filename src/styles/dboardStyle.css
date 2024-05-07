@@ -83,7 +83,6 @@ body {
   z-index: -1; /* Send the background behind other content */
 }
 
-
 .sidebar-logo {
   height: 50px; /* Adjust height as needed */
   width: auto; /* Maintain aspect ratio */
@@ -326,17 +325,7 @@ body.sidebar-active {
   transform: translateY(-50%);
   color: #058789;
   font-size: 20px;
-  padding-right: 130px;
-}
-
-.dashboard-text {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  color: #058789;
-  font-size: 20px;
-  padding-right: 130px;
+  margin-right: 130px;
 }
 
 .dashboard-text p:nth-child(1) {
@@ -941,6 +930,18 @@ body.sidebar-active {
 #treatment-form {
   width: 100%;
   height: 100%;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 .input-row {

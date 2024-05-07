@@ -67,58 +67,83 @@ mysqli_close($conn);
     <title>SicKo - Treatment Record</title>
     <link rel="icon" type="image/png" href="src/images/sicko-logo.png">
     <link rel="stylesheet" href="src/styles/dboardStyle.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <style>
-    /* Add custom styles for the autocomplete list */
-    .list {
-        background-color: white;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        padding: 5px;
-        list-style-type: none;
-        margin-top: 5px; /* Adjust margin to give space between input field and list */
-        width: calc(100% - 10px); /* Adjust width to match the input field */
-        max-height: 150px;
-        overflow-y: auto;
-        font-size: 14px;
-        position: absolute;
-        z-index: 1;
+    #search-results {
+    position: absolute;
+    top: calc(100% + 5px);
+    width: 30%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 9999; /* Ensure the dropdown appears above other elements */
     }
 
-    .list li {
-        cursor: pointer;
-        padding: 8px 12px;
+    .input-row {
+        position: relative; /* Ensure relative positioning for the parent */
     }
 
-    .list li:hover {
-        background-color: #f9f9f9;
+    /* Adjust input field position */
+    .input-row input[type="text"],
+    .input-row input[type="number"],
+    .input-row select {
+        width: calc(100% - 30px); /* Adjust the width to accommodate the dropdown */
+        padding-right: 30px; /* Space for dropdown icon */
     }
 
-    .input-container {
-        position: relative;
-    }
-
-    #sex {
-        height: 83px;
-        border-radius: 15px;
-        background-color: white;
-        padding: 10px;
-        box-sizing: border-box;
-        border: none;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: border-color 0.3s; /* Added transition for smoother effect */
-        }
 </style>
 
 <body>
     <div class="overlay" id="overlay"></div>
 
     <?php
-    include ('src/includes/sidebar.php');
+    include ('src/includes/sidebar/patients-treatment-record.php');
     ?>
+
+                <!-- Log Out Modal -->
+                <div class="modal" id="logOut" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <!-- Modal content -->
+                            <div class="modal-middle-icon">
+                                <i class="bi bi-box-arrow-right" style="color:#058789; font-size:5rem"></i>
+                            </div>
+                            <div class="modal-title" style="color: black;">Are you leaving?</div>
+                            <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to log out?</div>
+                        </div>
+                        <div class="modal-buttons">
+                            <button type="button" class="btn btn-secondary" id="logout-close-modal" data-dismiss="modal" style="background-color: #777777; 
+                            font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
+                            <button type="button" class="btn btn-secondary" id="logout-confirm-button" style="background-color: #058789; 
+                            font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Log Out</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <!-- Submit Form Modal -->
+                <div class="modal" id="confirmModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="modal-middle-icon">
+                                    <i class="bi bi-check-circle-fill" style="color:#058789; font-size:5rem"></i>
+                                </div>
+                                <div class="modal-title" style="color: black;">Confirmation</div>
+                                <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to submit?</div>
+                            </div>
+                            <div class="modal-buttons">
+                                <button type="button" class="btn btn-secondary" id="cancel-confirm-modal" data-dismiss="modal" style="background-color: #777777; 
+                                font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
+                                <button type="button" class="btn btn-secondary" id="submit-form-modal" data-dismiss="modal" style="background-color: #058789; 
+                                font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
     <div class="content" id="content">
         <div class="left-header">
@@ -137,13 +162,15 @@ mysqli_close($conn);
                     <ul id="search-results" class="list" style="display: none;"></ul>
                 </div>
                 <input type="hidden" id="patient_id" name="patient_id">
-                        <select id="sex" name="sex" required>
-                            <option value="" disabled selected hidden>Sex</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other">Other</option>
-                        </select>
-                        <input type="number" name="age" id="age" placeholder="Age" required>
+                <input type="text" id="full-name" name="full_name" placeholder="Full Name" autocomplete="off" required onkeyup="searchPatients(this.value)">
+                <div id="search-results"></div>
+                    <select id="gender" name="gender" required>
+                        <option value="" disabled selected hidden>Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <input type="number" name="age" id="age" placeholder="Age" required>
                 </div>
                 <div class="input-row">
                     <input type="text" id="course" name="course" placeholder="Course/Organization" autocomplete="off" required>
@@ -170,8 +197,7 @@ mysqli_close($conn);
                     <input type="text" id="treatments" name="treatments" placeholder="Treatments/Medicines" autocomplete="off" value="<?php echo isset($_GET['treatments']) ? $_GET['treatments'] : ''; ?>" required>
                 </div>
                 <div class="right-row">
-                    <button type="submit" id="submit-form-button"
-                        name="record-btn">Submit Form</button>
+                    <button type="submit" id="submit-form-button" name="record-btn">Submit Form</button>
                 </div>
             </form>
         </div>
@@ -180,88 +206,35 @@ mysqli_close($conn);
     <?php
     include ('src/includes/footer.php');
     ?>
+        <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/scripts/script.js"></script>
     <script>
-    // JavaScript
-    function searchPatients(input) {
-        if (input.length == 0) {
-            document.getElementById("search-results").innerHTML = "";
-            document.getElementById("search-results").style.display = "none";
-            return;
-        } else {
-            $.ajax({
-                type: 'POST',
-                url: 'autocomplete.php',
-                data: { input: input },
-                success: function(data) {
-                    console.log(data); 
-                    try {
-                        var suggestions = JSON.parse(data);
-                        if (Array.isArray(suggestions) && suggestions.length > 0) {
-                            var listHtml = '';
-                            suggestions.forEach(function(person) {
-                                var fullName = person.first_name + ' ' + person.last_name;
-                                listHtml += '<li onclick="selectFullName(\'' + fullName + '\', \'' + person.patient_id + '\')">' + fullName + '</li>';
-                            });
-                            $('#search-results').html(listHtml);
-                            document.getElementById("search-results").style.display = "block";
-                        } else {
-                            document.getElementById("search-results").innerHTML = "";
-                            document.getElementById("search-results").style.display = "none"; // Hide the list box if there are no suggestions
-                        }
-                    } catch (error) {
-                        console.error('Error parsing JSON:', error);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
-        }
-    }
-    
-    function selectFullName(fullName, patientId) {
-    document.getElementById("full-name").value = fullName;
-    document.getElementById("patient_id").value = patientId; // Set the patient_id
-    document.getElementById("search-results").innerHTML = ""; // Clear suggestions
-    // Now, fetch additional patient data from the server using patientId
-    $.ajax({
-        type: 'POST',
-        url: 'autocomplete.php',
-        data: { patient_id: patientId },
-        success: function(data) {
-            // Assuming 'data' contains JSON with patient details
-            try {
-                var patientData = JSON.parse(data);
-                document.getElementById("sex").value = patientData.sex;
-                document.getElementById("age").value = patientData.age;
-                document.getElementById("course").value = patientData.course;
-                document.getElementById("section").value = patientData.section;
-                document.getElementById("symptoms").focus(); // Move focus to the next input field
-            } catch (error) {
-                console.error('Error parsing JSON:', error);
+function searchPatients(keyword) {
+    if(keyword.length > 0) {
+        // Perform an AJAX request
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                // Display search results in the search-results div
+                document.getElementById("search-results").innerHTML = this.responseText;
             }
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText); // Log any errors to the console
-        }
-    });
+        };
+        xhttp.open("GET", "search-patients.php?keyword=" + keyword, true);
+        xhttp.send();
+    } else {
+        document.getElementById("search-results").innerHTML = "";
+    }
 }
 
-
-    // Trigger autocomplete only when input length > 0
-    $(document).ready(function() {
-        $('#full-name').keyup(function() {
-            var input = $(this).val().trim();
-            if (input.length > 0) {
-                searchPatients(input);
-            }
-        });
-    });
+function selectPatient(patient_id, fullName, gender, age, course, section) {
+    document.getElementById("full-name").value = fullName;
+    document.getElementById("gender").value = gender;
+    document.getElementById("age").value = age;
+    document.getElementById("course").value = course;
+    document.getElementById("section").value = section;
+    document.getElementById("patient_id").value = patient_id;
+}
 </script>
-
-
-    
 </body>
 
 </html>
