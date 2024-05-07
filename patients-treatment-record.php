@@ -49,6 +49,19 @@ if(isset($_GET['patient_id'])) {
     <link rel="stylesheet" href="src/styles/dboardStyle.css">
     <link rel="stylesheet" href="vendors\bootstrap-5.0.2\dist\css\bootstrap.min.css">
 </head>
+
+<style>
+    .history-info-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .treatment-history-info {
+        margin-bottom: 1px;
+        padding: 0;
+    }
+</style>
+
 <body>
     <div class="overlay" id="overlay"></div>
 
@@ -84,29 +97,40 @@ if(isset($_GET['patient_id'])) {
                         <span style="color: #058789;">&nbsp;History</span>
                     </div>
                     <div class="history-info-container">
-                        <?php foreach ($treatment_history as $history): ?>
+                        <?php 
+                            $recordsPerPage = 4;
+                            $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+                            $start = ($currentPage - 1) * $recordsPerPage;
+                            $end = $start + $recordsPerPage;
+
+                            for ($i = $start; $i < min($end, count($treatment_history)); $i++): // Display records based on pagination
+                        ?>
                             <div class="treatment-history-info">
                                 <div class="history-row">
                                     <div class="vertical-line-separator"></div>
                                     <div class="history-info">
-                                        <div class="history-date" id=""><?php echo $history['date']; ?></div>
+                                        <div class="history-date" id=""><?php echo $treatment_history[$i]['date']; ?></div>
                                         <div class="diagnosis-tag">Diagnosis: 
-                                            <div class="diagnosis-tag-box"><?php echo $history['diagnosis']; ?></div>
+                                            <div class="diagnosis-tag-box"><?php echo $treatment_history[$i]['diagnosis']; ?></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        <?php endforeach; ?>
+                        <?php endfor; ?>
                     </div>
                     <div class="treatment-history-buttons">
-                        <div class="history-prev-button">Previous</div>
-                        <div class="history-next-button">Next</div>
+                        <?php if ($currentPage > 1): ?>
+                            <a href="?patient_id=<?php echo $patient_id; ?>&page=<?php echo $currentPage - 1; ?>" class="history-prev-button">Previous</a>
+                        <?php endif; ?>
+                        <?php if ($end < count($treatment_history)): ?>
+                            <a href="?patient_id=<?php echo $patient_id; ?>&page=<?php echo $currentPage + 1; ?>" class="history-next-button">Next</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    
     <?php include ('src/includes/footer.php'); ?>
     <script src="src/scripts/script.js"></script>
 </body>
