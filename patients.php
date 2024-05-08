@@ -158,7 +158,11 @@
     include ('src/includes/sidebar/patients.php');
 ?>
 
+<<<<<<< HEAD
+    <div class="content" id="content">
+=======
 <div class="content" id="content">
+>>>>>>> a7a31d201fda6a99ecc4921f4f59afe56b7c4aa7
     <div class="left-header" style="margin-top: 40px;">
         <p>
             <span style="color: #E13F3D;">List of</span>
@@ -259,6 +263,8 @@
     ?>
     <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/scripts/script.js"></script>
+<<<<<<< HEAD
+=======
     <script>
         $(document).ready(function () {
             // Show Modal when Log Out menu item is clicked
@@ -384,5 +390,6 @@
     // Add event listener for the form submission
     document.getElementById('deleteForm').addEventListener('submit', handleFormSubmission);
     </script>
+>>>>>>> a7a31d201fda6a99ecc4921f4f59afe56b7c4aa7
 </body>
 </html>

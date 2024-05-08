@@ -183,6 +183,16 @@ mysqli_close($conn);
                     <ul id="search-results" class="list" style="display: none;"></ul>
                 </div>
                 <input type="hidden" id="patient_id" name="patient_id">
+<<<<<<< HEAD
+                <input type="text" id="full-name" name="full_name" placeholder="Full Name" autocomplete="off" required onkeyup="searchPatients(this.value)" required>
+                <div id="search-results"></div>
+                    <select id="gender" name="gender" required>
+                        <option value="" disabled selected hidden>Birth Sex</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                    <input type="number" name="age" id="age" placeholder="Age" maxlength="2" required>
+=======
                         <select id="sex" name="sex" required>
                             <option value="" disabled selected hidden>Sex</option>
                             <option value="Male">Male</option>
@@ -190,6 +200,7 @@ mysqli_close($conn);
                             <option value="Other">Other</option>
                         </select>
                         <input type="number" name="age" id="age" placeholder="Age" required>
+>>>>>>> a7a31d201fda6a99ecc4921f4f59afe56b7c4aa7
                 </div>
                 <div class="input-row">
                     <input type="text" id="course" name="course" placeholder="Course/Organization" autocomplete="off" required>

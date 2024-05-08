@@ -56,21 +56,20 @@
                 <span class="menu-header-text">ACCOUNT</span>
             </div>
 
-            <!-- New menu items -->
-            <div class="menu-item">
-                <img src="src/images/notifications.svg" alt="notifications Icon" class="notifications-icon">
-                <span class="menu-text" onclick="window.location.href='notifications.php'">Notifications</span>
+           <!-- New menu items -->
+           <div class="menu-item">
+                <img src="src/images/activity-icon.svg" alt="Activity Icon" class="activity-icon">
+                <span class="menu-text" onclick="window.location.href='activity.php'">Activity</span>
             </div>
 
             <div class="menu-item">
                 <img src="src/images/settings.svg" alt="settings Icon" class="settings-icon">
-                <span class="menu-text" onclick="window.location.href='edit-profile.php'">Settings</span>
+                <span class="menu-text" onclick="window.location.href='edit-profile.php'">User Settings</span>
             </div>
 
-            <!-- Log Out menu item -->
-            <div class="menu-item" id="logout-menu-item">
+            <div class="menu-item">
                 <img src="src/images/log-out.svg" alt="log-out Icon" class="log-out-icon">
-                <span class="menu-text">Log Out</span>
+                <span class="menu-text" onclick="window.location.href='logout.php'">Log Out</span>
             </div>
         </div>
     </div>
