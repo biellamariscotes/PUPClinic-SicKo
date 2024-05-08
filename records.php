@@ -1,6 +1,7 @@
 <?php
 require_once('src/includes/session-nurse.php');
 require_once('src/includes/connect.php');
+
 // Number of records to display per page
 $recordsPerPage = 5;
 
@@ -10,8 +11,25 @@ $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
 // Offset calculation for SQL query
 $offset = ($currentPage - 1) * $recordsPerPage;
 
+// Initialize variables for filtering by academic year
+$selectedAcademicYear = '';
+
+// Check if an academic year is selected
+if(isset($_GET['academic_year'])) {
+    // Ensure it's a valid integer
+    $selectedAcademicYear = intval($_GET['academic_year']);
+}
+
 // SQL query to fetch records with pagination
-$query = "SELECT * FROM treatment_record LIMIT $offset, $recordsPerPage";
+$query = "SELECT * FROM treatment_record";
+
+// Add condition to filter by academic year if selected
+if(!empty($selectedAcademicYear)) {
+    $query .= " WHERE YEAR(date) = $selectedAcademicYear";
+}
+
+$query .= " LIMIT $offset, $recordsPerPage";
+
 $result = mysqli_query($conn, $query);
 
 // Total number of records
@@ -27,7 +45,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SicKo - Records</title>
+    <title>SicKo - Med Reports</title>
     <link rel="icon" type="image/png" href="src/images/sicko-logo.png">
     <link rel="stylesheet" href="src/styles/dboardStyle.css">
     <link rel="stylesheet" href="src/styles/modals.css">
@@ -39,27 +57,28 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
     <div class="overlay" id="overlay"></div>
 
 <?php
-    include ('src/includes/sidebar/records.php');
+    include ('src/includes/sidebar/reports.php');
     ?>
 
 
 
-    <div class="content" id="content" style="margin-bottom: 100px;">
         <div class="med-reports-header">
-            <div class="med-reports-header-box">
-                <div class="medreports-header-text">Medical Records Archive</div>
-                <div class="medreports-sorting-button" id="medReportsortingButton">
-                                    <select id="medReportsortCriteria" style="font-family: 'Poppins', sans-serif; font-weight: bold;">
-                                        <option value="" disabled selected hidden>Academic Year</option>
-                                        <option value="ay1">2024-2025</option>
-                                        <option value="ay2">2023-2024</option>
-                                        <option value="ay2">2022-2023</option>
-                                    </select>
-                                </div>
-            </div>
-        </div>
+                    <div class="med-reports-header-box">
+                        <div class="medreports-header-text">Medical Records Archive</div>
+                        <div class="medreports-sorting-button" id="medReportsortingButton">
+                            <form method="GET">
+                                <select name="academic_year" id="medReportsortCriteria" style="font-family: 'Poppins', sans-serif; font-weight: bold;" onchange="this.form.submit()">
+                                    <option value="" disabled selected hidden>Academic Year</option>
+                                    <option value="2025">2024-2025</option>
+                                    <option value="2024">2023-2024</option>
+                                    <option value="2023">2022-2023</option>
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
-    <div class="header-middle" style="margin: 0 20px 0 20px;">Treatment Record</div>
+                <div class="header-middle" style="margin: 0 20px 0 20px;">Treatment Record</div>
     <!-- Table Container -->
         <div class="table-container">
             <table class="dashboard-table" style="margin-bottom: 80px;">
@@ -145,23 +164,30 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
             <div class="quarterly-report-row" id="firstQuarter">
                 <div class="quarterly-report-content">
                 <div class="quarterly-report-row-box">
-                        <?php
-                        // Fetch and display data for Second Quarter
-                        $query = "SELECT diagnosis, COUNT(*) AS diagnosis_count 
+                    <?php
+                    // Fetch and display data for Second Quarter
+                    $query = "SELECT diagnosis, COUNT(*) AS diagnosis_count 
                                 FROM treatment_record 
-                                WHERE MONTH(date) IN (1, 2, 3) 
-                                GROUP BY diagnosis 
+                                WHERE MONTH(date) IN (1, 2, 3) ";
+
+                    // Add condition to filter by academic year if selected
+                    if (!empty($selectedAcademicYear)) {
+                        $query .= "AND YEAR(date) = $selectedAcademicYear ";
+                    }
+
+                    $query .= "GROUP BY diagnosis 
                                 ORDER BY diagnosis_count DESC 
                                 LIMIT 1";
-                        $result = mysqli_query($conn, $query);
-                        if ($row = mysqli_fetch_assoc($result)) {
-                            $leading_diagnosis = $row['diagnosis'];
-                            $diagnosis_count = $row['diagnosis_count'];
-                        } else {
-                            $leading_diagnosis = "No data";
-                            $diagnosis_count = 0;
-                        }
-                        ?>
+
+                    $result = mysqli_query($conn, $query);
+                    if ($row = mysqli_fetch_assoc($result)) {
+                        $leading_diagnosis = $row['diagnosis'];
+                        $diagnosis_count = $row['diagnosis_count'];
+                    } else {
+                        $leading_diagnosis = "No data";
+                        $diagnosis_count = 0;
+                    }
+                    ?>
                         <div class="row-first-content">
                             <div class="extend-down-icon" onclick="toggleQuarter('firstQuarter')">
                                 <img src="src/images/extend-down.svg" alt="Extend Down Icon" class="extend-down-icon">
@@ -272,11 +298,18 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                     <?php
                     // Fetch and display data for Second Quarter
                     $query = "SELECT diagnosis, COUNT(*) AS diagnosis_count 
-                            FROM treatment_record 
-                            WHERE MONTH(date) IN (4, 5, 6) 
-                            GROUP BY diagnosis 
-                            ORDER BY diagnosis_count DESC 
-                            LIMIT 1";
+                                FROM treatment_record 
+                                WHERE MONTH(date) IN (4, 5, 6) ";
+
+                    // Add condition to filter by academic year if selected
+                    if (!empty($selectedAcademicYear)) {
+                        $query .= "AND YEAR(date) = $selectedAcademicYear ";
+                    }
+
+                    $query .= "GROUP BY diagnosis 
+                                ORDER BY diagnosis_count DESC 
+                                LIMIT 1";
+
                     $result = mysqli_query($conn, $query);
                     if ($row = mysqli_fetch_assoc($result)) {
                         $leading_diagnosis = $row['diagnosis'];
@@ -397,11 +430,18 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                     <?php
                     // Fetch and display data for Second Quarter
                     $query = "SELECT diagnosis, COUNT(*) AS diagnosis_count 
-                            FROM treatment_record 
-                            WHERE MONTH(date) IN (7, 8, 9) 
-                            GROUP BY diagnosis 
-                            ORDER BY diagnosis_count DESC 
-                            LIMIT 1";
+                                FROM treatment_record 
+                                WHERE MONTH(date) IN (7, 8, 9) ";
+
+                    // Add condition to filter by academic year if selected
+                    if (!empty($selectedAcademicYear)) {
+                        $query .= "AND YEAR(date) = $selectedAcademicYear ";
+                    }
+
+                    $query .= "GROUP BY diagnosis 
+                                ORDER BY diagnosis_count DESC 
+                                LIMIT 1";
+
                     $result = mysqli_query($conn, $query);
                     if ($row = mysqli_fetch_assoc($result)) {
                         $leading_diagnosis = $row['diagnosis'];
@@ -519,14 +559,21 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
             <div class="quarterly-report-row" id="fourthQuarter">
                 <div class="quarterly-report-content">
                 <div class="quarterly-report-row-box">
-                    <?php
+                <?php
                     // Fetch and display data for Second Quarter
                     $query = "SELECT diagnosis, COUNT(*) AS diagnosis_count 
-                            FROM treatment_record 
-                            WHERE MONTH(date) IN (10, 11, 12) 
-                            GROUP BY diagnosis 
-                            ORDER BY diagnosis_count DESC 
-                            LIMIT 1";
+                                FROM treatment_record 
+                                WHERE MONTH(date) IN (10, 11, 12) ";
+
+                    // Add condition to filter by academic year if selected
+                    if (!empty($selectedAcademicYear)) {
+                        $query .= "AND YEAR(date) = $selectedAcademicYear ";
+                    }
+
+                    $query .= "GROUP BY diagnosis 
+                                ORDER BY diagnosis_count DESC 
+                                LIMIT 1";
+
                     $result = mysqli_query($conn, $query);
                     if ($row = mysqli_fetch_assoc($result)) {
                         $leading_diagnosis = $row['diagnosis'];

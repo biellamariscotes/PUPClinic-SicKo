@@ -364,6 +364,7 @@ mysqli_close($conn);
     document.getElementById("full-name").value = fullName;
     document.getElementById("patient_id").value = patientId; // Set the patient_id
     document.getElementById("search-results").innerHTML = ""; // Clear suggestions
+    document.getElementById("search-results").style.display = "none"; // Hide the search results
     // Now, fetch additional patient data from the server using patientId
     $.ajax({
         type: 'POST',
@@ -387,6 +388,7 @@ mysqli_close($conn);
         }
     });
 }
+
 
 
     // Trigger autocomplete only when input length > 0

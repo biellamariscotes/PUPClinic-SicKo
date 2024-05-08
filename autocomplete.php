@@ -15,16 +15,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo json_encode($names);
         exit();
     } elseif (isset($_POST['patient_id'])) {
-        // If 'patient_id' parameter is provided, return patient data including birthdate
+        // If 'patient_id' parameter is provided, return patient data including age
         $patient_id = mysqli_real_escape_string($conn, $_POST['patient_id']);
 
-        $sql = "SELECT *, DATE_FORMAT(birthday, '%Y-%m-%d') AS formatted_birthday FROM patient WHERE patient_id = '$patient_id'";
+        $sql = "SELECT *, TIMESTAMPDIFF(YEAR, birthday, CURDATE()) AS age FROM patient WHERE patient_id = '$patient_id'";
         $result = mysqli_query($conn, $sql);
 
         if ($row = mysqli_fetch_assoc($result)) {
-            // Include formatted birthdate in the response
-            $row['birthdate'] = $row['formatted_birthday'];
-            unset($row['formatted_birthday']); // Remove the formatted_birthday field from the response
+            // Include age in the response
+            $row['age'] = $row['age'];
             echo json_encode($row);
             exit();
         } else {
