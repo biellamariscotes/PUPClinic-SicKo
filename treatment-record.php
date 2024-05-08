@@ -147,7 +147,7 @@ mysqli_close($conn);
             <form id="treatment-form" action="treatment-record.php" method="post">
                 <div class="input-row">
                 <input type="hidden" id="patient_id" name="patient_id">
-                <input type="text" id="full-name" name="full_name" placeholder="Full Name" autocomplete="off" required onkeyup="searchPatients(this.value)">
+                <input type="text" id="full-name" name="full_name" placeholder="Full Name" autocomplete="off" required onkeyup="searchPatients(this.value)" required>
                 <div id="search-results"></div>
                     <select id="gender" name="gender" required>
                         <option value="" disabled selected hidden>Birth Sex</option>
