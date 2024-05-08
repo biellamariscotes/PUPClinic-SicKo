@@ -114,12 +114,12 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                 <!-- Pagination buttons -->
                                 <div class="pagination-buttons">
                                     <!-- Previous button -->
-                                    <a href="?page=<?php echo max(1, $currentPage - 1); ?>" class="pagination-button <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
+                                    <a href="?page=<?php echo max(1, $currentPage - 1); ?>" style="text-decoration: none;" class="pagination-button <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
                                         &lt;
                                     </a>
                                     
                                     <!-- Next button -->
-                                    <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>" class="pagination-button <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
+                                    <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>" style="text-decoration: none;" class="pagination-button  <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
                                         &gt;
                                     </a>
                                 </div>

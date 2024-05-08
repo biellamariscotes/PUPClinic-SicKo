@@ -2,12 +2,23 @@
 require_once('src/includes/session-nurse.php');
 require_once('src/includes/connect.php');
 
+// Pagination variables
+$rowsPerPage = 5;
+$currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+$offset = ($currentPage - 1) * $rowsPerPage;
+
+// Query to fetch limited rows
 $sql = "SELECT * 
         FROM treatment_record
-        JOIN patient ON treatment_record.patient_id = patient.patient_id";
+        JOIN patient ON treatment_record.patient_id = patient.patient_id
+        LIMIT $offset, $rowsPerPage";
 $result = mysqli_query($conn, $sql);
 
+// Count total records
+$totalRecords = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM treatment_record"));
 
+// Calculate total pages
+$totalPages = ceil($totalRecords / $rowsPerPage);
 ?>
 
 <!DOCTYPE html>
@@ -63,6 +74,38 @@ $result = mysqli_query($conn, $sql);
                     echo "<tr><td colspan='4'>No records found</td></tr>";
                 }
                 ?>
+
+<tr>
+                    <td colspan="5"> <!-- Use colspan to span across all columns -->
+
+                            <!-- Sorting and Pagination Container -->
+                            <div class="sorting-pagination-container">
+                                <!-- Sorting button box -->
+                                <div class="sorting-button-box" id="sortingButtonBox">
+                                    <!-- Sort text -->
+                                    Sort by:
+                                    <select id="sortCriteria" style="font-family: 'Poppins', sans-serif; font-weight: bold;">
+                                        <option value="Accending">Accending A-Z</option>
+                                        <option value="Descending">Descending Z-A</option>
+                                        <option value="Time">Time</option>
+                                    </select>
+                                </div>
+                                <!-- Pagination buttons -->
+                                <div class="pagination-buttons">
+                                    <!-- Previous button -->
+                                    <a href="?page=<?php echo max(1, $currentPage - 1); ?>" style="text-decoration: none;" class="pagination-button <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
+                                        &lt;
+                                    </a>
+                                    
+                                    <!-- Next button -->
+                                    <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>" style="text-decoration: none; margin-right: 1.25rem;" class="pagination-button  <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
+                                        &gt;
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
             </table>
         </div>
 
