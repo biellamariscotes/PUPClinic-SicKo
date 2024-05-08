@@ -85,7 +85,7 @@ $totalPages = ceil($totalRecords / $rowsPerPage);
                                     <!-- Sort text -->
                                     Sort by:
                                     <select id="sortCriteria" style="font-family: 'Poppins', sans-serif; font-weight: bold;">
-                                        <option value="Accending">Accending A-Z</option>
+                                        <option value="Accending">Ascending A-Z</option>
                                         <option value="Descending">Descending Z-A</option>
                                         <option value="Time">Time</option>
                                     </select>
