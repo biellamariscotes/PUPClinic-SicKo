@@ -1098,24 +1098,40 @@ input[type=number] {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 20px 20px 20px;
+  margin: 0 1.25rem 1.25rem 1.25rem;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+}
+
+.sorting-pagination-container {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* Move to the right */
+}
+
+.sorting-button-box {
+  margin-right: 20px; /* Add margin to separate from the buttons */
 }
 
 .delete-button {
-  width: 90px;
-  height: 31px;
-  background-color: #E13F3D;
-  border-radius: 6px;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-right: 10px; /* Add space between buttons */
+  padding: 8px 20px; /* Resize buttons */
+  background-color: #E13F3D; /* Change background color */
+  color: white; /* Change text color */
   border: none;
+  border-radius: 5px;
   cursor: pointer;
-  font-family: 'Poppins', sans-serif;
-  padding: 5px 10px;
-  font-size: 16px;
+}
+.cancel-button {
+  background-color: #058789; /* Change background color */
+  color: white; /* Change text color */
   border: none;
+  border-radius: 5px;
+  padding: 8px 20px; /* Resize buttons */
+  cursor: pointer;
 }
 
 .delete-icon {
@@ -1134,7 +1150,6 @@ input[type=number] {
   display: flex;
   justify-content: right;
   align-items: center;
-  gap: 20px;
 }
 
 .sorting-button-box select {
@@ -1210,18 +1225,32 @@ input[type=number] {
 }
 
 .profile-avatar {
-  width: 100%;
-  text-align: center; /* Center the avatar horizontally */
-  margin-top: 30px; /* Adjust margin top as needed */ 
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically */
+  margin-top: 30px;
 }
 
-.avatar-image {
+.avatar-circle {
   width: 202px;
   height: 202px;
-  border-radius: 50%; /* Ensure the image appears as a circle */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+  border-radius: 50%;
+  background-color: #E9E9E9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   margin: 20px;
 }
+
+.initials {
+  font-family: 'Poppins', sans-serif;
+  font-size: 5.5rem;
+  font-weight: bold;
+  color: #058789;
+}
+
 
 .patient-info {
   text-align: center;
@@ -1414,7 +1443,7 @@ input[type=number] {
 .med-reports-header {
   display: flex;
   justify-content: center;
-  margin: 40px 20px 40px 20px;
+  margin: 2.5rem 1.25rem 5rem 1.25rem;
 }
 
 .med-reports-header-box {
@@ -1460,18 +1489,52 @@ input[type=number] {
   margin-right: 30px;
 }
 
-.edit-delete-records {
-  font-family: 'Poppins', sans-serif; 
-  text-decoration: underline;
-  font-size: 16px;
-  font-weight: 400;
+.button-group {
+  display: flex;
   align-items: center;
-  margin-left: 20px;
+}
+
+.button-separator {
+  width: 0.063rem;
+  height: 1rem;
+  background-color: #ccc;
+}
+
+.delete-records, .download-button {
+  display: flex;
+  align-items: center; /* Align items vertically */
   cursor: pointer;
 }
 
-.edit-delete-records:hover {
+.delete-records i, .download-button i {
+  margin-right: 0.625rem;
+}
+
+.delete-records {
+  font-family: 'Poppins', sans-serif; 
+  font-size: 1rem;
+  font-weight: bold;
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+  cursor: pointer;
   color: #D22B2B;
+}
+
+.delete-records:hover {
+  color: #cc0000;
+}
+
+.download-button {
+  font-family: 'Poppins', sans-serif; 
+  font-size: 1rem;
+  font-weight: bold;
+  margin-left: 1.25rem;
+  cursor: pointer;
+  color: #058789;
+}
+
+.download-button:hover {
+  color: #1D434E;
 }
 
 .quarterly-report-container {
