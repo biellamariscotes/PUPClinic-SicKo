@@ -1132,6 +1132,7 @@ input[type=number] {
 
 .sorting-pagination-container {
   display: flex;
+  justify-content: right;
   align-items: center;
   gap: 20px;
 }

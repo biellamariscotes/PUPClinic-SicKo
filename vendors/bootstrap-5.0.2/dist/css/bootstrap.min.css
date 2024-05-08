@@ -203,8 +203,8 @@ sup {
   top: -0.5em;
 }
 a {
-  color: #0d6efd;
-  text-decoration: underline;
+  font-family: 'Poppins';
+  color: black;
 }
 a:hover {
   color: #058789;
