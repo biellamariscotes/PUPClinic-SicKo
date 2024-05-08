@@ -58,8 +58,8 @@ $treatments = isset($_GET['treatments']) ? $_GET['treatments'] : '';
             <div class="input-row">
             <input type="text" id="full-name" name="full_name" placeholder="Full Name" autocomplete="off" required value="<?php echo $full_name; ?>">
             <input type="hidden" name="patient_id" value="<?php echo $patient_id; ?>">
-                <select id="sex" name="sex" required value="<?php echo $sex; ?>">
-                    <option value="" disabled selected hidden>Gender</option>
+                <select id="sex" name="sex" required>
+                    <option value="" disabled hidden>Gender</option>
                     <option value="male" <?php if($sex == 'male') echo 'selected'; ?>>Male</option>
                     <option value="female" <?php if($sex == 'female') echo 'selected'; ?>>Female</option>
                     <option value="other" <?php if($sex == 'other') echo 'selected'; ?>>Other</option>
@@ -68,12 +68,17 @@ $treatments = isset($_GET['treatments']) ? $_GET['treatments'] : '';
             </div>
             <div class="input-row">
                 <input type="text" id="course" name="course" placeholder="Course/Organization" autocomplete="off" required value="<?php echo $course; ?>">
-                <select id="section" name="section" required value="<?php echo $section; ?>">
-                    <option value="" disabled selected hidden>Block Section</option>
-                    <option value="1-1" <?php if($section == '1-1') echo 'selected'; ?>>1-1</option>
-                    <option value="1-2" <?php if($section == '1-2') echo 'selected'; ?>>1-2</option>
-                    <!-- Add other options similarly -->
-                </select>
+                    <select id="section" name="section" required>
+                        <option value="" disabled hidden>Block Section</option>
+                        <option value="1-1" <?php if($section == '1-1') echo 'selected'; ?>>1-1</option>
+                        <option value="1-2" <?php if($section == '1-2') echo 'selected'; ?>>1-2</option>
+                        <option value="2-1" <?php if($section == '2-1') echo 'selected'; ?>>2-1</option>
+                        <option value="2-2" <?php if($section == '2-2') echo 'selected'; ?>>2-2</option>
+                        <option value="3-1" <?php if($section == '3-1') echo 'selected'; ?>>3-1</option>
+                        <option value="3-2" <?php if($section == '3-2') echo 'selected'; ?>>3-2</option>
+                        <option value="4-1" <?php if($section == '4-1') echo 'selected'; ?>>4-1</option>
+                        <option value="4-2" <?php if($section == '4-2') echo 'selected'; ?>>4-2</option>
+                    </select>
             </div>
             <div class="input-row">
                 <input type="text" id="symptoms" name="symptoms" placeholder="Symptoms" autocomplete="off" required value="<?php echo $symptoms; ?>">
