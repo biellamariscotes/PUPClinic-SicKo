@@ -1,6 +1,25 @@
 <?php
 require_once('src/includes/session-nurse.php');
 require_once('src/includes/connect.php');
+// Number of records to display per page
+$recordsPerPage = 10;
+
+// Current page number
+$currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+
+// Offset calculation for SQL query
+$offset = ($currentPage - 1) * $recordsPerPage;
+
+// SQL query to fetch records with pagination
+$query = "SELECT * FROM treatment_record LIMIT $offset, $recordsPerPage";
+$result = mysqli_query($conn, $query);
+
+// Total number of records
+$totalRecords = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM treatment_record"));
+
+// Total number of pages
+$totalPages = ceil($totalRecords / $recordsPerPage);
+
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +41,8 @@ require_once('src/includes/connect.php');
 <?php
     include ('src/includes/sidebar/med-reports.php');
     ?>
+
+
 
     <div class="content" id="content" style="margin-bottom: 100px;">
         <div class="med-reports-header">
@@ -47,25 +68,24 @@ require_once('src/includes/connect.php');
                     <th>Course</th>
                     <th>Section</th>
                     <th>Gender</th>
+                    <th>Date</th>
                 </tr>
                 <?php
-        // Assuming $conn is your mysqli connection object
-        $query = "SELECT * FROM patient";
-        $result = mysqli_query($conn, $query);
-        if (mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        ?>
+                        <tr>
+                            <td><?php echo "<a href='patients-treatment-record.php?patient_id=" . $row["patient_id"] . "'>" . $row["full_name"] ?> </a></td>
+                            
+                            <td><?php echo $row['course']; ?></td>
+                            <td><?php echo $row['section']; ?></td>
+                            <td><?php echo $row['sex']; ?></td>
+                            <td><?php echo $row['date']; ?></td>
+                        </tr>
+                        <?php
+                    }
+                } else {
                 ?>
-                <tr>
-                    <td><?php echo "<a href='patients-treatment-record.php?patient_id=" . $row["patient_id"] . "'>" . $row["first_name"] . " " . $row["last_name"] ?> </a></td>
-                    
-                    <td><?php echo $row['course']; ?></td>
-                    <td><?php echo $row['section']; ?></td>
-                    <td><?php echo $row['sex']; ?></td>
-                </tr>
-                <?php
-            }
-        } else {
-            ?>
             <tr>
                 <td colspan="4">No records found</td>
             </tr>
@@ -73,7 +93,7 @@ require_once('src/includes/connect.php');
         }
         ?>
                 <tr>
-                    <td colspan="4"> <!-- Use colspan to span across all columns -->
+                    <td colspan="5"> <!-- Use colspan to span across all columns -->
 
                         <!-- Inside the table button container -->
                         <div class="table-button-container">
@@ -94,13 +114,14 @@ require_once('src/includes/connect.php');
                                 <!-- Pagination buttons -->
                                 <div class="pagination-buttons">
                                     <!-- Previous button -->
-                                    <button class="pagination-button" id="previousButton">
+                                    <a href="?page=<?php echo max(1, $currentPage - 1); ?>" class="pagination-button <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
                                         &lt;
-                                    </button>
+                                    </a>
+                                    
                                     <!-- Next button -->
-                                    <button class="pagination-button" id="nextButton">
+                                    <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>" class="pagination-button <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
                                         &gt;
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>

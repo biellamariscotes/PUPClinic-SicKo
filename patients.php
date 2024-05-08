@@ -97,6 +97,24 @@
     require_once('src/includes/session-nurse.php');
     require_once('src/includes/connect.php');
 
+    $recordsPerPage = 10;
+
+    // Current page number
+    $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+
+    // Offset calculation for SQL query
+    $offset = ($currentPage - 1) * $recordsPerPage;
+
+    // SQL query to fetch records with pagination
+    $query = "SELECT * FROM treatment_record LIMIT $offset, $recordsPerPage";
+    $result = mysqli_query($conn, $query);
+
+    // Total number of records
+    $totalRecords = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM treatment_record"));
+
+    // Total number of pages
+    $totalPages = ceil($totalRecords / $recordsPerPage);
+
     // Check if the form is submitted for deletion
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmDeleteButton'])) {
         if (!empty($_POST['delete_patient'])) {
@@ -205,13 +223,14 @@
                             <!-- Pagination buttons -->
                             <div class="pagination-buttons">
                                 <!-- Previous button -->
-                                <button class="pagination-button" id="previousButton">
+                                <a href="?page=<?php echo max(1, $currentPage - 1); ?>" class="pagination-button <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
                                     &lt;
-                                </button>
+                                </a>
+                                
                                 <!-- Next button -->
-                                <button class="pagination-button" id="nextButton">
+                                <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>" class="pagination-button <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
                                     &gt;
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
