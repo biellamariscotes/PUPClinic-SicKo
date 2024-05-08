@@ -65,7 +65,7 @@ hr-bt {
   border: 0;
   opacity: 0.25;
 }
-hr:not([size]) {
+hr-bt:not([size]) {
   height: 1px;
 }
 .h1-bt,

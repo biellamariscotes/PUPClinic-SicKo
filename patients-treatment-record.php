@@ -70,13 +70,15 @@ if(isset($_GET['patient_id'])) {
     <div class="content" id="content">
         <div class="two-container">
             <div class="box-container left-box">
-                <div class="profile-avatar">
-                    <img src="src/images/avatar.png" alt="Profile Avatar" class="avatar-image">
-                    <div class="patient-info">
-                        <div class="patient-name"><?php echo $patient['first_name'] . ' ' . $patient['last_name']; ?></div>
-                        <div class="patient-id"><span>PATIENT ID:</span> <span><?php echo $patient['patient_id']; ?></span></div>
-                        <hr class="horizontal-line-separator">
-                        
+            <div class="profile-avatar">
+                <div class="avatar-circle">
+                    <div class="initials"><?php echo strtoupper(substr($patient['first_name'], 0, 1) . substr($patient['last_name'], 0, 1)); ?></div>
+                </div>
+                <div class="patient-info">
+                    <div class="patient-name"><?php echo $patient['first_name'] . ' ' . $patient['last_name']; ?></div>
+                    <div class="patient-id"><span>PATIENT ID:</span> <span><?php echo $patient['patient_id']; ?></span></div>
+                    <hr class="horizontal-line-separator">
+        
                         <!-- New container for patient's other information -->
                         <div class="additional-info-container">
                             <div class="additional-info">

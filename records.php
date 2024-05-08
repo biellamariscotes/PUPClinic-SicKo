@@ -2,7 +2,7 @@
 require_once('src/includes/session-nurse.php');
 require_once('src/includes/connect.php');
 // Number of records to display per page
-$recordsPerPage = 10;
+$recordsPerPage = 5;
 
 // Current page number
 $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -27,7 +27,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SicKo - Med Reports</title>
+    <title>SicKo - Records</title>
     <link rel="icon" type="image/png" href="src/images/sicko-logo.png">
     <link rel="stylesheet" href="src/styles/dboardStyle.css">
     <link rel="stylesheet" href="src/styles/modals.css">
@@ -39,7 +39,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
     <div class="overlay" id="overlay"></div>
 
 <?php
-    include ('src/includes/sidebar/med-reports.php');
+    include ('src/includes/sidebar/records.php');
     ?>
 
 
@@ -59,7 +59,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
             </div>
         </div>
 
-    <div class="header-middle" style="margin: 0 20px 0 20px;">Daily Treatment Record</div>
+    <div class="header-middle" style="margin: 0 20px 0 20px;">Treatment Record</div>
     <!-- Table Container -->
         <div class="table-container">
             <table class="dashboard-table" style="margin-bottom: 80px;">
@@ -95,36 +95,44 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                 <tr>
                     <td colspan="5"> <!-- Use colspan to span across all columns -->
 
-                        <!-- Inside the table button container -->
-                        <div class="table-button-container">
-                            <div class="edit-delete-records" onclick="window.location.href=''">Edit/Delete Records</div>
-
-                            <!-- Sorting and Pagination Container -->
-                            <div class="sorting-pagination-container">
-                                <!-- Sorting button box -->
-                                <div class="sorting-button-box" id="sortingButtonBox">
-                                    <!-- Sort text -->
-                                    Sort by:
-                                    <select id="sortCriteria" style="font-family: 'Poppins', sans-serif; font-weight: bold;">
-                                        <option value="annually">Annually</option>
-                                        <option value="monthly">Monthly</option>
-                                        <option value="weekly">Weekly</option>
-                                    </select>
-                                </div>
-                                <!-- Pagination buttons -->
-                                <div class="pagination-buttons">
-                                    <!-- Previous button -->
-                                    <a href="?page=<?php echo max(1, $currentPage - 1); ?>" style="text-decoration: none;" class="pagination-button <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
-                                        &lt;
-                                    </a>
-                                    
-                                    <!-- Next button -->
-                                    <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>" style="text-decoration: none;" class="pagination-button  <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
-                                        &gt;
-                                    </a>
-                                </div>
+                    <!-- Inside the table button container -->
+                    <div class="table-button-container">
+                        <div class="button-group">
+                            <div class="delete-records" onclick="window.location.href=''">
+                                <i class="bi bi-trash" style="color: #D22B2B; font-size: 1rem; margin-right: 0.625rem; vertical-align: middle;"></i>
+                                Delete Records
+                            </div>
+                            <div class="button-separator"></div>
+                            <div class="download-button" onclick="window.location.href=''">
+                                <i class="bi bi-download" style="color: #058789; font-size: 1rem; margin-right: 0.625rem; vertical-align: middle;"></i>
+                                Download
                             </div>
                         </div>
+                        <!-- Sorting and Pagination Container -->
+                        <div class="sorting-pagination-container">
+                            <!-- Sorting button box -->
+                            <div class="sorting-button-box" id="sortingButtonBox">
+                                <!-- Sort text -->
+                                Sort by:
+                                <select id="sortCriteria" style="font-family: 'Poppins', sans-serif; font-weight: bold;">
+                                    <option value="annually">Annually</option>
+                                    <option value="monthly">Monthly</option>
+                                    <option value="weekly">Weekly</option>
+                                </select>
+                            </div>
+                            <!-- Pagination buttons -->
+                            <div class="pagination-buttons">
+                                <!-- Previous button -->
+                                <a href="?page=<?php echo max(1, $currentPage - 1); ?>" style="text-decoration: none;" class="pagination-button <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
+                                    &lt;
+                                </a>
+                                <!-- Next button -->
+                                <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>" style="text-decoration: none;" class="pagination-button  <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
+                                    &gt;
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                     </td>
                 </tr>
             </table>

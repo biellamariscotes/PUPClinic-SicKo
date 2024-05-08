@@ -41,13 +41,13 @@
             <!-- Records -->
             <div class="menu-item">
                 <img src="src/images/records.svg" alt="records Icon" class="records-icon">
-                <span class="menu-text" onclick="window.location.href='treatment-record.php'">Records</span>
+                <span class="menu-text" onclick="window.location.href='records.php'">Records</span>
             </div>
 
             <!-- Med Reports -->
             <div class="menu-item">
                 <img src="src/images/med-reports.svg" alt="medreports Icon" class="medreports-icon">
-                <span class="menu-text" onclick="window.location.href='med-reports.php'">Med Reports</span>
+                <span class="menu-text" onclick="window.location.href='reports.php'">Med Reports</span>
             </div>
 
             <!-- New header title for "Accounts" -->

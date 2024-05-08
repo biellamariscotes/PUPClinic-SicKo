@@ -11,82 +11,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
-    <style>
-    .button-container {
-        display: flex;
-        align-items: center;
-    }
-
-    .sorting-pagination-container {
-        display: flex;
-        align-items: center;
-        margin-left: auto; /* Move to the right */
-    }
-
-    .sorting-button-box {
-        margin-right: 20px; /* Add margin to separate from the buttons */
-    }
-
-    .delete-button {
-        margin-right: 10px; /* Add space between buttons */
-        padding: 8px 20px; /* Resize buttons */
-        background-color: #E13F3D; /* Change background color */
-        color: white; /* Change text color */
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .cancel-button {
-        background-color: #058789; /* Change background color */
-        color: white; /* Change text color */
-        border: none;
-        border-radius: 5px;
-        padding: 8px 20px; /* Resize buttons */
-        cursor: pointer;
-    }
-
-        /* Modal styles */
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0,0,0,0.4);
-    }
-
-    .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 50%;
-    }
-
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
-
-    .button-container {
-        text-align: center;
-        margin-top: 20px;
-    }
-
-</style>
 
 </head>
 <body>
@@ -202,7 +126,7 @@
                         <!-- Delete button with toggle for checkboxes -->
                         <button class="delete-button" id="toggleCheckboxButton">
                             <img src="src/images/trash-icon.svg" alt="Delete Icon" class="delete-icon">
-                            Delete
+                            Delete Records
                         </button>
                         <!-- Sorting and Pagination Container -->
                         <div class="sorting-pagination-container">
@@ -217,18 +141,18 @@
                                     <option value="sex">Gender</option>
                                 </select>
                             </div>
-                            <!-- Pagination buttons -->
-                            <div class="pagination-buttons">
-                                <!-- Previous button -->
-                                <a href="?page=<?php echo max(1, $currentPage - 1); ?>" style="text-decoration: none;" class="pagination-button <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
-                                    &lt;
-                                </a>
-                                
-                                <!-- Next button -->
-                                <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>" style="text-decoration: none;" class="pagination-button <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
-                                    &gt;
-                                </a>
-                            </div>
+                                <!-- Pagination buttons -->
+                                <div class="pagination-buttons">
+                                    <!-- Previous button -->
+                                    <a href="?page=<?php echo max(1, $currentPage - 1); ?>" style="text-decoration: none;" class="pagination-button <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
+                                        &lt;
+                                    </a>
+                                    
+                                    <!-- Next button -->
+                                    <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>" style="text-decoration: none; margin-right: 1.25rem;" class="pagination-button  <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
+                                        &gt;
+                                    </a>
+                                </div>
                         </div>
                     </div>
                 </td>
