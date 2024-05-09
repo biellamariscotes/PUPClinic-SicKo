@@ -4,13 +4,13 @@ require_once ('src/includes/connect.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if patient_id is set in the POST data
-    if(isset($_POST['patient_id'])) {
+    if (isset($_POST['patient_id'])) {
         $patient_id = mysqli_real_escape_string($conn, $_POST['patient_id']);
-        
+
         // Query to check if the patient exists
         $check_patient_query = "SELECT * FROM patient WHERE patient_id = '$patient_id'";
         $result = mysqli_query($conn, $check_patient_query);
-        
+
         // If no rows are returned, patient does not exist
         if (mysqli_num_rows($result) == 0) {
             echo "Error: Patient does not exist!";
@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error: Patient ID is missing!";
         exit();
     }
-    
+
     $full_name = isset($_POST['full_name']) ? $_POST['full_name'] : '';
     $sex = isset($_POST['sex']) ? $_POST['sex'] : '';
     $age = mysqli_real_escape_string($conn, $_POST['age']);
@@ -35,23 +35,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "INSERT INTO treatment_record (patient_id, full_name, sex, age, course, section, symptoms, diagnosis, treatments) 
             VALUES ('$patient_id', '$full_name', '$sex', '$age', '$course', '$section', '$symptoms', '$diagnosis', '$treatments')";
 
-if (mysqli_query($conn, $sql)) {
-    // Redirect to confirmation page with form data
-    $url = "treatment-record-confirmation.php?";
-    $url .= "patient_id=" . urlencode($patient_id) . "&";
-    $url .= "full_name=" . urlencode($full_name) . "&";
-    $url .= "sex=" . urlencode($sex) . "&";
-    $url .= "age=" . urlencode($age) . "&";
-    $url .= "course=" . urlencode($course) . "&";
-    $url .= "section=" . urlencode($section) . "&";
-    $url .= "symptoms=" . urlencode($symptoms) . "&";
-    $url .= "diagnosis=" . urlencode($diagnosis) . "&";
-    $url .= "treatments=" . urlencode($treatments);
-    header("Location: $url");
-    exit();
-} else {
-    echo "Error: " . mysqli_error($conn);
-}
+    if (mysqli_query($conn, $sql)) {
+        // Redirect to confirmation page with form data
+        $url = "treatment-record-confirmation.php?";
+        $url .= "patient_id=" . urlencode($patient_id) . "&";
+        $url .= "full_name=" . urlencode($full_name) . "&";
+        $url .= "sex=" . urlencode($sex) . "&";
+        $url .= "age=" . urlencode($age) . "&";
+        $url .= "course=" . urlencode($course) . "&";
+        $url .= "section=" . urlencode($section) . "&";
+        $url .= "symptoms=" . urlencode($symptoms) . "&";
+        $url .= "diagnosis=" . urlencode($diagnosis) . "&";
+        $url .= "treatments=" . urlencode($treatments);
+        header("Location: $url");
+        exit();
+    } else {
+        echo "Error: " . mysqli_error($conn);
+    }
 
 }
 
@@ -82,8 +82,10 @@ mysqli_close($conn);
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         padding: 5px;
         list-style-type: none;
-        margin-top: 5px; /* Adjust margin to give space between input field and list */
-        width: calc(100% - 10px); /* Adjust width to match the input field */
+        margin-top: 5px;
+        /* Adjust margin to give space between input field and list */
+        width: calc(100% - 10px);
+        /* Adjust width to match the input field */
         max-height: 150px;
         overflow-y: auto;
         font-size: 14px;
@@ -112,77 +114,92 @@ mysqli_close($conn);
         box-sizing: border-box;
         border: none;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: border-color 0.3s; /* Added transition for smoother effect */
-        }
+        transition: border-color 0.3s;
+        /* Added transition for smoother effect */
+    }
 </style>
 
 <body>
+
+    <div class="loader">
+        <img src="src/images/loader.gif">
+    </div>
+
     <div class="overlay" id="overlay"></div>
 
-    <?php
-    include ('src/includes/sidebar/patients-treatment-record.php');
-    ?>
+    <div class="main-content">
+        <?php
+        include ('src/includes/sidebar/patients-treatment-record.php');
+        ?>
 
-                <!-- Log Out Modal -->
-                <div class="modal" id="logOut" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <!-- Modal content -->
-                            <div class="modal-middle-icon">
-                                <i class="bi bi-box-arrow-right" style="color:#058789; font-size:5rem"></i>
-                            </div>
-                            <div class="modal-title" style="color: black;">Are you leaving?</div>
-                            <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to log out?</div>
+        <!-- Log Out Modal -->
+        <div class="modal" id="logOut" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <!-- Modal content -->
+                        <div class="modal-middle-icon">
+                            <i class="bi bi-box-arrow-right" style="color:#058789; font-size:5rem"></i>
                         </div>
-                        <div class="modal-buttons">
-                            <button type="button" class="btn btn-secondary" id="logout-close-modal" data-dismiss="modal" style="background-color: #777777; 
+                        <div class="modal-title" style="color: black;">Are you leaving?</div>
+                        <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to log out?
+                        </div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button type="button" class="btn btn-secondary" id="logout-close-modal" data-dismiss="modal"
+                            style="background-color: #777777; 
                             font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
-                            <button type="button" class="btn btn-secondary" id="logout-confirm-button" style="background-color: #058789; 
-                            font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Log Out</button>
-                        </div>
+                        <button type="button" class="btn btn-secondary" id="logout-confirm-button" style="background-color: #058789; 
+                            font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Log
+                            Out</button>
                     </div>
                 </div>
             </div>
-
-                <!-- Submit Form Modal -->
-                <div class="modal" id="confirmModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                            <div class="modal-body">
-                                <div class="modal-middle-icon">
-                                    <i class="bi bi-check-circle-fill" style="color:#058789; font-size:5rem"></i>
-                                </div>
-                                <div class="modal-title" style="color: black;">Confirmation</div>
-                                <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to submit?</div>
-                            </div>
-                            <div class="modal-buttons">
-                                <button type="button" class="btn btn-secondary" id="cancel-confirm-modal" data-dismiss="modal" style="background-color: #777777; 
-                                font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
-                                <button type="button" class="btn btn-secondary" id="submit-form-modal" data-dismiss="modal" style="background-color: #058789; 
-                                font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="content" id="content">
-        <div class="left-header">
-            <p>
-                <span style="color: #E13F3D;">Treatment</span>
-                <span style="color: #058789;">Record</span>
-            </p>
         </div>
 
-        <!-- Form Container -->
-        <div class="form-container">
-            <form id="treatment-form" action="treatment-record.php" method="post">
-                <div class="input-row">
-                <div class="input-container">
-                    <input type="text" id="full-name" name="full_name" placeholder="Full Name" autocomplete="off" required onkeyup="searchPatients(this.value)">
-                    <ul id="search-results" class="list" style="display: none;"></ul>
+        <!-- Submit Form Modal -->
+        <div class="modal" id="confirmModal" tabindex="-1" role="dialog" data-bs-backdrop="static"
+            data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="modal-middle-icon">
+                            <i class="bi bi-check-circle-fill" style="color:#058789; font-size:5rem"></i>
+                        </div>
+                        <div class="modal-title" style="color: black;">Confirmation</div>
+                        <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to submit?
+                        </div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button type="button" class="btn btn-secondary" id="cancel-confirm-modal" data-dismiss="modal"
+                            style="background-color: #777777; 
+                                font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
+                        <button type="button" class="btn btn-secondary" id="submit-form-modal" data-dismiss="modal"
+                            style="background-color: #058789; 
+                                font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Submit</button>
+                    </div>
                 </div>
-                <input type="hidden" id="patient_id" name="patient_id">
+            </div>
+        </div>
+
+        <div class="content" id="content">
+            <div class="left-header">
+                <p>
+                    <span style="color: #E13F3D;">Treatment</span>
+                    <span style="color: #058789;">Record</span>
+                </p>
+            </div>
+
+            <!-- Form Container -->
+            <div class="form-container">
+                <form id="treatment-form" action="treatment-record.php" method="post">
+                    <div class="input-row">
+                        <div class="input-container">
+                            <input type="text" id="full-name" name="full_name" placeholder="Full Name"
+                                autocomplete="off" required onkeyup="searchPatients(this.value)">
+                            <ul id="search-results" class="list" style="display: none;"></ul>
+                        </div>
+                        <input type="hidden" id="patient_id" name="patient_id">
                         <select id="sex" name="sex" required>
                             <option value="" disabled selected hidden>Sex</option>
                             <option value="Male">Male</option>
@@ -190,44 +207,51 @@ mysqli_close($conn);
                             <option value="Other">Other</option>
                         </select>
                         <input type="number" name="age" id="age" placeholder="Age" required>
-                </div>
-                <div class="input-row">
-                    <input type="text" id="course" name="course" placeholder="Course/Organization" autocomplete="off" required>
-                    <select id="section" name="section" required>
-                        <option value="" disabled selected hidden>Block Section</option>
-                        <option value="1-1">1-1</option>
-                        <option value="1-2">1-2</option>
-                        <option value="2-1">2-1</option>
-                        <option value="2-2">2-2</option>
-                        <option value="3-1">3-1</option>
-                        <option value="3-2">3-2</option>
-                        <option value="4-1">4-1</option>
-                        <option value="4-2">4-2</option>
-                    </select>
-                </div>
-                <div class="right-row">
-                    <p class="bold" onclick="window.location.href='ai-basedSDT.php'">Use AI Symptoms Diagnostic Tool</p>
-                </div>
-                <div class="input-row">
-                    <input type="text" id="symptoms" name="symptoms" placeholder="Symptoms" autocomplete="off" value="<?php echo isset($_GET['symptoms']) ? $_GET['symptoms'] : ''; ?>" required>
-                </div>
-                <div class="input-row">
-                    <input type="text" id="diagnosis" name="diagnosis" placeholder="Diagnosis" autocomplete="off" value="<?php echo isset($_GET['diagnosis']) ? $_GET['diagnosis'] : ''; ?>" required>
-                    <input type="text" id="treatments" name="treatments" placeholder="Treatments/Medicines" autocomplete="off" value="<?php echo isset($_GET['treatments']) ? $_GET['treatments'] : ''; ?>" required>
-                </div>
-                <div class="right-row">
-                    <button type="submit" id="submit-form-button"
-                        name="record-btn">Submit Form</button>
-                </div>
-            </form>
+                    </div>
+                    <div class="input-row">
+                        <input type="text" id="course" name="course" placeholder="Course/Organization"
+                            autocomplete="off" required>
+                        <select id="section" name="section" required>
+                            <option value="" disabled selected hidden>Block Section</option>
+                            <option value="1-1">1-1</option>
+                            <option value="1-2">1-2</option>
+                            <option value="2-1">2-1</option>
+                            <option value="2-2">2-2</option>
+                            <option value="3-1">3-1</option>
+                            <option value="3-2">3-2</option>
+                            <option value="4-1">4-1</option>
+                            <option value="4-2">4-2</option>
+                        </select>
+                    </div>
+                    <div class="right-row">
+                        <p class="bold" onclick="window.location.href='ai-basedSDT.php'">Use AI Symptoms Diagnostic Tool
+                        </p>
+                    </div>
+                    <div class="input-row">
+                        <input type="text" id="symptoms" name="symptoms" placeholder="Symptoms" autocomplete="off"
+                            value="<?php echo isset($_GET['symptoms']) ? $_GET['symptoms'] : ''; ?>" required>
+                    </div>
+                    <div class="input-row">
+                        <input type="text" id="diagnosis" name="diagnosis" placeholder="Diagnosis" autocomplete="off"
+                            value="<?php echo isset($_GET['diagnosis']) ? $_GET['diagnosis'] : ''; ?>" required>
+                        <input type="text" id="treatments" name="treatments" placeholder="Treatments/Medicines"
+                            autocomplete="off"
+                            value="<?php echo isset($_GET['treatments']) ? $_GET['treatments'] : ''; ?>" required>
+                    </div>
+                    <div class="right-row">
+                        <button type="submit" id="submit-form-button" name="record-btn">Submit Form</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
 
-    <?php
-    include ('src/includes/footer.php');
-    ?>
-        <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+        <?php
+        include ('src/includes/footer.php');
+        ?>
+    </div>
+    <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/scripts/script.js"></script>
+    <script src="src/scripts/loader.js"></script>
     <script>
         $(document).ready(function () {
             // Show Modal when Log Out menu item is clicked
@@ -236,7 +260,7 @@ mysqli_close($conn);
             });
 
             // Close the Modal with the close button
-                $("#logout-close-modal").click(function (event) {
+            $("#logout-close-modal").click(function (event) {
                 $("#logOut").modal("hide");
             });
 
@@ -257,7 +281,7 @@ mysqli_close($conn);
             });
 
             // Close the Modal with the close button
-                $("#cancel-confirm-modal").click(function (event) {
+            $("#cancel-confirm-modal").click(function (event) {
                 $("#confirmModal").modal("hide");
             });
 
@@ -269,31 +293,31 @@ mysqli_close($conn);
     </script>
 
     <script>
-    // function searchPatients(keyword) {
-    //     if(keyword.length > 0) {
-    //         // Perform an AJAX request
-    //         var xhttp = new XMLHttpRequest();
-    //         xhttp.onreadystatechange = function() {
-    //             if (this.readyState == 4 && this.status == 200) {
-    //                 // Display search results in the search-results div
-    //                 document.getElementById("search-results").innerHTML = this.responseText;
-    //             }
-    //         };
-    //         xhttp.open("GET", "search-patients.php?keyword=" + keyword, true);
-    //         xhttp.send();
-    //     } else {
-    //         document.getElementById("search-results").innerHTML = "";
-    //     }
-    // }
+        // function searchPatients(keyword) {
+        //     if(keyword.length > 0) {
+        //         // Perform an AJAX request
+        //         var xhttp = new XMLHttpRequest();
+        //         xhttp.onreadystatechange = function() {
+        //             if (this.readyState == 4 && this.status == 200) {
+        //                 // Display search results in the search-results div
+        //                 document.getElementById("search-results").innerHTML = this.responseText;
+        //             }
+        //         };
+        //         xhttp.open("GET", "search-patients.php?keyword=" + keyword, true);
+        //         xhttp.send();
+        //     } else {
+        //         document.getElementById("search-results").innerHTML = "";
+        //     }
+        // }
 
-    function selectPatient(patient_id, fullName, gender, age, course, section) {
-        document.getElementById("full-name").value = fullName;
-        document.getElementById("gender").value = gender;
-        document.getElementById("age").value = age;
-        document.getElementById("course").value = course;
-        document.getElementById("section").value = section;
-        document.getElementById("patient_id").value = patient_id;
-    }
+        function selectPatient(patient_id, fullName, gender, age, course, section) {
+            document.getElementById("full-name").value = fullName;
+            document.getElementById("gender").value = gender;
+            document.getElementById("age").value = age;
+            document.getElementById("course").value = course;
+            document.getElementById("section").value = section;
+            document.getElementById("patient_id").value = patient_id;
+        }
     </script>
 
     <script>
@@ -316,90 +340,90 @@ mysqli_close($conn);
         }
 
         // Add event listener to form submission
-        document.getElementById("treatment-form").addEventListener("submit", function(event) {
+        document.getElementById("treatment-form").addEventListener("submit", function (event) {
             if (!validateForm()) {
                 event.preventDefault(); // Prevent form submission if validation fails
             }
         });
 
         // JavaScript
-    function searchPatients(input) {
-        if (input.length == 0) {
-            document.getElementById("search-results").innerHTML = "";
-            document.getElementById("search-results").style.display = "none";
-            return;
-        } else {
+        function searchPatients(input) {
+            if (input.length == 0) {
+                document.getElementById("search-results").innerHTML = "";
+                document.getElementById("search-results").style.display = "none";
+                return;
+            } else {
+                $.ajax({
+                    type: 'POST',
+                    url: 'autocomplete.php',
+                    data: { input: input },
+                    success: function (data) {
+                        console.log(data);
+                        try {
+                            var suggestions = JSON.parse(data);
+                            if (Array.isArray(suggestions) && suggestions.length > 0) {
+                                var listHtml = '';
+                                suggestions.forEach(function (person) {
+                                    var fullName = person.first_name + ' ' + person.last_name;
+                                    listHtml += '<li onclick="selectFullName(\'' + fullName + '\', \'' + person.patient_id + '\')">' + fullName + '</li>';
+                                });
+                                $('#search-results').html(listHtml);
+                                document.getElementById("search-results").style.display = "block";
+                            } else {
+                                document.getElementById("search-results").innerHTML = "";
+                                document.getElementById("search-results").style.display = "none"; // Hide the list box if there are no suggestions
+                            }
+                        } catch (error) {
+                            console.error('Error parsing JSON:', error);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+        }
+
+        function selectFullName(fullName, patientId) {
+            document.getElementById("full-name").value = fullName;
+            document.getElementById("patient_id").value = patientId; // Set the patient_id
+            document.getElementById("search-results").innerHTML = ""; // Clear suggestions
+            document.getElementById("search-results").style.display = "none"; // Hide the search results
+            // Now, fetch additional patient data from the server using patientId
             $.ajax({
                 type: 'POST',
                 url: 'autocomplete.php',
-                data: { input: input },
-                success: function(data) {
-                    console.log(data); 
+                data: { patient_id: patientId },
+                success: function (data) {
+                    // Assuming 'data' contains JSON with patient details
                     try {
-                        var suggestions = JSON.parse(data);
-                        if (Array.isArray(suggestions) && suggestions.length > 0) {
-                            var listHtml = '';
-                            suggestions.forEach(function(person) {
-                                var fullName = person.first_name + ' ' + person.last_name;
-                                listHtml += '<li onclick="selectFullName(\'' + fullName + '\', \'' + person.patient_id + '\')">' + fullName + '</li>';
-                            });
-                            $('#search-results').html(listHtml);
-                            document.getElementById("search-results").style.display = "block";
-                        } else {
-                            document.getElementById("search-results").innerHTML = "";
-                            document.getElementById("search-results").style.display = "none"; // Hide the list box if there are no suggestions
-                        }
+                        var patientData = JSON.parse(data);
+                        document.getElementById("sex").value = patientData.sex;
+                        document.getElementById("age").value = patientData.age;
+                        document.getElementById("course").value = patientData.course;
+                        document.getElementById("section").value = patientData.section;
+                        document.getElementById("symptoms").focus(); // Move focus to the next input field
                     } catch (error) {
                         console.error('Error parsing JSON:', error);
                     }
                 },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText); // Log any errors to the console
                 }
             });
         }
-    }
-    
-    function selectFullName(fullName, patientId) {
-    document.getElementById("full-name").value = fullName;
-    document.getElementById("patient_id").value = patientId; // Set the patient_id
-    document.getElementById("search-results").innerHTML = ""; // Clear suggestions
-    document.getElementById("search-results").style.display = "none"; // Hide the search results
-    // Now, fetch additional patient data from the server using patientId
-    $.ajax({
-        type: 'POST',
-        url: 'autocomplete.php',
-        data: { patient_id: patientId },
-        success: function(data) {
-            // Assuming 'data' contains JSON with patient details
-            try {
-                var patientData = JSON.parse(data);
-                document.getElementById("sex").value = patientData.sex;
-                document.getElementById("age").value = patientData.age;
-                document.getElementById("course").value = patientData.course;
-                document.getElementById("section").value = patientData.section;
-                document.getElementById("symptoms").focus(); // Move focus to the next input field
-            } catch (error) {
-                console.error('Error parsing JSON:', error);
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText); // Log any errors to the console
-        }
-    });
-}
 
 
 
-    // Trigger autocomplete only when input length > 0
-    $(document).ready(function() {
-        $('#full-name').keyup(function() {
-            var input = $(this).val().trim();
-            if (input.length > 0) {
-                searchPatients(input);
-            }
+        // Trigger autocomplete only when input length > 0
+        $(document).ready(function () {
+            $('#full-name').keyup(function () {
+                var input = $(this).val().trim();
+                if (input.length > 0) {
+                    searchPatients(input);
+                }
+            });
         });
-    });
     </script>
 
 </body>

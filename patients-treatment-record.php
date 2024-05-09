@@ -63,10 +63,14 @@ if(isset($_GET['patient_id'])) {
 </style>
 
 <body>
+<div class="loader">
+        <img src="src/images/loader.gif">
+    </div>
     <div class="overlay" id="overlay"></div>
 
     <?php include ('src/includes/sidebar/patients-treatment-record.php'); ?>
 
+    <div class="main-content">
     <div class="content" id="content">
         <div class="two-container">
             <div class="box-container left-box">
@@ -134,6 +138,8 @@ if(isset($_GET['patient_id'])) {
     </div>
     
     <?php include ('src/includes/footer.php'); ?>
+    </div>
     <script src="src/scripts/script.js"></script>
+    <script src="src/scripts/loader.js"></script>
 </body>
 </html>
