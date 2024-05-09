@@ -67,69 +67,79 @@ require_once ('src/includes/connect.php');
                 </div>
             </form>
 
-            <?php
-            include ('src/includes/footer.php');
-            ?>
-        </div>
-        <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="src/scripts/script.js"></script>
-        <script>
-            function simulateContentLoading() {
-                showLoader();
-                setTimeout(function () {
-                    hideLoader();
-                    showContent();
-                }, 3000);
-            }
+    <?php
+    include ('src/includes/footer.php');
+    ?>
+    <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="src/scripts/script.js"></script>
+    <script>
+    // Function to handle form submission
+    function submitForm() {
+        var input = document.getElementById('symptoms-input').value.trim();
+        
+        // Remove leading spaces and replace double spaces with single space
+        input = input.replace(/^\s+|\s{2,}/g, ' ');
 
-            function showLoader() {
-                console.log("Showing loader.");
-                document.querySelector('.loader').classList.add('visible');
-            }
+        var tags = document.querySelectorAll('.tag');
+        var symptomsString = input; // Initialize with text input
+        // Concatenate symptoms from tags
+        tags.forEach(function(tag) {
+            symptomsString += tag.textContent.trim() + ', ';
+        });
+        // Remove the trailing comma and whitespace
+        symptomsString = symptomsString.replace(/,\s*$/, '');
+        // Set the concatenated symptoms string as the value of the hidden input field
+        document.getElementById('symptoms-input').value = symptomsString;
+        // Submit the form if there's text input or tags
+        if (symptomsString.length > 0) {
+            document.getElementById('diagnosis-form').submit();
+        }
+    }
 
-            function hideLoader() {
-                console.log("Hiding loader with transition.");
-                const loader = document.querySelector('.loader');
-                loader.style.transition = 'opacity 0.5s ease-out';
-                loader.style.opacity = '0';
-                loader.addEventListener('transitionend', function (event) {
-                    if (event.propertyName === 'opacity') {
-                        loader.classList.remove('d-flex');
-                        loader.style.display = 'none';
-                    }
-                });
-            }
+    // Event listener for clicking the generate button
+    document.getElementById('generate-diagnosis-btn').addEventListener('click', submitForm);
 
-            function showContent() {
-                console.log("Showing content.");
-                const body = document.querySelector('.main-content');
-                body.style.display = 'block';
-            }
-            simulateContentLoading();
-        </script>
-        <script>
-            document.getElementById('generate-diagnosis-btn').addEventListener('click', function () {
-                document.getElementById('diagnosis-form').submit();
-            });
+    // Function to toggle the button state
+    function toggleButton() {
+        var input = document.getElementById('symptoms-input').value.trim();
+        var tags = document.querySelectorAll('.tag');
+        var button = document.getElementById('generate-diagnosis-btn');
+        // Check if there's input in the text field or if tags exist
+        if (input.length > 0 || tags.length > 0) {
+            // Enable the button if there's input or tags
+            button.removeAttribute('disabled');
+        } else {
+            // Disable the button if there's no input or tags
+            button.setAttribute('disabled', true);
+        }
+    }
 
-            document.getElementById('generate-diagnosis-btn').addEventListener('click', function () {
-                // Get the text content of each tag box
-                var tagsContainer = document.getElementById('tags-container');
-                var tags = tagsContainer.querySelectorAll('.tag');
-                var symptomsString = '';
-                tags.forEach(function (tag) {
-                    symptomsString += tag.textContent.trim() + ', '; // Concatenate the symptoms with comma
-                });
-                // Remove the trailing comma and whitespace
-                symptomsString = symptomsString.replace(/,\s*$/, '');
+    // Call toggleButton initially to set button state on page load
+    toggleButton();
 
-                // Set the concatenated symptoms string as the value of the hidden input field
-                document.getElementById('symptoms-input').value = symptomsString;
+    // Event listener for input field
+    document.getElementById('symptoms-input').addEventListener('input', function(event) {
+        var input = this.value;
+        var cursorPosition = this.selectionStart;
 
-                // Submit the form
-                document.getElementById('diagnosis-form').submit();
-            });
-        </script>
+        // Check if the input starts with a space or has consecutive spaces
+        if (input.startsWith(' ') || input.includes('  ')) {
+            // Remove leading spaces and replace consecutive spaces with a single space
+            this.value = input.trim().replace(/\s{2,}/g, ' ');
+            // Adjust cursor position after modification
+            this.setSelectionRange(cursorPosition - 1, cursorPosition - 1);
+        }
+
+        toggleButton();
+    });
+
+    // Event listener for tags using event delegation
+    document.getElementById('tags-container').addEventListener('click', function(event) {
+        if (event.target.classList.contains('tag') || event.target.classList.contains('close')) {
+            toggleButton(); // Call toggleButton when a tag is added or removed
+        }
+    });
+</script>
 
 </body>
 
