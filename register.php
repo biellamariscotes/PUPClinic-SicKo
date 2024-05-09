@@ -146,12 +146,12 @@
             </div>
         </div>
     </div>
-    </div>
 
 
     <footer>
         <img class="vector-green fixed-bottom" src="src/images/vector-green.png" alt="Green Vector">
     </footer>
+    </div>
     <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/scripts/loader.js"></script>
 

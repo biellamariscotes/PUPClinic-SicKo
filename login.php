@@ -66,7 +66,7 @@ if (isset($_POST['login_btn'])) {
     </div>
     
     <!-- Navigation Bar -->
-    <div class="main-container">
+    <div class="main-content">
         <div class="container pt-4">
             <div class="row nav-bar">
                 <div class="col-md-6  d-flex align-items-center">
@@ -118,12 +118,12 @@ if (isset($_POST['login_btn'])) {
                 </div>
             </div>
         </div>
-    </div>
 
 
     <footer>
         <img class="vector-green fixed-bottom" src="src/images/vector-green.png" alt="Green Vector">
     </footer>
+    </div>
     <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/scripts/script.js"></script>
     <script src="src/scripts/loader.js"></script>
