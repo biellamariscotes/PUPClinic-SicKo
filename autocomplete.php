@@ -6,7 +6,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // If 'input' parameter is provided, return autocomplete suggestions
         $input = mysqli_real_escape_string($conn, $_POST['input']);
 
-        $sql = "SELECT first_name, last_name, patient_id FROM patient WHERE first_name LIKE '%$input%' OR last_name LIKE '%$input%' LIMIT 5";
+        // Modify the SQL query to search for names starting with the inputted letter
+        $sql = "SELECT first_name, last_name, patient_id FROM patient WHERE first_name LIKE '$input%' OR last_name LIKE '$input%' LIMIT 5";
         $result = mysqli_query($conn, $sql);
         $names = array();
         while ($row = mysqli_fetch_assoc($result)) {

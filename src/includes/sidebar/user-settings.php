@@ -6,6 +6,7 @@
  */
 ?>
 
+
 <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <img src="src/images/sidebar-logo.svg" alt="SicKo Logo" class="sidebar-logo">
@@ -35,7 +36,7 @@
             <!-- Patients -->
             <div class="menu-item">
                 <img src="src/images/patients.svg" alt="patients Icon" class="patients-icon">
-                <span class="menu-text" onclick="window.location.href='patients.php'" style="color: #058789;">Patients</span>
+                <span class="menu-text" onclick="window.location.href='patients.php'">Patients</span>
             </div>
 
             <!-- Records -->
@@ -54,7 +55,7 @@
             <div class="menu-header">
                 <span class="menu-header-text">ACCOUNT</span>
             </div>
-            
+
            <!-- New menu items -->
            <div class="menu-item">
                 <img src="src/images/activity-icon.svg" alt="Activity Icon" class="activity-icon">
@@ -63,7 +64,7 @@
 
             <div class="menu-item">
                 <img src="src/images/settings.svg" alt="settings Icon" class="settings-icon">
-                <span class="menu-text" onclick="window.location.href='edit-profile.php'">User Settings</span>
+                <span class="menu-text" onclick="window.location.href='edit-profile.php'" style="color: #058789;">User Settings</span>
             </div>
 
             <div class="menu-item">

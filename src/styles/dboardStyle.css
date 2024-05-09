@@ -646,11 +646,19 @@ body.sidebar-active {
 
 .left-header p{
   font-size: 40px; 
-  margin: 30px 0 20px 200px; 
+  margin: 2.5rem 0 0 12.5rem; 
   font-family: 'Poppins', sans-serif;
   font-weight: bold;
-  letter-spacing: 1px;
+  letter-spacing: 0.063rem;
 
+}
+
+.left-header-subtitle {
+  margin: 0 0 1.875rem 12.5rem; 
+  color: black; 
+  font-weight: 400; 
+  font-size: 0.938rem;
+  letter-spacing: 0.063rem;
 }
 
 /* KEYWORD FIELD */
@@ -1015,6 +1023,12 @@ input[type=number] {
 .right-row {
   display: flex;
   justify-content: flex-end; /* Align items to the end */
+  width: 95%; /* Ensure full width */
+}
+
+.middle-row {
+  display: flex;
+  justify-content: center; /* Align items to the end */
   width: 95%; /* Ensure full width */
 }
 
@@ -1706,4 +1720,48 @@ input[type=number] {
     display: none;
   }
 
+  .editProfile-input-container {
+    position: relative;
+  }
+
+  #lastName, #middleName, #firstName,
+  #email, #password, #confirmPassword {
+    height: 83px;
+    border-radius: 15px;
+    background-color: white;
+    padding: 10px;
+    box-sizing: border-box;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s; /* Added transition for smoother effect */
+  }
+
+  #lastName {
+    width: 28.5rem;
+  }
+
+  #firstName {
+    width: 21.25rem;
+  }
+
+  #middleName {
+    width: 13.5rem;
+  }
   
+  #email, #password, #confirmPassword {
+    width: 64.850rem;
+  }
+
+  .group {
+    display: inline-block;
+  }
+
+  .userProfile-input-label {
+    margin-left: 0.875rem;
+  }
+
+  #empty-field-message { 
+    color: #D22B2B;
+    display: flex; 
+    justify-content: center;
+  }

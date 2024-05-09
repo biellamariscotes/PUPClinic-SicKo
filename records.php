@@ -57,10 +57,8 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
     <div class="overlay" id="overlay"></div>
 
 <?php
-    include ('src/includes/sidebar/reports.php');
+    include ('src/includes/sidebar/records.php');
     ?>
-
-
 
         <div class="med-reports-header">
                     <div class="med-reports-header-box">
@@ -693,7 +691,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
     <?php
     include ('src/includes/footer.php');
     ?>
-        <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/scripts/script.js"></script>
+    <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
