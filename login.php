@@ -26,7 +26,8 @@ if (isset($_POST['login_btn'])) {
             $_SESSION['message'] = "You are now Logged In";
             $_SESSION['patient_id'] = $patient_id;
 
-            echo $patient_id . "You've been logged in";
+            header("Location: home.php");
+            exit();
 
         } else {
             $login_failed = true;
@@ -155,11 +156,9 @@ if (isset($_POST['login_btn'])) {
             }
         }
 
-        // Add event listeners to input fields to trigger checkInputs function on input
         emailInput.addEventListener('input', checkInputs);
         passwordInput.addEventListener('input', checkInputs);
 
-        // Initially check inputs on page load
         checkInputs();
     </script>
 

@@ -2933,7 +2933,7 @@ textarea.form-control-lg {
 }
 .btn-check:focus + .btn, .btn:focus {
   outline: 0;
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  /* box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25); */
 }
 .btn:disabled, .btn.disabled, fieldset:disabled .btn {
   pointer-events: none;
@@ -7085,6 +7085,11 @@ textarea.form-control-lg {
   padding-left: 3rem !important;
 }
 
+.px-6 {
+  padding-right: 4rem !important;
+  padding-left: 4rem !important;
+}
+
 .py-0 {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
@@ -7257,6 +7262,10 @@ textarea.form-control-lg {
 
 .fw-normal {
   font-weight: 400 !important;
+}
+
+.fw-semibold {
+  font-weight: 600 !important;
 }
 
 .fw-bold {
