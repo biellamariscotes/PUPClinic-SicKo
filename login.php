@@ -93,7 +93,7 @@ if (isset($_POST['login_btn'])) {
                     <div class="form-container-cst">
                         <form method="post" class="needs-validation" novalidate>
                             <div class="input-container">
-                                <input type="email" name="email" id="emailInput" maxlength="254" required>
+                                <input type="email" name="email" id="emailInput" maxlength="50" required>
                                 <label for="emailInput">Email</label>
                             </div>
                             <div class="input-container">
