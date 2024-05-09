@@ -235,11 +235,32 @@ function toggleQuarter(quarterId) {
       alterBox.classList.add('collapsed'); // Hide the alter box
   }
 }
+function simulateContentLoading() {
+  console.log("???");
+  showLoader();
 
-//FORM VALIDATION
+  // Simulate loading time (3 seconds in this example)
+  setTimeout(function() {
+      console.log("Loading complete. Hiding loader.");
+      // After loading is complete, hide the loader
+      hideLoader();
+  }, 3000); // Adjust time as needed
+}
 
+// Show the loader
+function showLoader() {
+  console.log("Showing loader.");
+  document.querySelector('.loader').style.display = 'block';
+}
 
+// Hide the loader
+function hideLoader() {
+  console.log("Hiding loader.");
+  document.querySelector('.loader').style.display = 'none';
+}
 
+// Call function to simulate content loading
+simulateContentLoading();
 
 
 
