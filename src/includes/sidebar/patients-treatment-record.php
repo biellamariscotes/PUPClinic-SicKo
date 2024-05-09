@@ -14,7 +14,7 @@
 
         <div class="sidebar-content">
             <img src="src/images/sidebar_design.png" alt="Sidebar Design" class="sidebar-design">
-            <div class="new-treatment-box" onclick="window.location.href='treatment-record.php'">
+            <div class="new-treatment-box" onclick="window.location.href='treatment-record.php'" >
                 <div class="new-treatment-text">
                     Create New <br> Treatment Record
                 </div>
@@ -42,7 +42,7 @@
             <!-- Records -->
             <div class="menu-item">
                 <img src="src/images/records.svg" alt="records Icon" class="records-icon">
-                <span class="menu-text" onclick="window.location.href='records.php'" style="color: #058789;">Records</span>
+                <span class="menu-text" onclick="window.location.href='records.php'">Records</span>
             </div>
 
             <!-- Med Reports -->

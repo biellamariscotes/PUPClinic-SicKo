@@ -254,26 +254,6 @@ mysqli_close($conn);
     <script src="src/scripts/loader.js"></script>
     <script>
         $(document).ready(function () {
-            // Show Modal when Log Out menu item is clicked
-            $("#logout-menu-item").click(function (event) {
-                $("#logOut").modal("show");
-            });
-
-            // Close the Modal with the close button
-            $("#logout-close-modal").click(function (event) {
-                $("#logOut").modal("hide");
-            });
-
-            // Handle logout when Log Out button on modal is clicked
-            $("#logout-confirm-button").click(function (event) {
-                // Perform logout action
-                window.location.href = "logout.php";
-            });
-        });
-    </script>
-
-    <script>
-        $(document).ready(function () {
             // Show Modal when Submit button is clicked
             $("#submit-form-button").click(function (event) {
                 event.preventDefault(); // Prevent default form submission

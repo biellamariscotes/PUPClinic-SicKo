@@ -55,7 +55,7 @@
             <div class="menu-header">
                 <span class="menu-header-text">ACCOUNT</span>
             </div>
-
+            
            <!-- New menu items -->
            <div class="menu-item">
                 <img src="src/images/activity-icon.svg" alt="Activity Icon" class="activity-icon">
