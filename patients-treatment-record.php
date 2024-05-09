@@ -45,7 +45,7 @@ if(isset($_GET['patient_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SicKo - Patient Treatment Record</title>
-    <link rel="icon" type="image/png" href="src/images/sicko-logo.png"> 
+    <link rel="icon" type="image/png" href="src/images/heart-logo.png"> 
     <link rel="stylesheet" href="src/styles/dboardStyle.css">
     <link rel="stylesheet" href="vendors\bootstrap-5.0.2\dist\css\bootstrap.min.css">
 </head>
@@ -63,10 +63,14 @@ if(isset($_GET['patient_id'])) {
 </style>
 
 <body>
+<div class="loader">
+        <img src="src/images/loader.gif">
+    </div>
     <div class="overlay" id="overlay"></div>
 
     <?php include ('src/includes/sidebar/patients-treatment-record.php'); ?>
 
+    <div class="main-content">
     <div class="content" id="content">
         <div class="two-container">
             <div class="box-container left-box">
@@ -144,6 +148,8 @@ if(isset($_GET['patient_id'])) {
     </div>
     
     <?php include ('src/includes/footer.php'); ?>
+    </div>
     <script src="src/scripts/script.js"></script>
+    <script src="src/scripts/loader.js"></script>
 </body>
 </html>

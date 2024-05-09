@@ -45,12 +45,19 @@ if (isset($_POST['login_btn'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SicKo - Sign In</title>
-    <link rel="icon" type="image/png" href="src/images/sicko-logo.png">
+    <link rel="icon" type="image/png" href="src/images/heart-logo.png">
     <link rel="stylesheet" href="src/styles/style.css">
     <link rel="stylesheet" href="src/styles/modals.css">
     <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+    <style>
+        input::-ms-reveal,
+        input::-ms-clear {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -61,25 +68,26 @@ if (isset($_POST['login_btn'])) {
         </div>
 
         <div class="form-container-cst">
-            <form method="post" action="nurse-login.php" class="needs-validation" novalidate>
+            <form method="post" class="needs-validation" novalidate>
                 <div class="input-container">
                     <input type="email" name="email" id="emailInput" maxlength="254" required>
                     <label for="emailInput">Email</label>
                 </div>
                 <div class="input-container">
-                    <input type="password" name="password" id="passwordInput" maxlength="50" required>
+                    <input type="password" name="password" id="passwordInput" maxlength="50" required
+                        class="padding-right: 50px">
                     <label for="passwordInput">Password</label>
                     <span class="toggle-password" onclick="togglePassword()">Show</span>
                 </div>
                 <div class="button-container">
-                    <button type="submit" name="login_btn">Sign In</button>
+                    <button type="submit" name="login_btn" id="submitButton" disable>Sign In</button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- Log In Failed Modal -->
-    <div class="modal" id="loginFailed" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" >
+    <div class="modal" id="loginFailed" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -87,10 +95,12 @@ if (isset($_POST['login_btn'])) {
                         <i class="bi bi-x-circle-fill" style="color:#E13F3D; font-size:5rem"></i>
                     </div>
                     <div class="modal-title">Login Failed</div>
-                    <div class="modal-subtitle" style="text-wrap: pretty;">Authentication failed. Please check your credentials and try again.</div>
+                    <div class="modal-subtitle" style="text-wrap: pretty;">Authentication failed. Please check your
+                        credentials and try again.</div>
                 </div>
                 <div class="modal-buttons">
-                    <button type="button" class="btn btn-secondary" id="login-close-modal" data-dismiss="modal" style="background-color: #E13F3D; 
+                    <button type="button" class="btn btn-secondary" id="login-close-modal" data-dismiss="modal"
+                        style="background-color: #E13F3D; 
                     font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Close</button>
                 </div>
             </div>
@@ -101,6 +111,44 @@ if (isset($_POST['login_btn'])) {
     <img class="vector-green" src="src/images/vector-green.png" alt="Green Vector">
     <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/scripts/script.js"></script>
+
+
+    <script>
+        // Get references to the input fields and the submit button
+        const emailInput = document.getElementById('emailInput');
+        const passwordInput = document.getElementById('passwordInput');
+        const submitButton = document.getElementById('submitButton');
+
+        function preventWhitespaceInput(event) {
+            if (event.key === ' ' || event.code === 'Space') {
+                event.preventDefault();
+            }
+        }
+
+        emailInput.addEventListener('keydown', preventWhitespaceInput);
+        passwordInput.addEventListener('keydown', preventWhitespaceInput);
+        // Function to check if any input field is empty
+        function checkInputs() {
+            const emailValue = emailInput.value.trim();
+            const passwordValue = passwordInput.value.trim();
+
+            // If any field is empty, disable the submit button
+            if (emailValue === '' || passwordValue === '') {
+                submitButton.disabled = true;
+                console.log("Disabled");
+            } else {
+                submitButton.disabled = false;
+            }
+        }
+
+        // Add event listeners to input fields to trigger checkInputs function on input
+        emailInput.addEventListener('input', checkInputs);
+        passwordInput.addEventListener('input', checkInputs);
+
+        // Initially check inputs on page load
+        checkInputs();
+    </script>
+
     <script>
         $(document).ready(function () {
             <?php if ($login_failed): ?> // Check if login failed

@@ -57,7 +57,7 @@ mysqli_close($conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SicKo - Edit Profile</title>
-    <link rel="icon" type="image/png" href="src/images/sicko-logo.png"> 
+    <link rel="icon" type="image/png" href="src/images/heart-logo.png"> 
     <link rel="stylesheet" href="src/styles/dboardStyle.css">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="src/styles/dboardStyle.css">

@@ -46,7 +46,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SicKo - Med Reports</title>
-    <link rel="icon" type="image/png" href="src/images/sicko-logo.png">
+    <link rel="icon" type="image/png" href="src/images/heart-logo.png">
     <link rel="stylesheet" href="src/styles/dboardStyle.css">
     <link rel="stylesheet" href="src/styles/modals.css">
     <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
@@ -54,8 +54,13 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 </head>
 <body>
+<div class="loader">
+        <img src="src/images/loader.gif">
+    </div>
+
     <div class="overlay" id="overlay"></div>
 
+    <div class="main-content">
 <?php
     include ('src/includes/sidebar/reports.php');
     ?>
@@ -688,12 +693,13 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
  
         </div>
     </div>
-</div>
 
     <?php
     include ('src/includes/footer.php');
     ?>
+    </div>
         <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/scripts/script.js"></script>
+    <script src="src/scripts/loader.js"></script>
 </body>
 </html>

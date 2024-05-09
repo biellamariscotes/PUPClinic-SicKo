@@ -1,59 +1,71 @@
 <?php
-require_once('src/includes/session-nurse.php');
-require_once('src/includes/connect.php');
+require_once ('src/includes/session-nurse.php');
+require_once ('src/includes/connect.php');
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SicKo - AI-Based SDT</title>
-    <link rel="icon" type="image/png" href="src/images/sicko-logo.png">
+    <link rel="icon" type="image/png" href="src/images/heart-logo.png">
     <link rel="stylesheet" href="src/styles/dboardStyle.css">
     <link rel="stylesheet" href="src/styles/modals.css">
     <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 </head>
+
 <body>
-    <div class="overlay" id="overlay"></div>
+    <div class="loader d-flex">
+        <img src="src/images/loader.gif">
+    </div>
 
-<?php
-    include ('src/includes/sidebar/ai-basedSDT.php');
-    ?>
+    <div class="main-content">
+        <div class="overlay" id="overlay"></div>
 
-    <div class="content" id="content">
-        <div class="ai-header-content">
-        <div class="ai-header-image-container">
-            <img src="src/images/ai-header.svg" alt="AI Header" class="ai-header">
-        </div>
-        <div class="ai-header-text-container">
-            <div class="ai-header-text">
-                <div class="ai-text">
-                    <p>AI-Based,<span class="bold"> Symptoms</span></p>
-                    <p class="bold" style="color: #E13F3D; font-size: 50px; font-family: 'Poppins', sans-serif;">Diagnostic Tool</p>
-                    <p style="color: black; font-size: 17px; font-family: 'Poppins', sans-serif; text-align: justify;">Detects and generates possible diagnosis <br> based on patient symptoms.</p>
+        <?php
+        include ('src/includes/sidebar/ai-basedSDT.php');
+        ?>
+
+        <div class="content" id="content">
+            <div class="ai-header-content">
+                <div class="ai-header-image-container">
+                    <img src="src/images/ai-header.svg" alt="AI Header" class="ai-header">
+                </div>
+                <div class="ai-header-text-container">
+                    <div class="ai-header-text">
+                        <div class="ai-text">
+                            <p>AI-Based,<span class="bold"> Symptoms</span></p>
+                            <p class="bold"
+                                style="color: #E13F3D; font-size: 50px; font-family: 'Poppins', sans-serif;">
+                                Diagnostic Tool</p>
+                            <p
+                                style="color: black; font-size: 17px; font-family: 'Poppins', sans-serif; text-align: justify;">
+                                Detects and generates possible diagnosis <br> based on patient symptoms.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="left-header">
-        <p style="color: #E13F3D" >Type symptoms...</p>
-    </div>
+            <div class="left-header">
+                <p style="color: #E13F3D">Type symptoms...</p>
+            </div>
 
-    <!-- Keyword Tags Container -->  
-    <form id="diagnosis-form" method="post" action="generated-diagnosis.php">
-        <div class="symptoms-input-container">
-            <input type="text" id="symptoms-input" name="symptoms" placeholder="Type symptoms keywords..." autocomplete="off">
-            <div class="tags-container" id="tags-container"></div>
-        </div>
+            <!-- Keyword Tags Container -->
+            <form id="diagnosis-form" method="post" action="generated-diagnosis.php">
+                <div class="symptoms-input-container">
+                    <input type="text" id="symptoms-input" name="symptoms" placeholder="Type symptoms keywords..."
+                        autocomplete="off">
+                    <div class="tags-container" id="tags-container"></div>
+                </div>
 
-        <div class="generate-diagnosis-box">
-        <div class="generate-diagnosis-text" id="generate-diagnosis-btn">Generate Diagnosis</div>
-        </div>
-    </form>
+                <div class="generate-diagnosis-box">
+                    <div class="generate-diagnosis-text" id="generate-diagnosis-btn">Generate Diagnosis</div>
+                </div>
+            </form>
 
     <?php
     include ('src/includes/footer.php');
@@ -129,7 +141,6 @@ require_once('src/includes/connect.php');
     });
 </script>
 
-
-   
 </body>
+
 </html>
