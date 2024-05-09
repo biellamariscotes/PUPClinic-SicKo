@@ -118,53 +118,23 @@ input[type="date"]::before {
   }
 
 
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-  body,
-  button {
-    font-family: "Poppins", sans-serif;
-  }
-  :root {
-    --offcanvas-width: 270px;
-    --topNavbarHeight: 56px;
-  }
-  @media (min-width: 992px) {
-    body {
-      overflow: auto !important;
-    }
-    main {
-      margin: 0;
-      padding: 0;
-    }
-    /* this is to remove the backdrop */
-    .offcanvas-backdrop::before {
-      display: none;
-    }
-  }
-  
-  /* General Styles */
-  html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    font-family: 'Poppins', sans-serif; /* Added font-family rule */
-  }
+
   
   .container-login-cst {
     position: absolute;
-    width: 350px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 400px;
     background: #FFFFFF;
     padding: 20px;
   }
   
   /* Logo and Sign In Section */
   .logo-container {
-    text-align: center;
     margin-bottom: 10px;
+  }
+
+  .logo-container img {
+    height: auto;
+    width: 40%;
   }
   
   .logo {
@@ -177,8 +147,7 @@ input[type="date"]::before {
   /* Form Container */
   .form-container-cst {
     border-radius: 15px;
-    padding: 10px 20px; /* Adjusted padding to reduce space in the upper part */
-    text-align: center;
+   
   }
   
   .form-container-cst form {
@@ -191,13 +160,14 @@ input[type="date"]::before {
     background-color: #E9E9E9;
     width: 90%;
     font-size: medium;
-    padding: 30px 10px 15px 20px;
+    padding: 30px 30px 15px 30px ;
     border: none; /* Remove default border */
     border-radius: 10px;
     font-family: 'Poppins', sans-serif; /* Added font-family rule */
     transition: border-color 0.3s; /* Added transition for smoother effect */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add drop shadow */
   }
+
   
   .form-container-cst input:focus {
     background-color: #D4D4D4; /* Set background color when input is focused */
@@ -229,14 +199,14 @@ input[type="date"]::before {
   
   /* Form Container Input */
   .form-container-cst input:focus {
-    background-color: #D4D4D4; /* Set background color when input is focused */
+    background-color: #E9E9E9; /* Set background color when input is focused */
     outline: none; /* Remove default focus outline */
   }
   
   /* Form Container Input when autofill */
   .form-container-cst input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px #D4D4D4 inset !important; /* Reset autofill background color */
-    background-color: #D4D4D4; /* Set background color */
+    -webkit-box-shadow: 0 0 0px 1000px #E9E9E9 inset !important; /* Reset autofill background color */
+    background-color: #E9E9E9; /* Set background color */
   }
   
   /* Sign In Button */
@@ -256,10 +226,14 @@ input[type="date"]::before {
     cursor: pointer;
     transition: background-color 0.3s ease; /* Smooth transition for background color */
   }
-  
-  .form-container-cst button:hover {
-    background-color: #058789; /* Change background color on hover */
+
+  button:disabled,
+  button:disabled:hover {
+      background-color: #D4D4D4;
+      color: #fff !important;
+      cursor: default;
   }
+  
   
   /* Vector Adjustment */
   .vector-red, .vector-green {
@@ -292,7 +266,7 @@ input[type="date"]::before {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    right: 25px; /* Adjust as needed */
+    right: 60px; /* Adjust as needed */
     cursor: pointer;
     color: #999; /* Color for the eye icon */
   }

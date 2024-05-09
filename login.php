@@ -76,15 +76,18 @@ if (isset($_POST['login_btn'])) {
     </div>
 
     <!-- Information -->
-    <div class="container" style="padding-right: 10rem">
+    <div class="container">
         <div class="row register">
-            <div class="col-md-12 info">
-
+            <div class="col-12 info  d-flex justify-content-center">
                 <div class="container-login-cst">
-                    <div class="logo-container">
-                        <img class="logo" src="src/images/sicko-logo.png" alt="Sicko Logo">
-                        <p class="fw-bold fs-4"><span class="green">Sic</span><span class="red">Ko</span> | Sign In
-                        </p>
+                    <div class="logo-container d-flex flex-wrap justify-content-center">
+                        <div class="d-flex flex-wrap justify-content-center"">
+                            <img class=" logo" src="src/images/sicko-logo.png" alt="Sicko Logo">
+                        </div>
+                        <div>
+                            <p class="fw-bold fs-4"><span class="green">Sic</span><span class="red">Ko</span> | Sign In
+                            </p>
+                        </div>
                     </div>
 
                     <div class="form-container-cst">
@@ -94,12 +97,13 @@ if (isset($_POST['login_btn'])) {
                                 <label for="emailInput">Email</label>
                             </div>
                             <div class="input-container">
-                                <input type="password" name="password" id="passwordInput" maxlength="50" required>
+                                <input type="password" name="password" id="passwordInput" maxlength="50" required
+                                    class="padding-right: 50px">
                                 <label for="passwordInput">Password</label>
                                 <span class="toggle-password" onclick="togglePassword()">Show</span>
                             </div>
                             <div class="button-container">
-                                <button type="submit" name="login_btn">Sign In</button>
+                                <button type="submit" name="login_btn" id="submitButton" disable>Sign In</button>
                             </div>
                         </form>
                     </div>
@@ -116,6 +120,42 @@ if (isset($_POST['login_btn'])) {
     <script src="src/scripts/script.js"></script>
 
     <script>
+        // Get references to the input fields and the submit button
+        const emailInput = document.getElementById('emailInput');
+        const passwordInput = document.getElementById('passwordInput');
+        const submitButton = document.getElementById('submitButton');
+
+        function preventWhitespaceInput(event) {
+            if (event.key === ' ' || event.code === 'Space') {
+                event.preventDefault();
+            }
+        }
+
+        emailInput.addEventListener('keydown', preventWhitespaceInput);
+        passwordInput.addEventListener('keydown', preventWhitespaceInput);
+        // Function to check if any input field is empty
+        function checkInputs() {
+            const emailValue = emailInput.value.trim();
+            const passwordValue = passwordInput.value.trim();
+
+            // If any field is empty, disable the submit button
+            if (emailValue === '' || passwordValue === '') {
+                submitButton.disabled = true;
+                console.log("Disabled");
+            } else {
+                submitButton.disabled = false;
+            }
+        }
+
+        // Add event listeners to input fields to trigger checkInputs function on input
+        emailInput.addEventListener('input', checkInputs);
+        passwordInput.addEventListener('input', checkInputs);
+
+        // Initially check inputs on page load
+        checkInputs();
+    </script>
+
+    <script>
         function togglePassword() {
             var passwordInput = document.getElementById("passwordInput");
             var toggleIcon = document.querySelector(".toggle-password");
@@ -128,7 +168,6 @@ if (isset($_POST['login_btn'])) {
             }
         }
     </script>
-
 </body>
 
 </html>
