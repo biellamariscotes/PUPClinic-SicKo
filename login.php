@@ -44,8 +44,8 @@ if (isset($_POST['login_btn'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SicKo - Sign In</title>
-    <link rel="icon" type="image/png" href="src/images/sicko-logo.png">
+    <title>Sign In</title>
+    <link rel="icon" type="image/png" href="src/images/heart-logo.png">
     <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.css">
     <link rel="stylesheet" href="src/styles/register.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -60,52 +60,59 @@ if (isset($_POST['login_btn'])) {
 
 <body>
 
+<div class="loader">
+        <img src="src/images/loader.gif">
+    </div>
+    
     <!-- Navigation Bar -->
-    <div class="container pt-4">
-        <div class="row nav-bar">
-            <div class="col-md-6  d-flex align-items-center">
-                <img src="src/images/sicko-logo.png" class="me-3">
-                <div class="fw-bold fs-4 d-flex align-items-center text-center" style="align-self: center"><span
-                        class="green">Sic</span><span class="red">Ko</span></div>
-            </div>
-            <div class="col-md-6  d-flex justify-content-end">
-                <a href="login.php"><button class="sign-in">Sign In</button></a>
-                <a href="register.php"><button class="sign-up">Register</button></a>
+    <div class="main-container">
+        <div class="container pt-4">
+            <div class="row nav-bar">
+                <div class="col-md-6  d-flex align-items-center">
+                    <img src="src/images/sicko-logo.png" class="me-3">
+                    <div class="fw-bold fs-4 d-flex align-items-center text-center" style="align-self: center"><span
+                            class="green">Sic</span><span class="red">Ko</span></div>
+                </div>
+                <div class="col-md-6  d-flex justify-content-end">
+                    <a href="login.php"><button class="sign-in">Sign In</button></a>
+                    <a href="register.php"><button class="sign-up">Register</button></a>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Information -->
-    <div class="container">
-        <div class="row register">
-            <div class="col-12 info  d-flex justify-content-center">
-                <div class="container-login-cst">
-                    <div class="logo-container d-flex flex-wrap justify-content-center">
-                        <div class="d-flex flex-wrap justify-content-center"">
-                            <img class=" logo" src="src/images/sicko-logo.png" alt="Sicko Logo">
+        <!-- Information -->
+        <div class="container">
+            <div class="row register">
+                <div class="col-12 info  d-flex justify-content-center">
+                    <div class="container-login-cst">
+                        <div class="logo-container d-flex flex-wrap justify-content-center">
+                            <div class="d-flex flex-wrap justify-content-center"">
+                            <img class=" logo" src="src/images/heart-logo.png" alt="Sicko Logo">
+                            </div>
+                            <div>
+                                <p class="fw-bold fs-4"><span class="green">Sic</span><span class="red">Ko</span> | Sign
+                                    In
+                                </p>
+                            </div>
                         </div>
-                        <div>
-                            <p class="fw-bold fs-4"><span class="green">Sic</span><span class="red">Ko</span> | Sign In
-                            </p>
-                        </div>
-                    </div>
 
-                    <div class="form-container-cst">
-                        <form method="post" class="needs-validation" novalidate>
-                            <div class="input-container">
-                                <input type="email" name="email" id="emailInput" maxlength="50" required>
-                                <label for="emailInput">Email</label>
-                            </div>
-                            <div class="input-container">
-                                <input type="password" name="password" id="passwordInput" maxlength="50" required
-                                    class="padding-right: 50px">
-                                <label for="passwordInput">Password</label>
-                                <span class="toggle-password" onclick="togglePassword()">Show</span>
-                            </div>
-                            <div class="button-container">
-                                <button type="submit" name="login_btn" id="submitButton" disable>Sign In</button>
-                            </div>
-                        </form>
+                        <div class="form-container-cst">
+                            <form method="post" class="needs-validation" novalidate>
+                                <div class="input-container">
+                                    <input type="email" name="email" id="emailInput" maxlength="50" required>
+                                    <label for="emailInput">Email</label>
+                                </div>
+                                <div class="input-container">
+                                    <input type="password" name="password" id="passwordInput" maxlength="50" required
+                                        class="padding-right: 50px">
+                                    <label for="passwordInput">Password</label>
+                                    <span class="toggle-password" onclick="togglePassword()">Show</span>
+                                </div>
+                                <div class="button-container">
+                                    <button type="submit" name="login_btn" id="submitButton" disable>Sign In</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -118,6 +125,7 @@ if (isset($_POST['login_btn'])) {
     </footer>
     <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/scripts/script.js"></script>
+    <script src="src/scripts/loader.js"></script>
 
     <script>
         // Get references to the input fields and the submit button

@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SicKo - Sign In</title>
-    <link rel="icon" type="image/png" href="src/images/sicko-logo.png">
+    <title>Register</title>
+    <link rel="icon" type="image/png" href="src/images/heart-logo.png">
     <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.css">
     <link rel="stylesheet" href="src/styles/register.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -13,6 +13,11 @@
 
 <body>
 
+<div class="loader">
+        <img src="src/images/loader.gif">
+    </div>
+
+    <div class="main-content">
     <!-- Navigation Bar -->
     <div class="container pt-4">
         <div class="row nav-bar">
@@ -133,8 +138,6 @@
                                         <button class="register-btn" name="register-btn"
                                             id="register-btn">Register</button>
                                     </div>
-                                    <div class="small-p d-flex justify-content-center">Already have an account? Sign in
-                                        instead.</div>
                                 </div>
                             </div>
                         </form>
@@ -143,12 +146,14 @@
             </div>
         </div>
     </div>
+    </div>
 
 
     <footer>
         <img class="vector-green fixed-bottom" src="src/images/vector-green.png" alt="Green Vector">
     </footer>
     <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="src/scripts/loader.js"></script>
 
 </body>
 
