@@ -65,7 +65,7 @@ mysqli_close($conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Treatment Record</title>
-    <link rel="icon" type="image/png" href="src/images/heart-logo.png"> 
+    <link rel="icon" type="image/png" href="src/images/heart-logo.png">
     <link rel="stylesheet" href="src/styles/dboardStyle.css">
     <link rel="stylesheet" href="src/styles/modals.css">
     <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
@@ -129,127 +129,141 @@ mysqli_close($conn);
 </style>
 
 <body>
+
+    <div class="loader">
+        <img src="src/images/loader.gif">
+    </div>
     <div class="overlay" id="overlay"></div>
 
     <?php
     include ('src/includes/sidebar/patients-treatment-record.php');
     ?>
 
-    <!-- Log Out Modal -->
-    <div class="modal" id="logOut" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <!-- Modal content -->
-                    <div class="modal-middle-icon">
-                        <i class="bi bi-box-arrow-right" style="color:#058789; font-size:5rem"></i>
+    <div class="main-content">
+
+        <!-- Log Out Modal -->
+        <div class="modal" id="logOut" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <!-- Modal content -->
+                        <div class="modal-middle-icon">
+                            <i class="bi bi-box-arrow-right" style="color:#058789; font-size:5rem"></i>
+                        </div>
+                        <div class="modal-title" style="color: black;">Are you leaving?</div>
+                        <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to log out?
+                        </div>
                     </div>
-                    <div class="modal-title" style="color: black;">Are you leaving?</div>
-                    <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to log out?
-                    </div>
-                </div>
-                <div class="modal-buttons">
-                    <button type="button" class="btn btn-secondary" id="logout-close-modal" data-dismiss="modal"
-                        style="background-color: #777777; 
+                    <div class="modal-buttons">
+                        <button type="button" class="btn btn-secondary" id="logout-close-modal" data-dismiss="modal"
+                            style="background-color: #777777; 
                             font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
-                    <button type="button" class="btn btn-secondary" id="logout-confirm-button" style="background-color: #058789; 
+                        <button type="button" class="btn btn-secondary" id="logout-confirm-button" style="background-color: #058789; 
                             font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Log
-                        Out</button>
+                            Out</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Submit Form Modal -->
-    <div class="modal" id="confirmModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="modal-middle-icon">
-                        <i class="bi bi-check-circle-fill" style="color:#058789; font-size:5rem"></i>
+        <!-- Submit Form Modal -->
+        <div class="modal" id="confirmModal" tabindex="-1" role="dialog" data-bs-backdrop="static"
+            data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="modal-middle-icon">
+                            <i class="bi bi-check-circle-fill" style="color:#058789; font-size:5rem"></i>
+                        </div>
+                        <div class="modal-title" style="color: black;">Confirmation</div>
+                        <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to submit?
+                        </div>
                     </div>
-                    <div class="modal-title" style="color: black;">Confirmation</div>
-                    <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to submit?</div>
-                </div>
-                <div class="modal-buttons">
-                    <button type="button" class="btn btn-secondary" id="cancel-confirm-modal" data-dismiss="modal"
-                        style="background-color: #777777; 
+                    <div class="modal-buttons">
+                        <button type="button" class="btn btn-secondary" id="cancel-confirm-modal" data-dismiss="modal"
+                            style="background-color: #777777; 
                                 font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
-                    <button type="button" class="btn btn-secondary" id="submit-form-modal" data-dismiss="modal"
-                        style="background-color: #058789; 
+                        <button type="button" class="btn btn-secondary" id="submit-form-modal" data-dismiss="modal"
+                            style="background-color: #058789; 
                                 font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Submit</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="content" id="content">
-        <div class="left-header">
-            <p>
-                <span style="color: #E13F3D;">Treatment</span>
-                <span style="color: #058789;">Record</span>
-            </p>
-        </div>
+        <div class="content" id="content">
+            <div class="left-header">
+                <p>
+                    <span style="color: #E13F3D;">Treatment</span>
+                    <span style="color: #058789;">Record</span>
+                </p>
+            </div>
 
-        <!-- Form Container -->
-        <div class="form-container">
-            <form id="treatment-form" action="treatment-record.php" method="post">
-                <div class="input-row">
-                    <div class="input-container">
-                        <input type="text" id="full-name" name="full_name" placeholder="Full Name" autocomplete="off"
-                            required onkeyup="searchPatients(this.value)">
-                        <ul id="search-results" class="list" style="display: none;"></ul>
+            <!-- Form Container -->
+            <div class="form-container">
+                <form id="treatment-form" action="treatment-record.php" method="post">
+                    <div class="input-row">
+                        <div class="input-container">
+                            <input type="text" id="full-name" name="full_name" placeholder="Full Name"
+                                autocomplete="off" required onkeyup="searchPatients(this.value)">
+                            <ul id="search-results" class="list" style="display: none;"></ul>
+                        </div>
+                        <input type="hidden" id="patient_id" name="patient_id">
+                        <select id="sex" name="sex" required>
+                            <option value="" disabled selected hidden>Sex</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <input type="number" name="age" id="age" placeholder="Age" required>
                     </div>
-                    <input type="hidden" id="patient_id" name="patient_id">
-                    <select id="sex" name="sex" required>
-                        <option value="" disabled selected hidden>Sex</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                    </select>
-                    <input type="number" name="age" id="age" placeholder="Age" required>
-                </div>
-                <div class="input-row">
-                    <input type="text" id="course" name="course" placeholder="Course/Organization" autocomplete="off"
-                        required>
-                    <select id="section" name="section" required>
-                        <option value="" disabled selected hidden>Block Section</option>
-                        <option value="1-1">1-1</option>
-                        <option value="1-2">1-2</option>
-                        <option value="2-1">2-1</option>
-                        <option value="2-2">2-2</option>
-                        <option value="3-1">3-1</option>
-                        <option value="3-2">3-2</option>
-                        <option value="4-1">4-1</option>
-                        <option value="4-2">4-2</option>
-                    </select>
-                </div>
-                <div class="right-row">
-                    <p class="bold" onclick="window.location.href='ai-basedSDT.php'">Use AI Symptoms Diagnostic Tool</p>
-                </div>
-                <div class="input-row">
-                    <input type="text" id="symptoms" name="symptoms" placeholder="Symptoms" autocomplete="off"
-                        value="<?php echo isset($_GET['symptoms']) ? htmlspecialchars($_GET['symptoms']) : ''; ?>" required>
-                </div>
-                <div class="input-row">
-                    <input type="text" id="diagnosis" name="diagnosis" placeholder="Diagnosis" autocomplete="off"
-                        value="<?php echo isset($_GET['diagnosis']) ? htmlspecialchars($_GET['diagnosis']) : ''; ?>" required>
-                    <input type="text" id="treatments" name="treatments" placeholder="Treatments/Medicines"
-                        autocomplete="off" value="<?php echo isset($_GET['treatments']) ? htmlspecialchars($_GET['treatments']) : ''; ?>"
-                        required>
-                </div>
-                <div class="right-row">
-                    <button type="submit" id="submit-form-button" name="record-btn">Submit Form</button>
-                </div>
-            </form>
+                    <div class="input-row">
+                        <input type="text" id="course" name="course" placeholder="Course/Organization"
+                            autocomplete="off" required>
+                        <select id="section" name="section" required>
+                            <option value="" disabled selected hidden>Block Section</option>
+                            <option value="1-1">1-1</option>
+                            <option value="1-2">1-2</option>
+                            <option value="2-1">2-1</option>
+                            <option value="2-2">2-2</option>
+                            <option value="3-1">3-1</option>
+                            <option value="3-2">3-2</option>
+                            <option value="4-1">4-1</option>
+                            <option value="4-2">4-2</option>
+                        </select>
+                    </div>
+                    <div class="right-row">
+                        <p class="bold" onclick="window.location.href='ai-basedSDT.php'">Use AI Symptoms Diagnostic Tool
+                        </p>
+                    </div>
+                    <div class="input-row">
+                        <input type="text" id="symptoms" name="symptoms" placeholder="Symptoms" autocomplete="off"
+                            value="<?php echo isset($_GET['symptoms']) ? htmlspecialchars($_GET['symptoms']) : ''; ?>"
+                            required>
+                    </div>
+                    <div class="input-row">
+                        <input type="text" id="diagnosis" name="diagnosis" placeholder="Diagnosis" autocomplete="off"
+                            value="<?php echo isset($_GET['diagnosis']) ? htmlspecialchars($_GET['diagnosis']) : ''; ?>"
+                            required>
+                        <input type="text" id="treatments" name="treatments" placeholder="Treatments/Medicines"
+                            autocomplete="off"
+                            value="<?php echo isset($_GET['treatments']) ? htmlspecialchars($_GET['treatments']) : ''; ?>"
+                            required>
+                    </div>
+                    <div class="right-row">
+                        <button type="submit" id="submit-form-button" name="record-btn">Submit Form</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
 
-    <?php
-    include ('src/includes/footer.php');
-    ?>
+        <?php
+        include ('src/includes/footer.php');
+        ?>
+    </div>
     <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/scripts/script.js"></script>
+    <script src="src/scripts/loader.js"></script>
     <script>
         $(document).ready(function () {
             // Show Modal when Log Out menu item is clicked
