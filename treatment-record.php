@@ -348,41 +348,41 @@ mysqli_close($conn);
 
         // JavaScript
         function searchPatients(input) {
-            if (input.length == 0) {
-                document.getElementById("search-results").innerHTML = "";
-                document.getElementById("search-results").style.display = "none";
-                return;
-            } else {
-                $.ajax({
-                    type: 'POST',
-                    url: 'autocomplete.php',
-                    data: { input: input },
-                    success: function (data) {
-                        console.log(data);
-                        try {
-                            var suggestions = JSON.parse(data);
-                            if (Array.isArray(suggestions) && suggestions.length > 0) {
-                                var listHtml = '';
-                                suggestions.forEach(function (person) {
-                                    var fullName = person.first_name + ' ' + person.last_name;
-                                    listHtml += '<li onclick="selectFullName(\'' + fullName + '\', \'' + person.patient_id + '\')">' + fullName + '</li>';
-                                });
-                                $('#search-results').html(listHtml);
-                                document.getElementById("search-results").style.display = "block";
-                            } else {
-                                document.getElementById("search-results").innerHTML = "";
-                                document.getElementById("search-results").style.display = "none"; // Hide the list box if there are no suggestions
-                            }
-                        } catch (error) {
-                            console.error('Error parsing JSON:', error);
+        if (input.length == 0) {
+            document.getElementById("search-results").innerHTML = "";
+            document.getElementById("search-results").style.display = "none";
+            return;
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: 'autocomplete.php',
+                data: { input: input },
+                success: function (data) {
+                    console.log(data);
+                    try {
+                        var suggestions = JSON.parse(data);
+                        if (Array.isArray(suggestions) && suggestions.length > 0) {
+                            var listHtml = '';
+                            suggestions.forEach(function (person) {
+                                var fullName = person.first_name + ' ' + person.last_name;
+                                listHtml += '<li onclick="selectFullName(\'' + fullName + '\', \'' + person.patient_id + '\')">' + fullName + '</li>';
+                            });
+                            $('#search-results').html(listHtml);
+                            document.getElementById("search-results").style.display = "block";
+                        } else {
+                            document.getElementById("search-results").innerHTML = "";
+                            document.getElementById("search-results").style.display = "none"; // Hide the list box if there are no suggestions
                         }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
+                    } catch (error) {
+                        console.error('Error parsing JSON:', error);
                     }
-                });
-            }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
         }
+    }
 
         function selectFullName(fullName, patientId) {
             document.getElementById("full-name").value = fullName;
@@ -415,14 +415,13 @@ mysqli_close($conn);
 
 
 
-        // Trigger autocomplete only when input length > 0
-        $(document).ready(function () {
-            $('#full-name').keyup(function () {
-                var input = $(this).val().trim();
-                if (input.length > 0) {
-                    searchPatients(input);
-                }
-            });
+    // Trigger autocomplete only when input length > 0
+    $(document).ready(function () {
+        $('#full-name').keyup(function () {
+            var input = $(this).val().trim();
+            if (input.length > 0) {
+                searchPatients(input);
+            }
         });
     </script>
 

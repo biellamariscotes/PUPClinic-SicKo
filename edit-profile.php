@@ -62,7 +62,7 @@ mysqli_close($conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SicKo - User Settings</title>
-    <link rel="icon" type="image/png" href="src/images/sicko-logo.png">
+    <link rel="icon" type="image/png" href="src/images/heart-logo.png">
     <link rel="stylesheet" href="src/styles/dboardStyle.css">
     <link rel="stylesheet" href="src/styles/modals.css">
     <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
@@ -71,6 +71,10 @@ mysqli_close($conn);
 </head>
 
 <body>
+    <div class="loader">
+        <img src="src/images/loader.gif">
+    </div>
+
     <div class="overlay" id="overlay"></div>
 
     <?php
@@ -156,6 +160,7 @@ mysqli_close($conn);
     ?>
     <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/scripts/script.js"></script>
+    <script src="src/scripts/loader.js"></script>
     <script>
 $(document).ready(function () {
     // Function to check if any input field is empty
