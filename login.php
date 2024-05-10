@@ -3,6 +3,11 @@ session_start();
 
 require_once ('src/includes/connect.php');
 
+if (isset($_SESSION['patient_id'])) {
+    header("Location: home.php");
+    exit();
+}
+
 if (!$conn) {
     die("Database connection failed");
 }

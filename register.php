@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (isset($_SESSION['patient_id'])) {
+    header("Location: home.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
