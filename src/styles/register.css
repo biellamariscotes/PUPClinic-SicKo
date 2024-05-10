@@ -232,6 +232,7 @@ input[type="date"]::before {
       background-color: #D4D4D4;
       color: #fff !important;
       cursor: default;
+      border: none !important;
   }
   
   
