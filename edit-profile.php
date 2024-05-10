@@ -1,6 +1,6 @@
 <?php
-require_once('src/includes/session-nurse.php');
-require_once('src/includes/connect.php');
+require_once ('src/includes/session-nurse.php');
+require_once ('src/includes/connect.php');
 
 // Initialize variables
 $errors = array();
@@ -68,6 +68,15 @@ mysqli_close($conn);
     <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+    <style>
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
@@ -81,28 +90,30 @@ mysqli_close($conn);
     include ('src/includes/sidebar/user-settings.php');
     ?>
 
-                <!-- Submit Form Modal -->
-                <div class="modal" id="confirmModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                            <div class="modal-body">
-                                <div class="modal-middle-icon">
-                                    <i class="bi bi-check-circle-fill" style="color:#058789; font-size:5rem"></i>
-                                </div>
-                                <div class="modal-title" style="color: black;">Confirmation</div>
-                                <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to submit?</div>
-                            </div>
-                            <div class="modal-buttons">
-                                <button type="button" class="btn btn-secondary" id="cancel-confirm-modal" data-dismiss="modal" style="background-color: #777777; 
-                                font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
-                                <button type="button" class="btn btn-secondary" id="submit-form-modal" data-dismiss="modal" style="background-color: #058789; 
-                                font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Submit</button>
-                            </div>
-                        </div>
+    <!-- Submit Form Modal -->
+    <div class="modal" id="confirmModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-middle-icon">
+                        <i class="bi bi-check-circle-fill" style="color:#058789; font-size:5rem"></i>
                     </div>
+                    <div class="modal-title" style="color: black;">Confirmation</div>
+                    <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to submit?</div>
                 </div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn btn-secondary" id="cancel-confirm-modal" data-dismiss="modal"
+                        style="background-color: #777777; 
+                                font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
+                    <button type="button" class="btn btn-secondary" id="submit-form-modal" data-dismiss="modal"
+                        style="background-color: #058789; 
+                                font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-      <div class="content" id="content">
+    <div class="content" id="content">
         <div class="left-header">
             <p>
                 <span style="color: #E13F3D;">Edit</span>
@@ -118,38 +129,41 @@ mysqli_close($conn);
 
         <!-- Form Container -->
         <div class="form-container">
-        <form id="edit-profile-form" method="post">
-            <!-- Display errors, if any -->
-            <?php if (!empty($errors)) { ?>
-                <div class="error-message">
-                    <?php foreach ($errors as $error) { ?>
-                        <p><?php echo $error; ?></p>
-                    <?php } ?>
-                </div>
-            <?php } ?>
-                <div class="input-row">
-                <div class="group">
-                    <div class="userProfile-input-label">Last Name</div>
-                    <input type="text" id="lastName" name="lastName" value="<?php echo $last_name_value; ?>" autocomplete="off" required>
-                </div>
-                  <div class="group">
-                    <div class="userProfile-input-label">First Name</div>
-                    <input type="text" id="firstName" name="firstName" value="<?php echo $first_name_value; ?>" autocomplete="off" required>
-                  </div>
-                  <div class="group">
-                    <div class="userProfile-input-label">Middle Name</div>
-                    <input type="text" id="middleName" name="middleName" value="<?php echo $middle_name_value; ?>" autocomplete="off" required>
+            <form id="edit-profile-form" method="post">
+                <!-- Display errors, if any -->
+                <?php if (!empty($errors)) { ?>
+                    <div class="error-message">
+                        <?php foreach ($errors as $error) { ?>
+                            <p><?php echo $error; ?></p>
+                        <?php } ?>
                     </div>
-                  </div>
+                <?php } ?>
                 <div class="input-row">
-                  <div class="group">
-                      <div class="userProfile-input-label">Email</div>
-                      <input type="email" id="email" name="email" value="<?php echo $email_value; ?>" autocomplete="off" required>
+                    <div class="group">
+                        <div class="userProfile-input-label">Last Name</div>
+                        <input type="text" id="lastName" name="lastName" value="<?php echo $last_name_value; ?>"
+                            autocomplete="off" required>
+                    </div>
+                    <div class="group">
+                        <div class="userProfile-input-label">First Name</div>
+                        <input type="text" id="firstName" name="firstName" value="<?php echo $first_name_value; ?>"
+                            autocomplete="off" required>
+                    </div>
+                    <div class="group">
+                        <div class="userProfile-input-label">Middle Name</div>
+                        <input type="text" id="middleName" name="middleName" value="<?php echo $middle_name_value; ?>"
+                            autocomplete="off" required>
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="group">
+                        <div class="userProfile-input-label">Email</div>
+                        <input type="email" id="email" name="email" value="<?php echo $email_value; ?>"
+                            autocomplete="off" required>
                     </div>
                 </div>
                 <div class="middle-row">
-                    <button type="submit" id="submit-form-button"
-                        name="record-btn">Save Changes</button>
+                    <button type="submit" id="submit-form-button" name="record-btn">Save Changes</button>
                 </div>
             </form>
         </div>
@@ -162,59 +176,60 @@ mysqli_close($conn);
     <script src="src/scripts/script.js"></script>
     <script src="src/scripts/loader.js"></script>
     <script>
-$(document).ready(function () {
-    // Function to check if any input field is empty
-    function checkEmptyInputs() {
-        var isEmpty = false;
-        $('input').each(function () {
-            if ($(this).val() === '') {
-                isEmpty = true;
-                return false; // Exit the loop if any input field is empty
+        $(document).ready(function () {
+            // Function to check if any input field is empty
+            function checkEmptyInputs() {
+                var isEmpty = false;
+                $('input').each(function () {
+                    if ($(this).val() === '') {
+                        isEmpty = true;
+                        return false; // Exit the loop if any input field is empty
+                    }
+                });
+                return isEmpty;
             }
+
+            // Initially disable the button if any input field is empty
+            $('#submit-form-button').prop('disabled', checkEmptyInputs());
+
+            // Initially show or hide the empty field message
+            $('#empty-field-message').toggle(checkEmptyInputs());
+
+            // Add event listener to input fields
+            $('input').on('input', function () {
+                // Enable or disable the button based on input field status
+                $('#submit-form-button').prop('disabled', checkEmptyInputs());
+                // Show or hide the empty field message
+                $('#empty-field-message').toggle(checkEmptyInputs());
+            });
+
+            // Show Modal when Submit button is clicked
+            $("#submit-form-button").click(function (event) {
+                event.preventDefault(); // Prevent default form submission
+                $("#confirmModal").modal("show");
+            });
+
+            // Close the Modal with the close button
+            $("#cancel-confirm-modal").click(function (event) {
+                $("#confirmModal").modal("hide");
+            });
+
+            // Handle form submission when user confirms in the modal
+            $("#submit-form-modal").click(function (event) {
+                $("#edit-profile-form").submit(); // Submit the form
+            });
+
+            // Reload the page after form submission
+            $("#edit-profile-form").submit(function () {
+                // Reload the page after a short delay (adjust time as needed)
+                setTimeout(function () {
+                    location.reload(true); // Reload the page
+                }, 3000); // 1000 milliseconds = 1 second
+            });
         });
-        return isEmpty;
-    }
-
-    // Initially disable the button if any input field is empty
-    $('#submit-form-button').prop('disabled', checkEmptyInputs());
-    
-    // Initially show or hide the empty field message
-    $('#empty-field-message').toggle(checkEmptyInputs());
-
-    // Add event listener to input fields
-    $('input').on('input', function () {
-        // Enable or disable the button based on input field status
-        $('#submit-form-button').prop('disabled', checkEmptyInputs());
-        // Show or hide the empty field message
-        $('#empty-field-message').toggle(checkEmptyInputs());
-    });
-
-    // Show Modal when Submit button is clicked
-    $("#submit-form-button").click(function (event) {
-        event.preventDefault(); // Prevent default form submission
-        $("#confirmModal").modal("show");
-    });
-
-    // Close the Modal with the close button
-    $("#cancel-confirm-modal").click(function (event) {
-        $("#confirmModal").modal("hide");
-    });
-
-    // Handle form submission when user confirms in the modal
-    $("#submit-form-modal").click(function (event) {
-        $("#edit-profile-form").submit(); // Submit the form
-    });
-
-    // Reload the page after form submission
-    $("#edit-profile-form").submit(function () {
-        // Reload the page after a short delay (adjust time as needed)
-        setTimeout(function () {
-            location.reload(true); // Reload the page
-        }, 3000); // 1000 milliseconds = 1 second
-    });
-});
-</script>
+    </script>
 
 
 </body>
+
 </html>

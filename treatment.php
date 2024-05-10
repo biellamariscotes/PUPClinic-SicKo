@@ -93,7 +93,6 @@ if (isset($_SESSION['patient_id'])) {
                         <span class="gray fs-7"><a href="home.php" style="text-decoration:none"><i class="fa-solid fa-arrow-left"></i>   Back to Home</a></span>
                     </div>
                 </div>
-
             </div>
 
             <div class="mt-2 col-md-9 container">

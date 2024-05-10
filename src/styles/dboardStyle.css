@@ -1251,7 +1251,7 @@ input[type=number] {
   display: flex;
   justify-content: center;
   gap: 25px;
-  margin: 50px 25px 50px 25px;
+  margin: 30px 25px 50px 25px;
 }
 
 .box-container {
