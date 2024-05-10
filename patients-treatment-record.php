@@ -62,6 +62,12 @@ if (isset($_GET['patient_id'])) {
         margin-bottom: 1px;
         padding: 0;
     }
+
+    .no-records-found {
+        text-align: center;
+        margin-top: 220px;
+        font-size: 30px;
+    }
 </style>
 
 <body>
@@ -115,7 +121,7 @@ if (isset($_GET['patient_id'])) {
                                     </div>
                                     <div class="info-label">Birthday:</div>
                                     <div class="info-value">
-                                        <?php echo isset($patient['birthday']) ? $patient['birthday'] : 'No data'; ?>
+                                        <?php echo isset($patient['birthday']) ? date("F d, Y", strtotime($patient['birthday'])) : 'No data'; ?>
                                     </div>
                                     <div class="info-label">Sex:</div>
                                     <div class="info-value">
@@ -134,12 +140,13 @@ if (isset($_GET['patient_id'])) {
                             <span style="color: #058789;">&nbsp;History</span>
                         </div>
                         <div class="history-info-container">
-                            <?php
-                            $recordsPerPage = 4;
-                            $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-                            $start = ($currentPage - 1) * $recordsPerPage;
-                            $end = $start + $recordsPerPage;
+                        <?php
+                        $recordsPerPage = 4;
+                        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+                        $start = ($currentPage - 1) * $recordsPerPage;
+                        $end = $start + $recordsPerPage;
 
+                        if (count($treatment_history) > 0) {
                             for ($i = $start; $i < min($end, count($treatment_history)); $i++): // Display records based on pagination
                                 // Format the date
                                 $formatted_date = date("F d, Y", strtotime($treatment_history[$i]['date']));
@@ -158,8 +165,12 @@ if (isset($_GET['patient_id'])) {
                                         </div>
                                     </div>
                                 </div>
-                            <?php endfor; ?>
-                        </div>
+                            <?php
+                            endfor;
+                        } else {
+                            echo "<div class='no-records-found'><p>No Records Found</p></div>";
+                        }
+                        ?>
 
                         <div class="treatment-history-buttons">
                             <?php if ($currentPage > 1): ?>

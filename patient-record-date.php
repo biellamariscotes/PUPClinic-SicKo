@@ -146,7 +146,7 @@ if (isset($_GET['patient_id']) && isset($_GET['record_id'])) {
                                 </div>
                                 <div class="info-label">Birthday:</div>
                                 <div class="info-value">
-                                    <?php echo isset($patient['birthday']) ? $patient['birthday'] : 'No data'; ?>
+                                    <?php echo isset($patient['birthday']) ? date("F d, Y", strtotime($patient['birthday'])) : 'No data'; ?>
                                 </div>
                                 <div class="info-label">Sex:</div>
                                 <div class="info-value">
