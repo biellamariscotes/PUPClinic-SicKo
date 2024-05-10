@@ -108,7 +108,7 @@ if (isset($_SESSION['patient_id'])) {
             <div class="container col-9 mb-5">
                 <div class="row d-flex flex-wrap align-items-stretch">
                     <div class="col-4">
-                        <div class="card-box" style="height:20.5rem">
+                        <div class="card-box" style="height:23.4rem">
                             <div>
                                 <p class="fs-3 green fw-semibold">Recent Visits</p>
                             </div>
