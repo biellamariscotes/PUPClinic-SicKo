@@ -11,17 +11,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $last_name = $_POST["last_name"];
     $email = $_POST["email"];
     $password = $_POST["password"];
-    $sex = $_POST["sex"]; // Add this line to retrieve sex from form
-    $birthday = $_POST["date"]; // Add this line to retrieve birthday from form
-    $course = $_POST["course"]; // Add this line to retrieve course from form
+    $sex = $_POST["sex"]; 
+    $birthday = $_POST["date"]; 
+    $course = $_POST["course"]; 
+    $section = $_POST["section"]; 
 
     // Prepare and bind the INSERT statement
-    $stmt = $conn->prepare("INSERT INTO patient (student_id, first_name, last_name, email, password, sex, birthday, course) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssss", $student_id, $first_name, $last_name, $email, $password, $sex, $birthday, $course);
+    $stmt = $conn->prepare("INSERT INTO patient (student_id, first_name, last_name, email, password, sex, birthday, course, section) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)");
+    $stmt->bind_param("sssssssss", $student_id, $first_name, $last_name, $email, $password, $sex, $birthday, $course, $section);
 
     // Execute the statement
     if ($stmt->execute()) {
-        header("Location: ../../../register.php");
+        header("Location: ../../../login.php");
         exit();
     } else {
         echo "Error: " . $stmt->error;

@@ -44,7 +44,7 @@ if (isset($_POST['login_btn'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SicKo - Sign In</title>
+    <title>Sign In</title>
     <link rel="icon" type="image/png" href="src/images/heart-logo.png">
     <link rel="stylesheet" href="src/styles/style.css">
     <link rel="stylesheet" href="src/styles/modals.css">
@@ -61,56 +61,65 @@ if (isset($_POST['login_btn'])) {
 </head>
 
 <body>
-    <div class="container-login-cst">
-        <div class="logo-container">
-            <img class="logo" src="src/images/sicko-logo.png" alt="Sicko Logo">
-            <h2><span style="color: #058789;">Sic</span><span style="color: #E13F3D;">Ko</span> | Sign In</h2>
-        </div>
 
-        <div class="form-container-cst">
-            <form method="post" class="needs-validation" novalidate>
-                <div class="input-container">
-                    <input type="email" name="email" id="emailInput" maxlength="254" required>
-                    <label for="emailInput">Email</label>
-                </div>
-                <div class="input-container">
-                    <input type="password" name="password" id="passwordInput" maxlength="50" required
-                        class="padding-right: 50px">
-                    <label for="passwordInput">Password</label>
-                    <span class="toggle-password" onclick="togglePassword()">Show</span>
-                </div>
-                <div class="button-container">
-                    <button type="submit" name="login_btn" id="submitButton" disable>Sign In</button>
-                </div>
-            </form>
-        </div>
+    <div class="loader">
+        <img src="src/images/loader.gif">
     </div>
 
-    <!-- Log In Failed Modal -->
-    <div class="modal" id="loginFailed" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="modal-middle-icon">
-                    <img src="src/images/x-mark.gif" style="width: 9rem; height: auto;" alt="Failed Icon">
+    <div class="main-content">
+        <div class="container-login-cst">
+            <div class="logo-container">
+                <img class="logo" src="src/images/sicko-logo.png" alt="Sicko Logo">
+                <h2><span style="color: #058789;">Sic</span><span style="color: #E13F3D;">Ko</span> | Sign In</h2>
+            </div>
+
+            <div class="form-container-cst">
+                <form method="post" class="needs-validation" novalidate>
+                    <div class="input-container">
+                        <input type="email" name="email" id="emailInput" maxlength="254" required>
+                        <label for="emailInput">Email</label>
                     </div>
-                    <div class="modal-title">Login Failed</div>
-                    <div class="modal-subtitle" style="text-wrap: pretty; ">Authentication failed. Please check your
-                        credentials and try again.</div>
-                </div>
-                <div class="modal-buttons">
-                    <button type="button" class="btn btn-secondary" id="login-close-modal" data-dismiss="modal"
-                        style="background-color: #E13F3D; 
+                    <div class="input-container">
+                        <input type="password" name="password" id="passwordInput" maxlength="50" required
+                            class="padding-right: 50px">
+                        <label for="passwordInput">Password</label>
+                        <span class="toggle-password" onclick="togglePassword()">Show</span>
+                    </div>
+                    <div class="button-container">
+                        <button type="submit" name="login_btn" id="submitButton" disable>Sign In</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Log In Failed Modal -->
+        <div class="modal" id="loginFailed" tabindex="-1" role="dialog" data-bs-backdrop="static"
+            data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="modal-middle-icon">
+                            <img src="src/images/x-mark.gif" style="width: 9rem; height: auto;" alt="Failed Icon">
+                        </div>
+                        <div class="modal-title">Login Failed</div>
+                        <div class="modal-subtitle" style="text-wrap: pretty; ">Authentication failed. Please check your
+                            credentials and try again.</div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button type="button" class="btn btn-secondary" id="login-close-modal" data-dismiss="modal"
+                            style="background-color: #E13F3D; 
                     font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-top: 1rem;">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <img class="vector-red" src="src/images/vector-red.png" alt="Red Vector">
-    <img class="vector-green" src="src/images/vector-green.png" alt="Green Vector">
+        <img class="vector-red" src="src/images/vector-red.png" alt="Red Vector">
+        <img class="vector-green" src="src/images/vector-green.png" alt="Green Vector">
+    </div>
     <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/scripts/script.js"></script>
+    <script src="src/scripts/loader.js"></script>
 
 
     <script>
