@@ -86,9 +86,11 @@ mysqli_close($conn);
 
     <div class="overlay" id="overlay"></div>
 
+    <div class="main-content">
     <?php
     include ('src/includes/sidebar/user-settings.php');
     ?>
+
 
     <!-- Save Changes Modal -->
         <div class="modal" id="saveChangesModal" tabindex="-1" role="dialog">
@@ -184,6 +186,7 @@ mysqli_close($conn);
     <?php
     include ('src/includes/footer.php');
     ?>
+    </div>
     <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/scripts/script.js"></script>
     <script src="src/scripts/loader.js"></script>

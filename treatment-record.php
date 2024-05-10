@@ -65,7 +65,7 @@ mysqli_close($conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Treatment Record</title>
-    <link rel="icon" type="image/png" href="src/images/sicko-logo.png">
+    <link rel="icon" type="image/png" href="src/images/heart-logo.png"> 
     <link rel="stylesheet" href="src/styles/dboardStyle.css">
     <link rel="stylesheet" href="src/styles/modals.css">
     <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
@@ -229,13 +229,13 @@ mysqli_close($conn);
                 </div>
                 <div class="input-row">
                     <input type="text" id="symptoms" name="symptoms" placeholder="Symptoms" autocomplete="off"
-                        value="<?php echo isset($_GET['symptoms']) ? $_GET['symptoms'] : ''; ?>" required>
+                        value="<?php echo isset($_GET['symptoms']) ? htmlspecialchars($_GET['symptoms']) : ''; ?>" required>
                 </div>
                 <div class="input-row">
                     <input type="text" id="diagnosis" name="diagnosis" placeholder="Diagnosis" autocomplete="off"
-                        value="<?php echo isset($_GET['diagnosis']) ? $_GET['diagnosis'] : ''; ?>" required>
+                        value="<?php echo isset($_GET['diagnosis']) ? htmlspecialchars($_GET['diagnosis']) : ''; ?>" required>
                     <input type="text" id="treatments" name="treatments" placeholder="Treatments/Medicines"
-                        autocomplete="off" value="<?php echo isset($_GET['treatments']) ? $_GET['treatments'] : ''; ?>"
+                        autocomplete="off" value="<?php echo isset($_GET['treatments']) ? htmlspecialchars($_GET['treatments']) : ''; ?>"
                         required>
                 </div>
                 <div class="right-row">
