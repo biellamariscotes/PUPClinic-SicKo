@@ -46,14 +46,14 @@ if(isset($_GET['download'])) {
 
     // Populate the table with data from the database
     while ($row = mysqli_fetch_assoc($result)) {
-        $pdf->Cell(60, 10, $row['full_name'], 1, 0, 'L');
+        $pdf->Cell(60, 10, ucwords(strtolower($row['full_name'])), 1, 0, 'L');
         $pdf->Cell(15, 10, $row['age'], 1, 0, 'C');
         $pdf->Cell(40, 10, $row['course'], 1, 0, 'C');
         $pdf->Cell(20, 10, $row['section'], 1, 0, 'C');
         $pdf->Cell(20, 10, $row['sex'], 1, 0, 'C');
-        $pdf->Cell(100, 10, $row['symptoms'], 1, 0, 'L');
-        $pdf->Cell(40, 10, $row['diagnosis'], 1, 0, 'L');
-        $pdf->Cell(50, 10, $row['treatments'], 1, 0, 'L');
+        $pdf->Cell(100, 10, ucfirst(strtolower($row['symptoms'])), 1, 0, 'L');
+        $pdf->Cell(40, 10, ucfirst(strtolower($row['diagnosis'])), 1, 0, 'L');
+        $pdf->Cell(50, 10, ucfirst(strtolower($row['treatments'])), 1, 0, 'L');
         $pdf->Cell(40, 10, $row['date'], 1, 1, 'C');
     }
 
