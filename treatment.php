@@ -53,11 +53,11 @@ if (isset($_SESSION['patient_id'])) {
 
     <body>
 
-        <!-- <div class="loader">
+         <div class="loader">
             <img src="src/images/loader.gif">
-        </div> -->
+        </div>
 
-        <div class="main-contenter">
+        <div class="main-content">
             <div class="row nav-bar px-6">
                 <div class="col-md-6 nav-bar-left d-flex align-items-center">
                     <a href="home.php"><img src="src/images/sicko-logo.png" class="me-4 my-2"></a>
@@ -144,7 +144,7 @@ if (isset($_SESSION['patient_id'])) {
         <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="src/scripts/script.js"></script>
         <script src="src/scripts/calendar.js"></script>
-        <!-- <script src="src/scripts/loader.js"></script> -->
+         <script src="src/scripts/loader.js"></script>
     </body>
 
     </html>

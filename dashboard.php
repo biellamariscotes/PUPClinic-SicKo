@@ -27,7 +27,7 @@ $totalPages = ceil($totalRecords / $rowsPerPage);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SicKo - Dashboard</title>
+    <title>Dashboard</title>
     <link rel="icon" type="image/png" href="src/images/heart-logo.png">
     <link rel="stylesheet" href="src/styles/dboardStyle.css">
     <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
