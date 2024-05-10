@@ -25,6 +25,13 @@ $treatments = isset($_GET['treatments']) ? $_GET['treatments'] : '';
 </head>
 
 <style>
+
+    input, select {
+        color: gray;
+        cursor: default;
+        pointer-events: none;
+    }
+
      #sex {
         height: 83px;
         border-radius: 15px;
@@ -56,19 +63,19 @@ $treatments = isset($_GET['treatments']) ? $_GET['treatments'] : '';
     <div class="form-container">
         <form id="treatment-form" action="excuse-letter.php" method="post">
             <div class="input-row">
-            <input type="text" id="full-name" name="full_name" placeholder="Full Name" autocomplete="off" required value="<?php echo $full_name; ?>" disabled>
-            <input type="hidden" name="patient_id" value="<?php echo $patient_id; ?>" disabled>
-                <select id="sex" name="sex" required disabled>
+            <input type="text" id="full-name" name="full_name" placeholder="Full Name" autocomplete="off" required value="<?php echo $full_name; ?>" >
+            <input type="hidden" name="patient_id" value="<?php echo $patient_id; ?>" >
+                <select id="sex" name="sex" required >
                     <option value="" disabled hidden>Gender</option>
                     <option value="male" <?php if($sex == 'male') echo 'selected'; ?>>Male</option>
                     <option value="female" <?php if($sex == 'female') echo 'selected'; ?>>Female</option>
                     <option value="other" <?php if($sex == 'other') echo 'selected'; ?>>Other</option>
                 </select>
-                <input type="number" id="age" name="age" placeholder="Age" required value="<?php echo $age; ?>" disabled>
+                <input type="number" id="age" name="age" placeholder="Age" required value="<?php echo $age; ?>" >
             </div>
             <div class="input-row">
-                <input type="text" id="course" name="course" placeholder="Course/Organization" autocomplete="off" required value="<?php echo $course; ?>" disabled>
-                    <select id="section" name="section" required disabled>
+                <input type="text" id="course" name="course" placeholder="Course/Organization" autocomplete="off" required value="<?php echo $course; ?>" >
+                    <select id="section" name="section" required >
                         <option value="" disabled hidden>Block Section</option>
                         <option value="1-1" <?php if($section == '1-1') echo 'selected'; ?>>1-1</option>
                         <option value="1-2" <?php if($section == '1-2') echo 'selected'; ?>>1-2</option>
@@ -81,11 +88,11 @@ $treatments = isset($_GET['treatments']) ? $_GET['treatments'] : '';
                     </select>
             </div>
             <div class="input-row">
-                <input type="text" id="symptoms" name="symptoms" placeholder="Symptoms" autocomplete="off" required value="<?php echo $symptoms; ?>" disabled>
+                <input type="text" id="symptoms" name="symptoms" placeholder="Symptoms" autocomplete="off" required value="<?php echo $symptoms; ?>" >
             </div>
             <div class="input-row">
-                <input type="text" id="diagnosis" name="diagnosis" placeholder="Diagnosis" autocomplete="off" required value="<?php echo $diagnosis; ?>" disabled>
-                <input type="text" id="treatments" name="treatments" placeholder="Treatments/Medicines" autocomplete="off" required value="<?php echo $treatments; ?>"  disabled>
+                <input type="text" id="diagnosis" name="diagnosis" placeholder="Diagnosis" autocomplete="off" required value="<?php echo $diagnosis; ?>" >
+                <input type="text" id="treatments" name="treatments" placeholder="Treatments/Medicines" autocomplete="off" required value="<?php echo $treatments; ?>"  >
             </div>
             <div class="middle-row">
                 <button type="submit" id="generate-excuse-letter-button" name="record-btn">Generate Excuse Letter</button>
