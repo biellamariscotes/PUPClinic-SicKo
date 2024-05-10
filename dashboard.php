@@ -86,17 +86,6 @@ $totalPages = ceil($totalRecords / $rowsPerPage);
 
                             <!-- Sorting and Pagination Container -->
                             <div class="sorting-pagination-container">
-                                <!-- Sorting button box -->
-                                <div class="sorting-button-box" id="sortingButtonBox">
-                                    <!-- Sort text -->
-                                    Sort by:
-                                    <select id="sortCriteria"
-                                        style="font-family: 'Poppins', sans-serif; font-weight: bold;">
-                                        <option value="Accending">Ascending A-Z</option>
-                                        <option value="Descending">Descending Z-A</option>
-                                        <option value="Time">Time</option>
-                                    </select>
-                                </div>
                                 <!-- Pagination buttons -->
                                 <div class="pagination-buttons">
                                     <!-- Previous button -->
@@ -108,7 +97,7 @@ $totalPages = ceil($totalRecords / $rowsPerPage);
 
                                     <!-- Next button -->
                                     <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>"
-                                        style="text-decoration: none; margin-right: 1.25rem;"
+                                        style="text-decoration: none; margin-right: 3rem;"
                                         class="pagination-button  <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
                                         &gt;
                                     </a>
