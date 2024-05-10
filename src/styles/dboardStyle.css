@@ -1456,6 +1456,10 @@ input[type=number] {
   border: none;
 }
 
+.history-next-button:hover {
+  color: #3b3b3b !important;
+}
+
 .history-next-button {
   width: 65px;
   height: 32px;

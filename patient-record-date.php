@@ -82,6 +82,10 @@ if(isset($_GET['patient_id']) && isset($_GET['record_id'])) {
     .additional-info {
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
+
+    a:hover {
+        color: #fff !important;
+    }
   }
 </style>
 
@@ -127,17 +131,17 @@ if(isset($_GET['patient_id']) && isset($_GET['record_id'])) {
                         <span style="color: #E13F3D;">Treatment</span>
                         <span style="color: #058789;">&nbsp;History</span>
                     </div>
-                    <div class="history-info-container" style="font-weight: bold; padding-left: 40px;">
+                    <div class="history-info-container" style="padding-left: 40px;">
                     <?php
                         // Format the date
                         $formatted_date = date("F j, Y", strtotime($record['date']));
                         // Display treatment record details
                         echo '<span style="color: black; font-size: 18px; margin-bottom: 40px;">' . $formatted_date . '</span>';
-                        echo "<p><span style=\"color: #058789; font-size: 25px;\">Symptoms</span> </p>";
+                        echo "<p><span style=\"color: #058789; font-size: 25px; font-weight: bold;\">Symptoms</span> </p>";
                         echo '<p><span style="color: #494949; font-size: 20px;">' . $record['symptoms'] . '</span></p>';
-                        echo "<p><span style=\"color: #058789; font-size: 25px;\">Diagnosis</span></p>";
+                        echo "<p><span style=\"color: #058789; font-size: 25px; font-weight: bold;\">Diagnosis</span></p>";
                         echo '<p><span style="color: #494949; font-size: 20px;">' . $record['diagnosis'] . '</span></p>';
-                        echo "<p><span style=\"color: #058789; font-size: 25px;\">Medicine Given:</span></p>";
+                        echo "<p><span style=\"color: #058789; font-size: 25px; font-weight: bold;\">Medicine Given:</span></p>";
                         echo '<p><span style="color: #494949; font-size: 20px;">' . $record['treatments'] . '</span></p>';
                     ?>
                     </div>

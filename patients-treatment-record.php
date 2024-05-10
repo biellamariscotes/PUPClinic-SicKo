@@ -126,7 +126,7 @@ if(isset($_GET['patient_id'])) {
                                     <div class="history-info">
                                     <a href="patient-record-date.php?patient_id=<?php echo $patient['patient_id']; ?>&record_id=<?php echo $treatment_history[$i]['record_id']; ?>" class="history-date"><?php echo $formatted_date; ?></a>
                                         <div class="diagnosis-tag">Diagnosis: 
-                                            <div class="diagnosis-tag-box"><?php echo $treatment_history[$i]['diagnosis']; ?></div>
+                                            <div class="diagnosis-tag-box"><?php echo ucfirst(strtolower($treatment_history[$i]['diagnosis'])); ?></div>
                                         </div>
                                     </div>
                                 </div>
