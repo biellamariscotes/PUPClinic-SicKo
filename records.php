@@ -13,7 +13,7 @@ if (isset($_GET['download'])) {
     $pdf = new TCPDF('L', 'mm', 'A3', true, 'UTF-8', false);
     $pdf->SetCreator('SicKo');
     $pdf->SetTitle('Treatment Records');
-    $pdf->SetHeaderData('', 0, 'SicKo - Treatment Records', '');
+    $pdf->SetHeaderData('', 0, 'SicKo - PUP Clinic', '');
 
     // Add a page with custom margins
     $pdf->SetMargins(15, 15, 15); // 15mm margin on all sides
@@ -126,6 +126,48 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
         <?php
         include ('src/includes/sidebar/records.php');
         ?>
+
+        <!-- Confirm Download Modal -->
+        <div class="modal" id="downloadModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-middle-icon">
+                        <i class="bi bi-check-circle-fill" style="color:#058789; font-size:5rem"></i>
+                    </div>
+                    <div class="modal-title" style="color: black;">Confirm Download</div>
+                    <div class="modal-subtitle" style="justify-content: center;">Are you sure you want to download this file?</div>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn btn-secondary" id="cancel-download" data-dismiss="modal" style="background-color: #777777; 
+                    font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
+                    <button type="button" class="btn btn-secondary" id="confirm-download" data-dismiss="modal" style="background-color: #058789; 
+                    font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Download Successful Modal -->
+        <div class="modal" id="download-successful-modal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="modal-middle-icon">
+                            <img src="src/images/check.gif" style="width: 10rem; height: auto;" alt="Check Icon">
+                        </div>
+                        <div class="modal-title" style="color: black;">Download Successful</div>
+                        <div class="modal-subtitle" style="text-wrap: pretty; justify-content: center;">Your file has been successfully downloaded.</div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button type="button" class="btn btn-secondary" id="download-close-modal" data-dismiss="modal"
+                            style="background-color: #23B26D; 
+                    font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-top: 1rem;">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="content" id="content">
             <div class="med-reports-header">
                 <div class="med-reports-header-box">
@@ -844,6 +886,42 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
     <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/scripts/script.js"></script>
     <script src="src/scripts/loader.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Show the confirm download modal when the download button is clicked
+        $('.download-button').click(function (event) {
+            // Prevent the default action of the download link
+            event.preventDefault();
+            $('#downloadModal').modal('show');
+        });
+
+        // Hide the confirm download modal when the cancel button is clicked
+        $('#cancel-download').click(function () {
+            $('#downloadModal').modal('hide');
+        });
+
+        // When the user confirms the download, trigger the download and show the download successful modal
+        $('#confirm-download').click(function () {
+            // Trigger the download
+            window.location.href = '?download=1';
+
+            // Show the download successful modal after a delay to allow the download to start
+            setTimeout(function () {
+                $('#downloadModal').modal('hide');
+                $('#download-successful-modal').modal('show');
+            }, 1000); // Adjust delay as needed
+        });
+
+        // Hide the download successful modal when the close button is clicked
+        $('#download-close-modal').click(function () {
+            $('#download-successful-modal').modal('hide');
+        });
+    });
+</script>
+
+
+
 </body>
 
 </html>
