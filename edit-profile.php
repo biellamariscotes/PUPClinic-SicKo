@@ -117,14 +117,35 @@ mysqli_close($conn);
                 <div class="modal-content">
                     <div class="modal-body">
                         <div class="modal-middle-icon">
-                            <img src="src/images/check.gif" style="width: 7rem; height: auto;" alt="Check Icon">
+                            <img src="src/images/check.gif" style="width: 12rem; height: auto;" alt="Check Icon">
                         </div>
-                        <div class="modal-title" style="color: black;">Saved Successfully</div>
+                        <div class="modal-title" style="color: black; margin-top: 1.25rem;">Saved Successfully</div>
                         <div class="modal-subtitle" style="justify-content: center; width: 98%;">Your changes have been successfully saved!</div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Error Modal -->
+            <div class="modal" id="error-modal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="modal-middle-icon">
+                            <img src="src/images/x-mark.gif" style="width: 9rem; height: auto;" alt="Error Icon">
+                        </div>
+                        <div class="modal-title">Error</div>
+                        <div class="modal-subtitle" style="text-wrap: pretty; ">Oops! It looks like no changes were made. Please update the input field to proceed.</div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button type="button" class="btn btn-secondary" id="error-close-modal" data-dismiss="modal"
+                            style="background-color: #E13F3D; 
+                    font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-top: 1rem;">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     <div class="content" id="content">
         <div class="left-header">
@@ -219,12 +240,35 @@ mysqli_close($conn);
         // Show Modal when Submit button is clicked
         $("#submit-form-button").click(function (event) {
             event.preventDefault(); // Prevent default form submission
-            $("#saveChangesModal").modal("show");
+            // Check if any changes are made
+            if (!checkFormChanges()) {
+                // Show error modal if no changes are made
+                $("#error-modal").modal("show");
+            } else {
+                $("#saveChangesModal").modal("show");
+            }
         });
+
+        // Function to check if any changes are made in the form
+        function checkFormChanges() {
+            var changesMade = false;
+            $('input').each(function () {
+                if ($(this).val() !== $(this).attr('value')) {
+                    changesMade = true;
+                    return false; // Exit the loop if any change is detected
+                }
+            });
+            return changesMade;
+        }
 
         // Close the Modal with the close button
         $("#cancel-saveChanges-modal").click(function (event) {
             $("#saveChangesModal").modal("hide");
+        });
+
+        // Close the Modal with the close button
+        $("#error-close-modal").click(function (event) {
+            $("#error-modal").modal("hide");
         });
 
         // Handle form submission when user confirms in the modal
@@ -263,6 +307,7 @@ mysqli_close($conn);
             }, 3000); // 1000 milliseconds = 1 second
         });
     });
+
 </script>
 
 </body>
