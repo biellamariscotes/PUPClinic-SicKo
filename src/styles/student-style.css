@@ -192,8 +192,8 @@ button:focus {
   text-align: center;
   background-color: transparent;
   color: #000;
-  font-size: 15px;
-  padding: 5px 0;
+  font-size: 12px;
+  padding: 10px 0;
 }
 
 .calendar_content div {
@@ -232,8 +232,8 @@ button:focus {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
   content: "";
-  width: auto;
-  height: 100%;
+  width: 80%;
+  height: 80%;
   border-radius: 50%;
   margin: 0 auto;
   background: #058789;
