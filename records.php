@@ -381,7 +381,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
                                         // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 1";
+                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 1";
                                         $result = mysqli_query($conn, $query);
                                         $row = mysqli_fetch_assoc($result);
                                         echo $row['count'];
@@ -396,7 +396,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
                                         // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 2";
+                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 2";
                                         $result = mysqli_query($conn, $query);
                                         $row = mysqli_fetch_assoc($result);
                                         echo $row['count'];
@@ -411,7 +411,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
                                         // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 3";
+                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 3";
                                         $result = mysqli_query($conn, $query);
                                         $row = mysqli_fetch_assoc($result);
                                         echo $row['count'];
@@ -530,7 +530,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
                                         // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 4";
+                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 4";
                                         $result = mysqli_query($conn, $query);
                                         $row = mysqli_fetch_assoc($result);
                                         echo $row['count'];
@@ -545,7 +545,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
                                         // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 5";
+                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 5";
                                         $result = mysqli_query($conn, $query);
                                         $row = mysqli_fetch_assoc($result);
                                         echo $row['count'];
@@ -560,7 +560,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
                                         // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 6";
+                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 6";
                                         $result = mysqli_query($conn, $query);
                                         $row = mysqli_fetch_assoc($result);
                                         echo $row['count'];
@@ -679,7 +679,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
                                         // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 7";
+                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 7";
                                         $result = mysqli_query($conn, $query);
                                         $row = mysqli_fetch_assoc($result);
                                         echo $row['count'];
@@ -694,7 +694,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
                                         // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 8";
+                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 8";
                                         $result = mysqli_query($conn, $query);
                                         $row = mysqli_fetch_assoc($result);
                                         echo $row['count'];
@@ -709,7 +709,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
                                         // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 9";
+                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 9";
                                         $result = mysqli_query($conn, $query);
                                         $row = mysqli_fetch_assoc($result);
                                         echo $row['count'];
@@ -829,7 +829,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
                                         // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 10";
+                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 10";
                                         $result = mysqli_query($conn, $query);
                                         $row = mysqli_fetch_assoc($result);
                                         echo $row['count'];
@@ -844,7 +844,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
                                         // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 11";
+                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 11";
                                         $result = mysqli_query($conn, $query);
                                         $row = mysqli_fetch_assoc($result);
                                         echo $row['count'];
@@ -859,7 +859,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
                                         // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT COUNT(DISTINCT patient_id) AS count FROM treatment_record WHERE MONTH(date) = 12";
+                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 12";
                                         $result = mysqli_query($conn, $query);
                                         $row = mysqli_fetch_assoc($result);
                                         echo $row['count'];
