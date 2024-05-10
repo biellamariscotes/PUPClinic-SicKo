@@ -15,6 +15,21 @@ if (isset($_SESSION['patient_id'])) {
     $last_initial = strtoupper(substr($row['last_name'], 0, 1));
     $initials = $first_initial . $last_initial;
 
+    // Recent Visits
+
+    $stmt = $conn->prepare("SELECT * FROM treatment_record WHERE patient_id = ? ORDER BY date DESC LIMIT 6");
+    $stmt->bind_param("s", $patient_id);
+    $stmt->execute();
+    $result_record = $stmt->get_result();
+
+    // Recent Record
+    $stmt_new = $conn->prepare("SELECT * FROM treatment_record WHERE patient_id = ? ORDER BY date DESC LIMIT 1");
+    $stmt_new->bind_param("s", $patient_id);
+    $stmt_new->execute();
+    $record = $stmt_new->get_result();
+    $latest_record = $record->fetch_assoc();
+
+
     ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -33,11 +48,11 @@ if (isset($_SESSION['patient_id'])) {
 
     <body>
 
-        <div class="loader">
+        <!-- <div class="loader">
             <img src="src/images/loader.gif">
-        </div>
+        </div> -->
 
-        <div class="main-content">
+        <div class="main-contenter">
             <div class="row nav-bar px-6">
                 <div class="col-md-6 nav-bar-left d-flex align-items-center">
                     <img src="src/images/sicko-logo.png" class="me-4 my-2">
@@ -93,48 +108,30 @@ if (isset($_SESSION['patient_id'])) {
             <div class="container col-9 mb-5">
                 <div class="row d-flex flex-wrap align-items-stretch">
                     <div class="col-4">
-                        <div class="card-box">
+                        <div class="card-box" style="height:20.5rem">
                             <div>
                                 <p class="fs-3 green fw-semibold">Recent Visits</p>
                             </div>
-                            <div>
-                                <ul>
-                                    <a href="#">
-                                        <li>April 08, 2024</li>
-                                    </a>
-                                </ul>
+                            <?php
 
-                                <ul>
-                                    <a href="#">
-                                        <li>April 08, 2024</li>
-                                    </a>
-                                </ul>
-
-                                <ul>
-                                    <a href="#">
-                                        <li>April 08, 2024</li>
-                                    </a>
-                                </ul>
-
-                                <ul>
-                                    <a href="#">
-                                        <li>April 08, 2024</li>
-                                    </a>
-                                </ul>
-
-                                <ul>
-                                    <a href="#">
-                                        <li>April 08, 2024</li>
-                                    </a>
-                                </ul>
-                            </div>
+                            // Check if there are records
+                            if ($result_record->num_rows > 0) {
+                                while ($row_record = $result_record->fetch_assoc()) {
+                                    $formatted_date = date("F j, Y", strtotime($row_record['date']));
+                                    $url = "treatment.php?record_id=" . $row_record['record_id'];
+                                    echo "<div><ul><a href='$url'><li>$formatted_date</li></a></ul></div>";
+                                }
+                            } else {
+                                echo "No treatment records found.";
+                            }
+                            ?>
                         </div>
                     </div>
 
                     <div class="col-8">
                         <div class="calendar-card-box calendar-box">
                             <div class="row">
-                                <div class="col-6 calendar-cont" style="padding-right:3%">
+                                <div class="col-6 calendar-cont" style="padding-right:3%;">
                                     <div class="col-md-12">
                                         <div class="calendar calendar-first" id="calendar_first">
                                             <div class="calendar_header">
@@ -153,24 +150,35 @@ if (isset($_SESSION['patient_id'])) {
                                 </div>
                                 <div class="col-6 d-flex flex-wrap align-items-center flex-grow-1">
                                     <div class="px-4 py-4">
-                                        <div>
-                                            <p class="fs-4 red fw-semibold">Treatment Records</p>
-                                            <p class="fs-8 gray fw-semibold">March 27, 2024</p>
-                                        </div>
+                                        <?php if (empty($latest_record)): ?>
+                                            <p class="fs-6 red fw-semibold">No latest record.</p>
+                                        <?php else: ?>
+                                            <div>
+                                                <p class="fs-4 red fw-semibold">Latest Treatment</p>
+                                                <p class="fs-8 gray fw-semibold">
+                                                    <?php $formatted_record_date = date("F j, Y", strtotime($latest_record['date']));
+                                                    echo $formatted_record_date; ?>
+                                                </p>
+                                            </div>
 
-                                        <div class="pt-3">
-                                            <p class="fs-6 fw-semibold">Medicine Given: <span
-                                                    class="fw-normal">Cetirizine</span></p>
-                                            <p class="fs-6 fw-semibold pt-2">Symptoms: <span
-                                                    class="fw-normal">Cetirizine</span></p>
-                                            <p class="fs-6 fw-semibold pt-2">Diagnosis: <span class="fw-normal">Allergic
-                                                    rhinitis</span></p>
-                                        </div>
+                                            <div class="pt-3">
+                                                <p class="fs-6 fw-semibold">Medicine Given: <span
+                                                        class="fw-normal"><?php echo ucfirst($latest_record['treatments']); ?></span>
+                                                </p>
+                                                <p class="fs-6 fw-semibold pt-2">Symptoms: <span
+                                                        class="fw-normal"><?php echo ucfirst($latest_record['symptoms']); ?></span>
+                                                </p>
+                                                <p class="fs-6 fw-semibold pt-2">Diagnosis: <span
+                                                        class="fw-normal"><?php echo ucfirst($latest_record['diagnosis']); ?></span>
+                                                </p>
+                                            </div>
 
-                                        <div class="pt-4 d-flex justify-content-end">
-                                            <a href="" class="fs-7 blue-link fw-semibold">View full details</a>
-                                        </div>
+                                            <div class="pt-4 d-flex justify-content-end">
+                                                <a href="treatment.php?record_id= <?php echo $latest_record['record_id'] ?>" class="fs-7 blue-link fw-semibold">View full details</a>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -185,7 +193,7 @@ if (isset($_SESSION['patient_id'])) {
         <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="src/scripts/script.js"></script>
         <script src="src/scripts/calendar.js"></script>
-        <script src="src/scripts/loader.js"></script>
+        <!-- <script src="src/scripts/loader.js"></script> -->
     </body>
 
     </html>
