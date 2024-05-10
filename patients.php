@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <div class="loader">
+<div class="loader">
         <img src="src/images/loader.gif">
     </div>
 
@@ -28,22 +28,15 @@
     require_once ('src/includes/session-nurse.php');
     require_once ('src/includes/connect.php');
 
-    $recordsPerPage = 6;
-
-    // Current page number
+    $recordsPerPage = 5;
     $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-
-    // Offset calculation for SQL query
     $offset = ($currentPage - 1) * $recordsPerPage;
 
-    // SQL query to fetch records with pagination
     $query = "SELECT * FROM treatment_record LIMIT $offset, $recordsPerPage";
     $result = mysqli_query($conn, $query);
 
-    // Total number of records
     $totalRecords = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM treatment_record"));
 
-    // Total number of pages
     $totalPages = ceil($totalRecords / $recordsPerPage);
 
     // Check if the form is submitted for deletion
@@ -197,7 +190,7 @@
     </div>
     <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/scripts/script.js"></script>
-    <script src="src/scripts/loader.js"></script>
+    <script src="src/scripts/loader.js"></script> 
 
     <script>
         $(document).ready(function () {
