@@ -1596,7 +1596,7 @@ input[type=number] {
 .quarterly-report-row {
   display: flex;
   justify-content: center;
-  margin: 20px;
+  margin: 20px  ;
 }
 
 .quarterly-report-row-box {
