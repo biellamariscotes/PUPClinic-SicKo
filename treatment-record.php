@@ -254,6 +254,26 @@ mysqli_close($conn);
     <script src="src/scripts/loader.js"></script>
     <script>
         $(document).ready(function () {
+            // Show Modal when Log Out menu item is clicked
+            $("#logout-menu-item").click(function (event) {
+                $("#logOut").modal("show");
+            });
+
+            // Close the Modal with the close button
+            $("#logout-close-modal").click(function (event) {
+                $("#logOut").modal("hide");
+            });
+
+            // Handle logout when Log Out button on modal is clicked
+            $("#logout-confirm-button").click(function (event) {
+                // Perform logout action
+                window.location.href = "logout.php";
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
             // Show Modal when Submit button is clicked
             $("#submit-form-button").click(function (event) {
                 event.preventDefault(); // Prevent default form submission
@@ -273,15 +293,31 @@ mysqli_close($conn);
     </script>
 
     <script>
+        // function searchPatients(keyword) {
+        //     if(keyword.length > 0) {
+        //         // Perform an AJAX request
+        //         var xhttp = new XMLHttpRequest();
+        //         xhttp.onreadystatechange = function() {
+        //             if (this.readyState == 4 && this.status == 200) {
+        //                 // Display search results in the search-results div
+        //                 document.getElementById("search-results").innerHTML = this.responseText;
+        //             }
+        //         };
+        //         xhttp.open("GET", "search-patients.php?keyword=" + keyword, true);
+        //         xhttp.send();
+        //     } else {
+        //         document.getElementById("search-results").innerHTML = "";
+        //     }
+        // }
 
-    function selectPatient(patient_id, fullName, gender, age, course, section) {
-        document.getElementById("full-name").value = fullName;
-        document.getElementById("gender").value = gender;
-        document.getElementById("age").value = age;
-        document.getElementById("course").value = course;
-        document.getElementById("section").value = section;
-        document.getElementById("patient_id").value = patient_id;
-    }
+        function selectPatient(patient_id, fullName, gender, age, course, section) {
+            document.getElementById("full-name").value = fullName;
+            document.getElementById("gender").value = gender;
+            document.getElementById("age").value = age;
+            document.getElementById("course").value = course;
+            document.getElementById("section").value = section;
+            document.getElementById("patient_id").value = patient_id;
+        }
     </script>
 
     <script>
@@ -388,39 +424,8 @@ mysqli_close($conn);
                 }
             });
         });
-    });
-
-    // Function to check the completion status of all required fields
-    function checkFormCompletion() {
-        var fullName = document.getElementById("full-name").value.trim();
-        var sex = document.getElementById("sex").value.trim();
-        var age = document.getElementById("age").value.trim();
-        var course = document.getElementById("course").value.trim();
-        var section = document.getElementById("section").value.trim();
-        var symptoms = document.getElementById("symptoms").value.trim();
-        var diagnosis = document.getElementById("diagnosis").value.trim();
-        var treatments = document.getElementById("treatments").value.trim();
-
-        // Check if all required fields are completed
-        var allFieldsCompleted = fullName !== '' && sex !== '' && age !== '' && course !== '' && section !== '' && symptoms !== '' && diagnosis !== '' && treatments !== '';
-
-        // Enable or disable the submit button based on completion status
-        document.getElementById("submit-form-button").disabled = !allFieldsCompleted;
-    }
-
-    // Add event listeners to input fields to trigger the checkFormCompletion function
-    document.getElementById("full-name").addEventListener("input", checkFormCompletion);
-    document.getElementById("sex").addEventListener("input", checkFormCompletion);
-    document.getElementById("age").addEventListener("input", checkFormCompletion);
-    document.getElementById("course").addEventListener("input", checkFormCompletion);
-    document.getElementById("section").addEventListener("input", checkFormCompletion);
-    document.getElementById("symptoms").addEventListener("input", checkFormCompletion);
-    document.getElementById("diagnosis").addEventListener("input", checkFormCompletion);
-    document.getElementById("treatments").addEventListener("input", checkFormCompletion);
-
-    // Call the checkFormCompletion function initially to set the initial state of the submit button
-    checkFormCompletion();
     </script>
 
 </body>
+
 </html>
