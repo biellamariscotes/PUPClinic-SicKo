@@ -80,6 +80,42 @@ if (isset($_POST['login_btn'])) {
         </div>
     </div>
 
+        <!-- Saved Successfully Modal Button -->
+        <button type="button" class="btn btn-primary" id="saved-successful" data-toggle="modal" data-target="#saved-successfully">
+            Saved Successfully Modal Button
+        </button>
+
+    <!-- Saved Successfully Modal -->
+    <div class="modal" id="saved-successfully" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="modal-middle-icon">
+                            <img src="src/images/check.gif" style="width: 7rem; height: auto;" alt="Check Icon">
+                        </div>
+                        <div class="modal-title" style="color: black;">Saved Successfully</div>
+                        <div class="modal-subtitle" style="justify-content: center;">Your changes have been successfully saved!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Show Modal
+            $(document).ready(function () {
+                $("#saved-successful").click(function (event) {
+                $("#saved-successfully").modal("show");
+            });
+
+            // Close the Modal with the close button
+            $("#savedSuccessfully-close-modal").click(function (event) {
+                $("#saved-successfully").modal("hide");
+            });
+            });
+        </script>
+
+
+
     <!-- Log In Failed Modal Button -->
     <button type="button" class="btn btn-primary" id="login-failed" data-toggle="modal" data-target="#loginFailed">
         Log In Failed Modal Button
@@ -243,6 +279,9 @@ if (isset($_POST['login_btn'])) {
     <img class="vector-green" src="src/images/vector-green.png" alt="Green Vector">
     <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/scripts/script.js"></script>
+
+
+
     <script>
         function togglePassword() {
             var passwordInput = document.getElementById("passwordInput");
