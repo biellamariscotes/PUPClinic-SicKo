@@ -1,6 +1,66 @@
 <?php
 require_once('src/includes/session-nurse.php');
 require_once('src/includes/connect.php');
+require_once('vendors/tcpdf/tcpdf.php'); 
+
+// Check if the download button is clicked
+if(isset($_GET['download'])) {
+    // Retrieve all data from the treatment records table, sorted by name
+    $query = "SELECT * FROM treatment_record ORDER BY date ASC";
+    $result = mysqli_query($conn, $query);
+
+    // Create new PDF document with landscape orientation and margins
+    $pdf = new TCPDF('L', 'mm', 'A4', true, 'UTF-8', false);
+    $pdf->SetCreator('SicKo');
+    $pdf->SetTitle('Treatment Records');
+    $pdf->SetHeaderData('', 0, 'SicKo - Treatment Records', '');
+
+    // Add a page with custom margins
+    $pdf->SetMargins(15, 15, 15); // 15mm margin on all sides
+    $pdf->AddPage();
+
+    // Set font
+    $pdf->SetFont('helvetica', '', 12);
+
+    // Add margin to the top of the header
+    $pdf->SetY(15); // Adjust the value as per your requirement
+
+    // Add header
+    $pdf->Cell(0, 10, 'Treatment Records', 0, 1, 'C');
+
+    // Add margin between header and table
+    $pdf->Ln(10); // Add 10mm margin between header and table
+
+    // Add a table
+    $pdf->SetFont('helvetica', 'B', 10);
+    $pdf->Cell(40, 10, 'Patient Name', 1, 0, 'C');
+    $pdf->Cell(15, 10, 'Age', 1, 0, 'C');
+    $pdf->Cell(20, 10, 'Course', 1, 0, 'C');
+    $pdf->Cell(20, 10, 'Section', 1, 0, 'C');
+    $pdf->Cell(20, 10, 'Gender', 1, 0, 'C');
+    $pdf->Cell(30, 10, 'Symptoms', 1, 0, 'C');
+    $pdf->Cell(40, 10, 'Diagnosis', 1, 0, 'C');
+    $pdf->Cell(50, 10, 'Treatments', 1, 0, 'C');
+    $pdf->Cell(40, 10, 'Date', 1, 1, 'C');
+    $pdf->SetFont('helvetica', '', 10);
+
+    // Populate the table with data from the database
+    while ($row = mysqli_fetch_assoc($result)) {
+        $pdf->Cell(40, 10, $row['full_name'], 1, 0, 'L');
+        $pdf->Cell(15, 10, $row['age'], 1, 0, 'C');
+        $pdf->Cell(20, 10, $row['course'], 1, 0, 'C');
+        $pdf->Cell(20, 10, $row['section'], 1, 0, 'C');
+        $pdf->Cell(20, 10, $row['sex'], 1, 0, 'C');
+        $pdf->Cell(30, 10, $row['symptoms'], 1, 0, 'L');
+        $pdf->Cell(40, 10, $row['diagnosis'], 1, 0, 'L');
+        $pdf->Cell(50, 10, $row['treatments'], 1, 0, 'L');
+        $pdf->Cell(40, 10, $row['date'], 1, 1, 'C');
+    }
+
+    // Output the PDF as a download
+    $pdf->Output('treatment_records.pdf', 'D');
+    exit;
+}
 
 // Number of records to display per page
 $recordsPerPage = 5;
@@ -45,7 +105,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SicKo - Med Reports</title>
+    <title>SicKo - Records</title>
     <link rel="icon" type="image/png" href="src/images/heart-logo.png">
     <link rel="stylesheet" href="src/styles/dboardStyle.css">
     <link rel="stylesheet" href="src/styles/modals.css">
@@ -125,9 +185,11 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                 Delete Records
                             </div>
                             <div class="button-separator"></div>
-                            <div class="download-button" onclick="window.location.href=''">
-                                <i class="bi bi-download" style="color: #058789; font-size: 1rem; margin-right: 0.625rem; vertical-align: middle;"></i>
-                                Download
+                            <div class="download-button">
+                                <a style="color: #058789; text-decoration: none;" href="?download=1">
+                                    <i class="bi bi-download" style="color: #058789; font-size: 1rem; margin-right: 0.625rem; vertical-align: middle;"></i>
+                                    <span style="transition: color 0.3s;">Download</span>
+                                </a>
                             </div>
                         </div>
                         <!-- Sorting and Pagination Container -->
