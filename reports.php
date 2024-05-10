@@ -127,8 +127,17 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                         </div>
                         <div class="total-diagnosis-box">
                             <div class="total-diagnosis-box-text">
-                                <div class="total-number" style="font-size: 35px;"><?php echo $diagnosis_count; ?></div>
-                                <div class="total-sub-text" style="font-size: 10px;"><?php echo $leading_diagnosis; ?>
+                                <div class="total-number" style="font-size: 35px;">
+                                    <?php $total_sec_query = "SELECT diagnosis, COUNT(*) AS diagnosis_count 
+                                FROM treatment_record 
+                                WHERE MONTH(date) IN (1, 2, 3)";
+
+                                    $result = mysqli_query($conn, $total_sec_query);
+                                    $row = mysqli_fetch_assoc($result);
+                                    echo $row['diagnosis_count']; ?>
+
+                                </div>
+                                <div class="total-sub-text" style="font-size: 10px;">Diagnoses
                                 </div>
                             </div>
                         </div>
@@ -270,8 +279,17 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                         </div>
                         <div class="total-diagnosis-box">
                             <div class="total-diagnosis-box-text">
-                                <div class="total-number" style="font-size: 35px;"><?php echo $diagnosis_count; ?></div>
-                                <div class="total-sub-text" style="font-size: 10px;"><?php echo $leading_diagnosis; ?>
+                                <div class="total-number" style="font-size: 35px;">
+                                    <?php $total_sec_query = "SELECT diagnosis, COUNT(*) AS diagnosis_count 
+                                FROM treatment_record 
+                                WHERE MONTH(date) IN (4, 5, 6)";
+
+                                    $result = mysqli_query($conn, $total_sec_query);
+                                    $row = mysqli_fetch_assoc($result);
+                                    echo $row['diagnosis_count']; ?>
+
+                                </div>
+                                <div class="total-sub-text" style="font-size: 10px;">Diagnoses
                                 </div>
                             </div>
                         </div>
@@ -414,8 +432,17 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                         </div>
                         <div class="total-diagnosis-box">
                             <div class="total-diagnosis-box-text">
-                                <div class="total-number" style="font-size: 35px;"><?php echo $diagnosis_count; ?></div>
-                                <div class="total-sub-text" style="font-size: 10px;"><?php echo $leading_diagnosis; ?>
+                            <div class="total-number" style="font-size: 35px;">
+                                <?php $total_sec_query = "SELECT diagnosis, COUNT(*) AS diagnosis_count 
+                                FROM treatment_record 
+                                WHERE MONTH(date) IN (7, 8, 9)";
+
+                                $result = mysqli_query($conn, $total_sec_query);
+                                $row = mysqli_fetch_assoc($result);
+                                echo $row['diagnosis_count'];  ?>
+                                
+                            </div>
+                                <div class="total-sub-text" style="font-size: 10px;">Diagnoses
                                 </div>
                             </div>
                         </div>
@@ -558,8 +585,17 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                         </div>
                         <div class="total-diagnosis-box">
                             <div class="total-diagnosis-box-text">
-                                <div class="total-number" style="font-size: 35px;"><?php echo $diagnosis_count; ?></div>
-                                <div class="total-sub-text" style="font-size: 10px;"><?php echo $leading_diagnosis; ?>
+                            <div class="total-number" style="font-size: 35px;">
+                                <?php $total_sec_query = "SELECT diagnosis, COUNT(*) AS diagnosis_count 
+                                FROM treatment_record 
+                                WHERE MONTH(date) IN (10, 11, 12)";
+
+                                $result = mysqli_query($conn, $total_sec_query);
+                                $row = mysqli_fetch_assoc($result);
+                                echo $row['diagnosis_count'];  ?>
+                                
+                            </div>
+                                <div class="total-sub-text" style="font-size: 10px;">Diagnoses
                                 </div>
                             </div>
                         </div>

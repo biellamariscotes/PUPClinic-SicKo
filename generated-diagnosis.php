@@ -16,13 +16,76 @@ function performDiagnosis($symptoms) {
     // Recommend treatment based on predicted sickness
     switch ($predictedSickness) {
         case "common cold":
-            $suggestedTreatments[] = "Rest, drink fluids, and take over-the-counter cold medications.";
+            $suggestedTreatments[] = "Bioflu/Decolgen";
             break;
         case "flu":
-            $suggestedTreatments[] = "Rest, drink fluids, and take antiviral medications if prescribed.";
+            $suggestedTreatments[] = "Tamiflu/Relenza/Rapivab";
             break;
-        case "fatigue syndrome":
-            $suggestedTreatments[] = "Maintain a healthy lifestyle, including regular exercise and proper nutrition.";
+        case "food poisoning":
+            $suggestedTreatments[] = "Loperamide";
+            break;
+        case "strep throat":
+            $suggestedTreatments[] = "Penicilin/Amoxicillin";
+            break;
+        case "pneumonia":
+            $suggestedTreatments[] = "Zithromax";
+            break;
+        case "malaria":
+            $suggestedTreatments[] = "Malarone";
+            break;
+        case "chikungunya":
+            $suggestedTreatments[] = "No Medication";
+            break;
+        case "typhoid fever":
+            $suggestedTreatments[] = "Ciprofloxacin/Azithromycin";
+            break;
+        case "dengue fever":
+            $suggestedTreatments[] = "Acetaminophen";
+            break;
+        case "tonsillitis":
+            $suggestedTreatments[] = "Penicillin";
+            break;
+        case "dysentery":
+            $suggestedTreatments[] = "Loperamide";
+            break;
+        case "rheumatoid arthritis":
+            $suggestedTreatments[] = "Nabumetone";
+            break;
+        case "infectious mononucleosis":
+            $suggestedTreatments[] = "No Medicine";
+            break;
+        case "bronchitis":
+            $suggestedTreatments[] = "Solmux";
+            break;
+        case "meningitis":
+            $suggestedTreatments[] = "Cefotaxime";
+            break;
+        case "measles":
+            $suggestedTreatments[] = "No Medicine";
+            break;
+        case "urticaria":
+            $suggestedTreatments[] = "Cetirizine";
+            break;
+        case "zika virus":
+            $suggestedTreatments[] = "No Medicine";
+            break;
+        case "hepatitis":
+            $suggestedTreatments[] = "Revovir";
+            break;
+        case "hemorrhagic fever":
+            $suggestedTreatments[] = "No Medicine";
+            break;
+        case "tetanus":
+            $suggestedTreatments[] = "Metronidazole";
+            break;
+        case "urinary tract infection":
+            $suggestedTreatments[] = "Ciprofloxacin/Levofloxacin";
+            break;
+        case "heart failure":
+            $suggestedTreatments[] = "Angiotensin";
+            break;
+        case "migraine":
+            $suggestedTreatments[] = "Sumatriptan";
             break;
         default:
             $suggestedTreatments[] = "No specific treatment recommended.";
@@ -51,7 +114,7 @@ if(isset($_POST['symptoms'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generated Diagnosis</title>
-    <link rel="icon" type="image/png" href="src/images/sicko-logo.png"> 
+    <link rel="icon" type="image/png" href="src/images/heart-logo.png">  
     <link rel="stylesheet" href="src/styles/dboardStyle.css">
 </head>
 <body>

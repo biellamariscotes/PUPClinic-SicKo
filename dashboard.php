@@ -73,7 +73,7 @@ $totalPages = ceil($totalRecords / $rowsPerPage);
                             echo "<td>" . $row["first_name"] . "</td>";
                             echo "<td>" . $row["course"] . "</td>";
                             echo "<td>" . ucfirst(strtolower($row["diagnosis"])) . "</td>";
-                            echo "<td>" . $row["acc_created"] . "</td>";
+                            echo "<td>" . $row["date"] . "</td>";
                             echo "</tr>";
                         }
                     } else {
