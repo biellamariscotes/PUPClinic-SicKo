@@ -28,7 +28,7 @@
     require_once ('src/includes/session-nurse.php');
     require_once ('src/includes/connect.php');
 
-    $recordsPerPage = 10;
+    $recordsPerPage = 6;
 
     // Current page number
     $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -80,7 +80,7 @@
     // Sorting criteria
     $sortCriteria = isset($_GET['sort']) ? $_GET['sort'] : 'first_name'; // Default sorting by name if not specified
     // SQL query with sorting
-    $sql = "SELECT * FROM patient ORDER BY $sortCriteria";
+    $sql = "SELECT * FROM patient ORDER BY $sortCriteria LIMIT $offset, $recordsPerPage";
     // Execute the query
     $result = mysqli_query($conn, $sql);
     ?>
