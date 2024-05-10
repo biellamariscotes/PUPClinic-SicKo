@@ -92,16 +92,16 @@ if (isset($_POST['login_btn'])) {
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="modal-middle-icon">
-                        <i class="bi bi-x-circle-fill" style="color:#E13F3D; font-size:5rem"></i>
+                    <img src="src/images/x-mark.gif" style="width: 9rem; height: auto;" alt="Failed Icon">
                     </div>
                     <div class="modal-title">Login Failed</div>
-                    <div class="modal-subtitle" style="text-wrap: pretty;">Authentication failed. Please check your
+                    <div class="modal-subtitle" style="text-wrap: pretty; ">Authentication failed. Please check your
                         credentials and try again.</div>
                 </div>
                 <div class="modal-buttons">
                     <button type="button" class="btn btn-secondary" id="login-close-modal" data-dismiss="modal"
                         style="background-color: #E13F3D; 
-                    font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Close</button>
+                    font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-top: 1rem;">Close</button>
                 </div>
             </div>
         </div>

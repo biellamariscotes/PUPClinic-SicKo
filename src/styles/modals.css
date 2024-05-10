@@ -1,6 +1,7 @@
 .modal-middle-icon {
     justify-content: center;
     display: flex;
+    margin-top: 1rem;
 }
 
 .modal-title {
@@ -25,5 +26,5 @@
     justify-content: center;
     display: flex;
     margin-bottom: 3.125rem;
-    margin-top: 0.625rem;
+    margin-top: 1.5rem;
 }
