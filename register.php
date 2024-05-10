@@ -13,11 +13,11 @@
 
 <body>
 
-    <!-- <div class="loader">
+    <div class="loader">
         <img src="src/images/loader.gif">
-    </div> -->
+    </div> 
 
-    <div class="main-contenter">
+    <div class="main-content">
         <!-- Navigation Bar -->
         <div class="container pt-4">
             <div class="row nav-bar">
@@ -172,7 +172,7 @@
         </footer>
     </div>
     <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- <script src="src/scripts/loader.js"></script> -->
+    <script src="src/scripts/loader.js"></script>
     <script src="src/scripts/register-validation.js">
 
     <script>

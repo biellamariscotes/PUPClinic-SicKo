@@ -47,6 +47,7 @@ if (isset($_POST['login_btn'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In</title>
     <link rel="icon" type="image/png" href="src/images/heart-logo.png">
+    <link rel="stylesheet" href="src/styles/modals.css">
     <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.css">
     <link rel="stylesheet" href="src/styles/register.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -61,10 +62,10 @@ if (isset($_POST['login_btn'])) {
 
 <body>
 
-<div class="loader">
+    <div class="loader">
         <img src="src/images/loader.gif">
     </div>
-    
+
     <!-- Navigation Bar -->
     <div class="main-content">
         <div class="container pt-4">
@@ -120,15 +121,49 @@ if (isset($_POST['login_btn'])) {
         </div>
 
 
-    <footer>
-        <img class="vector-green fixed-bottom" src="src/images/vector-green.png" alt="Green Vector">
-    </footer>
+        <footer>
+            <img class="vector-green fixed-bottom" src="src/images/vector-green.png" alt="Green Vector">
+        </footer>
     </div>
+
+    <div class="modal" id="loginFailed" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-middle-icon">
+                        <img src="src/images/x-mark.gif" style="width: 9rem; height: auto;" alt="Failed Icon">
+                    </div>
+                    <div class="modal-title">Login Failed</div>
+                    <div class="modal-subtitle" style="text-wrap: pretty; ">Authentication failed. Please check your
+                        credentials and try again.</div>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn btn-secondary" id="login-close-modal" data-dismiss="modal"
+                        style="background-color: #E13F3D; 
+                    font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-top: 1rem;">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="src/scripts/script.js"></script>
     <script src="src/scripts/loader.js"></script>
 
     <script>
+
+        $(document).ready(function () {
+            <?php if ($login_failed): ?> // Check if login failed
+                $("#loginFailed").modal("show");
+                // Show modal if login failed
+            <?php endif; ?>
+
+            // Close the Modal with the close button
+            $("#login-close-modal").click(function (event) {
+                $("#loginFailed").modal("hide");
+            });
+        });
+
         // Get references to the input fields and the submit button
         const emailInput = document.getElementById('emailInput');
         const passwordInput = document.getElementById('passwordInput');
