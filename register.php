@@ -105,8 +105,17 @@
                                         <div class="input-group mb-3 d-flex flex-wrap justify-content-center">
                                             <select class="form-control" name="course" id="course">
                                                 <option selected hidden value=""></option>
-                                                <option value="Information Technology">BSIT</option>
-                                                <option value="Jane">Jane</option>
+                                                <option value="BSA">BSA</option>
+                                                <option value="BSECE">BSECE</option>
+                                                <option value="BSIE">BSIE</option>
+                                                <option value="BSP">BSP</option>
+                                                <option value="BSIT">BSIT</option>
+                                                <option value="BSED-ENG">BSED - Eng </option>
+                                                <option value="BSED-MATH">BSED - Math</option>
+                                                <option value="BSBA-MM">BSBA - MM</option>
+                                                <option value="BSBA-HRM">BSBA - HRM</option>
+                                                <option value="BSEM">BSEM</option>
+                                                <option value="BSMA">BSMA</option>
                                             </select>
                                         </div>
                                     </div>
