@@ -1,6 +1,17 @@
 <?php
 require_once('src/includes/session-nurse.php');
 require_once('src/includes/connect.php');
+
+$patient_id = isset($_GET['patient_id']) ? $_GET['patient_id'] : '';
+$full_name = isset($_GET['full_name']) ? $_GET['full_name'] : '';
+$sex = isset($_GET['sex']) ? $_GET['sex'] : '';
+$age = isset($_GET['age']) ? $_GET['age'] : '';
+$course = isset($_GET['course']) ? $_GET['course'] : '';
+$section = isset($_GET['section']) ? $_GET['section'] : '';
+$symptoms = isset($_GET['symptoms']) ? $_GET['symptoms'] : '';
+$diagnosis = isset($_GET['diagnosis']) ? $_GET['diagnosis'] : '';
+$treatments = isset($_GET['treatments']) ? $_GET['treatments'] : '';
+
 ?>
 
 <!DOCTYPE html>
@@ -9,14 +20,35 @@ require_once('src/includes/connect.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SicKo - Treatment Record Confirmation </title>
-    <link rel="icon" type="image/png" href="src/images/sicko-logo.png"> 
+    <link rel="icon" type="image/png" href="src/images/heart-logo.png"> 
     <link rel="stylesheet" href="src/styles/dboardStyle.css">
 </head>
+
+<style>
+
+    input, select {
+        color: gray;
+        cursor: default;
+        pointer-events: none;
+    }
+
+     #sex {
+        height: 83px;
+        border-radius: 15px;
+        background-color: white;
+        padding: 10px;
+        box-sizing: border-box;
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: border-color 0.3s; /* Added transition for smoother effect */
+        }
+</style>
+
 <body>
     <div class="overlay" id="overlay"></div>
 
 <?php
-    include ('src/includes/sidebar.php');
+    include ('src/includes/sidebar/patients-treatment-record.php');
     ?>
 
     <div class="content" id="content">
@@ -29,42 +61,43 @@ require_once('src/includes/connect.php');
 
     <!-- Form Container -->
     <div class="form-container">
-        <form id="treatment-form">
+        <form id="treatment-form" action="excuse-letter.php" method="post">
             <div class="input-row">
-                <input type="text" id="full-name" placeholder="Full Name" autocomplete="off" required>
-                <select id="gender" required>
-                    <option value="" disabled selected hidden>Gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
+            <input type="text" id="full-name" name="full_name" placeholder="Full Name" autocomplete="off" required value="<?php echo $full_name; ?>" >
+            <input type="hidden" name="patient_id" value="<?php echo $patient_id; ?>" >
+                <select id="sex" name="sex" required >
+                    <option value="" disabled hidden>Gender</option>
+                    <option value="male" <?php if($sex == 'male') echo 'selected'; ?>>Male</option>
+                    <option value="female" <?php if($sex == 'female') echo 'selected'; ?>>Female</option>
+                    <option value="other" <?php if($sex == 'other') echo 'selected'; ?>>Other</option>
                 </select>
-                <input type="number" id="age" placeholder="Age" required>
+                <input type="number" id="age" name="age" placeholder="Age" required value="<?php echo $age; ?>" >
             </div>
             <div class="input-row">
-                <input type="text" id="course" placeholder="Course/Organization" autocomplete="off" required>
-                <select id="section" required>
-                    <option value="" disabled selected hidden>Block Section</option>
-                    <option value="1-1">1-1</option>
-                    <option value="1-2">1-2</option>
-                    <option value="2-1">2-1</option>
-                    <option value="2-2">2-2</option>
-                    <option value="3-1">3-1</option>
-                    <option value="3-2">3-2</option>
-                    <option value="4-1">4-1</option>
-                    <option value="4-2">4-2</option>
-                </select>
+                <input type="text" id="course" name="course" placeholder="Course/Organization" autocomplete="off" required value="<?php echo $course; ?>" >
+                    <select id="section" name="section" required >
+                        <option value="" disabled hidden>Block Section</option>
+                        <option value="1-1" <?php if($section == '1-1') echo 'selected'; ?>>1-1</option>
+                        <option value="1-2" <?php if($section == '1-2') echo 'selected'; ?>>1-2</option>
+                        <option value="2-1" <?php if($section == '2-1') echo 'selected'; ?>>2-1</option>
+                        <option value="2-2" <?php if($section == '2-2') echo 'selected'; ?>>2-2</option>
+                        <option value="3-1" <?php if($section == '3-1') echo 'selected'; ?>>3-1</option>
+                        <option value="3-2" <?php if($section == '3-2') echo 'selected'; ?>>3-2</option>
+                        <option value="4-1" <?php if($section == '4-1') echo 'selected'; ?>>4-1</option>
+                        <option value="4-2" <?php if($section == '4-2') echo 'selected'; ?>>4-2</option>
+                    </select>
             </div>
             <div class="input-row">
-                <input type="text" id="symptoms" placeholder="Symptoms" autocomplete="off" required>
+                <input type="text" id="symptoms" name="symptoms" placeholder="Symptoms" autocomplete="off" required value="<?php echo $symptoms; ?>" >
             </div>
             <div class="input-row">
-                <input type="text" id="diagnosis" placeholder="Diagnosis" autocomplete="off" required>
-                <input type="text" id="treatments" placeholder="Treatments/Medicines" autocomplete="off"required>
+                <input type="text" id="diagnosis" name="diagnosis" placeholder="Diagnosis" autocomplete="off" required value="<?php echo $diagnosis; ?>" >
+                <input type="text" id="treatments" name="treatments" placeholder="Treatments/Medicines" autocomplete="off" required value="<?php echo $treatments; ?>"  >
             </div>
             <div class="middle-row">
-                    <button type="submit" id="generate-excuse-letter-button" onclick="window.location.href='#'">Generate Excuse Letter</button>
+                <button type="submit" id="generate-excuse-letter-button" name="record-btn">Generate Excuse Letter</button>
             </div>
-        </form>
+    </form>
     </div>
 </div>
 

@@ -1,0 +1,59 @@
+.modal-middle-icon {
+    justify-content: center;
+    display: flex;
+    margin-top: 1rem;
+}
+
+.modal-title {
+    color: #E13F3D;
+    letter-spacing: normal;
+    font-weight: bold;
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+.modal-subtitle {
+    color: #000000;
+    letter-spacing: normal;
+    text-align: center;
+    font-size: 0.875rem;
+    text-wrap: balance;
+    display: flex;
+    width: 98%;
+}
+
+.modal-buttons {
+    justify-content: center;
+    display: flex;
+    margin-bottom: 3.125rem;
+    margin-top: 1.5rem;
+}
+
+/* Saved Successfully Modal */
+#saved-successfully .modal-content {
+    width: 500px;
+    height: 343.43px;
+    border-radius: 15px; /* Optional: Add border-radius for a rounded appearance */
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+}
+
+#saved-successfully .modal-body {
+    text-align: center; /* Center align content */
+    width: 100%; /* Ensure full width */
+}
+
+#saved-successfully .modal-title {
+    color: black; /* Set title color */
+    font-size: 1.5rem; /* Adjust title font size as needed */
+}
+
+#saved-successfully .modal-subtitle {
+    justify-content: center; /* Center align subtitle */
+    width: 100%; /* Ensure full width */
+}
+
+
+
+

@@ -36,6 +36,33 @@ body {
   background-color: #F2F2F2;
 }
 
+.loader {
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+}
+
+.loader.visible {
+  opacity: 1;
+}
+
+.main-content {
+  display: none;
+}
+
+.loader img {
+  max-height: 40vh;
+  max-width: 50%; 
+}
+
 .sidebar {
   height: 100%;
   width: 0;
@@ -82,7 +109,6 @@ body {
   left: 0;
   z-index: -1; /* Send the background behind other content */
 }
-
 
 .sidebar-logo {
   height: 50px; /* Adjust height as needed */
@@ -175,8 +201,8 @@ body {
 .patients-icon,
 .records-icon,
 .medreports-icon {
-  width: 22px;
-  height: 22px;
+  width: 1.375rem;
+  height: 1.375rem;
   margin-right: 15px;
   padding-left: 85px;
 }
@@ -205,10 +231,16 @@ body {
 }
 
 /* Add styles for the new menu items */
-.notifications-icon,
+.activity-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 15px;
+    padding-left: 85px;
+  }
+
 .settings-icon {
-  width: 22px;
-  height: 22px;
+  width: 1.375rem;
+  height: 1.375rem;
   margin-right: 15px;
   padding-left: 85px;
 }
@@ -326,17 +358,7 @@ body.sidebar-active {
   transform: translateY(-50%);
   color: #058789;
   font-size: 20px;
-  padding-right: 130px;
-}
-
-.dashboard-text {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  color: #058789;
-  font-size: 20px;
-  padding-right: 130px;
+  margin-right: 130px;
 }
 
 .dashboard-text p:nth-child(1) {
@@ -651,11 +673,19 @@ body.sidebar-active {
 
 .left-header p{
   font-size: 40px; 
-  margin: 30px 0 20px 200px; 
+  margin: 2.5rem 0 0 12.5rem; 
   font-family: 'Poppins', sans-serif;
   font-weight: bold;
-  letter-spacing: 1px;
+  letter-spacing: 0.063rem;
 
+}
+
+.left-header-subtitle {
+  margin: 0 0 1.875rem 12.5rem; 
+  color: black; 
+  font-weight: 400; 
+  font-size: 0.938rem;
+  letter-spacing: 0.063rem;
 }
 
 /* KEYWORD FIELD */
@@ -943,6 +973,18 @@ body.sidebar-active {
   height: 100%;
 }
 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .input-row {
   display: flex;
   justify-content: space-between; /* Distribute space between elements */
@@ -1008,6 +1050,12 @@ body.sidebar-active {
 .right-row {
   display: flex;
   justify-content: flex-end; /* Align items to the end */
+  width: 95%; /* Ensure full width */
+}
+
+.middle-row {
+  display: flex;
+  justify-content: center; /* Align items to the end */
   width: 95%; /* Ensure full width */
 }
 
@@ -1091,24 +1139,40 @@ body.sidebar-active {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 20px 20px 20px;
+  margin: 0 1.25rem 1.25rem 1.25rem;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+}
+
+.sorting-pagination-container {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* Move to the right */
+}
+
+.sorting-button-box {
+  margin-right: 20px; /* Add margin to separate from the buttons */
 }
 
 .delete-button {
-  width: 90px;
-  height: 31px;
-  background-color: #E13F3D;
-  border-radius: 6px;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-right: 10px; /* Add space between buttons */
+  padding: 8px 20px; /* Resize buttons */
+  background-color: #E13F3D; /* Change background color */
+  color: white; /* Change text color */
   border: none;
+  border-radius: 5px;
   cursor: pointer;
-  font-family: 'Poppins', sans-serif;
-  padding: 5px 10px;
-  font-size: 16px;
+}
+.cancel-button {
+  background-color: #058789; /* Change background color */
+  color: white; /* Change text color */
   border: none;
+  border-radius: 5px;
+  padding: 8px 20px; /* Resize buttons */
+  cursor: pointer;
 }
 
 .delete-icon {
@@ -1125,8 +1189,8 @@ body.sidebar-active {
 
 .sorting-pagination-container {
   display: flex;
+  justify-content: right;
   align-items: center;
-  gap: 20px;
 }
 
 .sorting-button-box select {
@@ -1187,7 +1251,7 @@ body.sidebar-active {
   display: flex;
   justify-content: center;
   gap: 25px;
-  margin: 50px 25px 50px 25px;
+  margin: 30px 25px 50px 25px;
 }
 
 .box-container {
@@ -1202,18 +1266,32 @@ body.sidebar-active {
 }
 
 .profile-avatar {
-  width: 100%;
-  text-align: center; /* Center the avatar horizontally */
-  margin-top: 30px; /* Adjust margin top as needed */ 
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically */
+  margin-top: 30px;
 }
 
-.avatar-image {
+.avatar-circle {
   width: 202px;
   height: 202px;
-  border-radius: 50%; /* Ensure the image appears as a circle */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+  border-radius: 50%;
+  background-color: #E9E9E9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   margin: 20px;
 }
+
+.initials {
+  font-family: 'Poppins', sans-serif;
+  font-size: 5.5rem;
+  font-weight: bold;
+  color: #058789;
+}
+
 
 .patient-info {
   text-align: center;
@@ -1378,6 +1456,10 @@ body.sidebar-active {
   border: none;
 }
 
+.history-next-button:hover {
+  color: #3b3b3b !important;
+}
+
 .history-next-button {
   width: 65px;
   height: 32px;
@@ -1406,7 +1488,7 @@ body.sidebar-active {
 .med-reports-header {
   display: flex;
   justify-content: center;
-  margin: 40px 20px 40px 20px;
+  margin: 2.5rem 1.25rem 5rem 1.25rem;
 }
 
 .med-reports-header-box {
@@ -1452,18 +1534,57 @@ body.sidebar-active {
   margin-right: 30px;
 }
 
-.edit-delete-records {
-  font-family: 'Poppins', sans-serif; 
-  text-decoration: underline;
-  font-size: 16px;
-  font-weight: 400;
+.button-group {
+  display: flex;
   align-items: center;
-  margin-left: 20px;
+}
+
+.button-separator {
+  width: 0.063rem;
+  height: 1rem;
+  background-color: #ccc;
+}
+
+.delete-records, .download-button {
+  display: flex;
+  align-items: center; /* Align items vertically */
   cursor: pointer;
 }
 
-.edit-delete-records:hover {
+.delete-records i, .download-button i {
+  margin-right: 0.625rem;
+}
+
+.delete-records {
+  font-family: 'Poppins', sans-serif; 
+  font-size: 1rem;
+  font-weight: bold;
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+  cursor: pointer;
   color: #D22B2B;
+}
+
+.delete-records:hover {
+  color: #cc0000;
+}
+
+.download-button a:hover i,
+.download-button a:hover span {
+    color: #04414d;
+}
+
+.download-button {
+  font-family: 'Poppins', sans-serif; 
+  font-size: 1rem;
+  font-weight: bold;
+  margin-left: 1.25rem;
+  cursor: pointer;
+  color: #058789;
+}
+
+.download-button:hover {
+  color: #1D434E;
 }
 
 .quarterly-report-container {
@@ -1475,7 +1596,7 @@ body.sidebar-active {
 .quarterly-report-row {
   display: flex;
   justify-content: center;
-  margin: 20px;
+  margin: 20px  ;
 }
 
 .quarterly-report-row-box {
@@ -1635,4 +1756,48 @@ body.sidebar-active {
     display: none;
   }
 
+  .editProfile-input-container {
+    position: relative;
+  }
+
+  #lastName, #middleName, #firstName,
+  #email, #password, #confirmPassword {
+    height: 83px;
+    border-radius: 15px;
+    background-color: white;
+    padding: 10px;
+    box-sizing: border-box;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s; /* Added transition for smoother effect */
+  }
+
+  #lastName {
+    width: 28.5rem;
+  }
+
+  #firstName {
+    width: 21.25rem;
+  }
+
+  #middleName {
+    width: 13.5rem;
+  }
   
+  #email, #password, #confirmPassword {
+    width: 64.850rem;
+  }
+
+  .group {
+    display: inline-block;
+  }
+
+  .userProfile-input-label {
+    margin-left: 0.875rem;
+  }
+
+  #empty-field-message { 
+    color: #D22B2B;
+    display: flex; 
+    justify-content: center;
+  }

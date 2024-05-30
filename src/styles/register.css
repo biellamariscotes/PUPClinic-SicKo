@@ -1,0 +1,310 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  margin: 0;
+}
+body,
+button {
+  font-family: "Poppins", sans-serif;
+}
+
+.asterisk {
+  color: #ff0f0f;
+}
+.red {
+  color: #e13f3d !important;
+}
+
+.green {
+  color: #058789 !important;
+}
+.border {
+  border: 2px red solid !important;
+}
+
+.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 25%;
+}
+
+.nav-bar img {
+  height: 3rem;
+}
+.info {
+  margin-top: 3rem;
+}
+
+.sign-in {
+  padding: 0.4rem 2rem !important;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background-color: #fff;
+  border: 3px solid #058789;
+  border-radius: 7px;
+  color: #058789;
+}
+
+.sign-in:hover {
+  padding: 0.4rem 2rem !important;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background-color: #fff;
+  border: 3px solid #05878987;
+  border-radius: 7px;
+  color: #05878987;
+}
+
+.sign-up {
+  padding: 0.4rem 2rem !important;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background-color: #058789;
+  border: 3px solid #058789;
+  border-radius: 7px;
+  color: #fff;
+  margin-left: 1rem;
+}
+
+.sign-up:hover {
+  color: #ffffff7a;
+}
+
+.register img {
+  width: 60%;
+  height: auto;
+  max-height: 100%;
+}
+
+.register-btn {
+  padding: 0.4rem 6rem !important;
+  font-size: 1rem;
+  font-weight: 500;
+  background-color: #058789;
+  border: 3px solid #058789;
+  border-radius: 7px;
+  color: #fff;
+  margin-top: 1rem;
+}
+
+.small-p {
+  padding-top: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.register-btn:hover {
+  color: #ffffff7a;
+}
+
+input[type="date"]::before {
+    content: attr(placeholder);
+    position: absolute;
+    color: #fff;
+  }
+  
+  input[type="date"] {
+    color: #ffffff;
+  }
+  
+  input[type="date"]:focus,
+  input[type="date"]:valid {
+    color: #666666;
+  }
+  
+  input[type="date"]:focus::before,
+  input[type="date"]:valid::before {
+    content: "";
+  }
+
+
+
+  
+  .container-login-cst {
+    position: absolute;
+    width: 400px;
+    background: #FFFFFF;
+    padding: 20px;
+  }
+  
+  /* Logo and Sign In Section */
+  .logo-container {
+    margin-bottom: 10px;
+  }
+
+  .logo-container img {
+    height: auto;
+    width: 40%;
+  }
+  
+  .logo {
+    width: 120px;
+    height: 120px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
+  /* Form Container */
+  .form-container-cst {
+    border-radius: 15px;
+   
+  }
+  
+  .form-container-cst form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Email and Password Form */
+  .form-container-cst input {
+    background-color: #E9E9E9;
+    width: 90%;
+    font-size: medium;
+    padding: 30px 30px 15px 30px ;
+    border: none; /* Remove default border */
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif; /* Added font-family rule */
+    transition: border-color 0.3s; /* Added transition for smoother effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add drop shadow */
+  }
+
+  
+  .form-container-cst input:focus {
+    background-color: #D4D4D4; /* Set background color when input is focused */
+    outline: none;
+  }
+  
+  .input-container {
+    position: relative;
+    margin-bottom: 15px;
+  }
+  
+  .input-container label {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #999;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    font-family: 'Poppins', sans-serif; /* Added font-family rule */
+  }
+  
+  .input-container.active label {
+    top: 10px;
+    left: 20px;
+    font-size: 12px;
+    color: #333;
+    font-family: 'Poppins', sans-serif; /* Added font-family rule */
+  }
+  
+  /* Form Container Input */
+  .form-container-cst input:focus {
+    background-color: #E9E9E9; /* Set background color when input is focused */
+    outline: none; /* Remove default focus outline */
+  }
+  
+  /* Form Container Input when autofill */
+  .form-container-cst input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #E9E9E9 inset !important; /* Reset autofill background color */
+    background-color: #E9E9E9; /* Set background color */
+  }
+  
+  /* Sign In Button */
+  .form-container-cst button {
+    width: 50%;
+    display: block;
+    margin: 0 auto; /* Center the button */
+    padding: 10px;
+    background-color: #1D434E;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+  }
+
+  button:disabled,
+  button:disabled:hover {
+      background-color: #D4D4D4;
+      color: #fff !important;
+      cursor: default;
+      border: none !important;
+  }
+  
+  
+  /* Vector Adjustment */
+  .vector-red, .vector-green {
+    position: absolute;
+  }
+  
+  .vector-red {
+    top: 0;
+    right: 0;
+  }
+  
+  .vector-green {
+    bottom: 0;
+    left: 0;
+  }
+  
+  /* Required input indicator */
+  .input-container.asterisk::after {
+    content: "*"; /* Insert asterisk */
+    color: #E13F3D; /* Set color to red */
+    position: absolute; /* Position relative to the input container */
+    top: 50%; /* Align vertically */
+    right: 15px; /* Align to the right side */
+    transform: translateY(-50%); /* Adjust vertical alignment */
+  }
+  
+  /* EYE TOGGLE BUTTON TO HIDE AND SHOW THE PASSWORD */
+  
+  .toggle-password {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 60px; /* Adjust as needed */
+    cursor: pointer;
+    color: #999; /* Color for the eye icon */
+  }
+  
+  
+  /* You can style the eye icon here */
+  .toggle-password::after {
+    /*content: "\1F441"; Unicode for eye icon */
+    font-family: "Poppins"; 
+    font-weight: 900; /* Adjust as needed */
+    font-size: 16px; /* Adjust as needed */
+  }
+  
+  
+  .loader {
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+  }
+  
+  .loader.visible {
+    opacity: 1;
+  }
+  
+  .main-content {
+    display: none;
+  }
+  
+  .loader img {
+    max-height: 40vh;
+    max-width: 50%; 
+  }
