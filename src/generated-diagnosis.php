@@ -1,7 +1,7 @@
 <?php
-require_once('src/includes/session-nurse.php');
-require_once('src/includes/connect.php');
-require_once('src/includes/algorithm/naive-bayes.php');
+require_once('includes/session-nurse.php');
+require_once('includes/connect.php');
+require_once('includes/algorithm/naive-bayes.php');
 
 // Assuming you have a function to perform diagnosis
 // and return predicted sicknesses and suggested treatments
@@ -114,18 +114,18 @@ if(isset($_POST['symptoms'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generated Diagnosis</title>
-    <link rel="icon" type="image/png" href="src/images/heart-logo.png">  
-    <link rel="stylesheet" href="src/styles/dboardStyle.css">
+    <link rel="icon" type="image/png" href="images/heart-logo.png">  
+    <link rel="stylesheet" href="styles/dboardStyle.css">
 </head>
 <body>
     <div class="overlay" id="overlay"></div>
 
-    <?php include ('src/includes/sidebar/ai-basedSDT.php'); ?>
+    <?php include ('includes/sidebar/ai-basedSDT.php'); ?>
 
     <div class="content" id="content">
         <div class="ai-header-content">
             <div class="ai-header-image-container">
-                <img src="src/images/ai-header.svg" alt="AI Header" class="ai-header">
+                <img src="images/ai-header.svg" alt="AI Header" class="ai-header">
             </div>
             <div class="ai-header-text-container">
                 <div class="ai-header-text">
@@ -192,14 +192,14 @@ if(isset($_POST['symptoms'])) {
             <div class="record-treatment-button" onclick="recordTreatment()">
                 <div class="box-content">
                     <p class="box-text">Record Treatment</p>
-                    <img src="src/images/arrow-icon.svg" alt="Arrow Icon">
+                    <img src="images/arrow-icon.svg" alt="Arrow Icon">
                 </div>
             </div>
         </div>
     </div>
 
-    <?php include ('src/includes/footer.php'); ?>
-    <script src="src/scripts/script.js"></script>
+    <?php include ('includes/footer.php'); ?>
+    <script src="scripts/script.js"></script>
     <script>
         function recordTreatment() {
             <?php

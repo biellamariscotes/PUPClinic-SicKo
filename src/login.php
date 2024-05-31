@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once ('src/includes/connect.php');
+require_once ('includes/connect.php');
 
 if (isset($_SESSION['patient_id'])) {
     header("Location: home.php");
@@ -51,10 +51,10 @@ if (isset($_POST['login_btn'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In</title>
-    <link rel="icon" type="image/png" href="src/images/heart-logo.png">
-    <link rel="stylesheet" href="src/styles/modals.css">
+    <link rel="icon" type="image/png" href="images/heart-logo.png">
+    <link rel="stylesheet" href="styles/modals.css">
     <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="src/styles/register.css">
+    <link rel="stylesheet" href="styles/register.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <style>
@@ -68,7 +68,7 @@ if (isset($_POST['login_btn'])) {
 <body>
 
     <div class="loader">
-        <img src="src/images/loader.gif">
+        <img src="images/loader.gif">
     </div>
 
     <!-- Navigation Bar -->
@@ -76,7 +76,7 @@ if (isset($_POST['login_btn'])) {
         <div class="container pt-4">
             <div class="row nav-bar">
                 <div class="col-md-6  d-flex align-items-center">
-                    <img src="src/images/sicko-logo.png" class="me-3">
+                    <img src="images/sicko-logo.png" class="me-3">
                     <div class="fw-bold fs-4 d-flex align-items-center text-center" style="align-self: center"><span
                             class="green">Sic</span><span class="red">Ko</span></div>
                 </div>
@@ -93,8 +93,8 @@ if (isset($_POST['login_btn'])) {
                 <div class="col-12 info  d-flex justify-content-center">
                     <div class="container-login-cst">
                         <div class="logo-container d-flex flex-wrap justify-content-center">
-                            <div class="d-flex flex-wrap justify-content-center"">
-                            <img class=" logo" src="src/images/heart-logo.png" alt="Sicko Logo">
+                            <div class="d-flex flex-wrap justify-content-center">
+                            <img class=" logo" src="images/heart-logo.png" alt="Sicko Logo">
                             </div>
                             <div>
                                 <p class="fw-bold fs-4"><span class="green">Sic</span><span class="red">Ko</span> | Sign
@@ -127,7 +127,7 @@ if (isset($_POST['login_btn'])) {
 
 
         <footer>
-            <img class="vector-green fixed-bottom" src="src/images/vector-green.png" alt="Green Vector">
+            <img class="vector-green fixed-bottom" src="images/vector-green.png" alt="Green Vector">
         </footer>
     </div>
 
@@ -136,7 +136,7 @@ if (isset($_POST['login_btn'])) {
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="modal-middle-icon">
-                        <img src="src/images/x-mark.gif" style="width: 9rem; height: auto;" alt="Failed Icon">
+                        <img src="images/x-mark.gif" style="width: 9rem; height: auto;" alt="Failed Icon">
                     </div>
                     <div class="modal-title">Login Failed</div>
                     <div class="modal-subtitle" style="text-wrap: pretty; ">Authentication failed. Please check your
@@ -152,8 +152,8 @@ if (isset($_POST['login_btn'])) {
     </div>
 
     <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="src/scripts/script.js"></script>
-    <script src="src/scripts/loader.js"></script>
+    <script src="scripts/script.js"></script>
+    <script src="sscripts/loader.js"></script>
 
     <script>
 

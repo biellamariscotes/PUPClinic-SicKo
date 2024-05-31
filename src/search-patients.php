@@ -1,5 +1,5 @@
 <?php
-require_once ('src/includes/connect.php');
+require_once ('includes/connect.php');
 
 if(isset($_GET['keyword'])) {
     $keyword = mysqli_real_escape_string($conn, $_GET['keyword']);

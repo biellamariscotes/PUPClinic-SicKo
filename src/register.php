@@ -13,16 +13,16 @@ if (isset($_SESSION['patient_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link rel="icon" type="image/png" href="src/images/heart-logo.png">
+    <link rel="icon" type="image/png" href="images/heart-logo.png">
     <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="src/styles/register.css">
+    <link rel="stylesheet" href="styles/register.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
 
     <div class="loader">
-        <img src="src/images/loader.gif">
+        <img src="images/loader.gif">
     </div> 
 
     <div class="main-content">
@@ -30,7 +30,7 @@ if (isset($_SESSION['patient_id'])) {
         <div class="container pt-4">
             <div class="row nav-bar">
                 <div class="col-md-6  d-flex align-items-center">
-                    <img src="src/images/sicko-logo.png" class="me-3">
+                    <img src="images/sicko-logo.png" class="me-3">
                     <div class="fw-bold fs-4 d-flex align-items-center text-center" style="align-self: center"><span
                             class="green">Sic</span><span class="red">Ko</span></div>
                 </div>
@@ -46,7 +46,7 @@ if (isset($_SESSION['patient_id'])) {
                 <div class="col-md-12 info">
                     <div class="row">
                         <div class="col-md-8 d-flex justify-content-center pb-5">
-                            <img src="src/images/register.png">
+                            <img src="images/register.png">
                         </div>
                         <div class="col-md-4">
                             <div class="row">
@@ -54,7 +54,7 @@ if (isset($_SESSION['patient_id'])) {
                                     <span class="fs-3 fw-bold">Create an account</span>
                                 </div>
                             </div>
-                            <form method="post" action="src/includes/queries/register.php">
+                            <form method="post" action="includes/queries/register.php">
                                 <!-- Student ID -->
                                 <div class="row">
                                     <div class="col-md-12 ">
@@ -185,12 +185,12 @@ if (isset($_SESSION['patient_id'])) {
         </div>
 
         <footer>
-            <img class="vector-green fixed-bottom" src="src/images/vector-green.png" alt="Green Vector">
+            <img class="vector-green fixed-bottom" src="images/vector-green.png" alt="Green Vector">
         </footer>
     </div>
     <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="src/scripts/loader.js"></script>
-    <script src="src/scripts/register-validation.js">
+    <script src="scripts/loader.js"></script>
+    <script src="scripts/register-validation.js">
 
     <script>
 

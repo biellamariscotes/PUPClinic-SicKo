@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once ('src/includes/connect.php');
+require_once ('includes/connect.php');
 
 if (isset($_SESSION['patient_id'])) {
     $patient_id = $_SESSION['patient_id'];
@@ -34,9 +34,9 @@ if (isset($_SESSION['patient_id'])) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Treatment Record</title>
-        <link rel="icon" type="image/png" href="src/images/heart-logo.png">
-        <link rel="stylesheet" href="src/styles/dboardStyle.css">
-        <link rel="stylesheet" href="src/styles/student-style.css">
+        <link rel="icon" type="image/png" href="images/heart-logo.png">
+        <link rel="stylesheet" href="styles/dboardStyle.css">
+        <link rel="stylesheet" href="styles/student-style.css">
         <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
@@ -54,13 +54,13 @@ if (isset($_SESSION['patient_id'])) {
     <body>
 
          <div class="loader">
-            <img src="src/images/loader.gif">
+            <img src="images/loader.gif">
         </div>
 
         <div class="main-content">
             <div class="row nav-bar px-6">
                 <div class="col-md-6 nav-bar-left d-flex align-items-center">
-                    <a href="home.php"><img src="src/images/sicko-logo.png" class="me-4 my-2"></a>
+                    <a href="home.php"><img src="images/sicko-logo.png" class="me-4 my-2"></a>
                     <div class="fw-bold fs-4 d-flex flex-column white" style="padding: 0;">
                         SicKo
                     </div>
@@ -137,13 +137,13 @@ if (isset($_SESSION['patient_id'])) {
             </div>
 
             <?php
-            include ('src/includes/footer.php');
+            include ('includes/footer.php');
             ?>
         </div>
         <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="src/scripts/script.js"></script>
-        <script src="src/scripts/calendar.js"></script>
-         <script src="src/scripts/loader.js"></script>
+        <script src="scripts/script.js"></script>
+        <script src="scripts/calendar.js"></script>
+         <script src="scripts/loader.js"></script>
     </body>
 
     </html>

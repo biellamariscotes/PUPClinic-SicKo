@@ -1,6 +1,6 @@
 <?php
-require_once('src/includes/session-nurse.php');
-require_once('src/includes/connect.php');
+require_once('includes/session-nurse.php');
+require_once('includes/connect.php');
 require_once('vendors/tcpdf/tcpdf.php');
 
 $date = date('F j, Y');

@@ -1,6 +1,6 @@
 <?php
-require_once ('src/includes/session-nurse.php');
-require_once ('src/includes/connect.php');
+require_once ('includes/session-nurse.php');
+require_once ('includes/connect.php');
 
 // Check if the patient_id is provided in the URL
 if (isset($_GET['patient_id'])) {
@@ -46,8 +46,8 @@ if (isset($_GET['patient_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Treatment Record</title>
-    <link rel="icon" type="image/png" href="src/images/heart-logo.png">
-    <link rel="stylesheet" href="src/styles/dboardStyle.css">
+    <link rel="icon" type="image/png" href="images/heart-logo.png">
+    <link rel="stylesheet" href="styles/dboardStyle.css">
     <link rel="stylesheet" href="vendors\bootstrap-5.0.2\dist\css\bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 </head>
@@ -76,7 +76,7 @@ if (isset($_GET['patient_id'])) {
     </div> -->
     <div class="overlay" id="overlay"></div>
 
-    <?php include ('src/includes/sidebar/patients-treatment-record.php'); ?>
+    <?php include ('includes/sidebar/patients-treatment-record.php'); ?>
 
     <div class="main-contenter">
         <div class="content" id="content">
@@ -187,10 +187,10 @@ if (isset($_GET['patient_id'])) {
             </div>
         </div>
 
-        <?php include ('src/includes/footer.php'); ?>
+        <?php include ('includes/footer.php'); ?>
     </div>
-    <script src="src/scripts/script.js"></script>
-    <script src="src/scripts/loader.js"></script>
+    <script src="scripts/script.js"></script>
+    <script src="scripts/loader.js"></script>
 </body>
 
 </html>
