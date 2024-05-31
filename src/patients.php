@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patients</title>
-    <link rel="icon" type="image/png" href="src/images/heart-logo.png">
-    <link rel="stylesheet" href="src/styles/dboardStyle.css">
-    <link rel="stylesheet" href="src/styles/modals.css">
+    <link rel="icon" type="image/png" href="images/heart-logo.png">
+    <link rel="stylesheet" href="styles/dboardStyle.css">
+    <link rel="stylesheet" href="styles/modals.css">
     <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
@@ -17,7 +17,7 @@
 
 <body>
 <div class="loader">
-        <img src="src/images/loader.gif">
+        <img src="images/loader.gif">
     </div>
 
     <div class="overlay" id="overlay"></div>
@@ -25,8 +25,8 @@
     <div class="main-content">
     <?php
     // Include necessary files and establish database connection
-    require_once ('src/includes/session-nurse.php');
-    require_once ('src/includes/connect.php');
+    require_once ('includes/session-nurse.php');
+    require_once ('includes/connect.php');
 
     $recordsPerPage = 5;
     $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -79,7 +79,7 @@
     ?>
 
     <?php
-    include ('src/includes/sidebar/patients.php');
+    include ('includes/sidebar/patients.php');
     ?>
 
 
@@ -125,7 +125,7 @@
                         <div class="table-button-container" id="tableButtonContainer">
                             <!-- Delete button with toggle for checkboxes -->
                             <button class="delete-button" id="toggleCheckboxButton">
-                                <img src="src/images/trash-icon.svg" alt="Delete Icon" class="delete-icon">
+                                <img src="images/trash-icon.svg" alt="Delete Icon" class="delete-icon">
                                 Delete Records
                             </button>
                             <!-- Sorting and Pagination Container -->
@@ -185,12 +185,12 @@
 
 
     <?php
-    include ('src/includes/footer.php');
+    include ('includes/footer.php');
     ?>
     </div>
     <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="src/scripts/script.js"></script>
-    <script src="src/scripts/loader.js"></script> 
+    <script src="scripts/script.js"></script>
+    <script src="scripts/loader.js"></script> 
 
     <script>
         $(document).ready(function () {

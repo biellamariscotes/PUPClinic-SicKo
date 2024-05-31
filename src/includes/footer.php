@@ -20,10 +20,10 @@
         </div>
         <div class="footer-right">
             <div class="footer-icons">
-                <a href="link1.html"><img src="src/images/facebook.svg" class="footer-icon" alt="facebook"></a>
-                <a href="link2.html"><img src="src/images/instagram.svg" class="footer-icon" alt="instagram"></a>
-                <a href="link3.html"><img src="src/images/twitter.svg" class="footer-icon" alt="twitter"></a>
-                <a href="link4.html"><img src="src/images/discord.svg" class="footer-icon" alt="discord"></a>
+                <a href="link1.html"><img src="images/facebook.svg" class="footer-icon" alt="facebook"></a>
+                <a href="link2.html"><img src="images/instagram.svg" class="footer-icon" alt="instagram"></a>
+                <a href="link3.html"><img src="images/twitter.svg" class="footer-icon" alt="twitter"></a>
+                <a href="link4.html"><img src="images/discord.svg" class="footer-icon" alt="discord"></a>
             </div>
             <p class="support-text">Support: bsit.teamsicko@gmail.com</p>
         </div>

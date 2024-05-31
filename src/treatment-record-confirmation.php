@@ -1,6 +1,6 @@
 <?php
-require_once('src/includes/session-nurse.php');
-require_once('src/includes/connect.php');
+require_once('includes/session-nurse.php');
+require_once('includes/connect.php');
 
 $patient_id = isset($_GET['patient_id']) ? $_GET['patient_id'] : '';
 $full_name = isset($_GET['full_name']) ? $_GET['full_name'] : '';
@@ -20,8 +20,8 @@ $treatments = isset($_GET['treatments']) ? $_GET['treatments'] : '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SicKo - Treatment Record Confirmation </title>
-    <link rel="icon" type="image/png" href="src/images/heart-logo.png"> 
-    <link rel="stylesheet" href="src/styles/dboardStyle.css">
+    <link rel="icon" type="image/png" href="images/heart-logo.png"> 
+    <link rel="stylesheet" href="styles/dboardStyle.css">
 </head>
 
 <style>
@@ -48,7 +48,7 @@ $treatments = isset($_GET['treatments']) ? $_GET['treatments'] : '';
     <div class="overlay" id="overlay"></div>
 
 <?php
-    include ('src/includes/sidebar/patients-treatment-record.php');
+    include ('includes/sidebar/patients-treatment-record.php');
     ?>
 
     <div class="content" id="content">
@@ -103,8 +103,8 @@ $treatments = isset($_GET['treatments']) ? $_GET['treatments'] : '';
 
 
     <?php
-    include ('src/includes/footer.php');
+    include ('includes/footer.php');
     ?>  
-    <script src="src/scripts/script.js"></script>
+    <script src="scripts/script.js"></script>
 </body>
 </html>

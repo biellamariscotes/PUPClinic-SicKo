@@ -1,6 +1,6 @@
 <?php
-require_once ('src/includes/session-nurse.php');
-require_once ('src/includes/connect.php');
+require_once ('includes/session-nurse.php');
+require_once ('includes/connect.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if patient_id is set in the POST data
@@ -65,9 +65,9 @@ mysqli_close($conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Treatment Record</title>
-    <link rel="icon" type="image/png" href="src/images/heart-logo.png">
-    <link rel="stylesheet" href="src/styles/dboardStyle.css">
-    <link rel="stylesheet" href="src/styles/modals.css">
+    <link rel="icon" type="image/png" href="images/heart-logo.png">
+    <link rel="stylesheet" href="styles/dboardStyle.css">
+    <link rel="stylesheet" href="styles/modals.css">
     <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
@@ -131,12 +131,12 @@ mysqli_close($conn);
 <body>
 
     <div class="loader">
-        <img src="src/images/loader.gif">
+        <img src="images/loader.gif">
     </div>
     <div class="overlay" id="overlay"></div>
 
     <?php
-    include ('src/includes/sidebar/patients-treatment-record.php');
+    include ('includes/sidebar/patients-treatment-record.php');
     ?>
 
     <div class="main-content">
@@ -258,12 +258,12 @@ mysqli_close($conn);
         </div>
 
         <?php
-        include ('src/includes/footer.php');
+        include ('includes/footer.php');
         ?>
     </div>
     <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="src/scripts/script.js"></script>
-    <script src="src/scripts/loader.js"></script>
+    <script src="scripts/script.js"></script>
+    <script src="scripts/loader.js"></script>
     <script>
         $(document).ready(function () {
             // Show Modal when Log Out menu item is clicked

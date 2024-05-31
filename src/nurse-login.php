@@ -6,7 +6,7 @@ if (isset($_SESSION['nurse_id'])) {
     exit();
 }
 
-require_once ('src/includes/connect.php');
+require_once ('includes/connect.php');
 
 if (!$conn) {
     die("Database connection failed");
@@ -50,9 +50,9 @@ if (isset($_POST['login_btn'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In</title>
-    <link rel="icon" type="image/png" href="src/images/heart-logo.png">
-    <link rel="stylesheet" href="src/styles/style.css">
-    <link rel="stylesheet" href="src/styles/modals.css">
+    <link rel="icon" type="image/png" href="images/heart-logo.png">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/modals.css">
     <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
@@ -68,13 +68,13 @@ if (isset($_POST['login_btn'])) {
 <body>
 
     <div class="loader">
-        <img src="src/images/loader.gif">
+        <img src="images/loader.gif">
     </div>
 
     <div class="main-content">
         <div class="container-login-cst">
             <div class="logo-container">
-                <img class="logo" src="src/images/sicko-logo.png" alt="Sicko Logo">
+                <img class="logo" src="images/sicko-logo.png" alt="Sicko Logo">
                 <h2><span style="color: #058789;">Sic</span><span style="color: #E13F3D;">Ko</span> | Sign In</h2>
             </div>
 
@@ -104,7 +104,7 @@ if (isset($_POST['login_btn'])) {
                 <div class="modal-content">
                     <div class="modal-body">
                         <div class="modal-middle-icon">
-                            <img src="src/images/x-mark.gif" style="width: 9rem; height: auto;" alt="Failed Icon">
+                            <img src="images/x-mark.gif" style="width: 9rem; height: auto;" alt="Failed Icon">
                         </div>
                         <div class="modal-title">Login Failed</div>
                         <div class="modal-subtitle" style="text-wrap: pretty; ">Authentication failed. Please check your
@@ -119,12 +119,12 @@ if (isset($_POST['login_btn'])) {
             </div>
         </div>
 
-        <img class="vector-red" src="src/images/vector-red.png" alt="Red Vector">
-        <img class="vector-green" src="src/images/vector-green.png" alt="Green Vector">
+        <img class="vector-red" src="images/vector-red.png" alt="Red Vector">
+        <img class="vector-green" src="images/vector-green.png" alt="Green Vector">
     </div>
     <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="src/scripts/script.js"></script>
-    <script src="src/scripts/loader.js"></script>
+    <script src="scripts/script.js"></script>
+    <script src="scripts/loader.js"></script>
 
 
     <script>
