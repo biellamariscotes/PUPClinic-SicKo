@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 
 <div align="start">
-  <h1>SicKo: PUPSRC Clinic Management System :hospital: :caduceus:</h1>
+  <h1>SicKo: PUPSRC Clinic Management System :hospital:</h1>
 </div>
 
 [![Contributors][contributors-shield]][contributors-url]
