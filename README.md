@@ -4,14 +4,6 @@
   <h1>SicKo: PUPSRC Clinic Management System :hospital:</h1>
 </div>
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![Pull requests][pull-requests-shield]][pull-requests-url]
-[![GitHub Release][release-shield]][release-url]
-
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -36,7 +28,6 @@ Tech stack and frameworks used to build SicKo web-application
 * [![CSS](https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white)][CSS-url]
 * [![HTML](https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white)][HTML-url]
 * [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)][JavaScript-url]
-* [![SCSS](https://img.shields.io/badge/SCSS-CC6699?style=for-the-badge&logo=sass&logoColor=white)][SCSS-url]
 * [![JQuery][JQuery.com]][JQuery-url]
 
 
