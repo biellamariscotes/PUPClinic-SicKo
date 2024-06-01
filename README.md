@@ -16,7 +16,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/PUPClinic-SicKo">
-    <img src="src/images/sicko-logo.png" alt="Logo" width="500" height="500">
+    <img src="src/images/sicko-logo.png" alt="Logo" width="250" height="250">
   </a>
 
   <div align="start">
