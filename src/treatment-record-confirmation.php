@@ -67,9 +67,9 @@ $treatments = isset($_GET['treatments']) ? $_GET['treatments'] : '';
             <input type="hidden" name="patient_id" value="<?php echo $patient_id; ?>" >
                 <select id="sex" name="sex" required >
                     <option value="" disabled hidden>Gender</option>
-                    <option value="male" <?php if($sex == 'male') echo 'selected'; ?>>Male</option>
-                    <option value="female" <?php if($sex == 'female') echo 'selected'; ?>>Female</option>
-                    <option value="other" <?php if($sex == 'other') echo 'selected'; ?>>Other</option>
+                    <option value="Male" <?php if($sex == 'Male') echo 'selected'; ?>>Male</option>
+                    <option value="Female" <?php if($sex == 'Female') echo 'selected'; ?>>Female</option>
+                    <option value="Other" <?php if($sex == 'Other') echo 'selected'; ?>>Other</option>
                 </select>
                 <input type="number" id="age" name="age" placeholder="Age" required value="<?php echo $age; ?>" >
             </div>
