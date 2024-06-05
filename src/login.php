@@ -53,7 +53,7 @@ if (isset($_POST['login_btn'])) {
     <title>Sign In</title>
     <link rel="icon" type="image/png" href="images/heart-logo.png">
     <link rel="stylesheet" href="styles/modals.css">
-    <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../vendors/bootstrap-5.0.2/dist/css/bootstrap.css">
     <link rel="stylesheet" href="styles/register.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -151,7 +151,7 @@ if (isset($_POST['login_btn'])) {
         </div>
     </div>
 
-    <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="scripts/script.js"></script>
     <script src="sscripts/loader.js"></script>
 

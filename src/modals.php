@@ -49,7 +49,7 @@ if (isset($_POST['login_btn'])) {
     <link rel="icon" type="image/png" href="images/heart-logo.png">
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/modals.css">
-    <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
@@ -277,7 +277,7 @@ if (isset($_POST['login_btn'])) {
 
     <!-- <img class="vector-red" src="src/images/vector-red.png" alt="Red Vector"> -->
     <img class="vector-green" src="images/vector-green.png" alt="Green Vector">
-    <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="scripts/script.js"></script>
 
 

@@ -30,7 +30,7 @@ $totalPages = ceil($totalRecords / $rowsPerPage);
     <title>Dashboard</title>
     <link rel="icon" type="image/png" href="images/heart-logo.png">
     <link rel="stylesheet" href="styles/dboardStyle.css">
-    <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
 </head>
 
 <body>

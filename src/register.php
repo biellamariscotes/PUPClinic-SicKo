@@ -14,7 +14,7 @@ if (isset($_SESSION['patient_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="icon" type="image/png" href="images/heart-logo.png">
-    <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../vendors/bootstrap-5.0.2/dist/css/bootstrap.css">
     <link rel="stylesheet" href="styles/register.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
@@ -188,7 +188,7 @@ if (isset($_SESSION['patient_id'])) {
             <img class="vector-green fixed-bottom" src="images/vector-green.png" alt="Green Vector">
         </footer>
     </div>
-    <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="scripts/loader.js"></script>
     <script src="scripts/register-validation.js">
 

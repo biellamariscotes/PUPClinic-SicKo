@@ -25,8 +25,18 @@
 .modal-buttons {
     justify-content: center;
     display: flex;
-    margin-bottom: 3.125rem;
-    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.modal-description {
+    color: #000000;
+    text-align: center;
+    font-weight: normal;
+    font-size: 0.875rem;
+    text-wrap: balance;
+    display: flex;
+    width: 100%;
 }
 
 /* Saved Successfully Modal */
@@ -54,6 +64,88 @@
     width: 100%; /* Ensure full width */
 }
 
+/* Preview Modal */
+#previewModal .modal-content {
+    width: 80rem;
+    height: 31rem;
+    border-radius: 0.938rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.625rem;
+}
+
+#previewModal .modal-body {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+#previewModal .content-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding: 0.625rem;
+}
+
+#previewModal .body-content {
+    padding: 1rem;
+}
+
+#previewModal .custom-scrollbar {
+    width: 0.5rem;
+    height: 30rem;
+    background-color: rgba(217, 217, 217, 0.3);
+    border-radius: 0.625rem;
+    margin-left: 0.625rem;
+    margin-right: 0.625rem;
+}
+
+#previewModal .modal-title {
+    color: black;
+    font-size: 1.5rem;
+}
+
+#previewModal .modal-subtitle {
+    justify-content: center;
+    width: 100%;
+}
+
+.modal-student-info-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-align: left;
+    margin: 1rem 0 0 2rem;
+}
+
+.modal-student-info {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 2rem;
+}
+
+.modal-student-info .preview-label,
+.modal-student-info .preview-value {
+    flex-basis: 33.33%;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: #333;
+    text-align: center;
+}
+
+.modal-student-info .preview-value {
+    font-weight: bold;
+}
+
+.horizontal-break-bar {
+    width: 30rem;
+    height: 0.063rem;
+    background-color: #d9d9d9;
+    border: none;
+    margin: 1rem 0 0 0;
+}
 
 
 

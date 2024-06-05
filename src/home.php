@@ -41,7 +41,7 @@ if (isset($_SESSION['patient_id'])) {
         <link rel="icon" type="image/png" href="images/heart-logo.png">
         <link rel="stylesheet" href="styles/dboardStyle.css">
         <link rel="stylesheet" href="styles/student-style.css">
-        <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="../vendors/bootstrap-5.0.2/dist/css/bootstrap.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     </head>
@@ -190,7 +190,7 @@ if (isset($_SESSION['patient_id'])) {
             include ('includes/footer.php');
             ?>
         </div>
-        <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="scripts/script.js"></script>
         <script src="scripts/calendar.js"></script>
         <script src="scripts/loader.js"></script>

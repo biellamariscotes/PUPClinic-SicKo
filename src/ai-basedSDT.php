@@ -13,7 +13,7 @@ require_once ('includes/connect.php');
     <link rel="icon" type="image/png" href="images/heart-logo.png">
     <link rel="stylesheet" href="styles/dboardStyle.css">
     <link rel="stylesheet" href="styles/modals.css">
-    <link rel="stylesheet" href="vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
@@ -78,7 +78,7 @@ require_once ('includes/connect.php');
             <?php
             include ('includes/footer.php');
             ?>
-            <script src="vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
             <script src="scripts/script.js"></script>
 
             <!-- LOADER -->

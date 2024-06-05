@@ -66,7 +66,7 @@ if (isset($_GET['patient_id']) && isset($_GET['record_id'])) {
     <title>Patient Treatment Record</title>
     <link rel="icon" type="image/png" href="images/heart-logo.png">
     <link rel="stylesheet" href="styles/dboardStyle.css">
-    <link rel="stylesheet" href="vendors\bootstrap-5.0.2\dist\css\bootstrap.min.css">
+    <link rel="stylesheet" href="../vendors\bootstrap-5.0.2\dist\css\bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 </head>
 

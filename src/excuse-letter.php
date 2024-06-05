@@ -1,7 +1,7 @@
 <?php
 require_once('includes/session-nurse.php');
 require_once('includes/connect.php');
-require_once('vendors/tcpdf/tcpdf.php');
+require_once('../vendors/tcpdf/tcpdf.php');
 
 $date = date('F j, Y');
 $full_name = isset($_POST['full_name']) ? $_POST['full_name'] : '';

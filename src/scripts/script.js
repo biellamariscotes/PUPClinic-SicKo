@@ -87,7 +87,7 @@ inputField.addEventListener('keydown', (event) => {
   
         // Add remove icon
         const removeIcon = document.createElement('img');
-        removeIcon.src = 'src/images/remove-icon.svg';
+        removeIcon.src = 'images/remove-icon.svg';
         removeIcon.alt = 'Remove';
         removeIcon.classList.add('tag-remove-icon');
   
