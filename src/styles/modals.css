@@ -85,21 +85,17 @@
 #previewModal .content-wrapper {
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 97%;
     padding: 0.625rem;
-}
-
-#previewModal .body-content {
-    padding: 1rem;
+    overflow: hidden; /* To hide the default scrollbar */
 }
 
 #previewModal .custom-scrollbar {
-    width: 0.5rem;
-    height: 30rem;
-    background-color: rgba(217, 217, 217, 0.3);
-    border-radius: 0.625rem;
-    margin-left: 0.625rem;
-    margin-right: 0.625rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 1rem;
 }
 
 #previewModal .modal-title {
@@ -145,6 +141,32 @@
     background-color: #d9d9d9;
     border: none;
     margin: 1rem 0 0 0;
+}
+
+/* Apply custom scrollbar */
+#previewModal .custom-scrollbar::-webkit-scrollbar {
+    width: 0.938rem;
+}
+
+#previewModal .custom-scrollbar::-webkit-scrollbar-track {
+    background: hsl(0, 0%, 85%);
+    border-radius: 100vw;
+    margin-block: 0.100rem;
+}
+
+#previewModal .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(#058789, #E13F3D);
+    border: 0.10em solid hsl(0, 0%, 70%);
+    border-radius: 100vw;
+}
+
+#previewModal .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: hsl(0, 0%, 55%);
+}
+
+#previewModal .body-content {
+    padding: 1rem;
+    width: 100%;
 }
 
 
