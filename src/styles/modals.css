@@ -155,7 +155,7 @@
 }
 
 #previewModal .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: linear-gradient(#058789, #E13F3D);
+    background: hsl(0, 0%, 70%);
     border: 0.10em solid hsl(0, 0%, 70%);
     border-radius: 100vw;
 }
