@@ -33,6 +33,18 @@ $totalPages = ceil($totalRecords / $rowsPerPage);
     <link rel="stylesheet" href="../vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
 </head>
 
+<style>
+    .pagination-button.disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    .pagination-buttons {
+        margin-right: 50px;
+    }
+
+</style>
+
 <body>
     <div class="loader">
         <img src="images/loader.gif">
@@ -60,53 +72,54 @@ $totalPages = ceil($totalRecords / $rowsPerPage);
             <div class="header-middle">Daily Treatment Record</div>
             <div class="table-container">
                 <table class="dashboard-table">
-                    <tr>
-                        <th>Patient Name</th>
-                        <th>Course &amp; Year</th>
-                        <th>Diagnosis</th>
-                        <th>Time</th>
-                    </tr>
-                    <?php
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            echo "<tr>";
-                            echo "<td>" . $row["first_name"] . "</td>";
-                            echo "<td>" . $row["course"] . "</td>";
-                            echo "<td>" . ucfirst(strtolower($row["diagnosis"])) . "</td>";
-                            echo "<td>" . $row["date"] . "</td>";
-                            echo "</tr>";
-                        }
-                    } else {
-                        echo "<tr><td colspan='4'>No records found</td></tr>";
-                    }
-                    ?>
-
-                    <tr>
-                        <td colspan="5"> <!-- Use colspan to span across all columns -->
-
-                            <!-- Sorting and Pagination Container -->
-                            <div class="sorting-pagination-container">
-                                <!-- Pagination buttons -->
-                                <div class="pagination-buttons">
-                                    <!-- Previous button -->
-                                    <a href="?page=<?php echo max(1, $currentPage - 1); ?>"
-                                        style="text-decoration: none;"
-                                        class="pagination-button <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
-                                        &lt;
-                                    </a>
-
-                                    <!-- Next button -->
-                                    <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>"
-                                        style="text-decoration: none; margin-right: 3rem;"
-                                        class="pagination-button  <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
-                                        &gt;
-                                    </a>
+                    <thead>
+                        <tr>
+                            <th>Patient Name</th>
+                            <th>Course &amp; Year</th>
+                            <th>Diagnosis</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (mysqli_num_rows($result) > 0) : ?>
+                            <?php while ($row = mysqli_fetch_assoc($result)) : ?>
+                                <tr>
+                                    <td><?php echo $row["first_name"]; ?></td>
+                                    <td><?php echo $row["course"]; ?></td>
+                                    <td><?php echo ucfirst(strtolower($row["diagnosis"])); ?></td>
+                                    <td><?php echo $row["date"]; ?></td>
+                                </tr>
+                            <?php endwhile; ?>
+                        <?php else : ?>
+                            <tr>
+                                <td colspan="4">No records found</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4">
+                                <!-- Sorting and Pagination Container -->
+                                <div class="sorting-pagination-container">
+                                    <!-- Pagination buttons -->
+                                    <div class="pagination-buttons">
+                                        <!-- Previous button -->
+                                        <a href="?page=<?php echo max(1, $currentPage - 1); ?>"
+                                            class="pagination-button <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
+                                            &lt;
+                                        </a>
+                                        <!-- Next button -->
+                                        <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>"
+                                            class="pagination-button <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
+                                            &gt;
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
-            </td>
-            </tr>
-            </table>
         </div>
 
         <div class="header-middle">Clinic Health Tools</div>
