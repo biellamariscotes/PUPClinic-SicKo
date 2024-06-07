@@ -18,18 +18,19 @@
                 <div class="new-treatment-text">
                     Create New <br> Treatment Record
                 </div>
-                <img src="images/add-button.svg" alt="Add Button Icon" class="add-button-icon">
+                <img src="images/add-button.svg" alt="Add Button Icon" class="add-button-icon"
+                    >
             </div>
             <!-- Dashboard -->
             <div class="menu-item">
                 <img src="images/dashboard-icon.svg" alt="dashboard Icon" class="dashboard-icon">
-                <span class="menu-text" onclick="window.location.href='dashboard.php'" style="color: #058789;">Dashboard</span>
+                <span class="menu-text" onclick="window.location.href='dashboard.php'">Dashboard</span>
             </div>
 
             <!-- Ai-based SDT -->
             <div class="menu-item">
                 <img src="images/pill.svg" alt="ai Icon" class="ai-icon">
-                <span class="menu-text" onclick="window.location.href='ai-basedSDT.php'">AI-based SDT</span>
+                <span class="menu-text" onclick="window.location.href='ai-basedSDT.php'" >AI-based SDT</span>
             </div>
 
             <!-- Patients -->
@@ -55,10 +56,10 @@
                 <span class="menu-header-text">ACCOUNT</span>
             </div>
 
-            <!-- New menu items -->
-            <div class="menu-item">
+           <!-- New menu items -->
+           <div class="menu-item">
                 <img src="images/activity-icon.svg" alt="Activity Icon" class="activity-icon">
-                <span class="menu-text" onclick="window.location.href='activity-log.php'">Activity</span>
+                <span class="menu-text" onclick="window.location.href='activity-log.php'" style="color: #058789;">Activity</span>
             </div>
 
             <div class="menu-item">
