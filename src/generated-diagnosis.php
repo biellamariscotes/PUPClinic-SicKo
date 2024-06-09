@@ -159,6 +159,10 @@ if (isset($_POST['symptoms'])) {
     </style>
 </head>
 <body>
+    <div class="loader d-flex">
+        <img src="images/loader.gif">
+    </div>
+
     <div class="overlay" id="overlay"></div>
 
     <?php include ('includes/sidebar/ai-basedSDT.php'); ?>
@@ -249,6 +253,44 @@ if (isset($_POST['symptoms'])) {
     <script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="scripts/script.js"></script>
 
+    <!-- LOADER -->
+            <script>
+                function simulateContentLoading() {
+                    showLoader();
+                    setTimeout(function () {
+                        hideLoader();
+                        showContent();
+                    }, 3000);
+                }
+
+                function showLoader() {
+                    console.log("Showing loader.");
+                    document.querySelector('.loader').classList.add('visible');
+                }
+
+                function hideLoader() {
+                    console.log("Hiding loader with transition.");
+                    const loader = document.querySelector('.loader');
+                    loader.style.transition = 'opacity 0.5s ease-out';
+                    loader.style.opacity = '0';
+                    loader.addEventListener('transitionend', function (event) {
+                        if (event.propertyName === 'opacity') {
+                            loader.classList.remove('d-flex');
+                            loader.style.display = 'none';
+                        }
+                    });
+                }
+
+                function showContent() {
+                    console.log("Showing content.");
+                    const body = document.querySelector('.main-content');
+                    body.style.display = 'block';
+                }
+                simulateContentLoading();
+            </script>
+
+            <!-- END OF LOADER -->
+
     <script>
         function recordTreatment() {
             <?php
@@ -259,7 +301,7 @@ if (isset($_POST['symptoms'])) {
             ?>
 
             // Redirect to the next page and pass the parameters
-            window.location.href = 'view-record-treatment.php?symptoms=<?= urlencode($symptoms) ?>&diagnosis=<?= urlencode($diagnosis) ?>&treatments=<?= urlencode($treatments) ?>';
+            window.location.href = 'treatment-record.php?symptoms=<?= urlencode($symptoms) ?>&diagnosis=<?= urlencode($diagnosis) ?>&treatments=<?= urlencode($treatments) ?>';
         }
 
         $(document).ready(function() {

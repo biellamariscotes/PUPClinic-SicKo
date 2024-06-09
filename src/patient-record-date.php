@@ -124,8 +124,8 @@ if (isset($_GET['patient_id']) && isset($_GET['record_id'])) {
                     <div class="patient-info">
                         <div class="patient-name"><?php echo $patient['first_name'] . ' ' . $patient['last_name']; ?>
                         </div>
-                        <div class="patient-id"><span>PATIENT ID:</span>
-                            <span><?php echo $patient['patient_id']; ?></span>
+                        <div class="patient-id"><span>STUDENT ID:</span>
+                            <span><?php echo $patient['student_id']; ?></span>
                         </div>
                         <hr class="horizontal-line-separator">
 
