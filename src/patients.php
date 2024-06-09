@@ -15,6 +15,18 @@
 
 </head>
 
+<style>
+    .pagination-button.disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    .pagination-buttons {
+        margin-right: 50px;
+    }
+    
+</style>
+
 <body>
 <div class="loader">
         <img src="images/loader.gif">
@@ -29,46 +41,37 @@
     require_once ('includes/connect.php');
 
     $recordsPerPage = 5;
-    $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+    $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
     $offset = ($currentPage - 1) * $recordsPerPage;
 
-    $query = "SELECT * FROM treatment_record LIMIT $offset, $recordsPerPage";
-    $result = mysqli_query($conn, $query);
-
-    $totalRecords = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM treatment_record"));
-
+    $totalRecordsQuery = "SELECT COUNT(*) AS total FROM patient";
+    $totalRecordsResult = mysqli_query($conn, $totalRecordsQuery);
+    $totalRecordsRow = mysqli_fetch_assoc($totalRecordsResult);
+    $totalRecords = $totalRecordsRow['total'];
     $totalPages = ceil($totalRecords / $recordsPerPage);
+
+    $query = "SELECT * FROM patient ORDER BY first_name LIMIT $offset, $recordsPerPage";
+    $result = mysqli_query($conn, $query);
 
     // Check if the form is submitted for deletion
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmDeleteButton'])) {
         if (!empty($_POST['delete_patient'])) {
             foreach ($_POST['delete_patient'] as $patient_id) {
-                // Prepare a delete statement
                 $sql = "DELETE FROM patient WHERE patient_id = ?";
                 if ($stmt = mysqli_prepare($conn, $sql)) {
-                    // Bind variables to the prepared statement as parameters
                     mysqli_stmt_bind_param($stmt, "i", $param_patient_id);
-
-                    // Set parameters
                     $param_patient_id = $patient_id;
-
-                    // Attempt to execute the prepared statement
-                    if (mysqli_stmt_execute($stmt)) {
-                        // Deletion successful
-                    } else {
-                        // Error handling
+                    if (!mysqli_stmt_execute($stmt)) {
                         echo "Error deleting record: " . mysqli_error($conn);
                     }
-
-                    // Close statement
                     mysqli_stmt_close($stmt);
                 }
             }
-            // Redirect to the same page to reflect changes
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
         }
     }
+
 
     // Sorting criteria
     $sortCriteria = isset($_GET['sort']) ? $_GET['sort'] : 'first_name'; // Default sorting by name if not specified
@@ -115,7 +118,7 @@
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='5'>No records found</td></tr>";
+                    echo "<tr><td colspan='4'>No records found</td></tr>";
                 }
                 ?>
                 <tr>
@@ -144,17 +147,15 @@
                                 </div>
                                 <!-- Pagination buttons -->
                                 <div class="pagination-buttons">
-                                    <!-- Previous button -->
+                                <!-- Previous button -->
                                     <a href="?page=<?php echo max(1, $currentPage - 1); ?>"
-                                        style="text-decoration: none;"
-                                        class="pagination-button <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
-                                        &lt;
+                                    class="pagination-button <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
+                                    &lt;
                                     </a>
 
                                     <!-- Next button -->
                                     <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>"
-                                        style="text-decoration: none; margin-right: 1.25rem;"
-                                        class="pagination-button  <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
+                                        class="pagination-button <?php echo ($currentPage == $totalPages || $totalRecords == 0) ? 'disabled' : ''; ?>">
                                         &gt;
                                     </a>
                                 </div>

@@ -58,7 +58,7 @@
            <!-- New menu items -->
            <div class="menu-item">
                 <img src="images/activity-icon.svg" alt="Activity Icon" class="activity-icon">
-                <span class="menu-text" onclick="window.location.href='activity.php'">Activity</span>
+                <span class="menu-text" onclick="window.location.href='activity-log.php'">Activity</span>
             </div>
 
             <div class="menu-item">

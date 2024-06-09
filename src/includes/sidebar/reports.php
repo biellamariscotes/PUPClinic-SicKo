@@ -59,11 +59,11 @@
            <!-- New menu items -->
            <div class="menu-item">
                 <img src="images/activity-icon.svg" alt="Activity Icon" class="activity-icon">
-                <span class="menu-text" onclick="window.location.href='activity.php'">Activity</span>
+                <span class="menu-text" onclick="window.location.href='activity-log.php'">Activity</span>
             </div>
 
             <div class="menu-item">
-                <img src=images/settings.svg" alt="settings Icon" class="settings-icon">
+                <img src="images/settings.svg" alt="settings Icon" class="settings-icon">
                 <span class="menu-text" onclick="window.location.href='edit-profile.php'">User Settings</span>
             </div>
 
