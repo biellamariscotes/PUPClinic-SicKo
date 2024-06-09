@@ -153,7 +153,7 @@ if (isset($_POST['login_btn'])) {
 
     <script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="scripts/script.js"></script>
-    <script src="sscripts/loader.js"></script>
+    <script src="scripts/loader.js"></script>
 
     <script>
 
