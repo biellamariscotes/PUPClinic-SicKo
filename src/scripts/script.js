@@ -263,7 +263,9 @@ function hideLoader() {
 simulateContentLoading();
 
 
-
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 
 
 
