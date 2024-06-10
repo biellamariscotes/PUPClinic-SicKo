@@ -74,6 +74,7 @@
     justify-content: center;
     align-items: center;
     padding: 0.625rem;
+    letter-spacing: 0.020rem;
 }
 
 #previewModal .modal-body {
@@ -145,7 +146,7 @@
 
 /* Apply custom scrollbar */
 #previewModal .custom-scrollbar::-webkit-scrollbar {
-    width: 0.938rem;
+    width: 0.5rem;
 }
 
 #previewModal .custom-scrollbar::-webkit-scrollbar-track {
@@ -155,8 +156,8 @@
 }
 
 #previewModal .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: hsl(0, 0%, 70%);
-    border: 0.10em solid hsl(0, 0%, 70%);
+    background: hsl(0, 0%, 75%);
+    border: 0.10em solid hsl(0, 0%, 75%);
     border-radius: 100vw;
 }
 

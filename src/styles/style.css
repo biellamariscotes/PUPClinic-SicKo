@@ -80,7 +80,7 @@ html, body {
 }
 
 .form-container-cst input:focus {
-  background-color: #D4D4D4; /* Set background color when input is focused */
+  background-color: #D4D4D4; 
   outline: none;
 }
 
@@ -109,8 +109,8 @@ html, body {
 
 /* Form Container Input */
 .form-container-cst input:focus {
-  background-color: #D4D4D4; /* Set background color when input is focused */
-  outline: none; /* Remove default focus outline */
+  background-color: #D4D4D4; 
+  outline: none; 
 }
 
 /* Form Container Input when autofill */

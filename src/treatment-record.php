@@ -196,23 +196,23 @@ mysqli_close($conn);
                             </div>
                             <!-- Text labels and values of name, age, and sex -->
                             <div class="modal-student-info">
-                                <div class="text-label" style="font-family: poppins; font-size: 0.938rem; color: #333; text-align: left; display: inline-block; width: 40%;">Full Name</div>
-                                <div class="text-label" style="font-family: poppins; font-size: 0.938rem; color: #333; text-align: left; display: inline-block; width: 30%;">Gender</div>
-                                <div class="text-label" style="font-family: poppins; font-size: 0.938rem; color: #333; text-align: left; display: inline-block; width: 20%;">Age</div>
+                                <div class="text-label" style="font-family: 'Poppins'; font-size: 0.938rem; color: #333; text-align: left; display: inline-block; width: 40%;">Full Name</div>
+                                <div class="text-label" style="font-family: 'Poppins'; font-size: 0.938rem; color: #333; text-align: left; display: inline-block; width: 30%;">Gender</div>
+                                <div class="text-label" style="font-family: 'Poppins'; font-size: 0.938rem; color: #333; text-align: left; display: inline-block; width: 20%;">Age</div>
                             </div>
                             <div class="modal-student-info">
-                                <span id="preview-full-name" style="font-family: poppins; font-size: 1.125rem; font-weight: bold; color: #000; text-align: left; display: inline-block; width: 40%;"><?php echo isset($full_name) ? $full_name : ''; ?></span>
-                                <span id="preview-sex" style="font-family: poppins; font-size: 1.125rem; font-weight: bold; color: #000; text-align: left; display: inline-block; width: 30%;"><?php echo isset($sex) ? $sex : ''; ?></span>
-                                <span id="preview-age" style="font-family: poppins; font-size: 1.125rem; font-weight: bold; color: #000; text-align: left; display: inline-block; width: 20%;"><?php echo isset($age) ? $age : ''; ?></span>
+                                <span id="preview-full-name" style="font-family: 'Poppins'; font-size: 1.125rem; font-weight: 600; color: #000; text-align: left; display: inline-block; width: 40%; padding-left: 1rem;"><?php echo isset($full_name) ? $full_name : ''; ?></span>
+                                <span id="preview-sex" style="font-family: 'Poppins'; font-size: 1.125rem; font-weight: 600; color: #000; text-align: left; display: inline-block; width: 30%; padding-left: 1rem;"><?php echo isset($sex) ? $sex : ''; ?></span>
+                                <span id="preview-age" style="font-family: 'Poppins'; font-size: 1.125rem; font-weight: 600; color: #000; text-align: left; display: inline-block; width: 20%; "><?php echo isset($age) ? $age : ''; ?></span>
                             </div>
                             <!-- Text labels and values of course and section -->
                             <div class="modal-student-info">
-                                <div class="text-label" style="font-family: poppins; font-size: 0.938rem; color: #333; text-align: left; display: inline-block; width: 60%; margin-top: 0.625rem;">Course</div>
-                                <div class="text-label" style="font-family: poppins; font-size: 0.938rem; color: #333; text-align: left; display: inline-block; width: 40%; margin-top: 0.625rem;">Block Section</div>
+                                <div class="text-label" style="font-family: 'Poppins'; font-size: 0.938rem; color: #333; text-align: left; display: inline-block; width: 60%; margin-top: 0.625rem;">Course</div>
+                                <div class="text-label" style="font-family: 'Poppins'; font-size: 0.938rem; color: #333; text-align: left; display: inline-block; width: 40%; margin-top: 0.625rem;">Block Section</div>
                             </div>
                             <div class="modal-student-info">
-                                <span id="preview-course" style="font-family: poppins; font-size: 1.125rem; font-weight: bold; color: #000; text-align: left; display: inline-block; width: 60%;"><?php echo isset($course) ? $course : ''; ?></span>
-                                <span id="preview-section" style="font-family: poppins; font-size: 1.125rem; font-weight: bold; color: #000; text-align: left; display: inline-block; width: 40%;"><?php echo isset($section) ? $section : ''; ?></span>
+                                <span id="preview-course" style="font-family: 'Poppins'; font-size: 1.125rem; font-weight: 600; color: #000; text-align: left; display: inline-block; width: 60%; padding-left: 1rem;"><?php echo isset($course) ? $course : ''; ?></span>
+                                <span id="preview-section" style="font-family: 'Poppins'; font-size: 1.125rem; font-weight: 600; color: #000; text-align: left; display: inline-block; width: 40%; padding-left: 1rem;"><?php echo isset($section) ? $section : ''; ?></span>
                             </div>
                             <!-- Horizontal Break Bar -->
                             <div class="modal-student-info">
@@ -224,19 +224,19 @@ mysqli_close($conn);
                             </div>
                             <!-- Text labels and values of symptoms -->
                             <div class="modal-student-info">
-                                <div class="text-label" style="font-family: poppins; font-size: 0.938rem; color: #333; text-align: left; display: inline-block; width: 100%;">Symptoms</div>
+                                <div class="text-label" style="font-family: 'Poppins'; font-size: 0.938rem; color: #333; text-align: left; display: inline-block; width: 100%;">Symptoms</div>
                             </div>
                             <div class="modal-student-info">
-                                <span id="preview-symptoms" style="font-family: poppins; font-size: 1.125rem; font-weight: bold; color: #000; text-align: left; display: inline-block; width: 100%;"><?php echo isset($symptoms) ? $symptoms : ''; ?></span>
+                                <span id="preview-symptoms" style="font-family: 'Poppins'; font-size: 1.125rem; font-weight: 600; color: #000; text-align: left; display: inline-block; width: 100%; padding-left: 1rem;"><?php echo isset($symptoms) ? $symptoms : ''; ?></span>
                             </div>
                             <!-- Text labels and values of diagnosis and treatments -->
                             <div class="modal-student-info">
-                                <div class="text-label" style="font-family: poppins; font-size: 0.938rem; color: #333; text-align: left; display: inline-block; width: 40%; margin-top: 0.625rem;">Diagnosis</div>
-                                <div class="text-label" style="font-family: poppins; font-size: 0.938rem; color: #333; text-align: left; display: inline-block; width: 60%; margin-top: 0.625rem;">Treatment</div>
+                                <div class="text-label" style="font-family: 'Poppins'; font-size: 0.938rem; color: #333; text-align: left; display: inline-block; width: 40%; margin-top: 0.625rem;">Diagnosis</div>
+                                <div class="text-label" style="font-family: 'Poppins'; font-size: 0.938rem; color: #333; text-align: left; display: inline-block; width: 60%; margin-top: 0.625rem;">Treatment</div>
                             </div>
                             <div class="modal-student-info">
-                                <span id="preview-diagnosis" style="font-family: poppins; font-size: 1.125rem; font-weight: bold; color: #000; text-align: left; display: inline-block; width: 40%;"><?php echo isset($diagnosis) ? $diagnosis : ''; ?></span>
-                                <span id="preview-treatment" style="font-family: poppins; font-size: 1.125rem; font-weight: bold; color: #000; text-align: left; display: inline-block; width: 60%;"><?php echo isset($treatments) ? $treatments : ''; ?></span>
+                                <span id="preview-diagnosis" style="font-family: 'Poppins'; font-size: 1.125rem; font-weight: 600; color: #000; text-align: left; display: inline-block; width: 40%; padding-left: 1rem;"><?php echo isset($diagnosis) ? $diagnosis : ''; ?></span>
+                                <span id="preview-treatment" style="font-family: 'Poppins'; font-size: 1.125rem; font-weight: 600; color: #000; text-align: left; display: inline-block; width: 60%; padding-left: 1rem;"><?php echo isset($treatments) ? $treatments : ''; ?></span>
                             </div>
                             <!-- Cancel and Submit Buttons -->
                             <div class="modal-buttons">
