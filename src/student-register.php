@@ -171,7 +171,7 @@
 
     .form-column {
       width: 40%;
-      margin: 0 auto;
+      margin: 0 auto; 
     }
 
     .blue1 {
