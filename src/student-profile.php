@@ -106,7 +106,7 @@ if (isset($_SESSION['patient_id'])) {
             ?>
 
             <!-- Content -->
-            <div class="container col-9 my-5">
+            <div class="wrap-main-content container col-9 my-5">
                 <div class="row d-flex flex-wrap align-items-stretch">
 
                     <!-- Left Section -->
