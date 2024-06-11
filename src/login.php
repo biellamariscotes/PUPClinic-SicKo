@@ -26,14 +26,15 @@ if (isset($_POST['login_btn'])) {
     if ($result->num_rows == 1) {
         $user = $result->fetch_assoc();
         $patient_id = $user['patient_id'];
+        $hashed_password = $user['password']; // Get the hashed password from the database
 
-        if ($password == $user['password']) {
+        // Verify the password
+        if (password_verify($password, $hashed_password)) {
             $_SESSION['message'] = "You are now Logged In";
             $_SESSION['patient_id'] = $patient_id;
 
             header("Location: home.php");
             exit();
-
         } else {
             $login_failed = true;
         }

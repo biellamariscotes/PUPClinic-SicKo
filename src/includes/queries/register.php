@@ -16,13 +16,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $course = $_POST["course"]; 
     $section = $_POST["section"]; 
 
+    // Hash the password before storing it in the database
+    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
     // Prepare and bind the INSERT statement
-    $stmt = $conn->prepare("INSERT INTO patient (student_id, first_name, last_name, email, password, sex, birthday, course, section) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)");
-    $stmt->bind_param("sssssssss", $student_id, $first_name, $last_name, $email, $password, $sex, $birthday, $course, $section);
+    $stmt = $conn->prepare("INSERT INTO patient (student_id, first_name, last_name, email, password, sex, birthday, course, section) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssssss", $student_id, $first_name, $last_name, $email, $hashed_password, $sex, $birthday, $course, $section);
 
     // Execute the statement
     if ($stmt->execute()) {
-        header("Location: ../../../login.php");
+        header("Location: ../../login.php");
         exit();
     } else {
         echo "Error: " . $stmt->error;
