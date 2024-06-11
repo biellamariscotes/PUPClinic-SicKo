@@ -62,40 +62,64 @@ if (isset($_GET['download'])) {
     exit;
 }
 
-// Number of records to display per page
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmDeleteButton'])) {
+    if (!empty($_POST['delete_record'])) {
+        foreach ($_POST['delete_record'] as $record_id) {
+            // Prepare a delete statement for treatment records
+            $sql = "DELETE FROM treatment_record WHERE record_id = ?";
+            $stmt = mysqli_prepare($conn, $sql);
+            mysqli_stmt_bind_param($stmt, "i", $record_id);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+        }
+        // Redirect to prevent form resubmission
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit;
+    }
+}
+
 $recordsPerPage = 5;
-
-// Current page number
-$currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-
-// Offset calculation for SQL query
+$currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $offset = ($currentPage - 1) * $recordsPerPage;
 
-// Initialize variables for filtering by academic year
 $selectedAcademicYear = '';
-
-// Check if an academic year is selected
 if (isset($_GET['academic_year'])) {
-    // Ensure it's a valid integer
     $selectedAcademicYear = intval($_GET['academic_year']);
 }
 
-// SQL query to fetch records with pagination
-$query = "SELECT * FROM treatment_record";
-
-// Add condition to filter by academic year if selected
-if (!empty($selectedAcademicYear)) {
-    $query .= " WHERE YEAR(date) = $selectedAcademicYear";
+// Determine sorting criteria
+$sortingCriteria = isset($_GET['sort']) ? $_GET['sort'] : 'annually';
+$orderBy = '';
+switch ($sortingCriteria) {
+    case 'annually':
+        $orderBy = 'YEAR(date) DESC';
+        break;
+    case 'monthly':
+        $orderBy = 'YEAR(date) DESC, MONTH(date) DESC';
+        break;
+    case 'weekly':
+        // Assuming week number is extracted from the date (requires MySQL function or PHP logic)
+        $orderBy = 'YEAR(date) DESC, WEEK(date) DESC';
+        break;
+    default:
+        $orderBy = 'YEAR(date) DESC';
+        break;
 }
 
-$query .= " LIMIT $offset, $recordsPerPage";
+$query = "SELECT * FROM treatment_record";
+$countQuery = "SELECT COUNT(*) AS total_records FROM treatment_record";
+$whereClause = '';
+
+if (!empty($selectedAcademicYear)) {
+    $whereClause .= " WHERE YEAR(date) = $selectedAcademicYear";
+}
+
+$query .= $whereClause . " ORDER BY $orderBy LIMIT $offset, $recordsPerPage";
+$countQuery .= $whereClause;
 
 $result = mysqli_query($conn, $query);
-
-// Total number of records
-$totalRecords = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM treatment_record"));
-
-// Total number of pages
+$totalRecordsResult = mysqli_query($conn, $countQuery);
+$totalRecords = mysqli_fetch_assoc($totalRecordsResult)['total_records'];
 $totalPages = ceil($totalRecords / $recordsPerPage);
 
 ?>
@@ -114,6 +138,18 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 </head>
+
+<style>
+    .pagination-button.disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    .pagination-buttons {
+        margin-right: 50px;
+    }
+
+</style>
 
 <body>
     <div class="loader">
@@ -190,91 +226,62 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
             <div class="header-middle" style="margin: 0 20px 0 20px;">Treatment Record</div>
             <!-- Table Container -->
             <div class="table-container">
-                <table class="dashboard-table" style="margin-bottom: 80px;">
-                    <tr>
-                        <th>Patient Name</th>
-                        <th>Course</th>
-                        <th>Section</th>
-                        <th>Gender</th>
-                        <th>Date</th>
-                    </tr>
-                    <?php
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            ?>
-                            <tr>
-                                <td><?php echo "<a href='patients-treatment-record.php?patient_id=" . $row["patient_id"] . "'>" . $row["full_name"] ?>
-                                    </a></td>
-
-                                <td><?php echo $row['course']; ?></td>
-                                <td><?php echo $row['section']; ?></td>
-                                <td><?php echo $row['sex']; ?></td>
-                                <td><?php echo $row['date']; ?></td>
-                            </tr>
-                            <?php
-                        }
-                    } else {
-                        ?>
+                <form method="POST">
+                    <table class="dashboard-table" style="margin-bottom: 80px;">
                         <tr>
-                            <td colspan="5">No records found</td>
+                            <th></th>
+                            <th>Patient Name</th>
+                            <th>Course</th>
+                            <th>Section</th>
+                            <th>Gender</th>
+                            <th>Date</th>
                         </tr>
                         <?php
-                    }
-                    ?>
-                    <tr>
-                        <td colspan="5"> <!-- Use colspan to span across all columns -->
-
-                            <!-- Inside the table button container -->
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo "<tr>";
+                                echo "<td class='nameColumn'>";
+                                echo "<input type='checkbox' name='delete_record[]' value='" . $row["record_id"] . "' style='display:none;'>";
+                                echo "</td>";
+                                echo "<td>" . $row["full_name"] . "</td>";
+                                echo "<td>" . $row["course"] . "</td>";
+                                echo "<td>" . $row["section"] . "</td>";
+                                echo "<td>" . $row["sex"] . "</td>";
+                                echo "<td>" . $row["date"] . "</td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='6'>No records found</td></tr>";
+                        }
+                        ?>
+                        <tr>
+                            <td colspan="6">
                             <div class="table-button-container">
-                                <div class="button-group">
-                                    <div class="delete-records" onclick="window.location.href=''">
-                                        <i class="bi bi-trash"
-                                            style="color: #D22B2B; font-size: 1rem; margin-right: 0.625rem; vertical-align: middle;"></i>
-                                        Delete Records
-                                    </div>
-                                    <div class="button-separator"></div>
-                                    <div class="download-button">
-                                        <a style="color: #058789; text-decoration: none;" href="?download=1">
-                                            <i class="bi bi-download"
-                                                style="color: #058789; font-size: 1rem; margin-right: 0.625rem; vertical-align: middle;"></i>
-                                            <span style="transition: color 0.3s;">Download</span>
-                                        </a>
-                                    </div>
-                                </div>
-                                <!-- Sorting and Pagination Container -->
-                                <div class="sorting-pagination-container">
-                                    <!-- Sorting button box -->
-                                    <div class="sorting-button-box" id="sortingButtonBox">
-                                        <!-- Sort text -->
-                                        Sort by:
-                                        <select id="sortCriteria"
-                                            style="font-family: 'Poppins', sans-serif; font-weight: bold;">
-                                            <option value="annually">Annually</option>
-                                            <option value="monthly">Monthly</option>
-                                            <option value="weekly">Weekly</option>
-                                        </select>
-                                    </div>
-                                    <!-- Pagination buttons -->
-                                    <div class="pagination-buttons">
-                                        <!-- Previous button -->
-                                        <a href="?page=<?php echo max(1, $currentPage - 1); ?>"
-                                            style="text-decoration: none;"
-                                            class="pagination-button <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
-                                            &lt;
-                                        </a>
-                                        <!-- Next button -->
-                                        <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>"
-                                            style="text-decoration: none;"
-                                            class="pagination-button  <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
-                                            &gt;
-                                        </a>
+                                    <div class="button-group">
+                                        <span class="delete-records-link" id="delete-toggle-link" onclick="toggleDeleteMode()">
+                                            <i class="bi bi-trash" style="color: #D22B2B; font-size: 1rem; margin-right: 0.625rem; vertical-align: middle;"></i>
+                                            Delete Records
+                                        </span>
+                                        <div class="button-separator"></div>
+                                        <span class="delete-records-link" id="delete-selected-link" style="display:none;" onclick="document.getElementById('confirmDeleteButton').click();">Delete Selected</span>
+                                        <span class="delete-records-link" id="cancel-delete-link" style="display:none;" onclick="cancelDeleteMode()">Cancel</span>
+                                        <div class="button-separator"></div>
+                                        <div class="download-button">
+                                            <a style="color: #058789; text-decoration: none;" href="?download=1">
+                                                <i class="bi bi-download"
+                                                    style="color: #058789; font-size: 1rem; margin-right: 0.625rem; vertical-align: middle;"></i>
+                                                <span style="transition: color 0.3s;">Download</span>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <button type="submit" id="confirmDeleteButton" name="confirmDeleteButton" style="display:none;">Confirm Delete</button>
+                </form>
             </div>
+        </div>
 
 
             <div class="header-middle" style="margin: 0 20px 0 20px;">Quarterly Report</div>
@@ -918,6 +925,29 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
             $('#download-successful-modal').modal('hide');
         });
     });
+
+    function toggleDeleteMode() {
+        var checkboxes = document.querySelectorAll('input[name="delete_record[]"]');
+        checkboxes.forEach(function (checkbox) {
+            checkbox.style.display = 'inline-block';
+        });
+
+        document.getElementById('delete-toggle-link').style.display = 'none';
+        document.getElementById('delete-selected-link').style.display = 'inline-block';
+        document.getElementById('cancel-delete-link').style.display = 'inline-block';
+    }
+
+    function cancelDeleteMode() {
+        var checkboxes = document.querySelectorAll('input[name="delete_record[]"]');
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = false;
+            checkbox.style.display = 'none';
+        });
+
+        document.getElementById('delete-toggle-link').style.display = 'inline-block';
+        document.getElementById('delete-selected-link').style.display = 'none';
+        document.getElementById('cancel-delete-link').style.display = 'none';
+    }
 </script>
 
 

@@ -92,11 +92,6 @@ $result = mysqli_query($conn, $query);
         margin-right: 50px;
     }
 
-    .checkbox-align {
-        /*vertical-align: middle;  Adjust the alignment */
-        margin-left: 20px;
-        margin-bottom: -19px; /* Adjust this value to fine-tune the alignment */
-    }
 </style>
 
 <body>
@@ -136,7 +131,7 @@ $result = mysqli_query($conn, $query);
                             while ($row = mysqli_fetch_assoc($result)) {
                                 echo "<tr>";
                                 echo "<td class='nameColumn'>";
-                                echo "<input type='checkbox' class='checkbox-align' name='delete_patient[]' value='" . $row["patient_id"] . "' style='display:none;'>"; // Checkbox initially hidden
+                                echo "<input type='checkbox' name='delete_patient[]' value='" . $row["patient_id"] . "' style='display:none;'>"; // Checkbox initially hidden
                                 echo "<a href='patients-treatment-record.php?patient_id=" . $row["patient_id"] . "'>" . $row["first_name"] . " " . $row["last_name"] . "</a></td>"; // Patient name
                                 echo "<td>" . $row["course"] . "</td>";
                                 echo "<td>" . $row["section"] . "</td>";
