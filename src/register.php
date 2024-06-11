@@ -188,13 +188,9 @@ if (isset($_SESSION['patient_id'])) {
             <img class="vector-green fixed-bottom" src="images/vector-green.png" alt="Green Vector">
         </footer>
     </div>
+    <script src="scripts/register-validation.js"></script>
     <script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="scripts/loader.js"></script>
-    <script src="scripts/register-validation.js">
-
-    <script>
-
-    </script>
 
 </body>
 
