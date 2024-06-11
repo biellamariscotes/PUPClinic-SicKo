@@ -65,7 +65,7 @@ if (isset($_SESSION['patient_id'])) {
                             <div class="col-12">
                                 <div class="card-box-col-2 d-flex align-items-center justify-content-center">
                                     <div class="change-password-div">
-                                        <a href="change-password.php"class="fw-semibold faded-black text-center fs-7"><i
+                                        <a href="change-password.php" class="fw-semibold faded-black text-center fs-7"><i
                                                 class="bi bi-person-lock me-2"></i>Change your
                                             password</a>
                                     </div>
@@ -89,7 +89,7 @@ if (isset($_SESSION['patient_id'])) {
                                     <div class="p-4">
                                         <!-- First Section: Name, Student ID, Sex -->
                                         <div class="row">
-                                            <div class="col-5">
+                                            <div class="col-4">
                                                 <p class="faded-black-2 fs-7 fw-normal pb-2">First Name</p>
                                                 <input type="text" class="form-control" placeholder="First Name"
                                                     name="first_name" id="first_name" value="<?= $first_name; ?>">
@@ -99,14 +99,14 @@ if (isset($_SESSION['patient_id'])) {
                                                 <input type="text" class="form-control" placeholder="Middle Name"
                                                     name="middle_name" id="middle_name" value="<?= $middle_name; ?>">
                                             </div>
-                                            <div class="col-3">
+                                            <div class="col-4">
                                                 <p class="faded-black-2 fs-7 fw-normal pb-2">Last Name</p>
                                                 <input type="text" class="form-control" placeholder="Last Name"
                                                     name="last_name" id="last_name" value="<?= $last_name; ?>">
                                             </div>
                                         </div>
 
-                                        <!-- Second Section: Email Address -->
+                                        <!-- Second Section: Student ID, Email Address -->
                                         <div class="row pt-4">
                                             <div class="col-6">
                                                 <p class="faded-black-2 fs-7 fw-normal pb-2">Student ID</p>
@@ -120,9 +120,9 @@ if (isset($_SESSION['patient_id'])) {
                                             </div>
                                         </div>
 
-                                        <!-- Third Section: Program, Section & Birthday -->
+                                        <!-- Third Section: Program, Section & Sex -->
                                         <div class="row pt-4">
-                                            <div class="col-8">
+                                            <div class="col-4">
                                                 <p class="faded-black-2 fs-7 fw-normal pb-2">Program</p>
                                                 <select class="form-control" name="course" id="course">
                                                     <option selected hidden value=""><?= $course_name; ?></option>
@@ -170,19 +170,33 @@ if (isset($_SESSION['patient_id'])) {
                                                     </select>
                                                 </div>
                                             </div>
+
+                                            <div class="col-4">
+                                                <p class="faded-black-2 fs-7 fw-normal pb-2">Block Section</p>
+                                                <div class="input-group mb-3 d-flex flex-wrap justify-content-center">
+                                                    <select class="form-control" name="sex" id="sex">
+                                                        <option selected hidden value=""><?= $sex; ?></option>
+                                                        <option value="Male" <?= $sex == 'Male' ? 'selected' : ''; ?>>Male
+                                                        </option>
+                                                        <option value="Female" <?= $sex == 'Female' ? 'selected' : ''; ?>>
+                                                            Female</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
 
 
                                         <!-- Fourth Section: Contact Number -->
                                         <div class="row pt-2">
                                             <div class="col-6">
-                                                <p class="faded-black-2 fs-7 fw-normal pb-2">Emergency Number <i
-                                                        class="bi bi-info-circle blue-link ms-1" data-bs-toggle="tooltip"
-                                                        data-bs-placement="right"
+                                                <p class="faded-black-2 fs-7 fw-normal pb-2"><span class="asterisk">*
+                                                    </span>Emergency Number <i class="bi bi-info-circle blue-link ms-1"
+                                                        data-bs-toggle="tooltip" data-bs-placement="right"
                                                         title="The emergency contact number will be called first in case of an emergency."></i>
                                                 </p>
                                                 <input type="text" class="form-control" placeholder="Emergency Number"
-                                                    name="emergency_no" id="emergency_no" value="<?= $emergency_no; ?>">
+                                                    name="emergency_no" id="emergency_no" maxlength="11"
+                                                    value="<?= $emergency_no; ?>">
                                             </div>
 
                                             <div class="col-6">
@@ -196,7 +210,8 @@ if (isset($_SESSION['patient_id'])) {
                                         <!-- Save Changes -->
                                         <div class="row pt-5">
                                             <div class="col-12 d-flex justify-content-end">
-                                                <button type="submit" class="save-changes">Save Changes</button>
+                                                <button type="submit" class="save-changes" id="save-btn" disabled>Save
+                                                    Changes</button>
                                             </div>
                                         </div>
                                     </div>
@@ -225,7 +240,10 @@ if (isset($_SESSION['patient_id'])) {
 
             <?php include ('includes/footer.php'); ?>
         </div>
+
+        <script src="scripts/edit-profile-validations.js"></script>
         <script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
 
         <script>
             document.addEventListener('DOMContentLoaded', (event) => {
@@ -236,8 +254,6 @@ if (isset($_SESSION['patient_id'])) {
             });
         </script>
 
-        <script src="scripts/script.js"></script>
-        <!-- <script src="scripts/loader.js"></script> -->
     </body>
 
     </html>

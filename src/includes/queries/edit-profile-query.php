@@ -17,11 +17,12 @@ $stmt = $conn->prepare("SELECT * FROM patient WHERE patient_id = ?");
         $email = $_POST['email'];
         $course = $_POST['course'];
         $section = $_POST['section'];
+        $sex = $_POST['sex'];
         $emergency_no = $_POST['emergency_no'];
         $birthday = $_POST['date'];
 
-        $update_stmt = $conn->prepare("UPDATE patient SET first_name = ?, middle_name = ?, last_name = ?, student_id = ?, email = ?, course = ?, section = ?, emergency_no = ? , birthday = ? WHERE patient_id = ?");
-        $update_stmt->bind_param("sssssssssi", $first_name, $middle_name, $last_name, $student_id, $email, $course, $section, $emergency_no, $birthday, $patient_id);
+        $update_stmt = $conn->prepare("UPDATE patient SET first_name = ?, middle_name = ?, last_name = ?, student_id = ?, email = ?, course = ?, section = ?, sex = ?, emergency_no = ? , birthday = ? WHERE patient_id = ?");
+        $update_stmt->bind_param("ssssssssssi", $first_name, $middle_name, $last_name, $student_id, $email, $course, $section, $sex, $emergency_no, $birthday, $patient_id);
         $update_stmt->execute();
 
         echo "<script>

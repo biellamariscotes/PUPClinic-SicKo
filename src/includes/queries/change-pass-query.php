@@ -30,7 +30,7 @@ if (isset($_POST['current_pass'], $_POST['new_pass'], $_POST['confirm_pass'], $_
             echo json_encode(['status' => 'error', 'message' => 'Failed to update password']);
         }
     } else {
-        echo json_encode(['status' => 'error', 'message' => 'Current password is incorrect']);
+        echo json_encode(['status' => 'error', 'message' => 'Current password is incorrect.']);
     }
 } else {
     echo json_encode(['status' => 'error', 'message' => 'Invalid request']);

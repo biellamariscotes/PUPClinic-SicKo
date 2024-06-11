@@ -12,6 +12,7 @@ $initials = $first_initial . $last_initial;
 
 // Echo out data
 $name = ucfirst(strtolower($row['first_name'])) . " " . ucfirst(strtolower(substr($row['middle_name'], 0, 1))) . ". " . ucfirst(strtolower($row['last_name']));
+$full_name = ucfirst(strtolower($row['first_name'])) . " " . ucfirst(strtolower($row['middle_name'])) . " " . ucfirst(strtolower($row['last_name']));
 $student_id = $row['student_id'];
 $sex = $row['sex'];
 $email = $row['email'];

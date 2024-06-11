@@ -132,11 +132,13 @@ if (isset($_SESSION['patient_id'])) {
                                                 <p class="faded-black-2 fs-7 fw-normal pb-2">Confirm Password</p>
                                                 <input type="password" class="form-control" placeholder="•••••••••••••••••"
                                                     name="confirm_pass" id="confirm_pass">
+                                                <div id="password-error" class="text-danger fs-7 pt-2"></div>
                                             </div>
                                         </div>
                                         <div class="row pt-5">
                                             <div class="col-12 d-flex justify-content-center">
-                                                <button type="submit" class="save-changes">Save Changes</button>
+                                                <button type="submit" class="save-changes" id="save-btn" disabled>Save
+                                                    Changes</button>
                                             </div>
                                         </div>
                                     </form>
@@ -152,6 +154,7 @@ if (isset($_SESSION['patient_id'])) {
             include ('includes/footer.php');
             ?>
 
+            <!-- Saved Successfully Modal -->
             <div class="modal" id="saved-successfully" tabindex="-1" role="dialog" data-bs-backdrop="static"
                 data-bs-keyboard="false">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -168,10 +171,33 @@ if (isset($_SESSION['patient_id'])) {
                 </div>
             </div>
 
+            <!-- Error Modal -->
+            <div class="modal" id="loginFailed" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="modal-middle-icon">
+                                <i class="bi bi-x-circle-fill" style="color:#E13F3D; font-size:5rem"></i>
+                            </div>
+                            <div class="modal-title">Oops!</div>
+                            <div class="modal-subtitle" style="display: flex; justify-content: center; align-items: center; text-align: center; width: 100%;"></div>
+                        </div>
+                        <div class="modal-buttons">
+                            <button type="button" class="btn btn-secondary" id="login-close-modal" data-dismiss="modal"
+                                style="background-color: #E13F3D; 
+                    font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+        <script src="scripts/password-validations.js"></script>
         <script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
         <script>
+
+            // Submit Form
             $(document).ready(function () {
                 $('#change-password-form').on('submit', function (event) {
                     event.preventDefault(); // Prevent the default form submission
@@ -189,19 +215,30 @@ if (isset($_SESSION['patient_id'])) {
                                     window.location.href = 'student-profile.php';
                                 }, 2000);
                             } else {
-                                alert(response.message);
+                                $('#loginFailed .modal-subtitle').text(response.message); // Set the error message
+                                $('#loginFailed').modal('show'); // Show error modal
                             }
                         },
                         error: function () {
-                            alert('An error occurred. Please try again.');
+                            $('#loginFailed .modal-subtitle').text('An error occurred. Please try again.');
+                            $('#loginFailed').modal('show'); // Show error modal
                         }
                     });
                 });
             });
+
+            
+
+            // Close Modal
+            $(document).ready(function () {
+                // Close the Modal with the close button
+                $("#login-close-modal").click(function (event) {
+                    $("#loginFailed").modal("hide");
+                });
+            });
+
         </script>
 
-
-        <script src="scripts/script.js"></script>
         <!-- <script src="scripts/loader.js"></script> -->
     </body>
 

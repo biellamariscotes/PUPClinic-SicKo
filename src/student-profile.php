@@ -99,7 +99,7 @@ if (isset($_SESSION['patient_id'])) {
                                     <div class="row">
                                         <div class="col-5">
                                             <p class="faded-black-2 fs-7 fw-normal">Full Name</p>
-                                            <p class="fw-semibold"><?= $name; ?></p>
+                                            <p class="fw-semibold text-truncate"><?= $full_name; ?></p>
                                         </div>
                                         <div class="col-4">
                                             <p class="faded-black-2 fs-7 fw-normal">Student ID</p>
@@ -158,7 +158,7 @@ if (isset($_SESSION['patient_id'])) {
                                 <!-- Delete Account -->
                                 <div class="row">
                                     <div class="col-12 d-flex justify-content-end">
-                                        <button class="btn delete-link-btn ls-1">Delete Account</button>
+                                        <a href="del-acc-info.php"><button class="btn delete-link-btn ls-1">Delete Account</button></a>
                                     </div>
                                 </div>
                             </section>
