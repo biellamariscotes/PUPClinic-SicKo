@@ -96,7 +96,7 @@ nav-bar-left img {
   background-color: #fff !important;
   border-radius: 8px;
   margin-bottom: 1rem;
-  padding: 2rem 4rem !important;
+  padding: 2rem 4rem 1rem 4rem !important;
 }
 
 .card-box-col-2 {
@@ -104,6 +104,26 @@ nav-bar-left img {
   border-radius: 8px;
   margin-bottom: 1.5rem;
   padding: 1rem 4rem !important;
+}
+
+.card-box-col-3 {
+  position: relative; /* Ensure the pseudo-element is positioned relative to this div */
+  background-color: #fff !important;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  padding: 1rem 4rem !important;
+}
+
+.card-box-col-3::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 100%;
+  background-color: #058789;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
 }
 
 .calendar-card-box {
@@ -157,7 +177,7 @@ nav-bar-left img {
 }
 
 .date-info {
-  outline-: 1px solid black;
+  outline: 1px solid black;
 }
 
 .calendar-box p {
@@ -404,11 +424,16 @@ button.switch-month:hover {
 /* PROFILE START */
 
 .stud-initials {
-  font-size: 5rem;
+  font-size: 5rem; /* You can keep this value */
+  width: 100%; /* Example value using percentage */
+  height: 2.7em;
   background-color: #e9e9e9;
   border-radius: 50%;
-  padding: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 
 .name-div p {
   margin-bottom: 0 !important;
