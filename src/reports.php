@@ -26,6 +26,15 @@ if ($selectedAcademicYear) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 </head>
+
+<style>
+    select:focus {
+        outline: none;
+        border-color: transparent;
+        box-shadow: none;
+    }
+</style>
+
 <div>
 
     <div class="loader">

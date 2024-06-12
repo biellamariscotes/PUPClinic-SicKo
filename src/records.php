@@ -159,7 +159,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
     }
 
     .fixed-width-checkbox {
-        width: 50px; /* Adjust width as necessary */
+        width: 50px;
         text-align: center;
     }
 
@@ -173,16 +173,27 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
 
     #downloadButton {
         display: inline-block;
-        margin-right: 10px; /* Adjust as needed */
+        margin-right: 10px;
     }
 
-    .dashboard-table tbody tr:nth-child(even) {
-        background-color: #f2f2f2; /* Light gray background for even rows */
+    .dashboard-table tbody tr {
+        border-bottom: 1px solid #D3D3D3;
     }
 
-    .dashboard-table tbody tr:nth-child(odd) {
-        background-color: #ffffff; /* White background for odd rows */
+    .dashboard-table tbody tr:last-child {
+        border-bottom: none;
     }
+
+    .dashboard-table th {
+        padding: 0px;
+    }
+
+    select:focus {
+        outline: none;
+        border-color: transparent;
+        box-shadow: none;
+    }
+
 </style>
 
 <body>

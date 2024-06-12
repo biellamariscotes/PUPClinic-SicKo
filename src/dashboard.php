@@ -48,13 +48,16 @@ $totalPages = ceil($totalRecords / $rowsPerPage);
         margin-bottom: 20px;
     }
 
-    /* Define styles for even and odd rows */
-    .dashboard-table tbody tr:nth-child(even) {
-        background-color: #f2f2f2; /* Light gray background for even rows */
+    .dashboard-table tbody tr {
+        border-bottom: 1px solid #D3D3D3; 
     }
 
-    .dashboard-table tbody tr:nth-child(odd) {
-        background-color: #ffffff; /* White background for odd rows */
+    .dashboard-table tbody tr:last-child {
+        border-bottom: 1px solid #D3D3D3; 
+    }
+
+    .dashboard-table th {
+        padding: 0px;
     }
 
 </style>
