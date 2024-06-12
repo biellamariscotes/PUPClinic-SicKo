@@ -92,6 +92,14 @@ $result = mysqli_query($conn, $query);
         margin-right: 50px;
     }
 
+    .dashboard-table tbody tr:nth-child(odd) {
+        background-color: #f2f2f2; /* Light gray background for even rows */
+    }
+
+    .dashboard-table tbody tr:nth-child(even) {
+        background-color: #ffffff; /* White background for odd rows */
+    }
+
 </style>
 
 <body>
@@ -143,7 +151,7 @@ $result = mysqli_query($conn, $query);
                         }
                         ?>
                         <tr>
-                            <td colspan="5" style="height: 97px;"> <!-- Use colspan to span across all columns -->
+                            <td colspan="5" style="height: 97px; background-color: white;"> <!-- Use colspan to span across all columns -->
 
                                 <!-- Inside the table button container -->
                                 <div class="table-button-container" id="tableButtonContainer">

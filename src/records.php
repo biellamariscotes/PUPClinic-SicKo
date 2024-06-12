@@ -176,6 +176,13 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
         margin-right: 10px; /* Adjust as needed */
     }
 
+    .dashboard-table tbody tr:nth-child(even) {
+        background-color: #f2f2f2; /* Light gray background for even rows */
+    }
+
+    .dashboard-table tbody tr:nth-child(odd) {
+        background-color: #ffffff; /* White background for odd rows */
+    }
 </style>
 
 <body>
@@ -272,10 +279,9 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                     <table class="dashboard-table" style="margin-bottom: 80px;">
                         <tr>
                             <th>Patient Name</th>
-                            <th>Course</th>
-                            <th>Section</th>
-                            <th>Gender</th>
-                            <th>Date</th>
+                            <th>Course & Year</th>
+                            <th>Diagnosis</th>
+                            <th>Time</th>
                         </tr>
                         <?php
                         if (mysqli_num_rows($result) > 0) {
@@ -284,10 +290,10 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                 echo "<td class='fixed-width-checkbox'>";
                                 echo "<input type='checkbox' name='delete_record[]' value='" . $row["record_id"] . "'>";
                                 echo $row["full_name"] . "</td>";
-                                echo "<td>" . $row["course"] . "</td>";
-                                echo "<td>" . $row["section"] . "</td>";
-                                echo "<td>" . $row["sex"] . "</td>";
-                                echo "<td>" . $row["date"] . "</td>";
+                                echo "<td>" . $row["course"] . " " . $row["section"] . "</td>";
+                                echo "<td>" . $row["diagnosis"] . "</td>";
+                                $time = date('h:i A', strtotime($row["date"]));
+                                echo "<td>" . $time . "</td>";
                                 echo "</tr>";
                             }
                         } else {
@@ -295,7 +301,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                         }
                         ?>
                         <tr>
-                            <td colspan="6">
+                            <td colspan="6" style="background-color: white;">
                                 <div class="table-button-container">
                                     <div class="button-group">
                                     <span class="delete-records-link" id="delete-toggle-link" onclick="toggleDeleteMode()" style="color: #D22B2B;">
@@ -1209,6 +1215,9 @@ $(document).ready(function () {
     });
 });
 
+function changeSortCriteria(sortCriteria) {
+    window.location.href = '?sort=' + sortCriteria;
+}
 </script>
 
 
