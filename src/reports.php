@@ -1,44 +1,16 @@
 <?php
-require_once ('includes/session-nurse.php');
-require_once ('includes/connect.php');
+require_once('includes/session-nurse.php');
+require_once('includes/connect.php');
 
-// Number of records to display per page
-$recordsPerPage = 5;
+$selectedAcademicYear = isset($_GET['academic_year']) ? $_GET['academic_year'] : '';
 
-// Current page number
-$currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-
-// Offset calculation for SQL query
-$offset = ($currentPage - 1) * $recordsPerPage;
-
-// Initialize variables for filtering by academic year
-$selectedAcademicYear = '';
-
-// Check if an academic year is selected
-if (isset($_GET['academic_year'])) {
-    // Ensure it's a valid integer
-    $selectedAcademicYear = intval($_GET['academic_year']);
+if ($selectedAcademicYear) {
+    $startYear = $selectedAcademicYear - 1;
+    $endYear = $selectedAcademicYear;
+    $startDate = "$startYear-09-01";
+    $endDate = "$endYear-07-30";
 }
-
-// SQL query to fetch records with pagination
-$query = "SELECT * FROM treatment_record";
-
-// Add condition to filter by academic year if selected
-if (!empty($selectedAcademicYear)) {
-    $query .= " WHERE YEAR(date) = $selectedAcademicYear";
-}
-
-$query .= " LIMIT $offset, $recordsPerPage";
-
-$result = mysqli_query($conn, $query);
-
-// Total number of records
-$totalRecords = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM treatment_record"));
-
-// Total number of pages
-$totalPages = ceil($totalRecords / $recordsPerPage);
-
-?>
+?>  
 
 <!DOCTYPE html>
 <html lang="en">
@@ -64,10 +36,8 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
 
     <div class="main-content">
         <?php
-        include ('includes/sidebar/reports.php');
+        include('includes/sidebar/reports.php');
         ?>
-
-
 
         <div class="content" id="content">
             <div class="med-reports-header">
@@ -78,10 +48,10 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                             <select name="academic_year" id="medReportsortCriteria"
                                 style="font-family: 'Poppins', sans-serif; font-weight: bold;"
                                 onchange="this.form.submit()">
-                                <option value="" disabled selected hidden>Academic Year</option>
-                                <option value="2025">2024-2025</option>
-                                <option value="2024">2023-2024</option>
-                                <option value="2023">2022-2023</option>
+                                <option value="" selected>Academic Year</option>
+                                <option value="2025" <?php echo $selectedAcademicYear == '2025' ? 'selected' : ''; ?>>2024-2025</option>
+                                <option value="2024" <?php echo $selectedAcademicYear == '2024' ? 'selected' : ''; ?>>2023-2024</option>
+                                <option value="2023" <?php echo $selectedAcademicYear == '2023' ? 'selected' : ''; ?>>2022-2023</option>
                             </select>
                         </form>
                     </div>
@@ -93,19 +63,19 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                 <div class="quarterly-report-content">
                     <div class="quarterly-report-row-box">
                         <?php
-                        // Fetch and display data for Second Quarter
+                        // Fetch and display data for First Quarter
                         $query = "SELECT diagnosis, COUNT(*) AS diagnosis_count 
-                                FROM treatment_record 
-                                WHERE MONTH(date) IN (1, 2, 3) ";
+                                  FROM treatment_record 
+                                  WHERE MONTH(date) IN (1, 2, 3)";
 
                         // Add condition to filter by academic year if selected
                         if (!empty($selectedAcademicYear)) {
-                            $query .= "AND YEAR(date) = $selectedAcademicYear ";
+                            $query .= " AND date BETWEEN '$startDate' AND '$endDate'";
                         }
 
-                        $query .= "GROUP BY diagnosis 
-                                ORDER BY diagnosis_count DESC 
-                                LIMIT 1";
+                        $query .= " GROUP BY diagnosis 
+                                    ORDER BY diagnosis_count DESC 
+                                    LIMIT 1";
 
                         $result = mysqli_query($conn, $query);
                         if ($row = mysqli_fetch_assoc($result)) {
@@ -128,17 +98,21 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                         <div class="total-diagnosis-box">
                             <div class="total-diagnosis-box-text">
                                 <div class="total-number" style="font-size: 35px;">
-                                    <?php $total_sec_query = "SELECT diagnosis, COUNT(*) AS diagnosis_count 
-                                FROM treatment_record 
-                                WHERE MONTH(date) IN (1, 2, 3)";
+                                    <?php 
+                                    $total_sec_query = "SELECT COUNT(*) AS diagnosis_count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) IN (1, 2, 3)";
+
+                                    if (!empty($selectedAcademicYear)) {
+                                        $total_sec_query .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                    }
 
                                     $result = mysqli_query($conn, $total_sec_query);
                                     $row = mysqli_fetch_assoc($result);
-                                    echo $row['diagnosis_count']; ?>
-
+                                    echo $row['diagnosis_count'];
+                                    ?>
                                 </div>
-                                <div class="total-sub-text" style="font-size: 10px;">Diagnoses
-                                </div>
+                                <div class="total-sub-text" style="font-size: 10px;">Diagnoses</div>
                             </div>
                         </div>
                     </div>
@@ -162,22 +136,18 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                             <div class="alter-second-row">
                                 <div class="leading-diagnosis-box">
                                     <div class="leading-diagnosis-box-text">
-                                        <div class="leading-diagnosis-text" style="font-size: 35px;">LEADING DIAGNOSIS
-                                        </div>
+                                        <div class="leading-diagnosis-text" style="font-size: 35px;"><?php echo $leading_diagnosis; ?></div>
                                         <div class="leading-diagnosis-subtext" style="font-size: 10px;">MOST COMMON
-                                            MEDICAL
-                                            CONDITION FOR THE QUARTER</div>
+                                            MEDICAL CONDITION FOR THE QUARTER</div>
                                     </div>
                                 </div>
 
                                 <div class="total-diagnosis-box" style="background-color: #E13F3D;">
                                     <div class="total-diagnosis-box-text" style="color: white;">
                                         <div class="total-number" style="font-size: 35px;">
-                                            <?php echo $diagnosis_count; ?>
-                                        </div>
+                                            <?php echo $diagnosis_count; ?></div>
                                         <div class="total-sub-text" style="font-size: 10px;">
-                                            <?php echo $leading_diagnosis; ?>
-                                        </div>
+                                            <?php echo $leading_diagnosis; ?></div>
                                     </div>
                                 </div>
                             </div>
@@ -192,50 +162,90 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">January</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 1";
-                                        $result = mysqli_query($conn, $query);
-                                        $row = mysqli_fetch_assoc($result);
-                                        echo $row['count'];
+                                        $query_jan = "SELECT diagnosis, COUNT(*) AS count 
+                                                      FROM treatment_record 
+                                                      WHERE MONTH(date) = 1";
+
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_jan .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_jan .= " GROUP BY diagnosis 
+                                                        ORDER BY count DESC 
+                                                        LIMIT 1";
+
+                                        $result_jan = mysqli_query($conn, $query_jan);
+                                        if ($row_jan = mysqli_fetch_assoc($result_jan)) {
+                                            echo $row_jan['count'];
+                                            $leading_diagnosis_jan = $row_jan['diagnosis'];
+                                        } else {
+                                            echo "No data";
+                                            $leading_diagnosis_jan = "No data";
+                                        }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 1
-                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_jan; ?></div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">February</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 2";
-                                        $result = mysqli_query($conn, $query);
-                                        $row = mysqli_fetch_assoc($result);
-                                        echo $row['count'];
+                                        $query_feb = "SELECT diagnosis, COUNT(*) AS count 
+                                                      FROM treatment_record 
+                                                      WHERE MONTH(date) = 2";
+
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_feb .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_feb .= " GROUP BY diagnosis 
+                                                        ORDER BY count DESC 
+                                                        LIMIT 1";
+
+                                        $result_feb = mysqli_query($conn, $query_feb);
+                                        if ($row_feb = mysqli_fetch_assoc($result_feb)) {
+                                            echo $row_feb['count'];
+                                            $leading_diagnosis_feb = $row_feb['diagnosis'];
+                                        } else {
+                                            echo "No data";
+                                            $leading_diagnosis_feb = "No data";
+                                        }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 2
-                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_feb; ?></div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">March</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 3";
-                                        $result = mysqli_query($conn, $query);
-                                        $row = mysqli_fetch_assoc($result);
-                                        echo $row['count'];
+                                        $query_mar = "SELECT diagnosis, COUNT(*) AS count 
+                                                      FROM treatment_record 
+                                                      WHERE MONTH(date) = 3";
+
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_mar .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_mar .= " GROUP BY diagnosis 
+                                                        ORDER BY count DESC 
+                                                        LIMIT 1";
+
+                                        $result_mar = mysqli_query($conn, $query_mar);
+                                        if ($row_mar = mysqli_fetch_assoc($result_mar)) {
+                                            echo $row_mar['count'];
+                                            $leading_diagnosis_mar = $row_mar['diagnosis'];
+                                        } else {
+                                            echo "No data";
+                                            $leading_diagnosis_mar = "No data";
+                                        }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 3
-                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_mar; ?></div>
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -245,19 +255,19 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                 <div class="quarterly-report-content">
                     <div class="quarterly-report-row-box">
                         <?php
-                        // Fetch and display data for Second Quarter
+                        // Fetch and display data for First Quarter
                         $query = "SELECT diagnosis, COUNT(*) AS diagnosis_count 
-                                FROM treatment_record 
-                                WHERE MONTH(date) IN (4, 5, 6) ";
+                                  FROM treatment_record 
+                                  WHERE MONTH(date) IN (4, 5, 6)";
 
                         // Add condition to filter by academic year if selected
                         if (!empty($selectedAcademicYear)) {
-                            $query .= "AND YEAR(date) = $selectedAcademicYear ";
+                            $query .= " AND date BETWEEN '$startDate' AND '$endDate'";
                         }
 
-                        $query .= "GROUP BY diagnosis 
-                                ORDER BY diagnosis_count DESC 
-                                LIMIT 1";
+                        $query .= " GROUP BY diagnosis 
+                                    ORDER BY diagnosis_count DESC 
+                                    LIMIT 1";
 
                         $result = mysqli_query($conn, $query);
                         if ($row = mysqli_fetch_assoc($result)) {
@@ -280,17 +290,21 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                         <div class="total-diagnosis-box">
                             <div class="total-diagnosis-box-text">
                                 <div class="total-number" style="font-size: 35px;">
-                                    <?php $total_sec_query = "SELECT diagnosis, COUNT(*) AS diagnosis_count 
-                                FROM treatment_record 
-                                WHERE MONTH(date) IN (4, 5, 6)";
+                                    <?php 
+                                    $total_sec_query = "SELECT COUNT(*) AS diagnosis_count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) IN (4, 5, 6)";
+
+                                    if (!empty($selectedAcademicYear)) {
+                                        $total_sec_query .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                    }
 
                                     $result = mysqli_query($conn, $total_sec_query);
                                     $row = mysqli_fetch_assoc($result);
-                                    echo $row['diagnosis_count']; ?>
-
+                                    echo $row['diagnosis_count'];
+                                    ?>
                                 </div>
-                                <div class="total-sub-text" style="font-size: 10px;">Diagnoses
-                                </div>
+                                <div class="total-sub-text" style="font-size: 10px;">Diagnoses</div>
                             </div>
                         </div>
                     </div>
@@ -314,22 +328,18 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                             <div class="alter-second-row">
                                 <div class="leading-diagnosis-box">
                                     <div class="leading-diagnosis-box-text">
-                                        <div class="leading-diagnosis-text" style="font-size: 35px;">LEADING DIAGNOSIS
-                                        </div>
+                                        <div class="leading-diagnosis-text" style="font-size: 35px;"><?php echo $leading_diagnosis; ?></div>
                                         <div class="leading-diagnosis-subtext" style="font-size: 10px;">MOST COMMON
-                                            MEDICAL
-                                            CONDITION FOR THE QUARTER</div>
+                                            MEDICAL CONDITION FOR THE QUARTER</div>
                                     </div>
                                 </div>
 
                                 <div class="total-diagnosis-box" style="background-color: #E13F3D;">
                                     <div class="total-diagnosis-box-text" style="color: white;">
                                         <div class="total-number" style="font-size: 35px;">
-                                            <?php echo $diagnosis_count; ?>
-                                        </div>
+                                            <?php echo $diagnosis_count; ?></div>
                                         <div class="total-sub-text" style="font-size: 10px;">
-                                            <?php echo $leading_diagnosis; ?>
-                                        </div>
+                                            <?php echo $leading_diagnosis; ?></div>
                                     </div>
                                 </div>
                             </div>
@@ -344,73 +354,112 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">April</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 4";
-                                        $result = mysqli_query($conn, $query);
-                                        $row = mysqli_fetch_assoc($result);
-                                        echo $row['count'];
+                                        $query_apr = "SELECT diagnosis, COUNT(*) AS count 
+                                                      FROM treatment_record 
+                                                      WHERE MONTH(date) = 4";
+
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_apr .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_apr .= " GROUP BY diagnosis 
+                                                        ORDER BY count DESC 
+                                                        LIMIT 1";
+
+                                        $result_apr = mysqli_query($conn, $query_apr);
+                                        if ($row_apr = mysqli_fetch_assoc($result_apr)) {
+                                            echo $row_apr['count'];
+                                            $leading_diagnosis_apr = $row_apr['diagnosis'];
+                                        } else {
+                                            echo "No data";
+                                            $leading_diagnosis_apr = "No data";
+                                        }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 1
-                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_apr; ?></div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">May</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 5";
-                                        $result = mysqli_query($conn, $query);
-                                        $row = mysqli_fetch_assoc($result);
-                                        echo $row['count'];
+                                        $query_may = "SELECT diagnosis, COUNT(*) AS count 
+                                                      FROM treatment_record 
+                                                      WHERE MONTH(date) = 5";
+
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_may .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_may .= " GROUP BY diagnosis 
+                                                        ORDER BY count DESC 
+                                                        LIMIT 1";
+
+                                        $result_may = mysqli_query($conn, $query_may);
+                                        if ($row_may = mysqli_fetch_assoc($result_may)) {
+                                            echo $row_may['count'];
+                                            $leading_diagnosis_may = $row_may['diagnosis'];
+                                        } else {
+                                            echo "No data";
+                                            $leading_diagnosis_may = "No data";
+                                        }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 2
-                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_may; ?></div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">June</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 6";
-                                        $result = mysqli_query($conn, $query);
-                                        $row = mysqli_fetch_assoc($result);
-                                        echo $row['count'];
+                                        $query_jun = "SELECT diagnosis, COUNT(*) AS count 
+                                                      FROM treatment_record 
+                                                      WHERE MONTH(date) = 6";
+
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_jun .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_jun .= " GROUP BY diagnosis 
+                                                        ORDER BY count DESC 
+                                                        LIMIT 1";
+
+                                        $result_jun = mysqli_query($conn, $query_jun);
+                                        if ($row_jun = mysqli_fetch_assoc($result_jun)) {
+                                            echo $row_jun['count'];
+                                            $leading_diagnosis_jun = $row_jun['diagnosis'];
+                                        } else {
+                                            echo "No data";
+                                            $leading_diagnosis_jun = "No data";
+                                        }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 3
-                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_jun; ?></div>
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
-
 
             <!-- Third Quarter -->
             <div class="quarterly-report-row" id="thirdQuarter">
                 <div class="quarterly-report-content">
                     <div class="quarterly-report-row-box">
                         <?php
-                        // Fetch and display data for Second Quarter
+                        // Fetch and display data for First Quarter
                         $query = "SELECT diagnosis, COUNT(*) AS diagnosis_count 
-                                FROM treatment_record 
-                                WHERE MONTH(date) IN (7, 8, 9) ";
+                                  FROM treatment_record 
+                                  WHERE MONTH(date) IN (7, 8, 9)";
 
                         // Add condition to filter by academic year if selected
                         if (!empty($selectedAcademicYear)) {
-                            $query .= "AND YEAR(date) = $selectedAcademicYear ";
+                            $query .= " AND date BETWEEN '$startDate' AND '$endDate'";
                         }
 
-                        $query .= "GROUP BY diagnosis 
-                                ORDER BY diagnosis_count DESC 
-                                LIMIT 1";
+                        $query .= " GROUP BY diagnosis 
+                                    ORDER BY diagnosis_count DESC 
+                                    LIMIT 1";
 
                         $result = mysqli_query($conn, $query);
                         if ($row = mysqli_fetch_assoc($result)) {
@@ -432,18 +481,22 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                         </div>
                         <div class="total-diagnosis-box">
                             <div class="total-diagnosis-box-text">
-                            <div class="total-number" style="font-size: 35px;">
-                                <?php $total_sec_query = "SELECT diagnosis, COUNT(*) AS diagnosis_count 
-                                FROM treatment_record 
-                                WHERE MONTH(date) IN (7, 8, 9)";
+                                <div class="total-number" style="font-size: 35px;">
+                                    <?php 
+                                    $total_sec_query = "SELECT COUNT(*) AS diagnosis_count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) IN (7, 8, 9)";
 
-                                $result = mysqli_query($conn, $total_sec_query);
-                                $row = mysqli_fetch_assoc($result);
-                                echo $row['diagnosis_count'];  ?>
-                                
-                            </div>
-                                <div class="total-sub-text" style="font-size: 10px;">Diagnoses
+                                    if (!empty($selectedAcademicYear)) {
+                                        $total_sec_query .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                    }
+
+                                    $result = mysqli_query($conn, $total_sec_query);
+                                    $row = mysqli_fetch_assoc($result);
+                                    echo $row['diagnosis_count'];
+                                    ?>
                                 </div>
+                                <div class="total-sub-text" style="font-size: 10px;">Diagnoses</div>
                             </div>
                         </div>
                     </div>
@@ -467,22 +520,18 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                             <div class="alter-second-row">
                                 <div class="leading-diagnosis-box">
                                     <div class="leading-diagnosis-box-text">
-                                        <div class="leading-diagnosis-text" style="font-size: 35px;">LEADING DIAGNOSIS
-                                        </div>
+                                        <div class="leading-diagnosis-text" style="font-size: 35px;"><?php echo $leading_diagnosis; ?></div>
                                         <div class="leading-diagnosis-subtext" style="font-size: 10px;">MOST COMMON
-                                            MEDICAL
-                                            CONDITION FOR THE QUARTER</div>
+                                            MEDICAL CONDITION FOR THE QUARTER</div>
                                     </div>
                                 </div>
 
                                 <div class="total-diagnosis-box" style="background-color: #E13F3D;">
                                     <div class="total-diagnosis-box-text" style="color: white;">
                                         <div class="total-number" style="font-size: 35px;">
-                                            <?php echo $diagnosis_count; ?>
-                                        </div>
+                                            <?php echo $diagnosis_count; ?></div>
                                         <div class="total-sub-text" style="font-size: 10px;">
-                                            <?php echo $leading_diagnosis; ?>
-                                        </div>
+                                            <?php echo $leading_diagnosis; ?></div>
                                     </div>
                                 </div>
                             </div>
@@ -497,53 +546,93 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">July</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 7";
-                                        $result = mysqli_query($conn, $query);
-                                        $row = mysqli_fetch_assoc($result);
-                                        echo $row['count'];
+                                        $query_jul = "SELECT diagnosis, COUNT(*) AS count 
+                                                      FROM treatment_record 
+                                                      WHERE MONTH(date) = 7";
+
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_jul .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_jul .= " GROUP BY diagnosis 
+                                                        ORDER BY count DESC 
+                                                        LIMIT 1";
+
+                                        $result_jul = mysqli_query($conn, $query_jul);
+                                        if ($row_jul = mysqli_fetch_assoc($result_jul)) {
+                                            echo $row_jul['count'];
+                                            $leading_diagnosis_jul = $row_jul['diagnosis'];
+                                        } else {
+                                            echo "No data";
+                                            $leading_diagnosis_jul = "No data";
+                                        }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 1
-                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_jul; ?></div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">August</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 8";
-                                        $result = mysqli_query($conn, $query);
-                                        $row = mysqli_fetch_assoc($result);
-                                        echo $row['count'];
+                                        $query_aug = "SELECT diagnosis, COUNT(*) AS count 
+                                                      FROM treatment_record 
+                                                      WHERE MONTH(date) = 8";
+
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_aug .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_aug .= " GROUP BY diagnosis 
+                                                        ORDER BY count DESC 
+                                                        LIMIT 1";
+
+                                        $result_aug = mysqli_query($conn, $query_aug);
+                                        if ($row_aug = mysqli_fetch_assoc($result_aug)) {
+                                            echo $row_aug['count'];
+                                            $leading_diagnosis_aug = $row_aug['diagnosis'];
+                                        } else {
+                                            echo "No data";
+                                            $leading_diagnosis_aug = "No data";
+                                        }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 2
-                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_aug; ?></div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">September</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 9";
-                                        $result = mysqli_query($conn, $query);
-                                        $row = mysqli_fetch_assoc($result);
-                                        echo $row['count'];
+                                        $query_sep = "SELECT diagnosis, COUNT(*) AS count 
+                                                      FROM treatment_record 
+                                                      WHERE MONTH(date) = 9";
+
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_sep .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_sep .= " GROUP BY diagnosis 
+                                                        ORDER BY count DESC 
+                                                        LIMIT 1";
+
+                                        $result_sep = mysqli_query($conn, $query_sep);
+                                        if ($row_sep = mysqli_fetch_assoc($result_sep)) {
+                                            echo $row_sep['count'];
+                                            $leading_diagnosis_sep = $row_sep['diagnosis'];
+                                        } else {
+                                            echo "No data";
+                                            $leading_diagnosis_sep = "No data";
+                                        }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 3
-                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_sep; ?></div>
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
-            </div>
+            </div>  
 
 
             <!-- Fourth Quarter -->
@@ -551,19 +640,19 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                 <div class="quarterly-report-content">
                     <div class="quarterly-report-row-box">
                         <?php
-                        // Fetch and display data for Second Quarter
+                        // Fetch and display data for First Quarter
                         $query = "SELECT diagnosis, COUNT(*) AS diagnosis_count 
-                                FROM treatment_record 
-                                WHERE MONTH(date) IN (10, 11, 12) ";
+                                  FROM treatment_record 
+                                  WHERE MONTH(date) IN (10, 11, 12)";
 
                         // Add condition to filter by academic year if selected
                         if (!empty($selectedAcademicYear)) {
-                            $query .= "AND YEAR(date) = $selectedAcademicYear ";
+                            $query .= " AND date BETWEEN '$startDate' AND '$endDate'";
                         }
 
-                        $query .= "GROUP BY diagnosis 
-                                ORDER BY diagnosis_count DESC 
-                                LIMIT 1";
+                        $query .= " GROUP BY diagnosis 
+                                    ORDER BY diagnosis_count DESC 
+                                    LIMIT 1";
 
                         $result = mysqli_query($conn, $query);
                         if ($row = mysqli_fetch_assoc($result)) {
@@ -585,18 +674,22 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                         </div>
                         <div class="total-diagnosis-box">
                             <div class="total-diagnosis-box-text">
-                            <div class="total-number" style="font-size: 35px;">
-                                <?php $total_sec_query = "SELECT diagnosis, COUNT(*) AS diagnosis_count 
-                                FROM treatment_record 
-                                WHERE MONTH(date) IN (10, 11, 12)";
+                                <div class="total-number" style="font-size: 35px;">
+                                    <?php 
+                                    $total_sec_query = "SELECT COUNT(*) AS diagnosis_count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) IN (10, 11, 12)";
 
-                                $result = mysqli_query($conn, $total_sec_query);
-                                $row = mysqli_fetch_assoc($result);
-                                echo $row['diagnosis_count'];  ?>
-                                
-                            </div>
-                                <div class="total-sub-text" style="font-size: 10px;">Diagnoses
+                                    if (!empty($selectedAcademicYear)) {
+                                        $total_sec_query .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                    }
+
+                                    $result = mysqli_query($conn, $total_sec_query);
+                                    $row = mysqli_fetch_assoc($result);
+                                    echo $row['diagnosis_count'];
+                                    ?>
                                 </div>
+                                <div class="total-sub-text" style="font-size: 10px;">Diagnoses</div>
                             </div>
                         </div>
                     </div>
@@ -620,22 +713,18 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                             <div class="alter-second-row">
                                 <div class="leading-diagnosis-box">
                                     <div class="leading-diagnosis-box-text">
-                                        <div class="leading-diagnosis-text" style="font-size: 35px;">LEADING DIAGNOSIS
-                                        </div>
+                                        <div class="leading-diagnosis-text" style="font-size: 35px;"><?php echo $leading_diagnosis; ?></div>
                                         <div class="leading-diagnosis-subtext" style="font-size: 10px;">MOST COMMON
-                                            MEDICAL
-                                            CONDITION FOR THE QUARTER</div>
+                                            MEDICAL CONDITION FOR THE QUARTER</div>
                                     </div>
                                 </div>
 
                                 <div class="total-diagnosis-box" style="background-color: #E13F3D;">
                                     <div class="total-diagnosis-box-text" style="color: white;">
                                         <div class="total-number" style="font-size: 35px;">
-                                            <?php echo $diagnosis_count; ?>
-                                        </div>
+                                            <?php echo $diagnosis_count; ?></div>
                                         <div class="total-sub-text" style="font-size: 10px;">
-                                            <?php echo $leading_diagnosis; ?>
-                                        </div>
+                                            <?php echo $leading_diagnosis; ?></div>
                                     </div>
                                 </div>
                             </div>
@@ -650,54 +739,93 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">October</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 10";
-                                        $result = mysqli_query($conn, $query);
-                                        $row = mysqli_fetch_assoc($result);
-                                        echo $row['count'];
+                                        $query_oct = "SELECT diagnosis, COUNT(*) AS count 
+                                                      FROM treatment_record 
+                                                      WHERE MONTH(date) = 10";
+
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_oct .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_oct .= " GROUP BY diagnosis 
+                                                        ORDER BY count DESC 
+                                                        LIMIT 1";
+
+                                        $result_oct = mysqli_query($conn, $query_oct);
+                                        if ($row_oct = mysqli_fetch_assoc($result_oct)) {
+                                            echo $row_oct['count'];
+                                            $leading_diagnosis_oct = $row_oct['diagnosis'];
+                                        } else {
+                                            echo "No data";
+                                            $leading_diagnosis_oct = "No data";
+                                        }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 1
-                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_oct; ?></div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">November</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 11";
-                                        $result = mysqli_query($conn, $query);
-                                        $row = mysqli_fetch_assoc($result);
-                                        echo $row['count'];
+                                        $query_nov = "SELECT diagnosis, COUNT(*) AS count 
+                                                      FROM treatment_record 
+                                                      WHERE MONTH(date) = 11";
+
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_nov .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_nov .= " GROUP BY diagnosis 
+                                                        ORDER BY count DESC 
+                                                        LIMIT 1";
+
+                                        $result_nov = mysqli_query($conn, $query_nov);
+                                        if ($row_nov = mysqli_fetch_assoc($result_nov)) {
+                                            echo $row_nov['count'];
+                                            $leading_diagnosis_nov = $row_nov['diagnosis'];
+                                        } else {
+                                            echo "No data";
+                                            $leading_diagnosis_nov = "No data";
+                                        }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 2
-                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_nov; ?></div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">December</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        // Fetch and display the count of unique patient IDs for April
-                                        $query = "SELECT diagnosis, COUNT(*) AS count FROM treatment_record WHERE MONTH(date) = 12";
-                                        $result = mysqli_query($conn, $query);
-                                        $row = mysqli_fetch_assoc($result);
-                                        echo $row['count'];
+                                        $query_dec = "SELECT diagnosis, COUNT(*) AS count 
+                                                      FROM treatment_record 
+                                                      WHERE MONTH(date) = 12";
+
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_dec .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_dec .= " GROUP BY diagnosis 
+                                                        ORDER BY count DESC 
+                                                        LIMIT 1";
+
+                                        $result_dec = mysqli_query($conn, $query_dec);
+                                        if ($row_dec = mysqli_fetch_assoc($result_dec)) {
+                                            echo $row_dec['count'];
+                                            $leading_diagnosis_dec = $row_dec['diagnosis'];
+                                        } else {
+                                            echo "No data";
+                                            $leading_diagnosis_dec = "No data";
+                                        }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">Diagnosis 3
-                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_dec; ?></div>
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
-
         </div>
 
         <?php
