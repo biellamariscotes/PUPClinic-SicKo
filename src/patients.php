@@ -3,9 +3,10 @@
 require_once('includes/session-nurse.php');
 require_once('includes/connect.php');
 
-// Check if the form is submitted for deletion
+// Check if the form is submitted for deletion and if the deletion was successful
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmDeleteButton'])) {
     if (!empty($_POST['delete_patient'])) {
+        $deletionSuccessful = true; // Flag to indicate successful deletion
         foreach ($_POST['delete_patient'] as $patient_id) {
             // Prepare a delete statement for treatment records
             $sql_treatment = "DELETE FROM treatment_record WHERE patient_id = ?";
@@ -25,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmDeleteButton'])
                             echo "Record deleted successfully: Patient ID " . $patient_id . "<br>";
                         } else {
                             // Error handling
+                            $deletionSuccessful = false; // Set flag to false if deletion fails
                             echo "Error deleting patient record: " . mysqli_stmt_error($stmt_patient) . "<br>";
                         }
 
@@ -32,9 +34,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmDeleteButton'])
                         mysqli_stmt_close($stmt_patient);
                     } else {
                         echo "Error preparing statement: " . mysqli_error($conn) . "<br>";
+                        $deletionSuccessful = false; // Set flag to false if preparation fails
                     }
                 } else {
                     // Error handling
+                    $deletionSuccessful = false; // Set flag to false if execution fails
                     echo "Error deleting treatment records: " . mysqli_stmt_error($stmt_treatment) . "<br>";
                 }
 
@@ -42,13 +46,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmDeleteButton'])
                 mysqli_stmt_close($stmt_treatment);
             } else {
                 echo "Error preparing statement: " . mysqli_error($conn) . "<br>";
+                $deletionSuccessful = false; // Set flag to false if preparation fails
             }
         }
         // Redirect to the same page to reflect changes
+        if ($deletionSuccessful) {
+            // Show the delete successful modal if deletion was successful
+            echo "<script>$(document).ready(function() { $('#delete-successful-modal').modal('show'); });</script>";
+        }
         header("Location: " . $_SERVER['PHP_SELF']);
         exit;
     }
 }
+
 
 $recordsPerPage = 5;
 $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -91,6 +101,12 @@ $result = mysqli_query($conn, $query);
     .pagination-buttons {
         margin-right: 50px;
     }
+    .cancel-button {
+        font-family: 'Poppins';
+        font-weight: 600;
+        background: #D4D4D4;
+        color: black;
+    }
 
 </style>
 
@@ -105,6 +121,47 @@ $result = mysqli_query($conn, $query);
         <?php
         include('includes/sidebar/patients.php');
         ?>
+
+        <!-- Delete Modal -->
+        <div class="modal" id="deleteModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="modal-middle-icon">
+                            <i class="bi bi-trash-fill" style="color:#E13F3D; font-size:5rem"></i>
+                        </div>
+                        <div class="modal-title" style="color: black;">Confirm Delete?</div>
+                        <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to delete the selected patient?</div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button type="button" class="btn btn-secondary" id="cancel-delete-modal" style="background-color: #777777; 
+                        font-family: 'Poppins'; font-weight: 600; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
+                        <button type="button" class="btn btn-secondary" id="confirmDeleteButton" style="background-color: #E13F3D; 
+                        font-family: 'Poppins'; font-weight: 600; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete Successful Modal -->
+        <div class="modal" id="delete-successful-modal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="modal-middle-icon">
+                            <img src="images/check.gif" style="width: 10rem; height: auto;" alt="Check Icon">
+                        </div>
+                        <div class="modal-title" style="color: black;">Deleted Successfully</div>
+                        <div class="modal-subtitle" style="text-wrap: pretty; justify-content: center;">Selected patients has been deleted successfully.</div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button type="button" class="btn btn-secondary" id="delete-successful-close-modal" data-dismiss="modal"
+                            style="background-color: #23B26D; 
+                    font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-top: 1rem;">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="content" id="content">
             <div class="left-header" style="margin-top: 40px;">
@@ -187,18 +244,6 @@ $result = mysqli_query($conn, $query);
             </div>
         </div>
 
-        <!-- Modal HTML -->
-        <div id="confirmationModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <p>Are you sure you want to delete the selected patients?</p>
-                <div class="button-container">
-                    <button type="button" class="delete-button" id="confirmDeleteButton">Yes, Delete</button>
-                    <button type="button" class="cancel-button close">Cancel</button>
-                </div>
-            </div>
-        </div>
-
         <?php
         include('includes/footer.php');
         ?>
@@ -209,95 +254,77 @@ $result = mysqli_query($conn, $query);
 
     <script>
         $(document).ready(function () {
-            // Show Modal when Log Out menu item is clicked
-            $("#logout-menu-item").click(function (event) {
-                $("#logOut").modal("show");
+            // Create Delete Selected button
+            $('#toggleCheckboxButton').click(function () {
+                var checkboxes = $('input[name="delete_patient[]"]');
+                var buttonContainer = $('#tableButtonContainer');
+                var deleteButton = $('#toggleCheckboxButton');
+                var deleteSelectedButton = $('<button>', { text: 'Delete Selected', class: 'delete-button', id: 'deleteSelectedButton', type: 'button' });
+                var cancelButton = $('<button>', { text: 'Cancel', class: 'cancel-button', id: 'cancelButton', type: 'button' });
+
+                // Hide the sorting-pagination-container when "Delete Records" button is clicked
+                $('.sorting-pagination-container').hide();
+
+                deleteSelectedButton.click(function () {
+                    $('#deleteModal').modal('show');
+                });
+
+                cancelButton.click(function () {
+                    checkboxes.hide().prop('checked', false);
+                    deleteSelectedButton.remove();
+                    cancelButton.remove();
+                    deleteButton.show();
+                    // Show the sorting-pagination-container when cancel button is clicked
+                    $('.sorting-pagination-container').show();
+                });
+
+                deleteButton.hide();
+                buttonContainer.append(deleteSelectedButton).append(cancelButton);
+                checkboxes.show();
             });
 
-            // Close the Modal with the close button
-            $("#logout-close-modal").click(function (event) {
-                $("#logOut").modal("hide");
+            $('#cancel-delete-modal').click(function () {
+                $('#deleteModal').modal('hide');
             });
 
-            // Handle logout when Log Out button on modal is clicked
-            $("#logout-confirm-button").click(function (event) {
-                // Perform logout action
-                window.location.href = "logout.php";
+            $('#confirmDeleteButton').click(function () {
+                $('#deleteForm').submit();
             });
         });
 
-        // Function to show the modal
-        function showModal() {
-            document.getElementById('confirmationModal').style.display = 'block';
-        }
+    </script>
 
-        // Function to hide the modal
-        function hideModal() {
-            document.getElementById('confirmationModal').style.display = 'none';
-        }
-
-        // Create Delete Selected button
-        document.getElementById('toggleCheckboxButton').addEventListener('click', function () {
-            var checkboxes = document.getElementsByName('delete_patient[]');
-            var buttonContainer = document.getElementById('tableButtonContainer');
-            var deleteButton = document.getElementById('toggleCheckboxButton');
-            var deleteSelectedButton = document.createElement('button');
-            var cancelButton = document.createElement('button');
-
-            deleteSelectedButton.textContent = 'Delete Selected';
-            deleteSelectedButton.classList.add('delete-button');
-            deleteSelectedButton.id = 'deleteSelectedButton';
-            deleteSelectedButton.type = 'button';
-            deleteSelectedButton.addEventListener('click', function () {
-                showModal();
-            });
-
-            cancelButton.textContent = 'Cancel';
-            cancelButton.classList.add('delete-button');
-            cancelButton.id = 'cancelButton';
-            cancelButton.type = 'button';
-            cancelButton.addEventListener('click', function () {
-                for (var i = 0; i < checkboxes.length; i++) {
-                    checkboxes[i].style.display = 'none';
-                    checkboxes[i].checked = false;
-                }
-                deleteSelectedButton.remove();
-                cancelButton.remove();
-                deleteButton.style.display = 'block';
-            });
-
-            deleteButton.style.display = 'none';
-            buttonContainer.insertBefore(deleteSelectedButton, deleteButton.nextSibling);
-            buttonContainer.insertBefore(document.createTextNode(' '), deleteButton.nextSibling);
-            buttonContainer.insertBefore(cancelButton, deleteButton.nextSibling);
-
-            for (var i = 0; i < checkboxes.length; i++) {
-                checkboxes[i].style.display = 'block';
-            }
+<script>
+    $(document).ready(function () {
+        // Function to handle deletion confirmation
+        $('#confirmDeleteButton').click(function () {
+            $('#deleteModal').modal('hide'); // Hide delete confirmation modal
+            $('#delete-successful-modal').modal('show'); // Show delete successful modal
         });
 
-        document.getElementsByClassName('close')[0].addEventListener('click', function () {
-            hideModal();
+        // Function to handle closing of delete successful modal
+        $('#delete-successful-close-modal').click(function () {
+            // Hide delete successful modal
+            $('#delete-successful-modal').modal('hide');
         });
 
-        window.onclick = function (event) {
-            var modal = document.getElementById('confirmationModal');
-            if (event.target == modal) {
-                hideModal();
-            }
-        }
-
-        document.getElementById('confirmDeleteButton').addEventListener('click', function () {
-            document.getElementById('deleteForm').submit();
+        // Function to handle form submission when closing delete successful modal
+        $('#delete-successful-close-modal').click(function () {
+            // Delay form submission by 1 second (1000 milliseconds)
+            setTimeout(function () {
+                $('#deleteForm').submit(); // Submit the form
+            }, 4000); // Adjust the delay as needed
         });
 
+        // Function to handle sorting
         function handleSort() {
-            var sortCriteria = document.getElementById('sortCriteria').value;
+            var sortCriteria = $('#sortCriteria').val();
             window.location.href = window.location.pathname + '?sort=' + sortCriteria;
         }
 
-        document.getElementById('sortCriteria').addEventListener('change', handleSort);
+        $('#sortCriteria').change(handleSort);
 
+        // Function to get query variable from URL
         function getQueryVariable(variable) {
             var query = window.location.search.substring(1);
             var vars = query.split("&");
@@ -310,11 +337,14 @@ $result = mysqli_query($conn, $query);
             return false;
         }
 
+        // Set current sort criteria in the dropdown
         var currentSortCriteria = getQueryVariable('sort');
         if (currentSortCriteria) {
-            document.getElementById('sortCriteria').value = currentSortCriteria;
+            $('#sortCriteria').val(currentSortCriteria);
         }
-    </script>
+    });
+</script>
+
 </body>
 
 </html>

@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login_btn'])) {
                     <div class="modal-buttons">
                         <button type="button" class="btn btn-secondary" id="login-close-modal" data-dismiss="modal"
                             style="background-color: #E13F3D; 
-                    font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-top: 1rem;">Close</button>
+                    font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-top: 3rem;">Close</button>
                     </div>
                 </div>
             </div>
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login_btn'])) {
         <div class="container-login-cst">
             <div class="logo-container">
                 <img class="logo" src="images/sicko-logo.png" alt="Sicko Logo">
-                <h2><span style="color: #058789;">Sic</span><span style="color: #E13F3D;">Ko</span> | Sign In</h2>
+                <h2 style="font-family: 'Poppins';"><span style="color: #058789;">Sic</span><span style="color: #E13F3D;">Ko</span> | Sign In</h2>
             </div>
 
             <div class="form-container-cst">

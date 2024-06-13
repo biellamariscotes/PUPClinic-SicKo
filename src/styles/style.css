@@ -80,7 +80,7 @@ html, body {
 }
 
 .form-container-cst input:focus {
-  background-color: #D4D4D4; 
+  background-color: #E9E9E9; 
   outline: none;
 }
 
@@ -109,14 +109,14 @@ html, body {
 
 /* Form Container Input */
 .form-container-cst input:focus {
-  background-color: #D4D4D4; 
+  background-color: #E9E9E9; 
   outline: none; 
 }
 
 /* Form Container Input when autofill */
 .form-container-cst input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px #D4D4D4 inset !important; /* Reset autofill background color */
-  background-color: #D4D4D4; /* Set background color */
+  -webkit-box-shadow: 0 0 0px 1000px #E9E9E9 inset !important; /* Reset autofill background color */
+  background-color: #E9E9E9; /* Set background color */
 }
 
 /* Sign In Button */

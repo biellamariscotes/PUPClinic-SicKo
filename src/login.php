@@ -72,6 +72,28 @@ if (isset($_POST['login_btn'])) {
         <img src="images/loader.gif">
     </div>
 
+        <!-- Log In Failed Modal -->
+        <div class="modal" id="loginFailed" tabindex="-1" role="dialog" data-bs-backdrop="static"
+            data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content" style="border-radius: 1.563rem;">
+                    <div class="modal-body">
+                        <div class="modal-middle-icon">
+                            <img src="images/x-mark.gif" style="width: 9rem; height: auto;" alt="Failed Icon">
+                        </div>
+                        <div class="modal-title">Login Failed</div>
+                        <div class="modal-subtitle" style="text-wrap: pretty; ">Authentication failed. Please check your
+                            credentials and try again.</div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button type="button" class="btn btn-secondary" id="login-close-modal" data-dismiss="modal"
+                            style="background-color: #E13F3D; 
+                    font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     <!-- Navigation Bar -->
     <div class="main-content">
         <div class="container pt-4">
@@ -130,26 +152,6 @@ if (isset($_POST['login_btn'])) {
         <footer>
             <img class="vector-green fixed-bottom" src="images/vector-green.png" alt="Green Vector">
         </footer>
-    </div>
-
-    <div class="modal" id="loginFailed" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="modal-middle-icon">
-                        <img src="images/x-mark.gif" style="width: 9rem; height: auto;" alt="Failed Icon">
-                    </div>
-                    <div class="modal-title">Login Failed</div>
-                    <div class="modal-subtitle" style="text-wrap: pretty; ">Authentication failed. Please check your
-                        credentials and try again.</div>
-                </div>
-                <div class="modal-buttons">
-                    <button type="button" class="btn btn-secondary" id="login-close-modal" data-dismiss="modal"
-                        style="background-color: #E13F3D; 
-                    font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-top: 1rem;">Close</button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
