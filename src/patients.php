@@ -108,6 +108,18 @@ $result = mysqli_query($conn, $query);
         color: black;
     }
 
+    .dashboard-table tbody tr {
+        border-bottom: 1px solid #D3D3D3; 
+    }
+
+    .dashboard-table tbody tr:last-child {
+        border-bottom: 1px solid #D3D3D3; 
+    }
+
+    .dashboard-table th {
+        padding: 0px;
+    }
+
 </style>
 
 <body>
@@ -200,7 +212,7 @@ $result = mysqli_query($conn, $query);
                         }
                         ?>
                         <tr>
-                            <td colspan="5" style="height: 97px;"> <!-- Use colspan to span across all columns -->
+                            <td colspan="5" style="height: 97px; background-color: white;"> <!-- Use colspan to span across all columns -->
 
                                 <!-- Inside the table button container -->
                                 <div class="table-button-container" id="tableButtonContainer">

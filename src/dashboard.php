@@ -7,15 +7,19 @@ $rowsPerPage = 5;
 $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($currentPage - 1) * $rowsPerPage;
 
-// Query to fetch limited rows
-$sql = "SELECT * 
+// Get current date
+$currentDate = date("Y-m-d");
+
+// Query to fetch records for the current day
+$sql = "SELECT *, TIME_FORMAT(treatment_record.date, '%h:%i %p') AS treatment_time
         FROM treatment_record
         JOIN patient ON treatment_record.patient_id = patient.patient_id
+        WHERE DATE(treatment_record.date) = '$currentDate'
         LIMIT $offset, $rowsPerPage";
 $result = mysqli_query($conn, $sql);
 
-// Count total records
-$totalRecords = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM treatment_record"));
+// Count total records for the current day
+$totalRecords = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM treatment_record WHERE DATE(date) = '$currentDate'"));
 
 // Calculate total pages
 $totalPages = ceil($totalRecords / $rowsPerPage);
@@ -41,6 +45,19 @@ $totalPages = ceil($totalRecords / $rowsPerPage);
 
     .pagination-buttons {
         margin-right: 50px;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-table tbody tr {
+        border-bottom: 1px solid #D3D3D3; 
+    }
+
+    .dashboard-table tbody tr:last-child {
+        border-bottom: 1px solid #D3D3D3; 
+    }
+
+    .dashboard-table th {
+        padding: 0px;
     }
 
 </style>
@@ -87,7 +104,7 @@ $totalPages = ceil($totalRecords / $rowsPerPage);
                                     <td><?php echo $row["first_name"]; ?></td>
                                     <td><?php echo $row["course"]; ?></td>
                                     <td><?php echo ucfirst(strtolower($row["diagnosis"])); ?></td>
-                                    <td><?php echo $row["date"]; ?></td>
+                                    <td><?php echo $row["treatment_time"]; ?></td>
                                 </tr>
                             <?php endwhile; ?>
                         <?php else : ?>
