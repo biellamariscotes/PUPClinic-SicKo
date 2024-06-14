@@ -1011,10 +1011,12 @@ input[type=number] {
 #age, #course, 
 #section, #symptoms,
 #diagnosis, #treatments {
-  height: 83px;
-  border-radius: 15px;
+  height: 5.188rem;
+  border-radius: 0.938rem;
   background-color: white;
-  padding: 10px;
+  padding: 0.625rem;
+  padding-left: 2rem;
+  padding-right: 1.5rem;
   box-sizing: border-box;
   border: none;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
@@ -1545,17 +1547,17 @@ input[type=number] {
   background-color: #ccc;
 }
 
-.delete-records, .download-button {
+.delete-records-link, .download-button {
   display: flex;
   align-items: center; /* Align items vertically */
   cursor: pointer;
 }
 
-.delete-records i, .download-button i {
+.delete-records-link i, .download-button i {
   margin-right: 0.625rem;
 }
 
-.delete-records {
+.delete-records-link {
   font-family: 'Poppins', sans-serif; 
   font-size: 1rem;
   font-weight: bold;
@@ -1565,7 +1567,7 @@ input[type=number] {
   color: #D22B2B;
 }
 
-.delete-records:hover {
+.delete-records-link:hover {
   color: #cc0000;
 }
 

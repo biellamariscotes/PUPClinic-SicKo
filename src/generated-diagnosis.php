@@ -145,7 +145,7 @@ if (isset($_POST['symptoms'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generated Diagnosis</title>
-    <link rel="icon" type="image/png" href="images/heart-logo.png">  
+    <link rel="icon" type="image/png" href="images/heart-logo.png"> 
     <link rel="stylesheet" href="styles/dboardStyle.css">
     <link rel="stylesheet" href="../vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -190,7 +190,7 @@ if (isset($_POST['symptoms'])) {
         <!-- Symptoms Container -->
         <div class="symptoms-input-container">
             <?php if(isset($_POST['symptoms'])): ?>
-                <div class="tags-container" id="tags-container">
+                <div class="tags-container" id="tags-container" style="pointer-events: none;">
                     <?php foreach(explode(",", htmlspecialchars($_POST['symptoms'])) as $symptom): ?>
                         <span class="tag"><?= trim($symptom) ?></span>
                     <?php endforeach; ?>

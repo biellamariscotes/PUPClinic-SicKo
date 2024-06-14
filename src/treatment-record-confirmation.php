@@ -36,10 +36,12 @@ $treatments = isset($_GET['treatments']) ? $_GET['treatments'] : '';
         height: 83px;
         border-radius: 15px;
         background-color: white;
-        padding: 10px;
+        padding: 0.625rem;
+        padding-left: 2rem;
+        padding-right: 1.5rem;
         box-sizing: border-box;
         border: none;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
         transition: border-color 0.3s; /* Added transition for smoother effect */
         }
 </style>
@@ -99,7 +101,7 @@ $treatments = isset($_GET['treatments']) ? $_GET['treatments'] : '';
                 <input type="text" id="treatments" name="treatments" placeholder="Treatments/Medicines" autocomplete="off" required value="<?php echo $treatments; ?>"  >
             </div>
             <div class="middle-row">
-                <button type="submit" id="generate-excuse-letter-button" name="record-btn">Generate Excuse Letter</button>
+                <button type="submit" id="generate-excuse-letter-button" name="record-btn">Generate Clearance</button>
             </div>
     </form>
     </div>

@@ -114,13 +114,13 @@
     font-size: 1.25rem;
     font-weight: bold;
     text-align: left;
-    margin: 1rem 0 0 2rem;
+    margin: 1rem 0 0.938rem 2rem;
 }
 
 .modal-student-info {
     display: flex;
     justify-content: space-between;
-    margin-left: 2rem;
+    margin-left: 3rem;
 }
 
 .modal-student-info .preview-label,
@@ -141,7 +141,7 @@
     height: 0.063rem;
     background-color: #d9d9d9;
     border: none;
-    margin: 1rem 0 0 0;
+    margin: 2rem 0 1rem 0;
 }
 
 /* Apply custom scrollbar */
