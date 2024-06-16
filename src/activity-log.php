@@ -2,41 +2,22 @@
 require_once ('includes/session-nurse.php');
 require_once ('includes/connect.php');
 
-// Number of records to display per page
-$recordsPerPage = 5;
 
-// Current page number
-$currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-
-// Offset calculation for SQL query
-$offset = ($currentPage - 1) * $recordsPerPage;
-
-// Initialize variables for filtering by academic year
-$selectedAcademicYear = '';
-
-// Check if an academic year is selected
-if (isset($_GET['academic_year'])) {
-    // Ensure it's a valid integer
-    $selectedAcademicYear = intval($_GET['academic_year']);
-}
-
-// SQL query to fetch records with pagination
-$query = "SELECT * FROM treatment_record";
-
-// Add condition to filter by academic year if selected
-if (!empty($selectedAcademicYear)) {
-    $query .= " WHERE YEAR(date) = $selectedAcademicYear";
-}
-
-$query .= " LIMIT $offset, $recordsPerPage";
-
+// Fetch activity log records with pagination
+$query = "SELECT fullname, DATE_FORMAT(date, '%M %d, %Y') as formatted_date, DATE_FORMAT(date, '%h:%i %p') as formatted_time, action 
+          FROM activity_log 
+          ORDER BY date ASC";
 $result = mysqli_query($conn, $query);
 
-// Total number of records
-$totalRecords = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM treatment_record"));
-
-// Total number of pages
-$totalPages = ceil($totalRecords / $recordsPerPage);
+// Group activities by date
+$activitiesByDate = [];
+while ($row = mysqli_fetch_assoc($result)) {
+    $date = $row['formatted_date'];
+    if (!isset($activitiesByDate[$date])) {
+        $activitiesByDate[$date] = [];
+    }
+    $activitiesByDate[$date][] = $row;
+}
 
 ?>
 
@@ -46,7 +27,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical Reports</title>
+    <title>Activity Log</title>
     <link rel="icon" type="image/png" href="images/heart-logo.png">
     <link rel="stylesheet" href="styles/dboardStyle.css">
     <link rel="stylesheet" href="styles/modals.css">
@@ -66,7 +47,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
 .activitylog-box {
   max-width: 100%;
   width: 76.313rem;
-  height: auto;
+  height: 21.875rem;
   border-radius: 6px;
   background-color: #FCFCFC;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
@@ -84,6 +65,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
 .activitylog-container {
   margin: 40px 40px;
   padding-top: 0.313rem;
+  overflow-x: auto; /* Enable horizontal scrolling */
 }
 
 section {
@@ -100,12 +82,12 @@ section {
 ul {
   margin-top: 30px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row; /* Display items in a row */
+  white-space: nowrap; /* Prevent wrapping of list items */
   list-style: none;
   padding: 0;
 }
+
 li {
   margin-top: 30px;
   position: relative;
@@ -171,7 +153,7 @@ li p {
     padding: 0px;
   }
   li p {
-    transform: translateY(-10px);
+    transform: translateY(-0.625rem);
     opacity: 0;
     /* padding: 0 20px; */
     transition: 1.5s;
@@ -215,7 +197,8 @@ li p {
 }
 </style>
 
-<div>
+<body>
+  <div>
 
     <div class="loader">
         <img src="images/loader.gif">
@@ -230,12 +213,13 @@ li p {
 
 
 
-        <div class="content" id="content">
+    <div class="content" id="content">
             <div class="med-reports-header" style="margin-bottom: 1.5rem;">
                 <div class="med-reports-header-box">
-                    <div class="medreports-header-text">                                
+                    <div class="medreports-header-text">
                         <span style="color: #E13F3D; font-size: 2rem;">Activity</span>
-                        <span style="color: #058789; font-size: 2rem;">Log</span></div>
+                        <span style="color: #058789; font-size: 2rem;">Log</span>
+                    </div>
                     <div class="medreports-sorting-button" id="medReportsortingButton">
                         <form method="GET">
                             <select name="academic_year" id="medReportsortCriteria"
@@ -250,103 +234,35 @@ li p {
                 </div>
             </div>
 
-            <div class="activitylog-body">
-            <div class="activitylog-box">
-                <div class="activitylog-date">May 26, 2024</div>
-                <div class="activitylog-container"> 
-                <section class="timeline">
-                    <div class="timeline-line">
-                        <span class="timeline-innerline"></span>
+            <?php foreach ($activitiesByDate as $date => $activities): ?>
+                <div class="activitylog-body">
+                    <div class="activitylog-box">
+                        <div class="activitylog-date"><?php echo $date; ?></div>
+                        <div class="activitylog-container"> 
+                            <section class="timeline">
+                                <div class="timeline-line">
+                                    <span class="timeline-innerline"></span>
+                                </div>
+
+                                <ul>
+                                <?php foreach ($activities as $activity): ?>
+                                    <li>
+                                        <span class="timeline-point"></span>
+                                        <span class="date"><?php echo $activity['formatted_time']; ?></span>
+                                        <p>You <b style="font-weight: 600;"><?php echo $activity['action']; ?></b></p>
+                                    </li>
+                                <?php endforeach; ?>
+                                </ul>
+                            </section>
+                        </div>
                     </div>
-
-                    <ul>
-                        <li>
-                        <span class="timeline-point"></span>
-                        <span class="date">8:44 AM</span>
-                        <p>You <b>created</b> a new Treatment Record.</p>
-                        </li>
-                        <li>
-                        <span class="timeline-point"></span>
-                        <span class="date">9:37 AM</span>
-                        <p>You <b>used</b> the AI Symptoms Diagnostic Tool.</p>
-                        </li>
-                        <li>
-                        <span class="timeline-point"></span>
-                        <span class="date">9:48 AM</span>
-                        <p>You <b style="color: #E13F3D;">deleted</b> a Treatment Record ID - 00313. </p>
-                        </li>
-                        <li>
-                        <span class="timeline-point"></span>
-                        <span class="date">10:23 AM</span>
-                        <p>You <b>created</b> a new Treatment Record.</p>
-                        </li>
-                        <li>
-                        <span class="timeline-point"></span>
-                        <span class="date">11:15 AM</span>
-                        <p>You <b>created</b> a new Treatment Record.</p>
-                        </li>
-                        <li>
-                        <span class="timeline-point"></span>
-                        <span class="date">1:00 PM</span>
-                        <p>You <b>created</b> a new Treatment Record.</p>
-                        </li>
-                    </ul>
-                </section>
                 </div>
-            </div>
+            <?php endforeach; ?>
+
+            <?php include ('includes/footer.php'); ?>
         </div>
-
-        <div class="activitylog-body">
-            <div class="activitylog-box">
-                <div class="activitylog-date">May 25, 2024</div>
-                <div class="activitylog-container"> 
-                <section class="timeline">
-                    <div class="timeline-line">
-                        <span class="timeline-innerline"></span>
-                    </div>
-
-                    <ul>
-                        <li>
-                        <span class="timeline-point"></span>
-                        <span class="date">8:44 AM</span>
-                        <p>You <b>created</b> a new Treatment Record.</p>
-                        </li>
-                        <li>
-                        <span class="timeline-point"></span>
-                        <span class="date">9:37 AM</span>
-                        <p>You <b>used</b> the AI Symptoms Diagnostic Tool.</p>
-                        </li>
-                        <li>
-                        <span class="timeline-point"></span>
-                        <span class="date">9:48 AM</span>
-                        <p>You <b style="color: #E13F3D;">deleted</b> a Treatment Record ID - 00320. </p>
-                        </li>
-                        <li>
-                        <span class="timeline-point"></span>
-                        <span class="date">10:23 AM</span>
-                        <p>You <b>created</b> a new Treatment Record.</p>
-                        </li>
-                        <li>
-                        <span class="timeline-point"></span>
-                        <span class="date">11:15 AM</span>
-                        <p>You <b>created</b> a new Treatment Record.</p>
-                        </li>
-                        <li>
-                        <span class="timeline-point"></span>
-                        <span class="date">1:00 PM</span>
-                        <p>You <b>created</b> a new Treatment Record.</p>
-                        </li>
-                    </ul>
-                </section>
-                </div>
-            </div>
-        </div>
-
-        <?php
-        include ('includes/footer.php');
-        ?>
     </div>
-</div>
+
 <script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="scripts/script.js"></script>
 <script src="scripts/loader.js"></script>

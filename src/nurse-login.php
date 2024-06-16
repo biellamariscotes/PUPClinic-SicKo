@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+date_default_timezone_set('Asia/Manila');
+
 require_once ('includes/connect.php');
 
 if (!$conn) {
@@ -21,10 +23,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login_btn'])) {
     if ($result->num_rows == 1) {
         $user = $result->fetch_assoc();
         $nurse_id = $user['nurse_id'];
+        $first_name = $user['first_name'];
+        $last_name = $user['last_name'];
+        $full_name = $first_name . ' ' . $last_name;
 
         if ($password == $user['password']) {
             $_SESSION['message'] = "You are now Logged In";
             $_SESSION['nurse_id'] = $nurse_id;
+
+            // Record the activity log
+            recordActivityLog($conn, $full_name, 'Logged in');
 
             header("Location: dashboard.php");
             exit();
@@ -35,11 +43,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login_btn'])) {
         $login_failed = true; // Set the flag to true
     }
 }
+
+function recordActivityLog($conn, $fullname, $action) {
+    date_default_timezone_set('Asia/Manila'); // Set timezone to Philippines
+    $date = date('Y-m-d H:i:s');
+    $stmt = $conn->prepare("INSERT INTO activity_log (fullname, date, action) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $fullname, $date, $action);
+    $stmt->execute();
+}
+
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,34 +75,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login_btn'])) {
         }
     </style>
 </head>
-
 <body>
 
     <div class="loader">
         <img src="images/loader.gif">
     </div>
 
-            <!-- Log In Failed Modal -->
-            <div class="modal" id="loginFailed" tabindex="-1" role="dialog" data-bs-backdrop="static"
-            data-bs-keyboard="false">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="modal-middle-icon">
-                            <img src="images/x-mark.gif" style="width: 9rem; height: auto;" alt="Failed Icon">
-                        </div>
-                        <div class="modal-title">Login Failed</div>
-                        <div class="modal-subtitle" style="text-wrap: pretty; ">Authentication failed. Please check your
-                            credentials and try again.</div>
+    <!-- Log In Failed Modal -->
+    <div class="modal" id="loginFailed" tabindex="-1" role="dialog" data-bs-backdrop="static"
+    data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-middle-icon">
+                        <img src="images/x-mark.gif" style="width: 9rem; height: auto;" alt="Failed Icon">
                     </div>
-                    <div class="modal-buttons">
-                        <button type="button" class="btn btn-secondary" id="login-close-modal" data-dismiss="modal"
-                            style="background-color: #E13F3D; 
-                    font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-top: 3rem;">Close</button>
-                    </div>
+                    <div class="modal-title">Login Failed</div>
+                    <div class="modal-subtitle" style="text-wrap: pretty; ">Authentication failed. Please check your
+                        credentials and try again.</div>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn btn-secondary" id="login-close-modal" data-dismiss="modal"
+                        style="background-color: #E13F3D; 
+                        font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-top: 3rem;">Close</button>
                 </div>
             </div>
         </div>
+    </div>
 
     <div class="main-content">
         <div class="container-login-cst">
@@ -183,5 +199,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login_btn'])) {
     </script>
 
 </body>
-
 </html>

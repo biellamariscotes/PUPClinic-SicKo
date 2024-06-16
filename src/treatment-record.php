@@ -154,31 +154,6 @@ mysqli_close($conn);
     include ('includes/sidebar/patients-treatment-record.php');
     ?>
 
-    <!-- Log Out Modal
-    <div class="modal" id="logOut" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                     Modal content
-                    <div class="modal-middle-icon">
-                        <i class="bi bi-box-arrow-right" style="color:#058789; font-size:5rem"></i>
-                    </div>
-                    <div class="modal-title" style="color: black;">Are you leaving?</div>
-                    <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to log out?
-                    </div>
-                </div>
-                <div class="modal-buttons">
-                    <button type="button" class="btn btn-secondary" id="logout-close-modal" data-dismiss="modal"
-                        style="background-color: #777777; 
-                            font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
-                    <button type="button" class="btn btn-secondary" id="logout-confirm-button" style="background-color: #058789; 
-                            font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Log
-                        Out</button>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
 <!-- Preview Modal -->
 <div class="modal" id="previewModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -248,6 +223,7 @@ mysqli_close($conn);
                                 <button type="button" class="btn btn-secondary" id="submit-form-modal" data-dismiss="modal"
                                     style="background-color: #058789; 
                                             font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Submit</button>
+                                    <input type="hidden" id="user-fullname" name="user-fullname" value="<?php echo htmlspecialchars($_SESSION['full_name']); ?>">
                             </div>
                         </div>
                     </div>
@@ -380,26 +356,6 @@ mysqli_close($conn);
 
     <script>
         $(document).ready(function () {
-            // Show Modal when Log Out menu item is clicked
-            $("#logout-menu-item").click(function (event) {
-                $("#logOut").modal("show");
-            });
-
-            // Close the Modal with the close button
-            $("#logout-close-modal").click(function (event) {
-                $("#logOut").modal("hide");
-            });
-
-            // Handle logout when Log Out button on modal is clicked
-            $("#logout-confirm-button").click(function (event) {
-                // Perform logout action
-                window.location.href = "logout.php";
-            });
-        });
-    </script>
-
-    <script>
-        $(document).ready(function () {
             const patientList = $('#patient-list');
 
             function clearAndEnableFields() {
@@ -486,7 +442,27 @@ mysqli_close($conn);
             // Handle form submission when user confirms in the modal
             $("#submit-form-modal").click(function (event) {
                 $("#treatment-form").submit(); // Submit the form
+                logActivity();
             });
+
+            // Function to log activity
+            function logActivity() {
+                    var fullName = document.getElementById('user-fullname').value.trim();
+                    var action = " created a new Treatment Record";
+
+                    // AJAX call to log activity
+                    $.ajax({
+                        type: 'POST',
+                        url: 'log_activity.php', // Create a PHP file to handle logging
+                        data: { fullname: fullName, action: action },
+                        success: function(response) {
+                            console.log('Activity logged successfully.');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error logging activity:', error);
+                        }
+                    });
+                }
         });
     </script>
 
