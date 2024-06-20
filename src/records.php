@@ -244,22 +244,20 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
             </div>
         </div>
 
-        <!-- Delete Modal -->
-            <div class="modal" id="confirmDeleteModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+        <!-- Confirm Delete Modal -->
+        <div class="modal" id="confirmDeleteModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+                <div class="modal-content">
                     <div class="modal-body">
                         <div class="modal-middle-icon">
-                            <i class="bi bi-trash-fill" style="color:#E13F3D; font-size:5rem"></i>
+                            <i class="bi bi-exclamation-triangle-fill" style="color: #D22B2B; font-size: 5rem;"></i>
                         </div>
-                        <div class="modal-title" style="color: black;">Confirm Delete?</div>
-                        <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to delete the selected record(s)? This action cannot be undone.</div>
+                        <div class="modal-title" style="color: black;">Confirm Deletion</div>
+                        <div class="modal-subtitle">Are you sure you want to delete the selected record(s)? This action cannot be undone.</div>
                     </div>
-                    <div class="modal-buttons" style="padding-top: 1rem;">
-                        <button type="button" class="btn btn-secondary" id="cancel-delete" style="background-color: #777777; 
-                        font-family: 'Poppins'; font-weight: 600; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
-                        <button type="button" class="btn btn-secondary" id="confirm-delete" style="background-color: #E13F3D; 
-                        font-family: 'Poppins'; font-weight: 600; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Delete</button>
+                    <div class="modal-buttons">
+                        <button type="button" class="btn btn-secondary" id="cancel-delete" data-bs-dismiss="modal" style="background-color: #777777;">Cancel</button>
+                        <button type="submit" class="btn btn-danger" id="confirm-delete">Delete</button>
                     </div>
                 </div>
             </div>
@@ -291,6 +289,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                 <form method="POST">
                     <table class="dashboard-table" style="margin-bottom: 80px;">
                         <tr>
+                            <th>Record ID</th>
                             <th>Patient Name</th>
                             <th>Course & Year</th>
                             <th>Diagnosis</th>
@@ -300,6 +299,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
                                 echo "<tr>";
+                                echo "<td><a href='tr-clearance.php?record_id=" . urlencode($row["record_id"]) . "'>" . $row["record_id"] . "</a></td>";
                                 echo "<td class='fixed-width-checkbox'>";
                                 echo "<input type='checkbox' name='delete_record[]' value='" . $row["record_id"] . "'>";
                                 echo $row["full_name"] . "</td>";
@@ -362,7 +362,6 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                         </tr>
                     </table>
                     <button type="submit" id="confirmDeleteButton" name="confirmDeleteButton" style="display:none;">Confirm Delete</button>
-                    <input type="hidden" id="user-fullname" name="user-fullname" value="<?php echo htmlspecialchars($_SESSION['full_name']); ?>">
                 </form>
             </div>
         </div>
@@ -1226,34 +1225,12 @@ $(document).ready(function () {
     $('#confirm-delete').click(function () {
         // Trigger form submission
         $('#confirmDeleteButton').click();
-        logActivity();
     });
-
-    // Function to log activity
-    function logActivity() {
-        var fullName = document.getElementById('user-fullname').value.trim();
-        var action = "  deleted a Treatment Record.";
-
-        // AJAX call to log activity
-                $.ajax({
-                        type: 'POST',
-                        url: 'log_activity.php', // Create a PHP file to handle logging
-                        data: { fullname: fullName, action: action },
-                        success: function(response) {
-                            console.log('Activity logged successfully.');
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Error logging activity:', error);
-                        }
-                    });
-                }
-
 });
 
 function changeSortCriteria(sortCriteria) {
     window.location.href = '?sort=' + sortCriteria;
 }
-
 </script>
 
 
