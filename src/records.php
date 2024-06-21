@@ -66,7 +66,11 @@ if (isset($_GET['download'])) {
     exit;
 }
 
-$selectedAcademicYear = isset($_GET['academic_year']) ? $_GET['academic_year'] : '';
+$selectedAcademicYear = isset($_GET['academic_year']) ? intval($_GET['academic_year']) : '';
+$startYear = '';
+$endYear = '';
+$startDate = '';
+$endDate = '';
 
 if ($selectedAcademicYear) {
     $startYear = $selectedAcademicYear - 1;
@@ -95,11 +99,6 @@ $recordsPerPage = 5;
 $currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $offset = ($currentPage - 1) * $recordsPerPage;
 
-$selectedAcademicYear = '';
-if (isset($_GET['academic_year'])) {
-    $selectedAcademicYear = intval($_GET['academic_year']);
-}
-
 // Determine sorting criteria
 $sortingCriteria = isset($_GET['sort']) ? $_GET['sort'] : 'annually';
 $orderBy = '';
@@ -119,23 +118,25 @@ switch ($sortingCriteria) {
         break;
 }
 
-$query = "SELECT * FROM treatment_record";
-$countQuery = "SELECT COUNT(*) AS total_records FROM treatment_record";
-$whereClause = '';
+$academicYearParam = !empty($selectedAcademicYear) ? "&academic_year=$selectedAcademicYear" : '';
+$sortParam = !empty($sortingCriteria) ? "&sort=$sortingCriteria" : '';
 
+$whereClause = '';
 if (!empty($selectedAcademicYear)) {
     $whereClause .= " WHERE YEAR(date) = $selectedAcademicYear";
 }
 
-$query .= $whereClause . " ORDER BY $orderBy LIMIT $offset, $recordsPerPage";
-$countQuery .= $whereClause;
+$query = "SELECT * FROM treatment_record" . $whereClause . " ORDER BY $orderBy LIMIT $offset, $recordsPerPage";
+$countQuery = "SELECT COUNT(*) AS total_records FROM treatment_record" . $whereClause;
 
 $result = mysqli_query($conn, $query);
 $totalRecordsResult = mysqli_query($conn, $countQuery);
 $totalRecords = mysqli_fetch_assoc($totalRecordsResult)['total_records'];
 $totalPages = ceil($totalRecords / $recordsPerPage);
-?>
 
+$prevPage = max(1, $currentPage - 1);
+$nextPage = min($totalPages, $currentPage + 1);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -194,22 +195,32 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
 
     select:focus {
         outline: none;
-        border-color: transparent;
-        box-shadow: none;
+        transition: border 0.3s, box-shadow 0.3s;
+        }
+
+    select {
+        -webkit-appearance: none;
+        -moz-appearance: none; 
+        appearance: none; 
+        padding: 0.375rem 1.5rem 0.375rem 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background: #fff url('data:image/svg+xml;charset=US-ASCII,<?xml version="1.0" ?><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="none" stroke="#058789" stroke-width=".5" d="M2 0L0 2h4z"/></svg>') no-repeat right 0.5rem center; /* Custom arrow */
+        background-size: 0.65em auto;
+        font-family: 'Poppins', sans-serif;
+        font-weight: bold;
     }
 
     #delete-selected-link.disabled {
-    pointer-events: none; /* Disable pointer events */
-    opacity: 0.5; /* Reduce opacity to indicate disabled state */
-    cursor: not-allowed; /* Change cursor to not-allowed */
+        pointer-events: none;
+        opacity: 0.5;
+        cursor: not-allowed;
     }
 
     .disabled-view {
-    pointer-events: none; /* Disable pointer events */
-    color: #aaa; /* Gray out the text */
+        pointer-events: none;
+        color: #aaa;
     }
-
-
 </style>
 
 <body>
@@ -220,7 +231,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
     <div class="overlay" id="overlay"></div>
 
     <div class="main-content">
-        <?php include ('includes/sidebar/records.php'); ?>
+        <?php include('includes/sidebar/records.php'); ?>
 
         <!-- Confirm Download Modal -->
         <div class="modal" id="downloadModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
@@ -281,13 +292,13 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
             </div>
         </div>
 
-
         <div class="content" id="content">
             <div class="med-reports-header">
                 <div class="med-reports-header-box">
                     <div class="medreports-header-text">Quarterly Reports</div>
                     <div class="medreports-sorting-button" id="medReportsortingButton">
                         <form method="GET">
+                            <input type="hidden" name="sort" value="<?php echo htmlspecialchars($sortingCriteria); ?>">
                             <select name="academic_year" id="medReportsortCriteria"
                                 style="font-family: 'Poppins', sans-serif; font-weight: bold;"
                                 onchange="this.form.submit()">
@@ -323,16 +334,15 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                 echo $row["full_name"] . "</td>";
                                 echo "<td>" . $row["course"] . " " . $row["section"] . "</td>";
                                 echo "<td>" . $row["diagnosis"] . "</td>";
-                                $formattedDateTime = date('M d, Y - h:i A', strtotime($row["date"]));
                                 echo "<td>" . date('M d, Y - h:i A', strtotime($row["date"])) . "</td>";
                                 echo "</tr>";
                             }                                                  
                         } else {
-                            echo "<tr><td colspan='6'>No records found</td></tr>";
+                            echo "<tr><td colspan='5'>No records found</td></tr>";
                         }
                         ?>
                         <tr>
-                            <td colspan="6" style="background-color: white;">
+                            <td colspan="5" style="background-color: white;">
                                 <div class="table-button-container">
                                     <div class="button-group">
                                     <span class="delete-records-link" id="delete-toggle-link" onclick="toggleDeleteMode()" style="color: #D22B2B;">
@@ -364,13 +374,13 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <!-- Pagination buttons -->
                                     <div class="pagination-buttons">
                                         <!-- Previous button -->
-                                        <a href="?page=<?php echo max(1, $currentPage - 1); ?>"
+                                        <a href="?page=<?php echo $prevPage . $academicYearParam . $sortParam; ?>"
                                             class="pagination-button <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
                                             &lt;
                                         </a>
                                         <!-- Next button -->
-                                        <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>"
-                                            class="pagination-button  <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
+                                        <a href="?page=<?php echo $nextPage . $academicYearParam . $sortParam; ?>"
+                                            class="pagination-button <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
                                             &gt;
                                         </a>
                                     </div>
@@ -383,6 +393,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                 </form>
             </div>
         </div>
+    </div>
 
 
             <div class="header-middle" style="margin: 0 20px 0 20px;">Quarterly Report</div>
@@ -1319,12 +1330,12 @@ function updatePaginationLinks() {
 });
 
 
-function changeSortCriteria(sortCriteria) {
-    window.location.href = '?sort=' + sortCriteria;
+function changeSortCriteria(sort) {
+    var academicYear = '<?php echo $selectedAcademicYear; ?>';
+    var url = '?sort=' + sort + (academicYear ? '&academic_year=' + academicYear : '');
+    window.location.href = url;
 }
 </script>
-
-
 
 </body>
 
