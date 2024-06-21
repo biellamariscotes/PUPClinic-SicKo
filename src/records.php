@@ -198,6 +198,18 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
         box-shadow: none;
     }
 
+    #delete-selected-link.disabled {
+    pointer-events: none; /* Disable pointer events */
+    opacity: 0.5; /* Reduce opacity to indicate disabled state */
+    cursor: not-allowed; /* Change cursor to not-allowed */
+    }
+
+    .disabled-view {
+    pointer-events: none; /* Disable pointer events */
+    color: #aaa; /* Gray out the text */
+    }
+
+
 </style>
 
 <body>
@@ -247,21 +259,23 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                 </div>
             </div>
         </div>
-
+        
         <!-- Confirm Delete Modal -->
         <div class="modal" id="confirmDeleteModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
+            <div class="modal-content">
                     <div class="modal-body">
                         <div class="modal-middle-icon">
-                            <i class="bi bi-exclamation-triangle-fill" style="color: #D22B2B; font-size: 5rem;"></i>
+                            <i class="bi bi-trash-fill" style="color:#E13F3D; font-size:5rem"></i>
                         </div>
-                        <div class="modal-title" style="color: black;">Confirm Deletion</div>
-                        <div class="modal-subtitle">Are you sure you want to delete the selected record(s)? This action cannot be undone.</div>
+                        <div class="modal-title" style="color: black;">Confirm Delete?</div>
+                        <div class="modal-subtitle" style="justify-content: center; padding-bottom: 1rem;">Are you sure you want to delete the selected record(s)? This action cannot be undone.</div>
                     </div>
-                    <div class="modal-buttons">
-                        <button type="button" class="btn btn-secondary" id="cancel-delete" data-bs-dismiss="modal" style="background-color: #777777;">Cancel</button>
-                        <button type="submit" class="btn btn-danger" id="confirm-delete">Delete</button>
+                    <div class="modal-buttons" style="padding-top: 1rem;">
+                        <button type="button" class="btn btn-secondary" id="cancel-delete" data-bs-dismiss="modal" style="background-color: #777777; 
+                        font-family: 'Poppins'; font-weight: 600; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
+                        <button type="button" class="btn btn-secondary" id="confirm-delete" style="background-color: #E13F3D; 
+                        font-family: 'Poppins'; font-weight: 600; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Delete</button>
                     </div>
                 </div>
             </div>
@@ -293,7 +307,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                 <form method="POST">
                     <table class="dashboard-table" style="margin-bottom: 80px;">
                         <tr>
-                            <th>Record ID</th>
+                            <th>Records</th>
                             <th>Patient Name</th>
                             <th>Course & Year</th>
                             <th>Diagnosis</th>
@@ -303,16 +317,16 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
                                 echo "<tr>";
-                                echo "<td><a href='tr-clearance.php?record_id=" . urlencode($row["record_id"]) . "'>" . $row["record_id"] . "</a></td>";
+                                echo "<td><a href='tr-clearance.php?record_id=" . urlencode($row["record_id"]) . "' class='view-link'>View</a></td>";
                                 echo "<td class='fixed-width-checkbox'>";
-                                echo "<input type='checkbox' name='delete_record[]' value='" . $row["record_id"] . "'>";
+                                echo "<input type='checkbox' name='delete_record[]' id='delete_record_" . $row["record_id"] . "' value='" . $row["record_id"] . "' onchange='toggleDeleteButton()'>";
                                 echo $row["full_name"] . "</td>";
                                 echo "<td>" . $row["course"] . " " . $row["section"] . "</td>";
                                 echo "<td>" . $row["diagnosis"] . "</td>";
                                 $formattedDateTime = date('M d, Y - h:i A', strtotime($row["date"]));
                                 echo "<td>" . date('M d, Y - h:i A', strtotime($row["date"])) . "</td>";
                                 echo "</tr>";
-                            }
+                            }                                                  
                         } else {
                             echo "<tr><td colspan='6'>No records found</td></tr>";
                         }
@@ -1151,6 +1165,26 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
     <script src="scripts/script.js"></script>
     <script src="scripts/loader.js"></script>
 
+    <script>
+        function toggleDeleteButton() {
+        var checkboxes = document.querySelectorAll('input[name="delete_record[]"]');
+        var deleteButton = document.getElementById('delete-selected-link');
+
+        var checked = false;
+        checkboxes.forEach(function (checkbox) {
+            if (checkbox.checked) {
+                checked = true;
+            }
+        });
+
+        if (checked) {
+            deleteButton.classList.remove('disabled'); // Enable the button
+        } else {
+            deleteButton.classList.add('disabled'); // Disable the button
+        }
+    }
+    </script>
+
 <script>
     $(document).ready(function () {
         // Show the confirm download modal when the download button is clicked
@@ -1184,6 +1218,12 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
     });
 
     function toggleDeleteMode() {
+    // Disable view links
+    var viewLinks = document.querySelectorAll('.view-link');
+    viewLinks.forEach(function(link) {
+        link.classList.add('disabled-view');
+    });
+
     var checkboxes = document.querySelectorAll('input[name="delete_record[]"]');
     checkboxes.forEach(function (checkbox) {
         checkbox.style.display = 'inline-block';
@@ -1196,15 +1236,58 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
 
     // Hide download button
     document.getElementById('downloadButton').style.display = 'none';
+    
+    // Hide pagination buttons
+    document.getElementsByClassName('sorting-pagination-container')[0].style.display = 'none';
 }
 
+// Function to cancel delete mode
 function cancelDeleteMode() {
-    var checkboxes = document.querySelectorAll('input[name="delete_record[]"]');
-    checkboxes.forEach(function (checkbox) {
-        checkbox.checked = false;
-        checkbox.style.display = 'none';
+    // Show sorting-pagination-container
+    $('.sorting-pagination-container').show();
+
+    // Enable view links
+    var viewLinks = document.querySelectorAll('.view-link');
+    viewLinks.forEach(function(link) {
+    link.classList.remove('disabled-view');
     });
 
+    // Hide delete mode buttons and show download button
+    $('#delete-toggle-link').show();
+    $('#delete-selected-link').hide();
+    $('#cancel-delete-link').hide();
+    $('#downloadButton').show();
+
+    // Uncheck all checkboxes and hide them
+    $('input[name="delete_record[]"]').prop('checked', false).hide();
+
+    // Update pagination links to reflect the current page state
+    updatePaginationLinks();
+}
+
+// Function to update pagination links based on current page
+function updatePaginationLinks() {
+    var currentPage = <?php echo $currentPage; ?>;
+    var totalPages = <?php echo $totalPages; ?>;
+
+    // Update previous page link
+    var prevPageLink = $('.pagination-button:first');
+    prevPageLink.attr('href', '?page=' + Math.max(1, currentPage - 1));
+    if (currentPage === 1) {
+        prevPageLink.addClass('disabled');
+    } else {
+        prevPageLink.removeClass('disabled');
+    }
+
+    // Update next page link
+    var nextPageLink = $('.pagination-button:last');
+    nextPageLink.attr('href', '?page=' + Math.min(totalPages, currentPage + 1));
+    if (currentPage === totalPages) {
+        nextPageLink.addClass('disabled');
+    } else {
+        nextPageLink.removeClass('disabled');
+    }
+}
     // Show download button
     document.getElementById('downloadButton').style.display = 'inline-block';
 
@@ -1212,17 +1295,20 @@ function cancelDeleteMode() {
     document.getElementById('delete-toggle-link').style.display = 'inline-block';
     document.getElementById('delete-selected-link').style.display = 'none';
     document.getElementById('cancel-delete-link').style.display = 'none';
-}
 
-$(document).ready(function () {
+
+    $(document).ready(function () {
+    // Initial button state
+    toggleDeleteButton();
+
     // Show the confirm delete modal when delete selected link is clicked
     $('#delete-selected-link').click(function () {
         $('#confirmDeleteModal').modal('show');
     });
 
-    // Handle cancel delete modal
-    $('#cancel-delete').click(function () {
-        $('#confirmDeleteModal').modal('hide');
+    // Handle cancel delete mode
+    $('#cancel-delete-link').click(function () {
+        cancelDeleteMode();
     });
 
     // Handle confirm delete action
@@ -1231,6 +1317,7 @@ $(document).ready(function () {
         $('#confirmDeleteButton').click();
     });
 });
+
 
 function changeSortCriteria(sortCriteria) {
     window.location.href = '?sort=' + sortCriteria;

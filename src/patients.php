@@ -120,6 +120,12 @@ $result = mysqli_query($conn, $query);
         padding: 0px;
     }
 
+    .delete-button[disabled] {
+    opacity: 0.5; /* Reduce opacity to visually indicate it's disabled */
+    cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+    }
+
+
 </style>
 
 <body>
@@ -266,13 +272,47 @@ $result = mysqli_query($conn, $query);
 
     <script>
         $(document).ready(function () {
+        // Function to handle "Delete Selected" button visibility
+        function updateDeleteButton() {
+            var checkboxes = $('input[name="delete_patient[]"]');
+            var deleteSelectedButton = $('#deleteSelectedButton');
+
+            // Check if any checkboxes are checked
+            if (checkboxes.filter(':checked').length > 0) {
+                deleteSelectedButton.prop('disabled', false); // Enable the button
+            } else {
+                deleteSelectedButton.prop('disabled', true); // Disable the button
+            }
+        }
+
+        // Initial check when document is ready
+        updateDeleteButton();
+
+        // Event handler for checkbox change
+        $('input[name="delete_patient[]"]').change(updateDeleteButton);
+    });
+    </script>
+
+    <script>
+        $(document).ready(function () {
             // Create Delete Selected button
             $('#toggleCheckboxButton').click(function () {
-                var checkboxes = $('input[name="delete_patient[]"]');
-                var buttonContainer = $('#tableButtonContainer');
-                var deleteButton = $('#toggleCheckboxButton');
-                var deleteSelectedButton = $('<button>', { text: 'Delete Selected', class: 'delete-button', id: 'deleteSelectedButton', type: 'button' });
-                var cancelButton = $('<button>', { text: 'Cancel', class: 'cancel-button', id: 'cancelButton', type: 'button' });
+            var checkboxes = $('input[name="delete_patient[]"]');
+            var buttonContainer = $('#tableButtonContainer');
+            var deleteButton = $('#toggleCheckboxButton');
+            var deleteSelectedButton = $('<button>', {
+                text: 'Delete Selected',
+                class: 'delete-button',
+                id: 'deleteSelectedButton',
+                type: 'button',
+                disabled: true // Initially disabled
+            });
+            var cancelButton = $('<button>', {
+                text: 'Cancel',
+                class: 'cancel-button',
+                id: 'cancelButton',
+                type: 'button'
+            });
 
                 // Hide the sorting-pagination-container when "Delete Records" button is clicked
                 $('.sorting-pagination-container').hide();

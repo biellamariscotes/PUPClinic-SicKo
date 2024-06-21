@@ -47,7 +47,7 @@ if (!empty($record_id)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SicKo - Treatment Record Confirmation </title>
+    <title>View Treatment Record </title>
     <link rel="icon" type="image/png" href="images/heart-logo.png"> 
     <link rel="stylesheet" href="styles/dboardStyle.css">
 </head>
@@ -133,6 +133,8 @@ input, select {
     </div>
 
     <?php include ('includes/footer.php'); ?>  
+    <script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="scripts/script.js"></script>
 
     <!-- LOADER -->
     <script>
