@@ -2,32 +2,46 @@
 require_once ('includes/session-nurse.php');
 require_once ('includes/connect.php');
 
+$first_name = $row['first_name'];
+
+// Set timezone to Philippine Time
+date_default_timezone_set('Asia/Manila');
+
 // Pagination variables
 $rowsPerPage = 5;
-$currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+$currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $offset = ($currentPage - 1) * $rowsPerPage;
 
 // Get current date
 $currentDate = date("Y-m-d");
 
 // Query to fetch records for the current day
-$sql = "SELECT *, TIME_FORMAT(treatment_record.date, '%h:%i %p') AS treatment_time
+$sql = "SELECT patient.first_name, patient.last_name, patient.course, treatment_record.diagnosis, 
+               treatment_record.date AS treatment_datetime
         FROM treatment_record
         JOIN patient ON treatment_record.patient_id = patient.patient_id
         WHERE DATE(treatment_record.date) = '$currentDate'
         LIMIT $offset, $rowsPerPage";
+
 $result = mysqli_query($conn, $sql);
 
-// Count total records for the current day
-$totalRecords = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM treatment_record WHERE DATE(date) = '$currentDate'"));
+if (!$result) {
+    die('Error executing query: ' . mysqli_error($conn));
+}
 
-// Calculate total pages
-$totalPages = ceil($totalRecords / $rowsPerPage);
+// Count total records for the current day
+$totalRecordsResult = mysqli_query($conn, "SELECT COUNT(*) AS count FROM treatment_record WHERE DATE(date) = '$currentDate'");
+if ($totalRecordsResult) {
+    $totalRecordsRow = mysqli_fetch_assoc($totalRecordsResult);
+    $totalRecords = $totalRecordsRow['count'];
+    $totalPages = ceil($totalRecords / $rowsPerPage);
+} else {
+    die('Error executing count query: ' . mysqli_error($conn));
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,7 +50,6 @@ $totalPages = ceil($totalRecords / $rowsPerPage);
     <link rel="stylesheet" href="styles/dboardStyle.css">
     <link rel="stylesheet" href="../vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
 </head>
-
 <style>
     .pagination-button.disabled {
         pointer-events: none;
@@ -59,9 +72,7 @@ $totalPages = ceil($totalRecords / $rowsPerPage);
     .dashboard-table th {
         padding: 0px;
     }
-
 </style>
-
 <body>
     <div class="loader">
         <img src="images/loader.gif">
@@ -70,20 +81,15 @@ $totalPages = ceil($totalRecords / $rowsPerPage);
     <div class="overlay" id="overlay"></div>
 
     <div class="main-content">
-        <?php
-        include ('includes/sidebar/dashboard.php');
-        ?>
+        <?php include ('includes/sidebar/dashboard.php'); ?>
 
         <div class="content" id="content">
             <div class="dashboard-header-container">
                 <img src="images/dashboard-header.png" alt="Dashboard Header" class="dashboard-header">
                 <div class="dashboard-text">
-                    <p>Good day, <span class="bold">Nurse Sharwin!</span></p>
-                    <p class="bold" style="color: #E13F3D; font-size: 50px; font-family: 'Poppins', sans-serif;">Anong
-                        SicKo?</p>
-                    <p style="color: black; font-size: 17px; font-family: 'Poppins', sans-serif; text-align: justify;">
-                        See
-                        today’s health reports. Record daily treatments,<br> and generate diagnosis.</p>
+                    <p>Good day, <span class="bold">Nurse <?php echo htmlspecialchars($first_name); ?>!</span></p>
+                    <p class="bold" style="color: #E13F3D; font-size: 50px; font-family: 'Poppins', sans-serif;">Anong SicKo?</p>
+                    <p style="color: black; font-size: 17px; font-family: 'Poppins', sans-serif; text-align: justify;">See today’s health reports. Record daily treatments,<br> and generate diagnosis.</p>
                 </div>
             </div>
             <div class="header-middle">Daily Treatment Record</div>
@@ -94,17 +100,22 @@ $totalPages = ceil($totalRecords / $rowsPerPage);
                             <th>Patient Name</th>
                             <th>Course &amp; Year</th>
                             <th>Diagnosis</th>
-                            <th>Time</th>
+                            <th>Date &amp; Time</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php if (mysqli_num_rows($result) > 0) : ?>
                             <?php while ($row = mysqli_fetch_assoc($result)) : ?>
+                                <?php 
+                                    // Format date and time
+                                    $treatmentDateTime = new DateTime($row["treatment_datetime"]);
+                                    $formattedDateTime = $treatmentDateTime->format('F j, Y - h:i A');
+                                ?>
                                 <tr>
-                                    <td><?php echo $row["first_name"]; ?></td>
-                                    <td><?php echo $row["course"]; ?></td>
-                                    <td><?php echo ucfirst(strtolower($row["diagnosis"])); ?></td>
-                                    <td><?php echo $row["treatment_time"]; ?></td>
+                                    <td><?php echo htmlspecialchars($row["first_name"] . ' ' . $row["last_name"]); ?></td>
+                                    <td><?php echo htmlspecialchars($row["course"]); ?></td>
+                                    <td><?php echo ucfirst(strtolower(htmlspecialchars($row["diagnosis"]))); ?></td>
+                                    <td><?php echo htmlspecialchars($formattedDateTime); ?></td>
                                 </tr>
                             <?php endwhile; ?>
                         <?php else : ?>
@@ -116,20 +127,10 @@ $totalPages = ceil($totalRecords / $rowsPerPage);
                     <tfoot>
                         <tr>
                             <td colspan="4">
-                                <!-- Sorting and Pagination Container -->
                                 <div class="sorting-pagination-container">
-                                    <!-- Pagination buttons -->
                                     <div class="pagination-buttons">
-                                        <!-- Previous button -->
-                                        <a href="?page=<?php echo max(1, $currentPage - 1); ?>"
-                                            class="pagination-button <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
-                                            &lt;
-                                        </a>
-                                        <!-- Next button -->
-                                        <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>"
-                                            class="pagination-button <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
-                                            &gt;
-                                        </a>
+                                        <a href="?page=<?php echo max(1, $currentPage - 1); ?>" class="pagination-button <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">&lt;</a>
+                                        <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>" class="pagination-button <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">&gt;</a>
                                     </div>
                                 </div>
                             </td>
@@ -165,12 +166,9 @@ $totalPages = ceil($totalRecords / $rowsPerPage);
         </div>
 
     </div>
-    <?php
-    include ('includes/footer.php');
-    ?>
+    <?php include ('includes/footer.php'); ?>
     </div>
     <script src="scripts/script.js"></script>
     <script src="scripts/loader.js"></script>
 </body>
-
 </html>

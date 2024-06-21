@@ -3,6 +3,9 @@ require_once ('includes/session-nurse.php');
 require_once ('includes/connect.php');
 require_once ('../vendors/tcpdf/tcpdf.php');
 
+// Set timezone to Philippine Time
+date_default_timezone_set('Asia/Manila');
+
 // Check if the download button is clicked
 if (isset($_GET['download'])) {
     // Retrieve all data from the treatment records table, sorted by name
@@ -54,7 +57,8 @@ if (isset($_GET['download'])) {
         $pdf->Cell(100, 10, ucfirst(strtolower($row['symptoms'])), 1, 0, 'L');
         $pdf->Cell(40, 10, ucfirst(strtolower($row['diagnosis'])), 1, 0, 'L');
         $pdf->Cell(50, 10, ucfirst(strtolower($row['treatments'])), 1, 0, 'L');
-        $pdf->Cell(40, 10, $row['date'], 1, 1, 'C');
+        $formattedDateTime = date('M d, Y - h:i A', strtotime($row["date"]));
+        $pdf->Cell(40, 10, $formattedDateTime, 1, 1, 'C');
     }
 
     // Output the PDF as a download
@@ -305,8 +309,8 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                 echo $row["full_name"] . "</td>";
                                 echo "<td>" . $row["course"] . " " . $row["section"] . "</td>";
                                 echo "<td>" . $row["diagnosis"] . "</td>";
-                                $time = date('h:i A', strtotime($row["date"]));
-                                echo "<td>" . $time . "</td>";
+                                $formattedDateTime = date('M d, Y - h:i A', strtotime($row["date"]));
+                                echo "<td>" . date('M d, Y - h:i A', strtotime($row["date"])) . "</td>";
                                 echo "</tr>";
                             }
                         } else {
