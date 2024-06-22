@@ -213,7 +213,7 @@ button:disabled:hover {
 }
 
 .main-content {
-  display: none;
+  visibility: hidden;
 }
 
 .loader img {
