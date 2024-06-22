@@ -1,12 +1,14 @@
 const student_id = document.getElementById("student_id");
 const first_name = document.getElementById("first_name");
 const last_name = document.getElementById("last_name");
+const middle_name = document.getElementById("middle_name");
 const sex = document.getElementById("sex");
 const date = document.getElementById("date");
 const course = document.getElementById("course");
 const section = document.getElementById("section");
 const email = document.getElementById("email");
 const password = document.getElementById("password");
+const emergency_no = document.getElementById("emergency_no");
 const submitButton = document.getElementById("register-btn");
 
 
@@ -40,47 +42,83 @@ course.addEventListener("keydown", preventWhitespaceInput);
 section.addEventListener("keydown", preventWhitespaceInput);
 email.addEventListener("keydown", preventWhitespaceInput);
 password.addEventListener("keydown", preventWhitespaceInput);
+emergency_no.addEventListener("keydown", preventWhitespaceInput);
 // -- END WHITESPACE
 
 
+
 // EMAIL VALIDATION
-email.addEventListener('input', function() {
-    const inputValue = this.value.trim();
-    const regex = /^[^\s@]+@(yahoo\.com|gmail\.com||iskolarngbayan\.pup\.edu\.ph|hotmail\.com|aol\.com|hotmail\.co\.uk|hotmail\.fr|msn\.com|yahoo\.fr|wanadoo\.fr|orange\.fr|comcast\.net|yahoo\.co\.uk|yahoo\.com\.br|yahoo\.co\.in|live\.com|rediffmail\.com|free\.fr|gmx\.de|web\.de|yandex\.ru|ymail\.com|libero\.it|outlook\.com|uol\.com\.br|bol\.com\.br|mail\.ru|cox\.net|hotmail\.it|sbcglobal\.net|sfr\.fr|live\.fr|verizon\.net|live\.co\.uk|googlemail\.com|yahoo\.es|ig\.com\.br|live\.nl)$/;
+email.addEventListener("input", function () {
+  const inputValue = this.value.trim();
+  const regex = /^[^\s@]+@(yahoo\.com|gmail\.com|iskolarngbayan\.pup\.edu\.ph|hotmail\.com|aol\.com|hotmail\.co\.uk|hotmail\.fr|msn\.com|yahoo\.fr|wanadoo\.fr|orange\.fr|comcast\.net|yahoo\.co\.uk|yahoo\.com\.br|yahoo\.co\.in|live\.com|rediffmail\.com|free\.fr|gmx\.de|web\.de|yandex\.ru|ymail\.com|libero\.it|outlook\.com|uol\.com\.br|bol\.com\.br|mail\.ru|cox\.net|hotmail\.it|sbcglobal\.net|sfr\.fr|live\.fr|verizon\.net|live\.co\.uk|googlemail\.com|yahoo\.es|ig\.com\.br|live\.nl)$/;
 
+  if (inputValue === "") {
+    // If the input is empty, remove the is-invalid class
+    this.classList.remove("is-invalid");
+    this.removeAttribute("title");
+  } else if (!regex.test(inputValue)) {
+    this.classList.add("is-invalid");
+    this.setAttribute("title", "Invalid email");
+  } else {
+    this.classList.remove("is-invalid");
+    this.removeAttribute("title");
 
-  
-    if (inputValue === "") {
-      // If the input is empty, remove the is-invalid class
-      this.classList.remove("is-invalid");
-    } else if (!regex.test(inputValue)) {
-      // If the input doesn't match the desired format, apply Bootstrap's is-invalid class
-      this.classList.add("is-invalid");
-    } else {
-      // If the input matches the desired format, remove Bootstrap's is-invalid class
-      this.classList.remove("is-invalid");
-    }
+    $.ajax({
+      url: "includes/queries/check-email.php", // Adjust this path as necessary
+      type: "POST",
+      data: { email: inputValue },
+      success: function (response) {
+        const res = JSON.parse(response);
+        if (res.isDuplicate) {
+          $("#email")
+            .addClass("is-invalid")
+            .attr("title", "Email already exists");
+        } else {
+          $("#email").removeClass("is-invalid");
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error(xhr.responseText);
+      },
+    });
+  }
 });
 // ----- END OF EMAIL
 
 
 
-
 // STUDENT ID FORMAT
 student_id.addEventListener("input", function () {
-    const inputValue = this.value.trim();
-    const regex = /^\d{4}-\d{5}-SR-\d$/; // Regular expression for the desired format
-    
-    if (inputValue === '') {
-        // If the input is empty, remove the is-invalid class
-        this.classList.remove('is-invalid');
-    } else if (!regex.test(inputValue)) {
-        // If the input doesn't match the desired format, apply Bootstrap's is-invalid class
-        this.classList.add('is-invalid');
-    } else {
-        // If the input matches the desired format, remove Bootstrap's is-invalid class
-        this.classList.remove('is-invalid');
-    }
+  const inputValue = this.value.trim();
+  const regex = /^\d{4}-\d{5}-SR-\d$/; // Regular expression for the desired format
+
+  if (inputValue === "") {
+    $(this).removeClass("is-invalid").removeAttr("title");
+  } else if (!regex.test(inputValue)) {
+    $(this).addClass("is-invalid").attr("title", "Invalid student ID format");
+  } else {
+    $(this).removeClass("is-invalid").removeAttr("title");
+
+    // AJAX request to check for duplication
+    $.ajax({
+      url: "includes/queries/check-student-id.php", // Adjust this path as necessary
+      type: "POST",
+      data: { student_id: inputValue },
+      success: function (response) {
+        const res = JSON.parse(response);
+        if (res.isDuplicate) {
+          $("#student_id")
+            .addClass("is-invalid")
+            .attr("title", "Student ID already exists");
+        } else {
+          $("#student_id").removeClass("is-invalid");
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error(xhr.responseText);
+      },
+    });
+  }
 });
 // ------ END OF STUDENT ID FORMAT
 
@@ -88,10 +126,10 @@ student_id.addEventListener("input", function () {
 
 // SPECIAL CHARACTERS
 function preventSpecialChars(event) {
-    const allowedChars = /^[a-zA-Z0-9@_.-]*$/;
-    if (!allowedChars.test(event.key)) {
-        event.preventDefault();
-    }
+  const allowedChars = /^[a-zA-Z0-9@_.-]*$/;
+  if (!allowedChars.test(event.key)) {
+    event.preventDefault();
+  }
 }
 
 student_id.addEventListener("keydown", preventSpecialChars);
@@ -102,13 +140,54 @@ course.addEventListener("keydown", preventSpecialChars);
 section.addEventListener("keydown", preventSpecialChars);
 email.addEventListener("keydown", preventSpecialChars);
 password.addEventListener("keydown", preventSpecialChars);
+emergency_no.addEventListener("keydown", preventSpecialChars);
 // ---- SPECIAL CHARACTERS
 
 
 
+// NUMBER VALIDATION
 
+function preventWrongNumber(event) {
+  const allowedKeys = ["Backspace", "ArrowLeft", "ArrowRight", "Delete", "Tab"];
+  const isNumeric = /^\d$/.test(event.key);
 
+  if (!isNumeric && !allowedKeys.includes(event.key)) {
+    event.preventDefault();
+  }
+}
 
+function ensureStartsWith09() {
+  if (!emergency_no.value.startsWith("09")) {
+    emergency_no.value = "09";
+  }
+
+  if (emergency_no.value.length > 11) {
+    emergency_no.value = emergency_no.value.slice(0, 11);
+  }
+
+  if (emergency_no.value.length < 11) {
+    emergency_no.classList.add("is-invalid");
+  } else {
+    emergency_no.classList.remove("is-invalid");
+  }
+}
+
+function validateLength(event) {
+  if (
+    emergency_no.value.length >= 11 &&
+    !["Backspace", "ArrowLeft", "ArrowRight", "Delete", "Tab"].includes(
+      event.key
+    )
+  ) {
+    event.preventDefault();
+  }
+}
+
+emergency_no.addEventListener("keydown", preventWrongNumber);
+emergency_no.addEventListener("keydown", validateLength);
+emergency_no.addEventListener("input", ensureStartsWith09);
+
+// --- END NUMBER VALIDATION
 
 
 
@@ -117,24 +196,29 @@ function checkInputs() {
   const studentID = student_id.value.trim();
   const firstName = first_name.value.trim();
   const lastName = last_name.value.trim();
+  const middleName = middle_name.value.trim();
   const sexVal = sex.value.trim();
   const birthdayVal = date.value.trim();
   const courseVal = course.value.trim();
   const blockSec = section.value.trim();
   const emailAdd = email.value.trim();
   const passwordVal = password.value.trim();
+  const emergencyNoVal = emergency_no.value.trim();
 
   // If any field is empty, disable the submit button
   if (
     studentID === "" ||
     firstName === "" ||
     lastName === "" ||
+    middleName === "" ||
     sexVal === "" ||
     birthdayVal === "" ||
     courseVal === "" ||
     blockSec === "" ||
     emailAdd === "" ||
-    passwordVal === "" || document.querySelector('.is-invalid') !== null
+    passwordVal === "" ||
+    emergencyNoVal === "" ||
+    document.querySelector(".is-invalid") !== null
   ) {
     submitButton.disabled = true;
     console.log("Disabled");
@@ -144,6 +228,8 @@ function checkInputs() {
 }
 
 student_id.addEventListener("input", checkInputs);
+first_name.addEventListener("input", checkInputs);
+middle_name.addEventListener("input", checkInputs);
 last_name.addEventListener("input", checkInputs);
 sex.addEventListener("input", checkInputs);
 date.addEventListener("input", checkInputs);
@@ -151,3 +237,4 @@ course.addEventListener("input", checkInputs);
 section.addEventListener("input", checkInputs);
 email.addEventListener("input", checkInputs);
 password.addEventListener("input", checkInputs);
+emergency_no.addEventListener("input", checkInputs);

@@ -104,8 +104,7 @@ if (isset($_POST['login_btn'])) {
                             class="green">Sic</span><span class="red">Ko</span></div>
                 </div>
                 <div class="col-md-6  d-flex justify-content-end">
-                    <a href="login.php"><button class="sign-in">Sign In</button></a>
-                    <a href="register.php"><button class="sign-up">Register</button></a>
+                    <a href="register.php"><button class="sign-in">Register</button></a>
                 </div>
             </div>
         </div>
