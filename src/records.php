@@ -8,6 +8,7 @@ date_default_timezone_set('Asia/Manila');
 
 // Check if the download button is clicked
 if (isset($_GET['download'])) {
+    
     // Retrieve all data from the treatment records table, sorted by name
     $query = "SELECT * FROM treatment_record ORDER BY date ASC";
     $result = mysqli_query($conn, $query);

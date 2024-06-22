@@ -153,11 +153,6 @@ body {
   transform: translateY(-5px); /* Move the box up slightly on hover */
 }
 
-.new-treatment-box:hover {
-  transform: translateY(-5px); /* Move the box up slightly on hover */
-  background-color: #CCE6E7;
-}
-
 .new-treatment-text {
   font-family: 'Poppins', sans-serif;
   font-size: 11px;
