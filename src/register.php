@@ -1,10 +1,8 @@
-<?php
-session_start();
+<?php session_start();
 if (isset($_SESSION['patient_id'])) {
     header("Location: home.php");
     exit();
-}
-?>
+} ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,14 +14,19 @@ if (isset($_SESSION['patient_id'])) {
     <link rel="icon" type="image/png" href="images/heart-logo.png">
     <link rel="stylesheet" href="../vendors/bootstrap-5.0.2/dist/css/bootstrap.css">
     <link rel="stylesheet" href="styles/register.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Font Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
 </head>
 
 <body>
 
     <div class="loader">
         <img src="images/loader.gif">
-    </div> 
+    </div>
 
     <div class="main-content">
         <!-- Navigation Bar -->
@@ -43,14 +46,14 @@ if (isset($_SESSION['patient_id'])) {
         <!-- Information -->
         <div class="container" style="padding-right: 10rem">
             <div class="row register">
-                <div class="col-md-12 info">
+                <div class="col-md-12 reg-info">
                     <div class="row">
-                        <div class="col-md-8 d-flex justify-content-center pb-5">
+                        <div class="col-7 d-flex justify-content-center image-container">
                             <img src="images/register.png">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-5">
                             <div class="row">
-                                <div class="col-md-12  d-flex justify-content-center mb-3">
+                                <div class="col-md-12 d-flex justify-content-center mb-3">
                                     <span class="fs-3 fw-bold">Create an account</span>
                                 </div>
                             </div>
@@ -68,7 +71,7 @@ if (isset($_SESSION['patient_id'])) {
 
                                 <!-- First Name & Last Name -->
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <small>First Name <span class="asterisk">*</span></small>
                                         <div class="input-group mb-3 d-flex flex-wrap justify-content-center">
                                             <input type="text" class="form-control" placeholder="First Name"
@@ -76,12 +79,32 @@ if (isset($_SESSION['patient_id'])) {
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <small>Last Name <span class="asterisk">*</span></small>
                                         <div class="input-group mb-3 d-flex flex-wrap justify-content-center">
                                             <input type="text" class="form-control" placeholder="Last Name"
                                                 name="last_name" id="last_name">
                                         </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <small>Middle Name <span class="asterisk">*</span></small>
+                                        <div class="input-group mb-3 d-flex flex-wrap justify-content-center">
+                                            <input type="text" class="form-control" placeholder="Last Name"
+                                                name="middle_name" id="middle_name">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <small>Emergency Number <span class="asterisk">*</span> <i
+                                                class="bi bi-info-circle blue-link ms-1" data-bs-toggle="tooltip"
+                                                data-bs-placement="right"
+                                                title="The emergency contact number will be called first in case of an emergency."></i>
+                                        </small>
+                                        <input type="text" class="form-control mb-3" placeholder="Phone Number"
+                                            name="emergency_no" id="emergency_no" maxlength="11">
                                     </div>
                                 </div>
 
@@ -164,7 +187,7 @@ if (isset($_SESSION['patient_id'])) {
                                         <small>Password <span class="asterisk">*</span></small>
                                         <div class="input-group mb-3 d-flex flex-wrap justify-content-center">
                                             <input type="password" class="form-control" placeholder="••••••••••"
-                                                name="password" id="password"  maxlength="100">
+                                                name="password" id="password" maxlength="100">
                                         </div>
                                     </div>
                                 </div>
@@ -191,6 +214,15 @@ if (isset($_SESSION['patient_id'])) {
     <script src="scripts/register-validation.js"></script>
     <script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="scripts/loader.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+        });
+    </script>
 
 </body>
 

@@ -22,6 +22,10 @@ button {
   border: 2px red solid !important;
 }
 
+.blue-link {
+  color: #1a73e8 !important;
+}
+
 .fixed-bottom {
   position: fixed;
   bottom: 0;
@@ -32,8 +36,13 @@ button {
 .nav-bar img {
   height: 3rem;
 }
+
 .info {
-  margin-top: 3rem;
+  margin-top: 3.5rem;
+}
+
+.reg-info {
+    margin-top: 1rem;
 }
 
 .sign-in {
@@ -72,9 +81,12 @@ button {
 }
 
 .register img {
-  width: 60%;
-  height: auto;
-  max-height: 100%;
+  width: 500px;
+  height: 500px;
+}
+
+.image-container {
+  margin-bottom: 8rem;
 }
 
 .register-btn {

@@ -204,7 +204,6 @@ if (isset($_SESSION['patient_id'])) {
                                                 <input type="date" class="form-control" name="date" id="date"
                                                     min="yyyy-01-01" max="yyyy-12-31" value="<?= $birthday; ?>">
                                             </div>
-
                                         </div>
 
                                         <!-- Save Changes -->
