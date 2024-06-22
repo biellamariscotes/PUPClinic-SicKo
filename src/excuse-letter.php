@@ -5,6 +5,7 @@ require_once('../vendors/tcpdf/tcpdf.php');
 
 $date = date('F j, Y');
 $full_name = isset($_POST['full_name']) ? $_POST['full_name'] : '';
+$symptoms = isset($_POST['symptoms']) ? $_POST['symptoms'] : '';
 
 // Create new PDF document
 $pdf = new TCPDF();
@@ -41,15 +42,18 @@ $html = '
         This is to certify that ' . $full_name . '
     </div>
     <div style="margin-left: 40px; margin-bottom: 10px;">
-        has been examined by the undersigned and found to be physically fit.
+        has been treated/is currently being treated for ' . $symptoms . '
     </div>
     <div style="margin-left: 40px; margin-bottom: 10px;">
-        This certification is issued upon request for a letter of excuse.
+        from ___________ to ____________. 
+    </div>
+    <div style="margin-left: 40px; margin-bottom: 10px;">
+        This certification is issued upon request for excuse letter purposes.
     </div>
     <br>
     <div style="text-align: right;">
         _______________________<br>
-        Authorized Signatory
+              School Nurse
     </div>
 ';
 

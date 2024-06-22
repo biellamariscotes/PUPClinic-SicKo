@@ -5,6 +5,7 @@ require_once('../vendors/tcpdf/tcpdf.php');
 
 $date = date('F j, Y');
 $full_name = isset($_POST['full_name']) ? $_POST['full_name'] : '';
+$diagnosis = isset($_POST['diagnosis']) ? $_POST['diagnosis'] : '';
 
 // Create new PDF document
 $pdf = new TCPDF();
@@ -38,18 +39,27 @@ $html = '
     </div>
     <br>
     <div style="margin-left: 40px; margin-bottom: 10px;">
-        This is to certify that ' . $full_name . '
+        I am writing to endorse ' . $full_name . ' a student at Polytechnic University
     </div>
     <div style="margin-left: 40px; margin-bottom: 10px;">
-        has been examined by the undersigned and found to be physically fit.
+        of the Philippines - Santa Rosa Branch for urgent medical evaluation and treatment at 
     </div>
     <div style="margin-left: 40px; margin-bottom: 10px;">
-        This certification is issued upon request for a letter of excuse.
+        ________________________________. ' . $full_name . ' suffers from ' . $diagnosis . ' , which
+    </div>
+    <div style="margin-left: 40px; margin-bottom: 10px;">
+        significantly impacts their daily life and academic performance. Their condition necessitates
+    </div>
+    <div style="margin-left: 40px; margin-bottom: 10px;">
+        specialized care that we believe your hospital can provide. We kindly request you to prioritize
+    </div>
+    <div style="margin-left: 40px; margin-bottom: 10px;">
+        ' . $full_name . ' case and provide the necessary medical attention.
     </div>
     <br>
     <div style="text-align: right;">
         _______________________<br>
-              School Nurse
+            School Nurse
     </div>
 ';
 
@@ -57,5 +67,5 @@ $html = '
 $pdf->writeHTML($html, true, false, true, false, '');
 
 // Close and output PDF document
-$pdf->Output('clearance_' . $full_name . '.pdf', 'D');
+$pdf->Output('endorsement_' . $full_name . '.pdf', 'D');
 ?>
