@@ -57,8 +57,8 @@ if (isset($_GET['download'])) {
         $pdf->Cell(100, 10, ucfirst(strtolower($row['symptoms'])), 1, 0, 'L');
         $pdf->Cell(40, 10, ucfirst(strtolower($row['diagnosis'])), 1, 0, 'L');
         $pdf->Cell(50, 10, ucfirst(strtolower($row['treatments'])), 1, 0, 'L');
-        $formattedDateTime = date('M d, Y - h:i A', strtotime($row["date"]));
-        $pdf->Cell(40, 10, $formattedDateTime, 1, 1, 'C');
+        $formattedDate = date('M d, Y', strtotime($row["date"]));
+        $pdf->Cell(40, 10, $formattedDate, 1, 1, 'C');
     }
 
     // Output the PDF as a download
@@ -311,7 +311,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                             <th>Patient Name</th>
                             <th>Course & Year</th>
                             <th>Diagnosis</th>
-                            <th>Time</th>
+                            <th>Date</th>
                         </tr>
                         <?php
                         if (mysqli_num_rows($result) > 0) {
@@ -323,8 +323,8 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                 echo $row["full_name"] . "</td>";
                                 echo "<td>" . $row["course"] . " " . $row["section"] . "</td>";
                                 echo "<td>" . $row["diagnosis"] . "</td>";
-                                $formattedDateTime = date('M d, Y - h:i A', strtotime($row["date"]));
-                                echo "<td>" . date('M d, Y - h:i A', strtotime($row["date"])) . "</td>";
+                                $formattedDate = date('M d, Y', strtotime($row["date"]));
+                                echo "<td>" . $formattedDate . "</td>";
                                 echo "</tr>";
                             }                                                  
                         } else {
@@ -333,7 +333,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                         ?>
                         <tr>
                             <td colspan="6" style="background-color: white;">
-                                <div class="table-button-container">
+                                <div class="table-button-container" style="padding-top: 1rem;">
                                     <div class="button-group">
                                     <span class="delete-records-link" id="delete-toggle-link" onclick="toggleDeleteMode()" style="color: #D22B2B;">
                                         <i class="bi bi-trash" style="color: #D22B2B; font-size: 1rem; margin-right: 0.625rem; vertical-align: middle;"></i>
@@ -342,6 +342,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <span class="delete-records-link" id="delete-selected-link" style="display: none; color: #D22B2B; margin-right: 10px;" onclick="$('#confirmDeleteModal').modal('show');">Delete Selected</span>
                                     <div class="button-separator"></div>
                                     <span class="delete-records-link" id="cancel-delete-link" style="display: none; margin-left: 10px;" onclick="cancelDeleteMode()">Cancel</span>
+                                   
                                     <div class="download-button" id="downloadButton">
                                         <a style="color: #058789; text-decoration: none;" href="?download=1">
                                             <i class="bi bi-download" style="color: #058789; font-size: 1rem; margin-right: 0.625rem; vertical-align: middle;"></i>

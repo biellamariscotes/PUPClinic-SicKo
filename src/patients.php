@@ -120,11 +120,37 @@ $result = mysqli_query($conn, $query);
         padding: 0px;
     }
 
-    .delete-button[disabled] {
-    opacity: 0.5; /* Reduce opacity to visually indicate it's disabled */
-    cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+    .delete-records-link.disabled {
+        opacity: 0.5; /* Reduce opacity to visually indicate it's disabled */
+        cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+        color: #ccc; /* Adjust color to visually indicate disabled state */
+        pointer-events: none; /* Disable pointer events to prevent clicks */
     }
 
+    .vertical-bar {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 10px; /* Adjust the margin as needed */
+    }
+
+    #delete-selected-link,
+    #cancel-delete-link {
+        margin-left: 0;
+    }
+
+    .button-group span {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .delete-cancel-container {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .delete-records-link {
+        cursor: pointer;
+    }
 
 </style>
 
@@ -152,7 +178,7 @@ $result = mysqli_query($conn, $query);
                         <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to delete the selected patient?</div>
                     </div>
                     <div class="modal-buttons">
-                        <button type="button" class="btn btn-secondary" id="cancel-delete-modal" style="background-color: #777777; 
+                        <button type="button" class="btn btn-secondary" id="cancel-delete-modal" data-bs-dismiss="modal" style="background-color: #777777; 
                         font-family: 'Poppins'; font-weight: 600; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
                         <button type="button" class="btn btn-secondary" id="confirmDeleteButton" style="background-color: #E13F3D; 
                         font-family: 'Poppins'; font-weight: 600; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Delete</button>
@@ -222,37 +248,48 @@ $result = mysqli_query($conn, $query);
 
                                 <!-- Inside the table button container -->
                                 <div class="table-button-container" id="tableButtonContainer">
-                                    <!-- Delete button with toggle for checkboxes -->
-                                    <button class="delete-button" id="toggleCheckboxButton" type="button">
-                                        <img src="images/trash-icon.svg" alt="Delete Icon" class="delete-icon">
-                                        Delete Records
-                                    </button>
-                                    <!-- Sorting and Pagination Container -->
-                                    <div class="sorting-pagination-container">
-                                        <!-- Sorting button box -->
-                                        <div class="sorting-button-box" id="sortingButtonBox">
-                                            <!-- Sort text -->
-                                            Sort by:
-                                            <select id="sortCriteria" style="font-family: 'Poppins', sans-serif; font-weight: bold;">
-                                                <option value="first_name">Name</option>
-                                                <option value="course">Course</option>
-                                                <option value="section">Section</option>
-                                                <option value="sex">Gender</option>
-                                            </select>
-                                        </div>
-                                        <!-- Pagination buttons -->
-                                        <div class="pagination-buttons">
-                                            <!-- Previous button -->
-                                            <a href="?page=<?php echo max(1, $currentPage - 1); ?>" class="pagination-button <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
-                                                &lt;
-                                            </a>
 
-                                            <!-- Next button -->
-                                            <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>" class="pagination-button <?php echo ($currentPage == $totalPages || $totalRecords == 0) ? 'disabled' : ''; ?>">
-                                                &gt;
-                                            </a>
+                                    <!-- Separate container for delete selected and cancel buttons -->
+                                    <div class="delete-cancel-container" style="display: none;">
+                                        <span class="delete-records-link" id="delete-selected-link" style="color: #D22B2B; margin-right: 10px;" onclick="$('#confirmDeleteModal').modal('show');">Delete Selected</span>
+                                        <span class="vertical-bar">|</span>
+                                        <span class="delete-records-link" id="cancel-delete-link" style="margin-left: 0;" onclick="cancelDeleteMode()">Cancel</span>
+                                    </div>
+
+                                    <!-- Delete button with toggle for checkboxes -->
+                                    <div class="button-group" style="justify-content: space-between; gap: 35rem;">
+                                        <span class="delete-records-link" id="delete-toggle-link" onclick="toggleDeleteMode()" style="color: #D22B2B;">
+                                            <i class="bi bi-trash" style="color: #D22B2B; font-size: 1rem; margin-right: 0.625rem; vertical-align: middle;"></i>
+                                            Delete Records
+                                        </span>
+
+                                        <!-- Sorting and Pagination Container -->
+                                        <div class="sorting-pagination-container">
+                                            <!-- Sorting button box -->
+                                            <div class="sorting-button-box" id="sortingButtonBox">
+                                                <!-- Sort text -->
+                                                Sort by:
+                                                <select id="sortCriteria" style="font-family: 'Poppins', sans-serif; font-weight: bold;">
+                                                    <option value="first_name">Name</option>
+                                                    <option value="course">Course</option>
+                                                    <option value="section">Section</option>
+                                                    <option value="sex">Gender</option>
+                                                </select>
+                                            </div>
+                                            <!-- Pagination buttons -->
+                                            <div class="pagination-buttons">
+                                                <!-- Previous button -->
+                                                <a href="?page=<?php echo max(1, $currentPage - 1); ?>" class="pagination-button <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
+                                                    &lt;
+                                                </a>
+                                                <!-- Next button -->
+                                                <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>" class="pagination-button <?php echo ($currentPage == $totalPages || $totalRecords == 0) ? 'disabled' : ''; ?>">
+                                                    &gt;
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
+                                </div>
                                 </div>
                             </td>
                         </tr>
@@ -272,129 +309,126 @@ $result = mysqli_query($conn, $query);
 
     <script>
         $(document).ready(function () {
-        // Function to handle "Delete Selected" button visibility
-        function updateDeleteButton() {
-            var checkboxes = $('input[name="delete_patient[]"]');
-            var deleteSelectedButton = $('#deleteSelectedButton');
+    // Function to handle deletion confirmation
+    $('#confirmDeleteButton').click(function () {
+        $('#deleteModal').modal('hide'); // Hide delete confirmation modal
+        $('#delete-successful-modal').modal('show'); // Show delete successful modal
+    });
 
-            // Check if any checkboxes are checked
-            if (checkboxes.filter(':checked').length > 0) {
-                deleteSelectedButton.prop('disabled', false); // Enable the button
-            } else {
-                deleteSelectedButton.prop('disabled', true); // Disable the button
+    // Function to handle closing of delete successful modal
+    $('#delete-successful-close-modal').click(function () {
+        // Hide delete successful modal
+        $('#delete-successful-modal').modal('hide');
+    });
+
+    // Function to handle form submission when closing delete successful modal
+    $('#delete-successful-close-modal').click(function () {
+        // Delay form submission by 1 second (1000 milliseconds)
+        setTimeout(function () {
+            $('#deleteForm').submit(); // Submit the form
+        }, 4000); // Adjust the delay as needed
+    });
+
+    // Function to handle sorting
+    function handleSort() {
+        var sortCriteria = $('#sortCriteria').val();
+        window.location.href = window.location.pathname + '?sort=' + sortCriteria;
+    }
+
+    $('#sortCriteria').change(handleSort);
+
+    // Function to get query variable from URL
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] === variable) {
+                return pair[1];
             }
         }
+        return false;
+    }
 
-        // Initial check when document is ready
-        updateDeleteButton();
+    // Set current sort criteria in the dropdown
+    var currentSortCriteria = getQueryVariable('sort');
+    if (currentSortCriteria) {
+        $('#sortCriteria').val(currentSortCriteria);
+    }
 
-        // Event handler for checkbox change
-        $('input[name="delete_patient[]"]').change(updateDeleteButton);
+    // Function to update the "Delete Selected" button visibility
+    function updateDeleteButton() {
+        var checkboxes = $('input[name="delete_patient[]"]');
+        var deleteSelectedLink = $('#delete-selected-link');
+
+        // Check if any checkboxes are checked
+        if (checkboxes.filter(':checked').length > 0) {
+            deleteSelectedLink.removeClass('disabled'); // Enable the button
+        } else {
+            deleteSelectedLink.addClass('disabled'); // Disable the button
+        }
+    }
+
+    // Initial check when document is ready
+    updateDeleteButton();
+
+    // Event handler for checkbox change
+    $('input[name="delete_patient[]"]').change(updateDeleteButton);
+
+    // Function to toggle delete mode
+    function toggleDeleteMode() {
+        var checkboxes = $('input[name="delete_patient[]"]');
+        var deleteSelectedLink = $('#delete-selected-link');
+        var cancelDeleteLink = $('#cancel-delete-link');
+        var deleteToggleLink = $('#delete-toggle-link');
+        var verticalBar = $('.vertical-bar'); // Reference to the vertical bar
+        var deleteCancelContainer = $('.delete-cancel-container'); // Reference to the new container
+
+        checkboxes.toggle(); // Show or hide checkboxes
+        deleteCancelContainer.toggle(); // Show or hide the delete-cancel-container
+        deleteToggleLink.toggle(); // Hide or show "Delete Records" link
+
+        // Show the sorting-pagination-container when cancel button is clicked
+        if (cancelDeleteLink.is(':visible')) {
+            $('.sorting-pagination-container').hide();
+        } else {
+            $('.sorting-pagination-container').show();
+        }
+    }
+
+    // Function to cancel delete mode
+    function cancelDeleteMode() {
+        var checkboxes = $('input[name="delete_patient[]"]');
+        var deleteSelectedLink = $('#delete-selected-link');
+        var cancelDeleteLink = $('#cancel-delete-link');
+        var deleteToggleLink = $('#delete-toggle-link');
+        var verticalBar = $('.vertical-bar'); // Reference to the vertical bar
+        var deleteCancelContainer = $('.delete-cancel-container'); // Reference to the new container
+
+        checkboxes.hide().prop('checked', false); // Hide checkboxes and uncheck them
+        deleteCancelContainer.hide(); // Hide the delete-cancel-container
+        deleteToggleLink.show(); // Show "Delete Records" link
+
+        $('.sorting-pagination-container').show(); // Show the sorting-pagination-container
+    }
+
+    // Function to show delete confirmation modal
+    function showDeleteModal() {
+        $('#deleteModal').modal('show');
+    }
+
+    // Event listeners
+    $('#delete-toggle-link').click(toggleDeleteMode);
+    $('#cancel-delete-link').click(cancelDeleteMode);
+    $('#delete-selected-link').click(showDeleteModal);
+    $('#confirmDeleteButton').click(function () {
+        $('#deleteForm').submit();
     });
-    </script>
-
-    <script>
-        $(document).ready(function () {
-            // Create Delete Selected button
-            $('#toggleCheckboxButton').click(function () {
-            var checkboxes = $('input[name="delete_patient[]"]');
-            var buttonContainer = $('#tableButtonContainer');
-            var deleteButton = $('#toggleCheckboxButton');
-            var deleteSelectedButton = $('<button>', {
-                text: 'Delete Selected',
-                class: 'delete-button',
-                id: 'deleteSelectedButton',
-                type: 'button',
-                disabled: true // Initially disabled
-            });
-            var cancelButton = $('<button>', {
-                text: 'Cancel',
-                class: 'cancel-button',
-                id: 'cancelButton',
-                type: 'button'
-            });
-
-                // Hide the sorting-pagination-container when "Delete Records" button is clicked
-                $('.sorting-pagination-container').hide();
-
-                deleteSelectedButton.click(function () {
-                    $('#deleteModal').modal('show');
-                });
-
-                cancelButton.click(function () {
-                    checkboxes.hide().prop('checked', false);
-                    deleteSelectedButton.remove();
-                    cancelButton.remove();
-                    deleteButton.show();
-                    // Show the sorting-pagination-container when cancel button is clicked
-                    $('.sorting-pagination-container').show();
-                });
-
-                deleteButton.hide();
-                buttonContainer.append(deleteSelectedButton).append(cancelButton);
-                checkboxes.show();
-            });
-
-            $('#cancel-delete-modal').click(function () {
-                $('#deleteModal').modal('hide');
-            });
-
-            $('#confirmDeleteButton').click(function () {
-                $('#deleteForm').submit();
-            });
-        });
-
-    </script>
-
-<script>
-    $(document).ready(function () {
-        // Function to handle deletion confirmation
-        $('#confirmDeleteButton').click(function () {
-            $('#deleteModal').modal('hide'); // Hide delete confirmation modal
-            $('#delete-successful-modal').modal('show'); // Show delete successful modal
-        });
-
-        // Function to handle closing of delete successful modal
-        $('#delete-successful-close-modal').click(function () {
-            // Hide delete successful modal
-            $('#delete-successful-modal').modal('hide');
-        });
-
-        // Function to handle form submission when closing delete successful modal
-        $('#delete-successful-close-modal').click(function () {
-            // Delay form submission by 1 second (1000 milliseconds)
-            setTimeout(function () {
-                $('#deleteForm').submit(); // Submit the form
-            }, 4000); // Adjust the delay as needed
-        });
-
-        // Function to handle sorting
-        function handleSort() {
-            var sortCriteria = $('#sortCriteria').val();
-            window.location.href = window.location.pathname + '?sort=' + sortCriteria;
-        }
-
-        $('#sortCriteria').change(handleSort);
-
-        // Function to get query variable from URL
-        function getQueryVariable(variable) {
-            var query = window.location.search.substring(1);
-            var vars = query.split("&");
-            for (var i = 0; i < vars.length; i++) {
-                var pair = vars[i].split("=");
-                if (pair[0] === variable) {
-                    return pair[1];
-                }
-            }
-            return false;
-        }
-
-        // Set current sort criteria in the dropdown
-        var currentSortCriteria = getQueryVariable('sort');
-        if (currentSortCriteria) {
-            $('#sortCriteria').val(currentSortCriteria);
-        }
+    $('#delete-successful-close-modal').click(function () {
+        $('#delete-successful-modal').modal('hide');
+        $('#deleteForm').submit();
     });
+});
 </script>
 
 </body>
