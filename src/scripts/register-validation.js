@@ -11,6 +11,8 @@ const password = document.getElementById("password");
 const emergency_no = document.getElementById("emergency_no");
 const submitButton = document.getElementById("register-btn");
 
+
+
 // VALIDATION FOR WHITESPACE
 
 function preventWhitespaceInput(event) {
@@ -43,16 +45,24 @@ password.addEventListener("keydown", preventWhitespaceInput);
 emergency_no.addEventListener("keydown", preventWhitespaceInput);
 // -- END WHITESPACE
 
+
+
 // EMAIL VALIDATION
 email.addEventListener("input", function () {
   const inputValue = this.value.trim();
-  const regex =
-    /^[^\s@]+@(yahoo\.com|gmail\.com||iskolarngbayan\.pup\.edu\.ph|hotmail\.com|aol\.com|hotmail\.co\.uk|hotmail\.fr|msn\.com|yahoo\.fr|wanadoo\.fr|orange\.fr|comcast\.net|yahoo\.co\.uk|yahoo\.com\.br|yahoo\.co\.in|live\.com|rediffmail\.com|free\.fr|gmx\.de|web\.de|yandex\.ru|ymail\.com|libero\.it|outlook\.com|uol\.com\.br|bol\.com\.br|mail\.ru|cox\.net|hotmail\.it|sbcglobal\.net|sfr\.fr|live\.fr|verizon\.net|live\.co\.uk|googlemail\.com|yahoo\.es|ig\.com\.br|live\.nl)$/;
+  const regex = /^[^\s@]+@(yahoo\.com|gmail\.com|iskolarngbayan\.pup\.edu\.ph|hotmail\.com|aol\.com|hotmail\.co\.uk|hotmail\.fr|msn\.com|yahoo\.fr|wanadoo\.fr|orange\.fr|comcast\.net|yahoo\.co\.uk|yahoo\.com\.br|yahoo\.co\.in|live\.com|rediffmail\.com|free\.fr|gmx\.de|web\.de|yandex\.ru|ymail\.com|libero\.it|outlook\.com|uol\.com\.br|bol\.com\.br|mail\.ru|cox\.net|hotmail\.it|sbcglobal\.net|sfr\.fr|live\.fr|verizon\.net|live\.co\.uk|googlemail\.com|yahoo\.es|ig\.com\.br|live\.nl)$/;
 
   if (inputValue === "") {
     // If the input is empty, remove the is-invalid class
     this.classList.remove("is-invalid");
-  } else if (inputValue) {
+    this.removeAttribute("title");
+  } else if (!regex.test(inputValue)) {
+    this.classList.add("is-invalid");
+    this.setAttribute("title", "Invalid email");
+  } else {
+    this.classList.remove("is-invalid");
+    this.removeAttribute("title");
+
     $.ajax({
       url: "includes/queries/check-email.php", // Adjust this path as necessary
       type: "POST",
@@ -62,28 +72,20 @@ email.addEventListener("input", function () {
         if (res.isDuplicate) {
           $("#email")
             .addClass("is-invalid")
-            .removeClass("is-valid")
             .attr("title", "Email already exists");
         } else {
-          $("#email")
-            .addClass("is-invalid")
-            .removeClass("is-valid")
-            .attr("title", "Invalid email");
+          $("#email").removeClass("is-invalid");
         }
       },
       error: function (xhr, status, error) {
         console.error(xhr.responseText);
       },
     });
-  } else if (!regex.test(inputValue)) {
-    // If the input doesn't match the desired format, apply Bootstrap's is-invalid class
-    this.classList.add("is-invalid");
-  } else {
-    // If the input matches the desired format, remove Bootstrap's is-invalid class
-    this.classList.remove("is-invalid");
   }
 });
 // ----- END OF EMAIL
+
+
 
 // STUDENT ID FORMAT
 student_id.addEventListener("input", function () {
@@ -91,9 +93,13 @@ student_id.addEventListener("input", function () {
   const regex = /^\d{4}-\d{5}-SR-\d$/; // Regular expression for the desired format
 
   if (inputValue === "") {
-    // If the input is empty, remove the is-invalid class
-    this.classList.remove("is-invalid");
-  } else if (inputValue) {
+    $(this).removeClass("is-invalid").removeAttr("title");
+  } else if (!regex.test(inputValue)) {
+    $(this).addClass("is-invalid").attr("title", "Invalid student ID format");
+  } else {
+    $(this).removeClass("is-invalid").removeAttr("title");
+
+    // AJAX request to check for duplication
     $.ajax({
       url: "includes/queries/check-student-id.php", // Adjust this path as necessary
       type: "POST",
@@ -103,27 +109,20 @@ student_id.addEventListener("input", function () {
         if (res.isDuplicate) {
           $("#student_id")
             .addClass("is-invalid")
-            .removeClass("is-valid")
             .attr("title", "Student ID already exists");
         } else {
-          $("#student_id")
-            .addClass("is-invalid")
-            .removeClass("is-valid")
-            .attr("title", "Invalid Student ID");
+          $("#student_id").removeClass("is-invalid");
         }
       },
       error: function (xhr, status, error) {
         console.error(xhr.responseText);
       },
     });
-  } else if (!regex.test(inputValue)) {
-    // If the input doesn't match the desired format, apply Bootstrap's is-invalid class
-    this.classList.add("is-invalid");
-  } else {
-    this.classList.remove("is-invalid");
   }
 });
 // ------ END OF STUDENT ID FORMAT
+
+
 
 // SPECIAL CHARACTERS
 function preventSpecialChars(event) {
@@ -143,6 +142,8 @@ email.addEventListener("keydown", preventSpecialChars);
 password.addEventListener("keydown", preventSpecialChars);
 emergency_no.addEventListener("keydown", preventSpecialChars);
 // ---- SPECIAL CHARACTERS
+
+
 
 // NUMBER VALIDATION
 
@@ -187,6 +188,8 @@ emergency_no.addEventListener("keydown", validateLength);
 emergency_no.addEventListener("input", ensureStartsWith09);
 
 // --- END NUMBER VALIDATION
+
+
 
 // BUTTON DISABLE
 function checkInputs() {
