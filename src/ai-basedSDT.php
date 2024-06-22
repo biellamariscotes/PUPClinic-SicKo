@@ -73,7 +73,8 @@ require_once ('includes/connect.php');
                 <div class="generate-diagnosis-box" id="generate-diagnosis-box">
                     <div class="generate-diagnosis-text" id="generate-diagnosis-btn">Generate Diagnosis</div>
                 </div>
-                <input type="hidden" id="user-fullname" name="user-fullname" value="<?php echo htmlspecialchars($_SESSION['full_name']); ?>">
+                <input type="hidden" id="user-fullname" name="user-fullname"
+                    value="<?php echo htmlspecialchars($_SESSION['full_name']); ?>">
             </form>
 
             <?php
@@ -112,8 +113,8 @@ require_once ('includes/connect.php');
 
                 function showContent() {
                     console.log("Showing content.");
-                    const body = document.querySelector('.main-content');
-                    body.style.display = 'block';
+                    const content = document.querySelector('.main-content');
+                    content.style.visibility = 'visible'; // Use visibility to show content
                 }
                 simulateContentLoading();
             </script>
@@ -145,7 +146,7 @@ require_once ('includes/connect.php');
                 }
 
                 // Event listener for clicking the generate button
-                document.getElementById('generate-diagnosis-btn').addEventListener('click', function() {
+                document.getElementById('generate-diagnosis-btn').addEventListener('click', function () {
                     submitForm(); // Call your form submission function
 
                     // Log activity
@@ -162,10 +163,10 @@ require_once ('includes/connect.php');
                         type: 'POST',
                         url: 'log_activity.php', // Create a PHP file to handle logging
                         data: { fullname: fullName, action: action },
-                        success: function(response) {
+                        success: function (response) {
                             console.log('Activity logged successfully.');
                         },
-                        error: function(xhr, status, error) {
+                        error: function (xhr, status, error) {
                             console.error('Error logging activity:', error);
                         }
                     });

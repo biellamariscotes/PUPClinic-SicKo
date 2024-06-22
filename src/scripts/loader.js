@@ -5,7 +5,7 @@ function simulateContentLoading() {
         
         hideLoader();
         showContent();
-    }, 3000);
+    }, 1000);
 }
 
 function showLoader() {
@@ -27,7 +27,7 @@ function hideLoader() {
 
 function showContent() {
     console.log("Showing content.");
-    const body = document.querySelector('.main-content');
-    body.style.display = 'block';
+    const content = document.querySelector('.main-content');
+    content.style.visibility = 'visible'; // Use visibility to show content
 }
 simulateContentLoading();

@@ -1,6 +1,6 @@
 <?php
-require_once('includes/session-nurse.php');
-require_once('includes/connect.php');
+require_once ('includes/session-nurse.php');
+require_once ('includes/connect.php');
 
 // Initialize variables
 $errors = array();
@@ -70,7 +70,7 @@ mysqli_close($conn);
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
     <style>
-            .is-invalid {
+        .is-invalid {
             border-color: #dc3545;
         }
 
@@ -79,7 +79,7 @@ mysqli_close($conn);
             color: #dc3545;
         }
 
-        .is-invalid ~ .invalid-feedback {
+        .is-invalid~.invalid-feedback {
             display: block;
         }
     </style>
@@ -93,34 +93,108 @@ mysqli_close($conn);
     <div class="overlay" id="overlay"></div>
 
     <div class="main-content">
-    <?php
-    include ('includes/sidebar/user-settings.php');
-    ?>
+        <?php
+        include ('includes/sidebar/user-settings.php');
+        ?>
 
-
-    <!-- Save Changes Modal -->
-        <div class="modal" id="saveChangesModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-                <div class="modal-body">
-                    <div class="modal-middle-icon">
-                        <i class="bi bi-check-circle-fill" style="color:#058789; font-size:5rem"></i>
-                    </div>
-                    <div class="modal-title" style="color: black;">Save Changes</div>
-                    <div class="modal-subtitle" style="justify-content: center;">Are you sure you want to save your changes?</div>
+        <div class="content wrap-main-content" id="content">
+            <div class="left-header">
+                <p>
+                    <span style="color: #E13F3D;">Edit</span>
+                    <span style="color: #058789;">Profile</span>
+                </p>
+                <div class="left-header-subtitle">
+                    Update your information.
                 </div>
-                <div class="modal-buttons">
-                    <button type="button" class="btn btn-secondary" id="cancel-saveChanges-modal" data-dismiss="modal" style="background-color: #777777; 
+            </div>
+
+            <div id="empty-field-message">All fields must be filled.</div>
+
+            <!-- Form Container -->
+            <div class="form-container">
+                <form id="edit-profile-form" method="post" action="edit-profile.php">
+                    <!-- Display errors, if any -->
+                    <?php if (!empty($errors)) { ?>
+                        <div class="error-message">
+                            <?php foreach ($errors as $error) { ?>
+                                <p><?php echo $error; ?></p>
+                            <?php } ?>
+                        </div>
+                    <?php } ?>
+                    <div class="input-row">
+                        <div class="group">
+                            <div class="userProfile-input-label">Last Name</div>
+                            <input type="text" id="lastName" name="lastName" value="<?php echo $last_name_value; ?>"
+                                autocomplete="off" required pattern="^[A-Za-z\s'-]+$" class="form-control">
+                            <div class="invalid-feedback">Last name must not contain numbers, special characters, or
+                                double spaces.</div>
+                        </div>
+                        <div class="group">
+                            <div class="userProfile-input-label">First Name</div>
+                            <input type="text" id="firstName" name="firstName" value="<?php echo $first_name_value; ?>"
+                                autocomplete="off" required pattern="^[A-Za-z\s'-]+$" class="form-control">
+                            <div class="invalid-feedback">First name must not contain numbers, special characters, or
+                                double spaces.</div>
+                        </div>
+                        <div class="group">
+                            <div class="userProfile-input-label">Middle Name</div>
+                            <input type="text" id="middleName" name="middleName"
+                                value="<?php echo $middle_name_value; ?>" autocomplete="off" required
+                                pattern="^[A-Za-z\s'-]+$" class="form-control">
+                            <div class="invalid-feedback">Middle name must not contain numbers, special characters, or
+                                double spaces.</div>
+                        </div>
+                    </div>
+                    <div class="input-row">
+                        <div class="group">
+                            <div class="userProfile-input-label">Email</div>
+                            <input type="email" id="email" name="email" value="<?php echo $email_value; ?>"
+                                autocomplete="off" required
+                                pattern="^[a-zA-Z0-9._%+-]+@(gmail\.com|iskolarngbayan\.pup\.edu\.ph)$"
+                                class="form-control">
+                            <div class="invalid-feedback">Please enter a valid email address (e.g., example@gmail.com or
+                                example@iskolarngbayan.pup.edu.ph).</div>
+                        </div>
+                    </div>
+                    <div class="middle-row">
+                        <button type="submit" id="submit-form-button" name="record-btn">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <?php
+        include ('includes/footer.php');
+        ?>
+
+        <!-- Save Changes Modal -->
+        <div class="modal" id="saveChangesModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="modal-middle-icon">
+                            <i class="bi bi-check-circle-fill" style="color:#058789; font-size:5rem"></i>
+                        </div>
+                        <div class="modal-title" style="color: black;">Save Changes</div>
+                        <div class="modal-subtitle" style="justify-content: center;">Are you sure you want to save your
+                            changes?</div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button type="button" class="btn btn-secondary" id="cancel-saveChanges-modal"
+                            data-dismiss="modal"
+                            style="background-color: #777777; 
                     font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
-                    <button type="button" class="btn btn-secondary" id="submit-changes-modal" data-dismiss="modal" style="background-color: #058789; 
+                        <button type="button" class="btn btn-secondary" id="submit-changes-modal" data-dismiss="modal"
+                            style="background-color: #058789; 
                     font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Confirm</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Saved Successfully Modal -->
-        <div class="modal" id="saved-successfully" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+        <!-- Saved Successfully Modal -->
+        <div class="modal" id="saved-successfully" tabindex="-1" role="dialog" data-bs-backdrop="static"
+            data-bs-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -128,22 +202,25 @@ mysqli_close($conn);
                             <img src="images/check.gif" style="width: 12rem; height: auto;" alt="Check Icon">
                         </div>
                         <div class="modal-title" style="color: black; margin-top: 1.25rem;">Saved Successfully</div>
-                        <div class="modal-subtitle" style="justify-content: center; width: 98%;">Your changes have been successfully saved!</div>
+                        <div class="modal-subtitle" style="justify-content: center; width: 98%;">Your changes have been
+                            successfully saved!</div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Error Modal -->
-            <div class="modal" id="error-modal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal" id="error-modal" tabindex="-1" role="dialog" data-bs-backdrop="static"
+            data-bs-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+                <div class="modal-content">
                     <div class="modal-body">
                         <div class="modal-middle-icon">
                             <img src="images/x-mark.gif" style="width: 9rem; height: auto;" alt="Error Icon">
                         </div>
                         <div class="modal-title">Error</div>
-                        <div class="modal-subtitle" style="text-wrap: pretty; ">Oops! It looks like no changes were made. Please update the input field to proceed.</div>
+                        <div class="modal-subtitle" style="text-wrap: pretty; ">Oops! It looks like no changes were
+                            made. Please update the input field to proceed.</div>
                     </div>
                     <div class="modal-buttons">
                         <button type="button" class="btn btn-secondary" id="error-close-modal" data-dismiss="modal"
@@ -152,67 +229,8 @@ mysqli_close($conn);
                     </div>
                 </div>
             </div>
-        </div>  
-
-
-    <div class="content" id="content">
-        <div class="left-header">
-            <p>
-                <span style="color: #E13F3D;">Edit</span>
-                <span style="color: #058789;">Profile</span>
-            </p>
-            <div class="left-header-subtitle">
-                Update your information.
-            </div>
         </div>
 
-        <div id="empty-field-message">All fields must be filled.</div>
-
-        <!-- Form Container -->
-        <div class="form-container">
-            <form id="edit-profile-form" method="post" action="edit-profile.php">
-                <!-- Display errors, if any -->
-                <?php if (!empty($errors)) { ?>
-                    <div class="error-message">
-                        <?php foreach ($errors as $error) { ?>
-                            <p><?php echo $error; ?></p>
-                        <?php } ?>
-                    </div>
-                <?php } ?>
-                <div class="input-row">
-                    <div class="group">
-                        <div class="userProfile-input-label">Last Name</div>
-                        <input type="text" id="lastName" name="lastName" value="<?php echo $last_name_value; ?>" autocomplete="off" required pattern="^[A-Za-z\s'-]+$" class="form-control">
-                        <div class="invalid-feedback">Last name must not contain numbers, special characters, or double spaces.</div>
-                    </div>
-                    <div class="group">
-                        <div class="userProfile-input-label">First Name</div>
-                        <input type="text" id="firstName" name="firstName" value="<?php echo $first_name_value; ?>" autocomplete="off" required pattern="^[A-Za-z\s'-]+$" class="form-control">
-                        <div class="invalid-feedback">First name must not contain numbers, special characters, or double spaces.</div>
-                    </div>
-                    <div class="group">
-                        <div class="userProfile-input-label">Middle Name</div>
-                        <input type="text" id="middleName" name="middleName" value="<?php echo $middle_name_value; ?>" autocomplete="off" required pattern="^[A-Za-z\s'-]+$" class="form-control">
-                        <div class="invalid-feedback">Middle name must not contain numbers, special characters, or double spaces.</div>
-                    </div>
-                </div>
-                <div class="input-row">
-                    <div class="group">
-                        <div class="userProfile-input-label">Email</div>
-                        <input type="email" id="email" name="email" value="<?php echo $email_value; ?>" autocomplete="off" required pattern="^[a-zA-Z0-9._%+-]+@(gmail\.com|iskolarngbayan\.pup\.edu\.ph)$" class="form-control">
-                        <div class="invalid-feedback">Please enter a valid email address (e.g., example@gmail.com or example@iskolarngbayan.pup.edu.ph).</div>
-                    </div>
-                </div>
-                <div class="middle-row">
-                    <button type="submit" id="submit-form-button" name="record-btn">Save Changes</button>
-                </div> 
-            </form>
-        </div>
-    </div>
-
-    <?php
-    include ('includes/footer.php');
-    ?>
     </div>
     <script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="scripts/script.js"></script>
@@ -220,134 +238,134 @@ mysqli_close($conn);
 
     <script>
         $(document).ready(function () {
-    // Function to check if any input field is empty
-    function checkEmptyInputs() {
-        var isEmpty = false;
-        $('input').each(function () {
-            if ($(this).val() === '') {
-                isEmpty = true;
-                return false; // Exit the loop if any input field is empty
+            // Function to check if any input field is empty
+            function checkEmptyInputs() {
+                var isEmpty = false;
+                $('input').each(function () {
+                    if ($(this).val() === '') {
+                        isEmpty = true;
+                        return false; // Exit the loop if any input field is empty
+                    }
+                });
+                return isEmpty;
             }
-        });
-        return isEmpty;
-    }
 
-    // Function to check if the input field contains invalid characters or double spaces
-    function checkInvalidCharacters(input) {
-        var pattern = /^[A-Za-z\s'-]+$/; // Pattern to allow only letters, spaces, apostrophes, and hyphens
-        var value = input.val();
-        return !pattern.test(value) || /\s\s/.test(value); // Check for invalid characters or double spaces
-    }
-
-    // Function to check if the email format is valid
-    function checkEmailFormat(input) {
-        var pattern = /^[a-zA-Z0-9._%+-]+@(gmail\.com|iskolarngbayan\.pup\.edu\.ph)$/; // Pattern for specific email domains
-        var value = input.val();
-        return pattern.test(value); // Check if the email matches the required pattern
-    }
-
-    // Initially disable the button if any input field is empty
-    $('#submit-form-button').prop('disabled', checkEmptyInputs());
-
-    // Initially show or hide the empty field message
-    $('#empty-field-message').toggle(checkEmptyInputs());
-
-    // Add event listener to input fields
-    $('input').on('input', function () {
-        // Enable or disable the button based on input field status
-        $('#submit-form-button').prop('disabled', checkEmptyInputs());
-        // Show or hide the empty field message
-        $('#empty-field-message').toggle(checkEmptyInputs());
-
-        // Check if the field is valid
-        if (this.checkValidity() && !checkInvalidCharacters($(this))) {
-            $(this).removeClass('is-invalid');
-        } else {
-            $(this).addClass('is-invalid');
-        }
-
-        // Additional check for email format
-        if ($(this).attr('id') === 'email') {
-            if (checkEmailFormat($(this))) {
-                $(this).removeClass('is-invalid');
-            } else {
-                $(this).addClass('is-invalid');
+            // Function to check if the input field contains invalid characters or double spaces
+            function checkInvalidCharacters(input) {
+                var pattern = /^[A-Za-z\s'-]+$/; // Pattern to allow only letters, spaces, apostrophes, and hyphens
+                var value = input.val();
+                return !pattern.test(value) || /\s\s/.test(value); // Check for invalid characters or double spaces
             }
-        }
-    });
 
-    // Show Modal when Submit button is clicked
-    $("#submit-form-button").click(function (event) {
-        event.preventDefault(); // Prevent default form submission
-        // Check if any changes are made
-        if (!checkFormChanges()) {
-            // Show error modal if no changes are made
-            $("#error-modal").modal("show");
-        } else {
-            $("#saveChangesModal").modal("show");
-        }
-    });
-
-    // Function to check if any changes are made in the form
-    function checkFormChanges() {
-        var changesMade = false;
-        $('input').each(function () {
-            if ($(this).val() !== $(this).attr('value')) {
-                changesMade = true;
-                return false; // Exit the loop if any change is detected
+            // Function to check if the email format is valid
+            function checkEmailFormat(input) {
+                var pattern = /^[a-zA-Z0-9._%+-]+@(gmail\.com|iskolarngbayan\.pup\.edu\.ph)$/; // Pattern for specific email domains
+                var value = input.val();
+                return pattern.test(value); // Check if the email matches the required pattern
             }
-        });
-        return changesMade;
-    }
 
-    // Handle form submission when user confirms in the modal
-    $("#submit-changes-modal").click(function (event) {
-        // Submit the form via AJAX
-        $("#edit-profile-form").submit();
-    });
+            // Initially disable the button if any input field is empty
+            $('#submit-form-button').prop('disabled', checkEmptyInputs());
 
-    // Handle form submission success
-    $("#edit-profile-form").submit(function (event) {
-        event.preventDefault(); // Prevent default form submission
-        var form = $(this);
+            // Initially show or hide the empty field message
+            $('#empty-field-message').toggle(checkEmptyInputs());
 
-        $.ajax({
-            type: form.attr('method'),
-            url: form.attr('action'),
-            data: form.serialize(),
-            success: function (response) {
-                // Hide the "Save Changes" modal
+            // Add event listener to input fields
+            $('input').on('input', function () {
+                // Enable or disable the button based on input field status
+                $('#submit-form-button').prop('disabled', checkEmptyInputs());
+                // Show or hide the empty field message
+                $('#empty-field-message').toggle(checkEmptyInputs());
+
+                // Check if the field is valid
+                if (this.checkValidity() && !checkInvalidCharacters($(this))) {
+                    $(this).removeClass('is-invalid');
+                } else {
+                    $(this).addClass('is-invalid');
+                }
+
+                // Additional check for email format
+                if ($(this).attr('id') === 'email') {
+                    if (checkEmailFormat($(this))) {
+                        $(this).removeClass('is-invalid');
+                    } else {
+                        $(this).addClass('is-invalid');
+                    }
+                }
+            });
+
+            // Show Modal when Submit button is clicked
+            $("#submit-form-button").click(function (event) {
+                event.preventDefault(); // Prevent default form submission
+                // Check if any changes are made
+                if (!checkFormChanges()) {
+                    // Show error modal if no changes are made
+                    $("#error-modal").modal("show");
+                } else {
+                    $("#saveChangesModal").modal("show");
+                }
+            });
+
+            // Function to check if any changes are made in the form
+            function checkFormChanges() {
+                var changesMade = false;
+                $('input').each(function () {
+                    if ($(this).val() !== $(this).attr('value')) {
+                        changesMade = true;
+                        return false; // Exit the loop if any change is detected
+                    }
+                });
+                return changesMade;
+            }
+
+            // Handle form submission when user confirms in the modal
+            $("#submit-changes-modal").click(function (event) {
+                // Submit the form via AJAX
+                $("#edit-profile-form").submit();
+            });
+
+            // Handle form submission success
+            $("#edit-profile-form").submit(function (event) {
+                event.preventDefault(); // Prevent default form submission
+                var form = $(this);
+
+                $.ajax({
+                    type: form.attr('method'),
+                    url: form.attr('action'),
+                    data: form.serialize(),
+                    success: function (response) {
+                        // Hide the "Save Changes" modal
+                        $("#saveChangesModal").modal("hide");
+                        // Show the "Saved Successfully" modal
+                        $("#saved-successfully").modal("show");
+
+                        // Automatically close the "Saved Successfully" modal after 5 seconds
+                        setTimeout(function () {
+                            $("#saved-successfully").modal("hide");
+                        }, 5000); // 5000 milliseconds = 5 seconds
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle errors if any
+                        console.log(xhr.responseText);
+                        $("#error-modal").modal("show");
+                    }
+                });
+            });
+
+            // Close the Modal with the close button
+            $("#cancel-saveChanges-modal").click(function (event) {
                 $("#saveChangesModal").modal("hide");
-                // Show the "Saved Successfully" modal
-                $("#saved-successfully").modal("show");
+            });
 
-                // Automatically close the "Saved Successfully" modal after 5 seconds
-                setTimeout(function () {
-                    $("#saved-successfully").modal("hide");
-                }, 5000); // 5000 milliseconds = 5 seconds
-            },
-            error: function (xhr, status, error) {
-                // Handle errors if any
-                console.log(xhr.responseText);
-                $("#error-modal").modal("show");
-            }
+            // Close the Modal with the close button
+            $("#error-close-modal").click(function (event) {
+                $("#error-modal").modal("hide");
+            });
+
         });
-    });
-
-    // Close the Modal with the close button
-    $("#cancel-saveChanges-modal").click(function (event) {
-        $("#saveChangesModal").modal("hide");
-    });
-
-    // Close the Modal with the close button
-    $("#error-close-modal").click(function (event) {
-        $("#error-modal").modal("hide");
-    });
-
-});
 
 
-document.getElementById("save-changes").addEventListener("click", function (event) {
+        document.getElementById("save-changes").addEventListener("click", function (event) {
             event.preventDefault(); // Prevent form submission
 
             var form = document.getElementById("edit-profile-form");
@@ -378,7 +396,7 @@ document.getElementById("save-changes").addEventListener("click", function (even
             $("#error-modal").modal("hide");
         });
 
-</script>
+    </script>
 
 </body>
 

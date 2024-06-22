@@ -301,7 +301,7 @@ input[type="date"]::before {
   }
   
   .main-content {
-    display: none;
+    visibility: hidden;
   }
   
   .loader img {
