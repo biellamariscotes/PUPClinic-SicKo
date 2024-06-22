@@ -343,8 +343,8 @@ $nextPage = min($totalPages, $currentPage + 1);
                         }
                         ?>
                         <tr>
-                            <td colspan="6" style="background-color: white;">
-                                <div class="table-button-container" style="padding-top: 1rem;">
+                            <td colspan="5" style="background-color: white;">
+                                <div class="table-button-container">
                                     <div class="button-group">
                                     <span class="delete-records-link" id="delete-toggle-link" onclick="toggleDeleteMode()" style="color: #D22B2B;">
                                         <i class="bi bi-trash" style="color: #D22B2B; font-size: 1rem; margin-right: 0.625rem; vertical-align: middle;"></i>
