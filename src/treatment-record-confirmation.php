@@ -129,7 +129,7 @@ $record_id = isset($_GET['record_id']) ? $_GET['record_id'] : '';
                     <input type="text" id="diagnosis" name="diagnosis" placeholder="Diagnosis" autocomplete="off" required value="<?php echo $diagnosis; ?>" >
                     <input type="text" id="treatments" name="treatments" placeholder="Treatments/Medicines" autocomplete="off" required value="<?php echo $treatments; ?>"  >
                 </div>
-                <div class="button-row">
+                <div class="button-row" style="justify-content: center; gap: 2rem;">
                     <input type="hidden" name="record_id" value="<?php echo htmlspecialchars($record_id); ?>">
                     <button type="button" id="generate-excuse-letter-button" name="record-btn" onclick="submitForm('excuse-letter.php')">Generate Clearance</button>
                     <button type="button" id="generate-endorsement-button" name="hello-btn" onclick="submitForm('endorsement.php')">Generate Endorsement</button>
