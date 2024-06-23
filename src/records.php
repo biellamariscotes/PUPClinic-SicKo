@@ -259,7 +259,7 @@ $nextPage = min($totalPages, $currentPage + 1);
                         <div class="modal-title" style="color: black;">Confirm Download</div>
                         <div class="modal-subtitle" style="justify-content: center;">Are you sure you want to download this file?</div>
                     </div>
-                    <div class="modal-buttons">
+                    <div class="modal-buttons" style="padding-bottom: 2rem;">
                         <button type="button" class="btn btn-secondary" id="cancel-download" data-dismiss="modal" style="background-color: #777777; font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
                         <button type="button" class="btn btn-secondary" id="confirm-download" data-dismiss="modal" style="background-color: #058789; font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Confirm</button>
                     </div>
@@ -278,7 +278,7 @@ $nextPage = min($totalPages, $currentPage + 1);
                         <div class="modal-title" style="color: black;">Download Successful</div>
                         <div class="modal-subtitle" style="text-wrap: pretty; justify-content: center;">Your file has been successfully downloaded.</div>
                     </div>
-                    <div class="modal-buttons">
+                    <div class="modal-buttons" style="padding-bottom: 1.5rem;">
                         <button type="button" class="btn btn-secondary" id="download-close-modal" data-dismiss="modal"
                             style="background-color: #23B26D; font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-top: 1rem;">Close</button>
                     </div>

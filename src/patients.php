@@ -177,7 +177,7 @@ $result = mysqli_query($conn, $query);
                         <div class="modal-title" style="color: black;">Confirm Delete?</div>
                         <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to delete the selected patient?</div>
                     </div>
-                    <div class="modal-buttons">
+                    <div class="modal-buttons" style="padding-bottom: 2rem;">
                         <button type="button" class="btn btn-secondary" id="cancel-delete-modal" data-bs-dismiss="modal" style="background-color: #777777; 
                         font-family: 'Poppins'; font-weight: 600; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
                         <button type="button" class="btn btn-secondary" id="confirmDeleteButton" style="background-color: #E13F3D; 
@@ -187,7 +187,7 @@ $result = mysqli_query($conn, $query);
             </div>
         </div>
 
-        <!-- Delete Successful Modal -->
+        <!-- Delete Successful Modal 
         <div class="modal" id="delete-successful-modal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -206,6 +206,7 @@ $result = mysqli_query($conn, $query);
                 </div>
             </div>
         </div>
+        -->
 
         <div class="content" id="content">
             <div class="left-header" style="margin-top: 40px;">

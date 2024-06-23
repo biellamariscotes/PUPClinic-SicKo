@@ -82,22 +82,21 @@ function recordActivityLog($conn, $fullname, $action) {
     </div>
 
     <!-- Log In Failed Modal -->
-    <div class="modal" id="loginFailed" tabindex="-1" role="dialog" data-bs-backdrop="static"
-    data-bs-keyboard="false">
+    <div class="modal" id="loginFailed" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
+            <div class="modal-content" style="border-radius: 1.563rem;">
+            <div class="modal-body d-flex flex-column justify-content-center align-items-center">
                     <div class="modal-middle-icon">
                         <img src="images/x-mark.gif" style="width: 9rem; height: auto;" alt="Failed Icon">
                     </div>
                     <div class="modal-title">Login Failed</div>
-                    <div class="modal-subtitle" style="text-wrap: pretty; ">Authentication failed. Please check your
+                    <div class="modal-subtitle" style="text-wrap: pretty; width: auto; font-size: 0.875rem; padding: 0 2rem 0 2rem;">Authentication failed. Please check your
                         credentials and try again.</div>
-                </div>
-                <div class="modal-buttons">
+
+                    <div class="pt-3"></div>
                     <button type="button" class="btn btn-secondary" id="login-close-modal" data-dismiss="modal"
                         style="background-color: #E13F3D; 
-                        font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-top: 3rem;">Close</button>
+                                font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Close</button>
                 </div>
             </div>
         </div>

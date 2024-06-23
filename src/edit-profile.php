@@ -226,7 +226,7 @@ mysqli_close($conn);
                         <div class="modal-subtitle" style="justify-content: center;">Are you sure you want to save your
                             changes?</div>
                     </div>
-                    <div class="modal-buttons">
+                    <div class="modal-buttons" style="padding-bottom: 2rem;">
                         <button type="button" class="btn btn-secondary" id="cancel-saveChanges-modal"
                             data-dismiss="modal"
                             style="background-color: #777777; 
