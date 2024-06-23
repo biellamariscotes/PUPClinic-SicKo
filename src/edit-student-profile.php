@@ -33,9 +33,9 @@ if (isset($_SESSION['patient_id'])) {
     </head>
 
     <body>
-        <!-- <div class="loader">
+        <div class="loader">
             <img src="images/loader.gif">
-        </div> -->
+        </div>
 
         <div class="main-content">
             <?php include ('includes/student-topbar.php'); ?>
@@ -225,7 +225,7 @@ if (isset($_SESSION['patient_id'])) {
                 data-bs-keyboard="false">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <div class="modal-body">
+                        <div class="modal-body d-flex flex-column justify-content-center align-items-center">
                             <div class="modal-middle-icon">
                                 <img src="images/check.gif" style="width: 7rem; height: auto;" alt="Check Icon">
                             </div>
@@ -242,6 +242,7 @@ if (isset($_SESSION['patient_id'])) {
 
         <script src="scripts/edit-profile-validations.js"></script>
         <script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="scripts/loader.js"></script>
 
 
         <script>

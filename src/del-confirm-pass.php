@@ -33,9 +33,9 @@ if (isset($_SESSION['patient_id'])) {
     </head>
 
     <body>
-        <!-- <div class="loader">
+        <div class="loader">
             <img src="images/loader.gif">
-        </div> -->
+        </div>
 
         <div class="main-content">
 
@@ -94,14 +94,16 @@ if (isset($_SESSION['patient_id'])) {
                                 <div class="p-4">
                                     <div class="row">
                                         <div class="col-12">
-                                            <p class="fs-6 fw-normal pb-3">To delete your account, please input your current
+                                            <p class="fs-6 fw-normal pb-3">To delete your account, please input your
+                                                current
                                                 password first:</p>
 
                                             <!-- Delete Account Form -->
                                             <form id="delete-account-form">
                                                 <div class="row">
                                                     <div class="col-12">
-                                                        <p class="faded-black-2 fs-7 fw-normal pb-2">Current Password</p>
+                                                        <p class="faded-black-2 fs-7 fw-normal pb-2">Current Password
+                                                        </p>
                                                         <input type="password" class="form-control"
                                                             placeholder="•••••••••••••••••" name="current_pass"
                                                             id="current_pass" required>
@@ -110,8 +112,10 @@ if (isset($_SESSION['patient_id'])) {
                                                     <div class="col-12 pt-3">
                                                         <div class="checkbox-container">
                                                             <input type="checkbox" id="delete-checkbox">
-                                                            <label for="delete-checkbox" class="fs-7 pl-1"> I understand that
-                                                                deleting my account will remove my access to <span class="fw-bold">SicKo</span>.</label>
+                                                            <label for="delete-checkbox" class="fs-7 pl-1"> I understand
+                                                                that
+                                                                deleting my account will remove my access to <span
+                                                                    class="fw-bold">SicKo</span>.</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -143,12 +147,13 @@ if (isset($_SESSION['patient_id'])) {
                 data-bs-keyboard="false">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <div class="modal-body">
+                        <div class="modal-body d-flex flex-column justify-content-center align-items-center">
                             <div class="modal-middle-icon">
                                 <img src="images/check.gif" style="width: 7rem; height: auto;" alt="Check Icon">
                             </div>
                             <div class="modal-title" style="color: black;">Deleted Successfully</div>
-                            <div class="modal-subtitle" style="justify-content: center;">You will now be redirected to Log
+                            <div class="modal-subtitle" style="justify-content: center;">You will now be redirected to
+                                Log
                                 In.</div>
                         </div>
                     </div>
@@ -159,7 +164,7 @@ if (isset($_SESSION['patient_id'])) {
             <div class="modal" id="loginFailed" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <div class="modal-body">
+                        <div class="modal-body d-flex flex-column justify-content-center align-items-center">
                             <div class="modal-middle-icon">
                                 <i class="bi bi-x-circle-fill" style="color:#E13F3D; font-size:5rem"></i>
                             </div>
@@ -167,13 +172,14 @@ if (isset($_SESSION['patient_id'])) {
                             <div class="modal-subtitle"
                                 style="display: flex; justify-content: center; align-items: center; text-align: center; width: 100%;">
                             </div>
-                        </div>
-                        <div class="modal-buttons">
+
+                            <div class="pt-3"></div>
                             <button type="button" class="btn btn-secondary" id="login-close-modal" data-dismiss="modal"
                                 style="background-color: #E13F3D; 
-                    font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Close</button>
+                                font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Close</button>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -224,7 +230,7 @@ if (isset($_SESSION['patient_id'])) {
         </script>
 
         <script src="scripts/script.js"></script>
-        <!-- <script src="scripts/loader.js"></script> -->
+        <script src="scripts/loader.js"></script>
     </body>
 
     </html>

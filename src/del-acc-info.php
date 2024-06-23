@@ -32,9 +32,9 @@ if (isset($_SESSION['patient_id'])) {
     </head>
 
     <body>
-        <!-- <div class="loader">
+       <div class="loader">
             <img src="images/loader.gif">
-        </div> -->
+        </div>
 
         <div class="main-content">
 
@@ -145,7 +145,7 @@ if (isset($_SESSION['patient_id'])) {
         </script>
 
         <script src="scripts/script.js"></script>
-        <!-- <script src="scripts/loader.js"></script> -->
+        <script src="scripts/loader.js"></script>
     </body>
 
     </html>

@@ -45,9 +45,9 @@ if (isset($_SESSION['patient_id'])) {
     </head>
 
     <body>
-        <!-- <div class="loader">
+        <div class="loader">
             <img src="images/loader.gif">
-        </div> -->
+        </div>
 
         <div class="main-content">
 
@@ -159,7 +159,7 @@ if (isset($_SESSION['patient_id'])) {
                 data-bs-keyboard="false">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <div class="modal-body">
+                        <div class="modal-body d-flex flex-column justify-content-center align-items-center">
                             <div class="modal-middle-icon">
                                 <img src="images/check.gif" style="width: 7rem; height: auto;" alt="Check Icon">
                             </div>
@@ -175,25 +175,31 @@ if (isset($_SESSION['patient_id'])) {
             <div class="modal" id="loginFailed" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <div class="modal-body">
+                        <div class="modal-body d-flex flex-column justify-content-center align-items-center">
                             <div class="modal-middle-icon">
                                 <i class="bi bi-x-circle-fill" style="color:#E13F3D; font-size:5rem"></i>
                             </div>
                             <div class="modal-title">Oops!</div>
-                            <div class="modal-subtitle" style="display: flex; justify-content: center; align-items: center; text-align: center; width: 100%;"></div>
-                        </div>
-                        <div class="modal-buttons">
+                            <div class="modal-subtitle"
+                                style="display: flex; justify-content: center; align-items: center; text-align: center; width: 100%;">
+                            </div>
+
+                            <div class="pt-3"></div>
                             <button type="button" class="btn btn-secondary" id="login-close-modal" data-dismiss="modal"
                                 style="background-color: #E13F3D; 
-                    font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Close</button>
+                                font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Close</button>
                         </div>
                     </div>
+
                 </div>
             </div>
+        </div>
 
         </div>
         <script src="scripts/password-validations.js"></script>
         <script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="scripts/script.js"></script>
+        <script src="scripts/loader.js"></script>
 
         <script>
 
@@ -227,7 +233,7 @@ if (isset($_SESSION['patient_id'])) {
                 });
             });
 
-            
+
 
             // Close Modal
             $(document).ready(function () {
