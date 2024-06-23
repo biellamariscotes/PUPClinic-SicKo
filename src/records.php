@@ -14,14 +14,16 @@ if (isset($_GET['download'])) {
     $result = mysqli_query($conn, $query);
 
     // Create new PDF document with landscape orientation and margins
-    $pdf = new TCPDF('L', 'mm', 'A3', true, 'UTF-8', false);
+    $pdf = new TCPDF('L', 'mm', array(297, 480), true, 'UTF-8', false);
     $pdf->SetCreator('SicKo');
     $pdf->SetTitle('Treatment Records');
-    $pdf->SetHeaderData('', 0, 'SicKo - PUP Clinic', '');
 
     // Add a page with custom margins
     $pdf->SetMargins(15, 15, 15); // 15mm margin on all sides
     $pdf->AddPage();
+
+    // Add logo at the top left corner
+    $pdf->Image('images/sicko-logo.jpg', 15, 3, 20, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
     // Set font
     $pdf->SetFont('helvetica', '', 12);
@@ -30,22 +32,34 @@ if (isset($_GET['download'])) {
     $pdf->SetY(15); // Adjust the value as per your requirement
 
     // Add header
+    $pdf->SetY(15); // Increase the Y position to add top padding
     $pdf->Cell(0, 10, 'Treatment Records', 0, 1, 'C');
 
-    // Add margin between header and table
-    $pdf->Ln(10); // Add 10mm margin between header and table
+    // Add top padding to the header data
+    $pdf->SetY(3); // Increase the Y position to add top padding
+    $pdf->SetX(40); // Set X position to align left
+    $pdf->SetFont('helvetica', 'B', 12);
+    $pdf->Cell(0, 10, 'SicKo - PUP Clinic', 0, 1, 'L');
 
-    // Add a table
+    // Add margin between header and table
+    $pdf->Ln(15); // Add 10mm margin between header and table
+
+    // Add a table header
     $pdf->SetFont('helvetica', 'B', 10);
     $pdf->Cell(60, 10, 'Patient Name', 1, 0, 'C');
     $pdf->Cell(15, 10, 'Age', 1, 0, 'C');
     $pdf->Cell(40, 10, 'Course', 1, 0, 'C');
     $pdf->Cell(20, 10, 'Section', 1, 0, 'C');
     $pdf->Cell(20, 10, 'Gender', 1, 0, 'C');
-    $pdf->Cell(100, 10, 'Symptoms', 1, 0, 'C');
+    $pdf->Cell(70, 10, 'Symptoms', 1, 0, 'C');
     $pdf->Cell(40, 10, 'Diagnosis', 1, 0, 'C');
     $pdf->Cell(50, 10, 'Treatments', 1, 0, 'C');
-    $pdf->Cell(40, 10, 'Date', 1, 1, 'C');
+    $pdf->Cell(40, 10, 'Date', 1, 0, 'C');
+    $pdf->Cell(30, 10, 'Excuse Letter', 1, 0, 'C');
+    $pdf->Cell(30, 10, 'Clearance Letter', 1, 0, 'C');
+    $pdf->Cell(30, 10, 'Referral Letter', 1, 1, 'C'); // '1' for newline after this cell
+
+    // Reset font for data rows
     $pdf->SetFont('helvetica', '', 10);
 
     // Populate the table with data from the database
@@ -55,11 +69,14 @@ if (isset($_GET['download'])) {
         $pdf->Cell(40, 10, $row['course'], 1, 0, 'C');
         $pdf->Cell(20, 10, $row['section'], 1, 0, 'C');
         $pdf->Cell(20, 10, $row['sex'], 1, 0, 'C');
-        $pdf->Cell(100, 10, ucfirst(strtolower($row['symptoms'])), 1, 0, 'L');
+        $pdf->Cell(70, 10, ucfirst(strtolower($row['symptoms'])), 1, 0, 'L');
         $pdf->Cell(40, 10, ucfirst(strtolower($row['diagnosis'])), 1, 0, 'L');
         $pdf->Cell(50, 10, ucfirst(strtolower($row['treatments'])), 1, 0, 'L');
         $formattedDate = date('M d, Y', strtotime($row["date"]));
-        $pdf->Cell(40, 10, $formattedDate, 1, 1, 'C');
+        $pdf->Cell(40, 10, $formattedDate, 1, 0, 'C');
+        $pdf->Cell(30, 10, $row['excuse_letter'], 1, 0, 'C');
+        $pdf->Cell(30, 10, $row['clearance_letter'], 1, 0, 'C');
+        $pdf->Cell(30, 10, $row['referral_letter'], 1, 1, 'C'); // '1' for newline after this cell
     }
 
     // Output the PDF as a download
