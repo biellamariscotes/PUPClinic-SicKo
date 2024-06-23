@@ -74,6 +74,10 @@ $record_id = isset($_GET['record_id']) ? $_GET['record_id'] : '';
     #generate-endorsement-button:hover {
         background-color: #1D434E;
     }
+
+    select {
+        appearance: none;
+    }
 </style>
 
 <body>

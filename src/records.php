@@ -217,9 +217,6 @@ $nextPage = min($totalPages, $currentPage + 1);
         }
 
     select {
-        -webkit-appearance: none;
-        -moz-appearance: none; 
-        appearance: none; 
         padding: 0.375rem 1.5rem 0.375rem 0.75rem;
         border: 1px solid #ddd;
         border-radius: 4px;
@@ -313,14 +310,14 @@ $nextPage = min($totalPages, $currentPage + 1);
         <div class="content" id="content">
             <div class="med-reports-header">
                 <div class="med-reports-header-box">
-                    <div class="medreports-header-text">Quarterly Reports</div>
+                    <div class="medreports-header-text">All Records</div>
                     <div class="medreports-sorting-button" id="medReportsortingButton">
                         <form method="GET">
                             <input type="hidden" name="sort" value="<?php echo htmlspecialchars($sortingCriteria); ?>">
                             <select name="academic_year" id="medReportsortCriteria"
                                 style="font-family: 'Poppins', sans-serif; font-weight: bold;"
                                 onchange="this.form.submit()">
-                                <option value="" selected>Academic Year</option>
+                                <option value="" disabled selected hidden>Academic Year</option>
                                 <option value="2025" <?php echo $selectedAcademicYear == '2025' ? 'selected' : ''; ?>>2024-2025</option>
                                 <option value="2024" <?php echo $selectedAcademicYear == '2024' ? 'selected' : ''; ?>>2023-2024</option>
                                 <option value="2023" <?php echo $selectedAcademicYear == '2023' ? 'selected' : ''; ?>>2022-2023</option>

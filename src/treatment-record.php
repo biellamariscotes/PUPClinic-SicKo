@@ -145,10 +145,34 @@ mysqli_close($conn);
         color: #999; /* Light gray text color */
         pointer-events: none; /* Disable interaction */
     }
+
+    select:focus {
+        outline: none;
+        transition: border 0.3s, box-shadow 0.3s;
+        }
+
+    select {
+        cursor: pointer;
+          /* General styling */
+            height: 30px;
+            width: 100px;
+            border-radius: 0;
+            padding-left: 10px;
+
+            /* Removes the default <select> styling */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+
+            /* Positions background arrow image */
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAh0lEQVQ4T93TMQrCUAzG8V9x8QziiYSuXdzFC7h4AcELOPQAdXYovZCHEATlgQV5GFTe1ozJlz/kS1IpjKqw3wQBVyy++JI0y1GTe7DCBbMAckeNIQKk/BanALBB+16LtnDELoMcsM/BESDlz2heDR3WePwKSLo5eoxz3z6NNcFD+vu3ij14Aqz/DxGbKB7CAAAAAElFTkSuQmCC');
+            background-repeat: no-repeat;
+            background-position: calc(100% - 20px) center; /* Adjust '20px' to the amount of padding you want */
+    }
 </style>
 
 <body>
-    <div class="loader d-flex">
+    <div class="loader">
         <img src="images/loader.gif">
     </div>
     
@@ -306,44 +330,7 @@ mysqli_close($conn);
     ?>
     <script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="scripts/script.js"></script>
-
-    <!-- LOADER -->
-    <script>
-                function simulateContentLoading() {
-                    showLoader();
-                    setTimeout(function () {
-                        hideLoader();
-                        showContent();
-                    }, 3000);
-                }
-
-                function showLoader() {
-                    console.log("Showing loader.");
-                    document.querySelector('.loader').classList.add('visible');
-                }
-
-                function hideLoader() {
-                    console.log("Hiding loader with transition.");
-                    const loader = document.querySelector('.loader');
-                    loader.style.transition = 'opacity 0.5s ease-out';
-                    loader.style.opacity = '0';
-                    loader.addEventListener('transitionend', function (event) {
-                        if (event.propertyName === 'opacity') {
-                            loader.classList.remove('d-flex');
-                            loader.style.display = 'none';
-                        }
-                    });
-                }
-
-                function showContent() {
-                    console.log("Showing content.");
-                    const body = document.querySelector('.main-content');
-                    body.style.display = 'block';
-                }
-                simulateContentLoading();
-            </script>
-
-            <!-- END OF LOADER -->
+    <script src="scripts/loader.js"></script>
 
 
     <script>

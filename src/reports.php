@@ -57,7 +57,7 @@ if ($selectedAcademicYear) {
                             <select name="academic_year" id="medReportsortCriteria"
                                 style="font-family: 'Poppins', sans-serif; font-weight: bold;"
                                 onchange="this.form.submit()">
-                                <option value="" selected>Academic Year</option>
+                                <option value="" disabled selected hidden>Academic Year</option>
                                 <option value="2025" <?php echo $selectedAcademicYear == '2025' ? 'selected' : ''; ?>>2024-2025</option>
                                 <option value="2024" <?php echo $selectedAcademicYear == '2024' ? 'selected' : ''; ?>>2023-2024</option>
                                 <option value="2023" <?php echo $selectedAcademicYear == '2023' ? 'selected' : ''; ?>>2022-2023</option>
