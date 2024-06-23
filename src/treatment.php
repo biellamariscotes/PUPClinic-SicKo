@@ -107,32 +107,9 @@ if (isset($_SESSION['patient_id'])) {
         </div>
 
         <div class="main-content">
-            <div class="row nav-bar px-6">
-                <div class="col-md-6 nav-bar-left d-flex align-items-center">
-                    <a href="home.php"><img src="images/sicko-logo.png" class="me-4 my-2"></a>
-                    <div class="fw-bold fs-4 d-flex flex-column white" style="padding: 0;">
-                        SicKo
-                    </div>
-                </div>
-
-                <div class="col-md-6 d-flex justify-content-end nav-bar-right">
-                    <i class="fa-solid fa-bell white d-flex align-items-center" style="margin-right: 40px"></i>
-                    <div class="ml-5 initials-cont d-flex align-items-center">
-                        <p class="initials fs-5 fw-semibold" style="margin: 10px 10px 0px 0px"><?= $initials; ?></p></a>
-                    </div>
-
-                    <div class="dropdown user-profile d-flex align-items-center">
-                        <button class="btn white" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                            <?= $row['first_name'] . ' ' . $row['last_name']; ?>
-                            <i class="pl-1 fas fa-chevron-down main-color fs-6" style="margin-left: 10px"></i>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                            <li class="px-xl-2"><a class="dropdown-item" href="#">Profile</a></li>
-                            <li class="px-xl-2"><a class="dropdown-item" href="user-logout.php">Log Out</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <?php
+            include ('includes/student-topbar.php');
+            ?>
 
             <div class="container mt-5">
                 <div class="row">
@@ -145,7 +122,8 @@ if (isset($_SESSION['patient_id'])) {
 
             <div class="mt-2 col-md-9 container">
                 <div class="">
-                    <div class="row d-flex flex-wrap align-items-center treatment-slider" style="margin: .5rem 1rem 0rem 1rem">
+                    <div class="row d-flex flex-wrap align-items-center treatment-slider"
+                        style="margin: .5rem 1rem 0rem 1rem">
                         <?php
                         if (!empty($records)) {
                             foreach ($records as $all_record) {
@@ -195,7 +173,6 @@ if (isset($_SESSION['patient_id'])) {
         <script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
         <script src="scripts/script.js"></script>
-        <script src="scripts/calendar.js"></script>
         <script src="scripts/loader.js"></script>
         <script>
             $(document).ready(function () {
@@ -254,6 +231,10 @@ if (isset($_SESSION['patient_id'])) {
                     $(`.card-box[data-record-id=${initialRecordId}]`).addClass('selected-card');
                     scrollToCard(initialRecordId);
                 }
+
+                $('#profile-link').on('click', function (event) {
+                    window.location.href = 'student-profile.php';
+                });
             });
 
 

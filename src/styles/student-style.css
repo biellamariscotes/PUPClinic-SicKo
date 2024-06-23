@@ -224,6 +224,7 @@ nav-bar-left img {
 }
 
 .initials {
+  color: #058789 !important;
   border-radius: 5px;
   padding: 4px 10px 5px 10px; /* Adjust padding as needed */
   background-color: #fff;
