@@ -71,6 +71,10 @@ if (isset($_SESSION['patient_id'])) {
             href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
 
         <style>
+            .nav-bar a {
+                text-decoration: none;
+            }
+
             .card-box {
                 background-color: #f8f9fa;
                 border-radius: 8px;

@@ -11,7 +11,7 @@
     </div>
 
     <div class="col-md-6 d-flex justify-content-end nav-bar-right">
-        <i class="fa-solid fa-bell white d-flex align-items-center" style="margin-right: 40px"></i>
+        <!-- <i class="fa-solid fa-bell white d-flex align-items-center" style="margin-right: 40px"></i> -->
 
         <div class="ml-5 d-flex align-items-center">
             <p class="initials fs-5 fw-semibold" style="margin: 10px 10px 0px 0px;"><?= $initials; ?></p></a>

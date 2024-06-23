@@ -261,7 +261,7 @@ $result = mysqli_query($conn, $query);
                                     <div class="button-group" style="justify-content: space-between; gap: 35rem;">
                                         <span class="delete-records-link" id="delete-toggle-link" onclick="toggleDeleteMode()" style="color: #D22B2B;">
                                             <i class="bi bi-trash" style="color: #D22B2B; font-size: 1rem; margin-right: 0.625rem; vertical-align: middle;"></i>
-                                            Delete Records
+                                            Delete Patients
                                         </span>
 
                                         <!-- Sorting and Pagination Container -->
