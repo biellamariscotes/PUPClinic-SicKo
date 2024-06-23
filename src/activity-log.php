@@ -1,24 +1,39 @@
 <?php
-require_once ('includes/session-nurse.php');
-require_once ('includes/connect.php');
+require_once('includes/session-nurse.php');
+require_once('includes/connect.php');
 
+// Default sorting order
+$sort_order = "ASC"; // Default to oldest to latest
 
-// Fetch activity log records with pagination
-$query = "SELECT fullname, DATE_FORMAT(date, '%M %d, %Y') as formatted_date, DATE_FORMAT(date, '%h:%i %p') as formatted_time, action 
-          FROM activity_log 
-          ORDER BY date ASC";
-$result = mysqli_query($conn, $query);
-
-// Group activities by date
-$activitiesByDate = [];
-while ($row = mysqli_fetch_assoc($result)) {
-    $date = $row['formatted_date'];
-    if (!isset($activitiesByDate[$date])) {
-        $activitiesByDate[$date] = [];
+// Check if user selected a sort option
+if (isset($_GET['medReportsortCriteria'])) {
+    switch ($_GET['medReportsortCriteria']) {
+        case 'latest-oldest':
+            $sort_order = "DESC"; // Latest to oldest
+            break;
+        case 'oldest-latest':
+            $sort_order = "ASC"; // Oldest to latest
+            break;
+        default:
+            $sort_order = "ASC"; // Default to oldest to latest
+            break;
     }
-    $activitiesByDate[$date][] = $row;
 }
 
+// Fetch activity log records with correct sorting order
+$query = "SELECT fullname, DATE_FORMAT(date, '%M %d, %Y') as formatted_date, DATE_FORMAT(date, '%h:%i %p') as formatted_time, action 
+          FROM activity_log 
+          ORDER BY date $sort_order";
+$result = mysqli_query($conn, $query);
+
+// Initialize array to store activities grouped by date
+$activitiesByDate = [];
+
+// Fetch and group activities by date
+while ($row = mysqli_fetch_assoc($result)) {
+    $date = $row['formatted_date'];
+    $activitiesByDate[$date][] = $row;
+}
 ?>
 
 <!DOCTYPE html>
@@ -126,6 +141,7 @@ li p {
   top: 30px;
   left: -38px;
   transition: 1.5s ease;
+  cursor: pointer;
 }
 .timeline-innerline {
   position: absolute;
@@ -141,7 +157,7 @@ li p {
 
 @media screen and (min-width: 728px) {
   .timeline {
-    display: block;
+    display: inline-block;
   }
   ul {
     flex-direction: row;
@@ -175,6 +191,7 @@ li p {
     top: -2.5rem;
     left: 40%;
     transition: 1.5s ease;
+    cursor: pointer;
   }
 
   .timeline-line {
@@ -183,6 +200,7 @@ li p {
   }
 
   .timeline-innerline {
+    display: inline;
     position: absolute;
     background: #058789;
     width: 0%;
@@ -221,42 +239,39 @@ li p {
                         <span style="color: #058789; font-size: 2rem;">Log</span>
                     </div>
                     <div class="medreports-sorting-button" id="medReportsortingButton">
-                        <form method="GET">
-                            <select name="academic_year" id="medReportsortCriteria"
-                                style="font-family: 'Poppins', sans-serif; font-weight: bold;"
-                                onchange="this.form.submit()">
-                                <option value="" disabled selected hidden>Sort by</option>
-                                <option value="latest-oldest">Latest to Oldest</option>
-                                <option value="oldest-latest">Oldest to Latest</option>
-                            </select>
-                        </form>
+                    <form method="GET">
+                    <select name="medReportsortCriteria" id="medReportsortCriteria" style="font-family: 'Poppins', sans-serif; font-weight: bold;" onchange="this.form.submit()">
+                      <option value="" disabled selected hidden>Sort by</option>
+                      <option value="latest-oldest" <?php if(isset($_GET['medReportsortCriteria']) && $_GET['medReportsortCriteria'] == 'latest-oldest') echo 'selected'; ?>>Latest to Oldest</option>
+                      <option value="oldest-latest" <?php if(isset($_GET['medReportsortCriteria']) && $_GET['medReportsortCriteria'] == 'oldest-latest') echo 'selected'; ?>>Oldest to Latest</option>
+                    </select>
+                    </form>
                     </div>
                 </div>
             </div>
 
             <?php foreach ($activitiesByDate as $date => $activities): ?>
-                <div class="activitylog-body">
-                    <div class="activitylog-box">
-                        <div class="activitylog-date"><?php echo $date; ?></div>
-                        <div class="activitylog-container"> 
-                            <section class="timeline">
-                                <div class="timeline-line">
-                                    <span class="timeline-innerline"></span>
-                                </div>
-
-                                <ul>
+            <div class="activitylog-body">
+                <div class="activitylog-box">
+                    <div class="activitylog-date"><?php echo $date; ?></div>
+                    <div class="activitylog-container">
+                        <section class="timeline">
+                            <div class="timeline-line">
+                                <span class="timeline-innerline"></span>
+                            </div>
+                            <ul>
                                 <?php foreach ($activities as $activity): ?>
-                                    <li>
-                                        <span class="timeline-point"></span>
-                                        <span class="date"><?php echo $activity['formatted_time']; ?></span>
-                                        <p>You <b style="font-weight: 600;"><?php echo $activity['action']; ?></b></p>
-                                    </li>
+                                <li>
+                                    <span class="timeline-point"></span>
+                                    <span class="date"><?php echo $activity['formatted_time']; ?></span>
+                                    <p>You <b style="font-weight: 600;"><?php echo $activity['action']; ?></b></p>
+                                </li>
                                 <?php endforeach; ?>
-                                </ul>
-                            </section>
-                        </div>
+                            </ul>
+                        </section>
                     </div>
                 </div>
+            </div>
             <?php endforeach; ?>
 
             <?php include ('includes/footer.php'); ?>
@@ -267,118 +282,84 @@ li p {
 <script src="scripts/script.js"></script>
 <script src="scripts/loader.js"></script>
 
-<script> 
-    document.addEventListener("DOMContentLoaded", function () {
-  const timelines = document.querySelectorAll(".timeline");
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const timelines = document.querySelectorAll(".timeline");
 
-  timelines.forEach((timeline) => {
-    const line = timeline.querySelector(".timeline-innerline");
-    let i = 0;
-    let i2 = 1;
-    const target1 = timeline.querySelector("ul");
-    const target2 = timeline.querySelectorAll("ul li");
-    const timeline_events = timeline.querySelectorAll("ul li");
+    timelines.forEach((timeline) => {
+      const line = timeline.querySelector(".timeline-innerline");
+      const timeline_events = timeline.querySelectorAll("ul li");
 
-    function showTime(e) {
-      e.setAttribute("done", "true");
-      e.querySelector(".timeline-point").style.background = "#058789";
-      e.querySelector(".date").style.opacity = "100%";
-      e.querySelector("p").style.opacity = "100%";
-      e.querySelector("p").style.transform = "translateY(0px)";
-    }
-
-    function hideTime(e) {
-      e.removeAttribute("done");
-      e.querySelector(".timeline-point").style.background = "rgb(228, 228, 228)";
-      e.querySelector(".date").style.opacity = "0%";
-      e.querySelector("p").style.opacity = "0%";
-      e.querySelector("p").style.transform = "translateY(-10px)";
-    }
-
-    function slowLoop() {
-      setTimeout(function () {
-        showTime(timeline_events[i]);
-        timelineProgress(i + 1);
-        i++;
-        if (i < timeline_events.length) {
-          slowLoop();
-        }
-      }, 800);
-    }
-
-    function timelineProgress(value) {
-      let progress = `${(value / timeline_events.length) * 100}%`;
-      if (window.matchMedia("(min-width: 728px)").matches) {
-        line.style.width = progress;
-        line.style.height = "4px";
-      } else {
-        line.style.height = progress;
-        line.style.width = "4px";
+      function showTime(e) {
+        e.setAttribute("done", "true");
+        e.querySelector(".timeline-point").style.background = "#058789";
+        e.querySelector(".date").style.opacity = "100%";
+        e.querySelector("p").style.opacity = "100%";
+        e.querySelector("p").style.transform = "translateY(0px)";
       }
-    }
 
-    let observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.intersectionRatio > 0.9) {
-            if (window.matchMedia("(min-width: 728px)").matches) {
-              slowLoop();
-            } else {
-              showTime(entry.target);
-              timelineProgress(i2);
-              i2++;
-            }
-            observer.unobserve(entry.target);
+      function hideTime(e) {
+        e.removeAttribute("done");
+        e.querySelector(".timeline-point").style.background = "rgb(228, 228, 228)";
+        e.querySelector(".date").style.opacity = "0%";
+        e.querySelector("p").style.opacity = "0%";
+        e.querySelector("p").style.transform = "translateY(-10px)";
+      }
+
+      function slowLoop() {
+        timeline_events.forEach((event, index) => {
+          setTimeout(() => {
+            showTime(event);
+            timelineProgress(index + 1);
+          }, index * 800);
+        });
+      }
+
+      function timelineProgress(value) {
+        let progress = `${(value / timeline_events.length) * 100}%`;
+        if (window.matchMedia("(min-width: 728px)").matches) {
+          line.style.width = progress;
+        } else {
+          line.style.height = progress;
+        }
+      }
+
+      slowLoop();
+
+      timeline_events.forEach((li, index) => {
+        li.addEventListener("click", () => {
+          if (li.getAttribute("done")) {
+            timelineProgress(index);
+
+            // hide all timeline events from last up to the point clicked
+            timeline_events.forEach((ev, idx) => {
+              if (idx >= index) {
+                hideTime(ev);
+              }
+            });
+          } else {
+            timelineProgress(index + 1);
+            // show all timeline events from first up to the point clicked
+            timeline_events.forEach((ev, idx) => {
+              if (idx <= index) {
+                showTime(ev);
+              }
+            });
           }
         });
-      },
-      { threshold: 1, rootMargin: "0px 0px -50px 0px" }
-    );
-
-    if (window.matchMedia("(min-width: 728px)").matches) {
-      observer.observe(target1);
-    } else {
-      target2.forEach((t) => {
-        observer.observe(t);
       });
-    }
 
-    timeline_events.forEach((li, index) => {
-      li.addEventListener("click", () => {
-        if (li.getAttribute("done")) {
-          timelineProgress(index);
-
-          // hide all timeline events from last up to the point clicked
-          timeline_events.forEach((ev, idx) => {
-            if (idx >= index) {
-              hideTime(ev);
-            }
-          });
-        } else {
-          timelineProgress(index + 1);
-          // show all timeline events from first up to the point clicked
-          timeline_events.forEach((ev, idx) => {
-            if (idx <= index) {
-              showTime(ev);
-            }
-          });
-        }
+      var doit;
+      window.addEventListener("resize", () => {
+        clearTimeout(doit);
+        doit = setTimeout(resizeEnd, 1200);
       });
-    });
 
-    var doit;
-    window.addEventListener("resize", () => {
-      clearTimeout(doit);
-      doit = setTimeout(resizeEnd, 1200);
+      function resizeEnd() {
+        slowLoop();
+      }
     });
-
-    function resizeEnd() {
-      i = 0;
-      slowLoop();
-    }
   });
-});
-
 </script>
 </body>
 

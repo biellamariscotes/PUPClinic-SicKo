@@ -51,7 +51,7 @@ if ($selectedAcademicYear) {
         <div class="content" id="content">
             <div class="med-reports-header">
                 <div class="med-reports-header-box">
-                    <div class="medreports-header-text">Quarterly Reports</div>
+                    <div class="medreports-header-text"><span style="color: #E13F3D;">Quarterly</span> Reports</div>
                     <div class="medreports-sorting-button" id="medReportsortingButton">
                         <form method="GET">
                             <select name="academic_year" id="medReportsortCriteria"
