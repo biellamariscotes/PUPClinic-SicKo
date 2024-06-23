@@ -414,8 +414,7 @@ $nextPage = min($totalPages, $currentPage + 1);
             </div>
         </div>
     </div>
-
-
+    
             <div class="header-middle" style="margin: 0 20px 0 20px;">Quarterly Report</div>
 
             <!-- First Quarter -->
@@ -522,87 +521,125 @@ $nextPage = min($totalPages, $currentPage + 1);
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">January</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        $query_jan = "SELECT diagnosis, COUNT(*) AS count 
-                                                      FROM treatment_record 
-                                                      WHERE MONTH(date) = 1";
+                                        // Query and display all diagnoses count for April
+                                        $query_jan_all = "SELECT COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 1";
 
                                         if (!empty($selectedAcademicYear)) {
-                                            $query_jan .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                            $query_jan_all .= " AND date BETWEEN '$startDate' AND '$endDate'";
                                         }
 
-                                        $query_jan .= " GROUP BY diagnosis 
-                                                        ORDER BY count DESC 
-                                                        LIMIT 1";
+                                        $result_jan_all = mysqli_query($conn, $query_jan_all);
+                                        $row_jan_all = mysqli_fetch_assoc($result_jan_all);
+                                        echo $row_jan_all['count'];
+                                        ?>
+                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">
+                                        <?php
+                                        $query_jan_lead = "SELECT diagnosis, COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 1";
 
-                                        $result_jan = mysqli_query($conn, $query_jan);
-                                        if ($row_jan = mysqli_fetch_assoc($result_jan)) {
-                                            echo $row_jan['count'];
-                                            $leading_diagnosis_jan = $row_jan['diagnosis'];
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_jan_lead .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_jan_lead .= " GROUP BY diagnosis 
+                                                            ORDER BY count DESC 
+                                                            LIMIT 1";
+
+                                        $result_jan_lead = mysqli_query($conn, $query_jan_lead);
+                                        if ($row_jan_lead = mysqli_fetch_assoc($result_jan_lead)) {
+                                            echo $row_jan_lead['diagnosis'];
                                         } else {
                                             echo "No data";
-                                            $leading_diagnosis_jan = "No data";
                                         }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_jan; ?></div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">February</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        $query_feb = "SELECT diagnosis, COUNT(*) AS count 
-                                                      FROM treatment_record 
-                                                      WHERE MONTH(date) = 2";
+                                        $query_feb_all = "SELECT COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 2";
 
                                         if (!empty($selectedAcademicYear)) {
-                                            $query_feb .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                            $query_feb_all .= " AND date BETWEEN '$startDate' AND '$endDate'";
                                         }
 
-                                        $query_feb .= " GROUP BY diagnosis 
-                                                        ORDER BY count DESC 
-                                                        LIMIT 1";
+                                        $result_feb_all = mysqli_query($conn, $query_feb_all);
+                                        $row_feb_all = mysqli_fetch_assoc($result_feb_all);
+                                        echo $row_feb_all['count'];
+                                        ?>
+                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">
+                                        <?php
+                                        $query_feb_lead = "SELECT diagnosis, COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 2";
 
-                                        $result_feb = mysqli_query($conn, $query_feb);
-                                        if ($row_feb = mysqli_fetch_assoc($result_feb)) {
-                                            echo $row_feb['count'];
-                                            $leading_diagnosis_feb = $row_feb['diagnosis'];
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_feb_lead .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_feb_lead .= " GROUP BY diagnosis 
+                                                            ORDER BY count DESC 
+                                                            LIMIT 1";
+
+                                        $result_feb_lead = mysqli_query($conn, $query_feb_lead);
+                                        if ($row_feb_lead = mysqli_fetch_assoc($result_feb_lead)) {
+                                            echo $row_feb_lead['diagnosis'];
                                         } else {
                                             echo "No data";
-                                            $leading_diagnosis_feb = "No data";
                                         }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_feb; ?></div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">March</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        $query_mar = "SELECT diagnosis, COUNT(*) AS count 
-                                                      FROM treatment_record 
-                                                      WHERE MONTH(date) = 3";
+                                        // Query and display all diagnoses count for June
+                                        $query_mar_all = "SELECT COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 3";
 
                                         if (!empty($selectedAcademicYear)) {
-                                            $query_mar .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                            $query_mar_all .= " AND date BETWEEN '$startDate' AND '$endDate'";
                                         }
 
-                                        $query_mar .= " GROUP BY diagnosis 
-                                                        ORDER BY count DESC 
-                                                        LIMIT 1";
+                                        $result_mar_all = mysqli_query($conn, $query_mar_all);
+                                        $row_mar_all = mysqli_fetch_assoc($result_mar_all);
+                                        echo $row_mar_all['count'];
+                                        ?>
+                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">
+                                        <?php
+                                        $query_mar_lead = "SELECT diagnosis, COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 3";
 
-                                        $result_mar = mysqli_query($conn, $query_mar);
-                                        if ($row_mar = mysqli_fetch_assoc($result_mar)) {
-                                            echo $row_mar['count'];
-                                            $leading_diagnosis_mar = $row_mar['diagnosis'];
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_mar_lead .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_mar_lead .= " GROUP BY diagnosis 
+                                                            ORDER BY count DESC 
+                                                            LIMIT 1";
+
+                                        $result_mar_lead = mysqli_query($conn, $query_mar_lead);
+                                        if ($row_mar_lead = mysqli_fetch_assoc($result_mar_lead)) {
+                                            echo $row_mar_lead['diagnosis'];
                                         } else {
                                             echo "No data";
-                                            $leading_diagnosis_mar = "No data";
                                         }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_mar; ?></div>
                                 </div>
                             </div>
                         </div>
@@ -714,87 +751,129 @@ $nextPage = min($totalPages, $currentPage + 1);
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">April</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        $query_apr = "SELECT diagnosis, COUNT(*) AS count 
-                                                      FROM treatment_record 
-                                                      WHERE MONTH(date) = 4";
+                                        // Query and display all diagnoses count for April
+                                        $query_apr_all = "SELECT COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 4";
 
                                         if (!empty($selectedAcademicYear)) {
-                                            $query_apr .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                            $query_apr_all .= " AND date BETWEEN '$startDate' AND '$endDate'";
                                         }
 
-                                        $query_apr .= " GROUP BY diagnosis 
-                                                        ORDER BY count DESC 
-                                                        LIMIT 1";
+                                        $result_apr_all = mysqli_query($conn, $query_apr_all);
+                                        $row_apr_all = mysqli_fetch_assoc($result_apr_all);
+                                        echo $row_apr_all['count'];
+                                        ?>
+                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">
+                                        <!-- Display the leading diagnosis for April -->
+                                        <?php
+                                        $query_apr_lead = "SELECT diagnosis, COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 4";
 
-                                        $result_apr = mysqli_query($conn, $query_apr);
-                                        if ($row_apr = mysqli_fetch_assoc($result_apr)) {
-                                            echo $row_apr['count'];
-                                            $leading_diagnosis_apr = $row_apr['diagnosis'];
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_apr_lead .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_apr_lead .= " GROUP BY diagnosis 
+                                                            ORDER BY count DESC 
+                                                            LIMIT 1";
+
+                                        $result_apr_lead = mysqli_query($conn, $query_apr_lead);
+                                        if ($row_apr_lead = mysqli_fetch_assoc($result_apr_lead)) {
+                                            echo $row_apr_lead['diagnosis'];
                                         } else {
                                             echo "No data";
-                                            $leading_diagnosis_apr = "No data";
                                         }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_apr; ?></div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">May</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        $query_may = "SELECT diagnosis, COUNT(*) AS count 
-                                                      FROM treatment_record 
-                                                      WHERE MONTH(date) = 5";
+                                        // Query and display all diagnoses count for May
+                                        $query_may_all = "SELECT COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 5";
 
                                         if (!empty($selectedAcademicYear)) {
-                                            $query_may .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                            $query_may_all .= " AND date BETWEEN '$startDate' AND '$endDate'";
                                         }
 
-                                        $query_may .= " GROUP BY diagnosis 
-                                                        ORDER BY count DESC 
-                                                        LIMIT 1";
+                                        $result_may_all = mysqli_query($conn, $query_may_all);
+                                        $row_may_all = mysqli_fetch_assoc($result_may_all);
+                                        echo $row_may_all['count'];
+                                        ?>
+                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">
+                                        <!-- Display the leading diagnosis for May -->
+                                        <?php
+                                        $query_may_lead = "SELECT diagnosis, COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 5";
 
-                                        $result_may = mysqli_query($conn, $query_may);
-                                        if ($row_may = mysqli_fetch_assoc($result_may)) {
-                                            echo $row_may['count'];
-                                            $leading_diagnosis_may = $row_may['diagnosis'];
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_may_lead .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_may_lead .= " GROUP BY diagnosis 
+                                                            ORDER BY count DESC 
+                                                            LIMIT 1";
+
+                                        $result_may_lead = mysqli_query($conn, $query_may_lead);
+                                        if ($row_may_lead = mysqli_fetch_assoc($result_may_lead)) {
+                                            echo $row_may_lead['diagnosis'];
                                         } else {
                                             echo "No data";
-                                            $leading_diagnosis_may = "No data";
                                         }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_may; ?></div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">June</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        $query_jun = "SELECT diagnosis, COUNT(*) AS count 
-                                                      FROM treatment_record 
-                                                      WHERE MONTH(date) = 6";
+                                        // Query and display all diagnoses count for June
+                                        $query_jun_all = "SELECT COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 6";
 
                                         if (!empty($selectedAcademicYear)) {
-                                            $query_jun .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                            $query_jun_all .= " AND date BETWEEN '$startDate' AND '$endDate'";
                                         }
 
-                                        $query_jun .= " GROUP BY diagnosis 
-                                                        ORDER BY count DESC 
-                                                        LIMIT 1";
+                                        $result_jun_all = mysqli_query($conn, $query_jun_all);
+                                        $row_jun_all = mysqli_fetch_assoc($result_jun_all);
+                                        echo $row_jun_all['count'];
+                                        ?>
+                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">
+                                        <!-- Display the leading diagnosis for June -->
+                                        <?php
+                                        $query_jun_lead = "SELECT diagnosis, COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 6";
 
-                                        $result_jun = mysqli_query($conn, $query_jun);
-                                        if ($row_jun = mysqli_fetch_assoc($result_jun)) {
-                                            echo $row_jun['count'];
-                                            $leading_diagnosis_jun = $row_jun['diagnosis'];
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_jun_lead .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_jun_lead .= " GROUP BY diagnosis 
+                                                            ORDER BY count DESC 
+                                                            LIMIT 1";
+
+                                        $result_jun_lead = mysqli_query($conn, $query_jun_lead);
+                                        if ($row_jun_lead = mysqli_fetch_assoc($result_jun_lead)) {
+                                            echo $row_jun_lead['diagnosis'];
                                         } else {
                                             echo "No data";
-                                            $leading_diagnosis_jun = "No data";
                                         }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_jun; ?></div>
                                 </div>
                             </div>
                         </div>
@@ -906,94 +985,129 @@ $nextPage = min($totalPages, $currentPage + 1);
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">July</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        $query_jul = "SELECT diagnosis, COUNT(*) AS count 
-                                                      FROM treatment_record 
-                                                      WHERE MONTH(date) = 7";
+                                        $query_jul_all = "SELECT COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 7";
 
                                         if (!empty($selectedAcademicYear)) {
-                                            $query_jul .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                            $query_jul_all .= " AND date BETWEEN '$startDate' AND '$endDate'";
                                         }
 
-                                        $query_jul .= " GROUP BY diagnosis 
-                                                        ORDER BY count DESC 
-                                                        LIMIT 1";
+                                        $result_jul_all = mysqli_query($conn, $query_jul_all);
+                                        $row_jul_all = mysqli_fetch_assoc($result_jul_all);
+                                        echo $row_jul_all['count'];
+                                        ?>
+                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">
+                                        <?php
+                                        $query_jul_lead = "SELECT diagnosis, COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 7";
 
-                                        $result_jul = mysqli_query($conn, $query_jul);
-                                        if ($row_jul = mysqli_fetch_assoc($result_jul)) {
-                                            echo $row_jul['count'];
-                                            $leading_diagnosis_jul = $row_jul['diagnosis'];
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_jul_lead .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_jul_lead .= " GROUP BY diagnosis 
+                                                            ORDER BY count DESC 
+                                                            LIMIT 1";
+
+                                        $result_jul_lead = mysqli_query($conn, $query_jul_lead);
+                                        if ($row_jul_lead = mysqli_fetch_assoc($result_jul_lead)) {
+                                            echo $row_jul_lead['diagnosis'];
                                         } else {
                                             echo "No data";
-                                            $leading_diagnosis_jul = "No data";
                                         }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_jul; ?></div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">August</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        $query_aug = "SELECT diagnosis, COUNT(*) AS count 
-                                                      FROM treatment_record 
-                                                      WHERE MONTH(date) = 8";
+                                        $query_aug_all = "SELECT COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 8";
 
                                         if (!empty($selectedAcademicYear)) {
-                                            $query_aug .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                            $query_aug_all .= " AND date BETWEEN '$startDate' AND '$endDate'";
                                         }
 
-                                        $query_aug .= " GROUP BY diagnosis 
-                                                        ORDER BY count DESC 
-                                                        LIMIT 1";
+                                        $result_aug_all = mysqli_query($conn, $query_aug_all);
+                                        $row_aug_all = mysqli_fetch_assoc($result_aug_all);
+                                        echo $row_aug_all['count'];
+                                        ?>
+                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">
+                                        <?php
+                                        $query_aug_lead = "SELECT diagnosis, COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 8";
 
-                                        $result_aug = mysqli_query($conn, $query_aug);
-                                        if ($row_aug = mysqli_fetch_assoc($result_aug)) {
-                                            echo $row_aug['count'];
-                                            $leading_diagnosis_aug = $row_aug['diagnosis'];
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_aug_lead .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_aug_lead .= " GROUP BY diagnosis 
+                                                            ORDER BY count DESC 
+                                                            LIMIT 1";
+
+                                        $result_aug_lead = mysqli_query($conn, $query_aug_lead);
+                                        if ($row_aug_lead = mysqli_fetch_assoc($result_aug_lead)) {
+                                            echo $row_aug_lead['diagnosis'];
                                         } else {
                                             echo "No data";
-                                            $leading_diagnosis_aug = "No data";
                                         }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_aug; ?></div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">September</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        $query_sep = "SELECT diagnosis, COUNT(*) AS count 
-                                                      FROM treatment_record 
-                                                      WHERE MONTH(date) = 9";
+                                        $query_sep_all = "SELECT COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 9";
 
                                         if (!empty($selectedAcademicYear)) {
-                                            $query_sep .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                            $query_sep_all .= " AND date BETWEEN '$startDate' AND '$endDate'";
                                         }
 
-                                        $query_sep .= " GROUP BY diagnosis 
-                                                        ORDER BY count DESC 
-                                                        LIMIT 1";
+                                        $result_sep_all = mysqli_query($conn, $query_sep_all);
+                                        $row_sep_all = mysqli_fetch_assoc($result_sep_all);
+                                        echo $row_sep_all['count'];
+                                        ?>
+                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">
+                                        <?php
+                                        $query_sep_lead = "SELECT diagnosis, COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 9";
 
-                                        $result_sep = mysqli_query($conn, $query_sep);
-                                        if ($row_sep = mysqli_fetch_assoc($result_sep)) {
-                                            echo $row_sep['count'];
-                                            $leading_diagnosis_sep = $row_sep['diagnosis'];
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_sep_lead .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_sep_lead .= " GROUP BY diagnosis 
+                                                            ORDER BY count DESC 
+                                                            LIMIT 1";
+
+                                        $result_sep_lead = mysqli_query($conn, $query_sep_lead);
+                                        if ($row_sep_lead = mysqli_fetch_assoc($result_sep_lead)) {
+                                            echo $row_sep_lead['diagnosis'];
                                         } else {
                                             echo "No data";
-                                            $leading_diagnosis_sep = "No data";
                                         }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_sep; ?></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>  
-
+            </div>
 
             <!-- Fourth Quarter -->
             <div class="quarterly-report-row" id="fourthQuarter">
@@ -1099,87 +1213,123 @@ $nextPage = min($totalPages, $currentPage + 1);
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">October</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        $query_oct = "SELECT diagnosis, COUNT(*) AS count 
-                                                      FROM treatment_record 
-                                                      WHERE MONTH(date) = 10";
+                                        $query_oct_all = "SELECT COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 10";
 
                                         if (!empty($selectedAcademicYear)) {
-                                            $query_oct .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                            $query_oct_all .= " AND date BETWEEN '$startDate' AND '$endDate'";
                                         }
 
-                                        $query_oct .= " GROUP BY diagnosis 
-                                                        ORDER BY count DESC 
-                                                        LIMIT 1";
+                                        $result_oct_all = mysqli_query($conn, $query_oct_all);
+                                        $row_oct_all = mysqli_fetch_assoc($result_oct_all);
+                                        echo $row_oct_all['count'];
+                                        ?>
+                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">
+                                        <?php
+                                        $query_oct_lead = "SELECT diagnosis, COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 10";
 
-                                        $result_oct = mysqli_query($conn, $query_oct);
-                                        if ($row_oct = mysqli_fetch_assoc($result_oct)) {
-                                            echo $row_oct['count'];
-                                            $leading_diagnosis_oct = $row_oct['diagnosis'];
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_oct_lead .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_oct_lead .= " GROUP BY diagnosis 
+                                                            ORDER BY count DESC 
+                                                            LIMIT 1";
+
+                                        $result_oct_lead = mysqli_query($conn, $query_oct_lead);
+                                        if ($row_oct_lead = mysqli_fetch_assoc($result_oct_lead)) {
+                                            echo $row_oct_lead['diagnosis'];
                                         } else {
                                             echo "No data";
-                                            $leading_diagnosis_oct = "No data";
                                         }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_oct; ?></div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">November</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        $query_nov = "SELECT diagnosis, COUNT(*) AS count 
-                                                      FROM treatment_record 
-                                                      WHERE MONTH(date) = 11";
+                                        $query_nov_all = "SELECT COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 11";
 
                                         if (!empty($selectedAcademicYear)) {
-                                            $query_nov .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                            $query_nov_all .= " AND date BETWEEN '$startDate' AND '$endDate'";
                                         }
 
-                                        $query_nov .= " GROUP BY diagnosis 
-                                                        ORDER BY count DESC 
-                                                        LIMIT 1";
+                                        $result_nov_all = mysqli_query($conn, $query_nov_all);
+                                        $row_nov_all = mysqli_fetch_assoc($result_nov_all);
+                                        echo $row_nov_all['count'];
+                                        ?>
+                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">
+                                        <?php
+                                        $query_nov_lead = "SELECT diagnosis, COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 11";
 
-                                        $result_nov = mysqli_query($conn, $query_nov);
-                                        if ($row_nov = mysqli_fetch_assoc($result_nov)) {
-                                            echo $row_nov['count'];
-                                            $leading_diagnosis_nov = $row_nov['diagnosis'];
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_nov_lead .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_nov_lead .= " GROUP BY diagnosis 
+                                                            ORDER BY count DESC 
+                                                            LIMIT 1";
+
+                                        $result_nov_lead = mysqli_query($conn, $query_nov_lead);
+                                        if ($row_nov_lead = mysqli_fetch_assoc($result_nov_lead)) {
+                                            echo $row_nov_lead['diagnosis'];
                                         } else {
                                             echo "No data";
-                                            $leading_diagnosis_nov = "No data";
                                         }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_nov; ?></div>
                                 </div>
 
                                 <div class="alter-third-row-result">
                                     <div class="alter-month" style="font-size: 25px; font-weight: bold;">December</div>
                                     <div class="alter-count" style="font-size: 15px; font-weight: 500;">
                                         <?php
-                                        $query_dec = "SELECT diagnosis, COUNT(*) AS count 
-                                                      FROM treatment_record 
-                                                      WHERE MONTH(date) = 12";
+                                        $query_dec_all = "SELECT COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 12";
 
                                         if (!empty($selectedAcademicYear)) {
-                                            $query_dec .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                            $query_dec_all .= " AND date BETWEEN '$startDate' AND '$endDate'";
                                         }
 
-                                        $query_dec .= " GROUP BY diagnosis 
-                                                        ORDER BY count DESC 
-                                                        LIMIT 1";
+                                        $result_dec_all = mysqli_query($conn, $query_dec_all);
+                                        $row_dec_all = mysqli_fetch_assoc($result_dec_all);
+                                        echo $row_dec_all['count'];
+                                        ?>
+                                    </div>
+                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;">
+                                        <?php
+                                        $query_dec_lead = "SELECT diagnosis, COUNT(*) AS count 
+                                                        FROM treatment_record 
+                                                        WHERE MONTH(date) = 12";
 
-                                        $result_dec = mysqli_query($conn, $query_dec);
-                                        if ($row_dec = mysqli_fetch_assoc($result_dec)) {
-                                            echo $row_dec['count'];
-                                            $leading_diagnosis_dec = $row_dec['diagnosis'];
+                                        if (!empty($selectedAcademicYear)) {
+                                            $query_dec_lead .= " AND date BETWEEN '$startDate' AND '$endDate'";
+                                        }
+
+                                        $query_dec_lead .= " GROUP BY diagnosis 
+                                                            ORDER BY count DESC 
+                                                            LIMIT 1";
+
+                                        $result_dec_lead = mysqli_query($conn, $query_dec_lead);
+                                        if ($row_dec_lead = mysqli_fetch_assoc($result_dec_lead)) {
+                                            echo $row_dec_lead['diagnosis'];
                                         } else {
                                             echo "No data";
-                                            $leading_diagnosis_dec = "No data";
                                         }
                                         ?>
                                     </div>
-                                    <div class="alter-diagnosis" style="font-size: 15px; font-weight: 500;"><?php echo $leading_diagnosis_dec; ?></div>
                                 </div>
                             </div>
                         </div>
