@@ -401,7 +401,7 @@ $nextPage = min($totalPages, $currentPage + 1);
                                         <!-- Sorting button box -->
                                         <div class="sorting-button-box" id="sortingButtonBox">
                                             <!-- Sort text -->
-                                            Sort by:
+                                            Filter by:
                                             <select id="sortCriteria" style="font-weight: bold;"
                                                 onchange="changeSortCriteria(this.value)">
                                                 <option value="annually" <?php echo ($sortingCriteria == 'annually') ? 'selected' : ''; ?>>Annually</option>
