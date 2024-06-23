@@ -476,7 +476,6 @@ body.sidebar-active {
   margin-top: 20px; /* Add some top margin */
   gap: 40px; /* Add space between the items */
   padding: 10px;
-  margin-bottom: 80px;
 }
 
 .health-tool {
@@ -555,7 +554,7 @@ body.sidebar-active {
   text-align: center;
   color: white; /* Example text color */
   width: 100%;
-  margin-top: auto;
+  margin-top: 5rem;
 }
 
 .footer-text {
@@ -975,7 +974,6 @@ button:disabled:hover {
   max-width: 1086px; /* Limit maximum width of form container */
   width: 100%; /* Ensure full width */
   margin: 0 auto; /* Center horizontally */
-  margin-bottom: 50px;
   display: flex;
   justify-content: center;
   font-family: 'Poppins', sans-serif;

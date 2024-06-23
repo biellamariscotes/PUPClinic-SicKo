@@ -80,15 +80,15 @@ if (isset($_SESSION['patient_id'])) {
                                     </div>
 
                                     <div class="col-md-4">
-                                        <small>Last Name <span class="asterisk">*</span></small>
+                                        <small>Middle Name <span class="asterisk">*</span></small>
                                         <div class="input-group mb-3 d-flex flex-wrap justify-content-center">
-                                            <input type="text" class="form-control" placeholder="Last Name"
+                                            <input type="text" class="form-control" placeholder="Middle Name"
                                                 name="last_name" id="last_name">
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
-                                        <small>Middle Name <span class="asterisk">*</span></small>
+                                        <small>Last Name <span class="asterisk">*</span></small>
                                         <div class="input-group mb-3 d-flex flex-wrap justify-content-center">
                                             <input type="text" class="form-control" placeholder="Last Name"
                                                 name="middle_name" id="middle_name">
