@@ -17,7 +17,7 @@ if (isset($_SESSION['patient_id'])) {
 
     // Recent Visits
 
-    $stmt = $conn->prepare("SELECT * FROM treatment_record WHERE patient_id = ? ORDER BY date DESC LIMIT 6");
+    $stmt = $conn->prepare("SELECT * FROM treatment_record WHERE patient_id = ? ORDER BY date DESC LIMIT 5");
     $stmt->bind_param("s", $patient_id);
     $stmt->execute();
     $result_record = $stmt->get_result();
@@ -44,6 +44,13 @@ if (isset($_SESSION['patient_id'])) {
         <link rel="stylesheet" href="../vendors/bootstrap-5.0.2/dist/css/bootstrap.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+        <style>
+            .nav-bar a {
+                text-decoration: none;
+            }
+        </style>
     </head>
 
     <body>
@@ -83,30 +90,48 @@ if (isset($_SESSION['patient_id'])) {
             <div class="container col-9 mb-5">
                 <div class="row d-flex flex-wrap align-items-stretch">
                     <div class="col-4">
-                        <div class="card-box" style="height:23.4rem">
+                        <div class="card-box" style="height: 23.6rem; padding-bottom: 5rem">
                             <div>
                                 <p class="fs-3 green fw-semibold">Recent Visits</p>
                             </div>
-                            <?php
-
-                            // Check if there are records
-                            if ($result_record->num_rows > 0) {
+                            <div class="scrollable-list">
+                                <?php
+                                $count = 0;
                                 while ($row_record = $result_record->fetch_assoc()) {
                                     $formatted_date = date("F j, Y", strtotime($row_record['date']));
                                     $url = "treatment.php?record_id=" . $row_record['record_id'];
                                     echo "<div><ul><a href='$url'><li>$formatted_date</li></a></ul></div>";
+                                    $count++;
                                 }
-                            } else {
-                                echo "No treatment records found.";
-                            }
-                            ?>
+
+                                if ($count === 0) {
+                                    echo "<div class='py-5 my-3 text-center'>";
+                                    echo "<div class='mb-3'>";
+                                    echo "<img src='images/empty-state.png' alt='Empty State' style='width: 6.688rem; height: 6.688rem;'>";
+                                    echo "</div>";
+                                    echo "<div>";
+                                    echo "<p class='mb-0'>No recent visits yet.</p>";
+                                    echo "</div>";
+                                    echo "</div>";
+
+                                } elseif ($count >= 5) {
+                                    $url_see_more = "treatment.php?record_id=" . $latest_record['record_id'];
+                                    echo "<p class='pt-3 see-more fw-semibold'>";
+                                    echo "<a href='$url_see_more' class='see-more-link'>";
+                                    echo "<span class='green'>See More</span> <span class='red'>Records</span>";
+                                    echo "<i class='ms-2 fa-xs fa-solid fa-arrow-up-right-from-square'></i>";
+                                    echo "</a>";
+                                    echo "</p>";
+                                }
+                                ?>
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-8">
-                        <div class="calendar-card-box calendar-box">
+                        <div class="calendar-card-box calendar-box" style="height: 23.6rem;">
                             <div class="row">
-                                <div class="col-6 calendar-cont" style="padding-right:3%;">
+                                <div class="col-6 calendar-cont" style="padding-right:5%;">
                                     <div class="col-md-12">
                                         <div class="calendar calendar-first" id="calendar_first">
                                             <div class="calendar_header">
@@ -121,12 +146,14 @@ if (isset($_SESSION['patient_id'])) {
                                         </div>
                                     </div>
 
-                                    <span class="vertical-line mr-5"></span>
+                                    <span class="vertical-line"></span>
                                 </div>
-                                <div class="col-6 d-flex flex-wrap align-items-center flex-grow-1">
+                                <div class="col-6 d-flex flex-wrap align-items-center justify-content-center flex-grow-1">
                                     <div class="px-4 py-4">
                                         <?php if (empty($latest_record)): ?>
-                                            <p class="fs-6 red fw-semibold">No latest record.</p>
+                                            <div class="d-flex justify-content-center text-center">
+                                                <p class="fs-6 text-center red fw-semibold">No latest record.</p>
+                                            </div>
                                         <?php else: ?>
                                             <div>
                                                 <p class="fs-4 red fw-semibold">Latest Treatment</p>
