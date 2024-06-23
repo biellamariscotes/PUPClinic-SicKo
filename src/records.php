@@ -220,7 +220,7 @@ $nextPage = min($totalPages, $currentPage + 1);
         padding: 0.375rem 1.5rem 0.375rem 0.75rem;
         border: 1px solid #ddd;
         border-radius: 4px;
-        background: #fff url('data:image/svg+xml;charset=US-ASCII,<?xml version="1.0" ?><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="none" stroke="#058789" stroke-width=".5" d="M2 0L0 2h4z"/></svg>') no-repeat right 0.5rem center; /* Custom arrow */
+        
         background-size: 0.65em auto;
         font-family: 'Poppins', sans-serif;
         font-weight: bold;
@@ -310,7 +310,7 @@ $nextPage = min($totalPages, $currentPage + 1);
         <div class="content" id="content">
             <div class="med-reports-header">
                 <div class="med-reports-header-box">
-                    <div class="medreports-header-text">All Records</div>
+                    <div class="medreports-header-text"><span style="color: #E13F3D;">All </span>Records</span></div>
                     <div class="medreports-sorting-button" id="medReportsortingButton">
                         <form method="GET">
                             <input type="hidden" name="sort" value="<?php echo htmlspecialchars($sortingCriteria); ?>">
