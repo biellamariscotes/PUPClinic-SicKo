@@ -65,8 +65,9 @@ require_once ('includes/connect.php');
             <!-- Keyword Tags Container -->
             <form id="diagnosis-form" method="post" action="generated-diagnosis.php">
                 <div class="symptoms-input-container">
-                    <input type="text" id="symptoms-input" name="symptoms" placeholder="Type symptoms keywords..."
+                    <input type="text" id="symptoms-input" name="symptom" placeholder="Type symptoms keywords..."
                         autocomplete="off">
+                    <input type="hidden" id="hidden-symptoms" name="symptoms">
                     <div class="tags-container" id="tags-container"></div>
                 </div>
 
@@ -120,38 +121,39 @@ require_once ('includes/connect.php');
             </script>
 
             <!-- END OF LOADER -->
-
             <script>
-                // Function to handle form submission
-                function submitForm() {
-                    var input = document.getElementById('symptoms-input').value.trim();
+            function submitForm() {
+    var input = document.getElementById('symptoms-input').value.trim();
 
-                    // Remove leading spaces and replace double spaces with single space
-                    input = input.replace(/^\s+|\s{2,}/g, ' ');
+    // Remove leading spaces and replace double spaces with single space
+    input = input.replace(/^\s+|\s{2,}/g, ' ');
 
-                    var tags = document.querySelectorAll('.tag');
-                    var symptomsString = input; // Initialize with text input
-                    // Concatenate symptoms from tags
-                    tags.forEach(function (tag) {
-                        symptomsString += tag.textContent.trim() + ', ';
-                    });
-                    // Remove the trailing comma and whitespace
-                    symptomsString = symptomsString.replace(/,\s*$/, '');
-                    // Set the concatenated symptoms string as the value of the hidden input field
-                    document.getElementById('symptoms-input').value = symptomsString;
-                    // Submit the form if there's text input or tags
-                    if (symptomsString.length > 0) {
-                        document.getElementById('diagnosis-form').submit();
-                    }
-                }
+    var tags = document.querySelectorAll('.tag');
+    var symptomsArray = []; // Array to store symptoms
 
-                // Event listener for clicking the generate button
-                document.getElementById('generate-diagnosis-btn').addEventListener('click', function () {
-                    submitForm(); // Call your form submission function
+    // Push symptoms from tags into the array
+    tags.forEach(function(tag) {
+        symptomsArray.push(tag.textContent.trim());
+    });
 
-                    // Log activity
-                    logActivity();
-                });
+    // Combine input field value with concatenated tags
+    var symptomsString = input;
+    if (symptomsArray.length > 0) {
+        symptomsString += (input.length > 0 ? ', ' : '') + symptomsArray.join(', ');
+    }
+
+    // Set the concatenated symptoms string as the value of the hidden input field
+    document.getElementById('hidden-symptoms').value = symptomsString;
+
+    // Submit the form
+    document.getElementById('diagnosis-form').submit();
+}
+
+
+        // Event listener for clicking the generate button
+        document.getElementById('generate-diagnosis-btn').addEventListener('click', function () {
+            submitForm(); // Call your form submission function
+        });
 
                 // Function to log activity
                 function logActivity() {
