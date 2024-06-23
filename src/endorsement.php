@@ -7,6 +7,15 @@ $date = date('F j, Y');
 $full_name = isset($_POST['full_name']) ? $_POST['full_name'] : '';
 $diagnosis = isset($_POST['diagnosis']) ? $_POST['diagnosis'] : '';
 
+$record_id = isset($_POST['record_id']) ? $_POST['record_id'] : '';
+    // Update the clearance_letter column to "Yes" in the database
+    if (!empty($record_id)) {
+        $record_id = mysqli_real_escape_string($conn, $record_id);       
+        $sql = "UPDATE treatment_record SET referral_letter = 'Yes' WHERE record_id = $record_id";
+        if(mysqli_query($conn, $sql)) {
+        }
+}    
+
 // Create new PDF document
 $pdf = new TCPDF();
 

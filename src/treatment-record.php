@@ -35,10 +35,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $treatments = mysqli_real_escape_string($conn, $_POST['treatments']);
 
         // Insert data into the database
-        $sql = "INSERT INTO treatment_record (patient_id, full_name, sex, age, course, section, symptoms, diagnosis, treatments) 
-                VALUES ('$patient_id', '$full_name', '$sex', '$age', '$course', '$section', '$symptoms', '$diagnosis', '$treatments')";
+        $sql = "INSERT INTO treatment_record (patient_id, full_name, sex, age, course, section, symptoms, diagnosis, treatments, excuse_letter, clearance_letter, referral_letter) 
+                VALUES ('$patient_id', '$full_name', '$sex', '$age', '$course', '$section', '$symptoms', '$diagnosis', '$treatments', 'No', 'No', 'No')";
 
         if (mysqli_query($conn, $sql)) {
+
+            $record_id = mysqli_insert_id($conn);
+
             $url = "treatment-record-confirmation.php?";
             $url .= "patient_id=" . urlencode($patient_id) . "&";
             $url .= "full_name=" . urlencode($full_name) . "&";
@@ -48,7 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $url .= "section=" . urlencode($section) . "&";
             $url .= "symptoms=" . urlencode($symptoms) . "&";
             $url .= "diagnosis=" . urlencode($diagnosis) . "&";
-            $url .= "treatments=" . urlencode($treatments);
+            $url .= "treatments=" . urlencode($treatments) . "&";
+            $url .= "record_id=" . urlencode($record_id);
             header("Location: $url");
             exit();
         } else {

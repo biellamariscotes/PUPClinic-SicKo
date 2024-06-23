@@ -3,9 +3,19 @@ require_once('includes/session-nurse.php');
 require_once('includes/connect.php');
 require_once('../vendors/tcpdf/tcpdf.php');
 
+
 $date = date('F j, Y');
 $full_name = isset($_POST['full_name']) ? $_POST['full_name'] : '';
 $symptoms = isset($_POST['symptoms']) ? $_POST['symptoms'] : '';
+
+$record_id = isset($_POST['record_id']) ? $_POST['record_id'] : '';
+    // Update the clearance_letter column to "Yes" in the database
+    if (!empty($record_id)) {
+        $record_id = mysqli_real_escape_string($conn, $record_id);       
+        $sql = "UPDATE treatment_record SET excuse_letter = 'Yes' WHERE record_id = $record_id";
+        if(mysqli_query($conn, $sql)) {
+        }
+    }   
 
 // Create new PDF document
 $pdf = new TCPDF();

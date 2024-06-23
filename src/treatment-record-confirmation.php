@@ -11,44 +11,8 @@ $section = isset($_GET['section']) ? $_GET['section'] : '';
 $symptoms = isset($_GET['symptoms']) ? $_GET['symptoms'] : '';
 $diagnosis = isset($_GET['diagnosis']) ? $_GET['diagnosis'] : '';
 $treatments = isset($_GET['treatments']) ? $_GET['treatments'] : '';
+$record_id = isset($_GET['record_id']) ? $_GET['record_id'] : '';
 
-// Handle form submission
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $record_id = isset($_POST['record_id']) ? $_POST['record_id'] : '';
-    $generated_clearance = isset($_POST['generated_clearance']) ? $_POST['generated_clearance'] : 'no';
-    $generated_endorsement = isset($_POST['generated_endorsement']) ? $_POST['generated_endorsement'] : 'no';
-
-    // Update database based on which button was clicked
-    if (isset($_POST['record-btn'])) {
-        // Handle Generate Clearance button click
-        $generated_clearance = 'yes';
-        $sql = "UPDATE treatment_record SET generated_clearance = ? WHERE record_id = ?";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "si", $generated_clearance, $record_id);
-        $result = mysqli_stmt_execute($stmt);
-        if ($result) {
-            echo "Generated Clearance updated successfully.";
-        } else {
-            echo "Error updating Generated Clearance: " . mysqli_error($conn);
-        }
-    } elseif (isset($_POST['hello-btn'])) {
-        // Handle Generate Endorsement button click
-        $generated_endorsement = 'yes';
-        $sql = "UPDATE treatment_record SET generated_endorsement = ? WHERE record_id = ?";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "si", $generated_endorsement, $record_id);
-        $result = mysqli_stmt_execute($stmt);
-        if ($result) {
-            echo "Generated Endorsement updated successfully.";
-        } else {
-            echo "Error updating Generated Endorsement: " . mysqli_error($conn);
-        }
-    }
-
-    // Redirect to confirmation page after processing
-    header("Location: treatment-record-confirmation.php");
-    exit();
-}
 ?>
 
 <!DOCTYPE html>
@@ -133,6 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="form-container">
             <form id="treatment-form" action="" method="post">
                 <div class="input-row">
+                    <input type="hidden" name="record_id" value="<?php echo htmlspecialchars($record_id); ?>">
                     <input type="text" id="full-name" name="full_name" placeholder="Full Name" autocomplete="off" required value="<?php echo $full_name; ?>" >
                     <input type="hidden" name="patient_id" value="<?php echo $patient_id; ?>" >
                     <select id="sex" name="sex" required >

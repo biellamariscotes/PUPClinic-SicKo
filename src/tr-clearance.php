@@ -94,6 +94,7 @@ input, select {
         <div class="form-container">
             <form id="treatment-form" action="clearance.php" method="post">
                 <div class="input-row">
+                <input type="hidden" name="record_id" value="<?php echo htmlspecialchars($record_id); ?>">
                     <input type="text" id="full-name" name="full_name" placeholder="Full Name" autocomplete="off" required value="<?php echo htmlspecialchars($full_name); ?>" >
                     <input type="hidden" name="patient_id" value="<?php echo htmlspecialchars($record_id); ?>" > <!-- Use record_id as patient_id -->
                     <select id="sex" name="sex" required >
