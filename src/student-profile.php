@@ -24,13 +24,6 @@ if (isset($_SESSION['patient_id'])) {
             href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
 
         <style>
-            .footer {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-            }
-
             a {
                 text-decoration: none !important;
                 cursor: pointer;
@@ -41,7 +34,9 @@ if (isset($_SESSION['patient_id'])) {
     <body>
         <div class="loader">
             <img src="images/loader.gif">
-        </div <div class="main-content">
+        </div>
+
+        <div class="main-content">
 
         <?php
         include ('includes/student-topbar.php');
