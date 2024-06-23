@@ -412,8 +412,8 @@ $(document).ready(function () {
 
                 // Automatically close the "Saved Successfully" modal after 5 seconds
                 setTimeout(function () {
-                    $("#saved-successfully").modal("hide");
-                }, 5000); // 5000 milliseconds = 5 seconds
+                    window.location.href = 'edit-profile.php';
+                }, 3000); // 5000 milliseconds = 5 seconds
             },
             error: function (xhr, status, error) {
                 // Handle errors if any
