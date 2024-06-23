@@ -71,58 +71,67 @@ mysqli_close($conn);
 
     <style>
         .group {
-    position: relative;
-    margin-bottom: 20px;
-}
+            position: relative;
+            margin-bottom: 20px;
+        }
 
-.error-icon {
-    position: absolute;
-    right: 10px; /* Adjust position as needed */
-    top: 50%; /* Adjust position as needed */
-    transform: translateY(-50%);
-    cursor: pointer;
-    z-index: 1; /* Ensure the error icon is above other content */
-}
+        .error-icon {
+            position: absolute;
+            right: 10px;
+            /* Adjust position as needed */
+            top: 50%;
+            /* Adjust position as needed */
+            transform: translateY(-50%);
+            cursor: pointer;
+            z-index: 1;
+            /* Ensure the error icon is above other content */
+        }
 
-.error-tooltip {
-    position: absolute;
-    top: 0;
-    left: calc(100% + 10px); /* Position next to the error icon */
-    background-color: #dc3545;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    display: none;
-    z-index: 2; /* Ensure the error tooltip is above other content */
-}
+        .error-tooltip {
+            position: absolute;
+            top: 0;
+            left: calc(100% + 10px);
+            /* Position next to the error icon */
+            background-color: #dc3545;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: none;
+            z-index: 2;
+            /* Ensure the error tooltip is above other content */
+        }
 
-.error-icon:hover + .error-tooltip {
-    display: block; /* Show tooltip on hover */
-}
+        .error-icon:hover+.error-tooltip {
+            display: block;
+            /* Show tooltip on hover */
+        }
 
-.is-invalid {
-    border-color: #dc3545;
-}
+        .is-invalid {
+            border-color: #dc3545;
+        }
 
-.is-invalid ~ .invalid-feedback {
-    display: block;
-    position: absolute;
-    bottom: 250px /* Position next to the error icon */
-    top: 50%; /* Adjust position as needed */
-    transform: translateY(-50%);
-    background-color: white;
-    color: black;
-    padding: 5px 10px;
-    border-radius: 5px;
-    display: none;
-    border: 1px solid black;
-    z-index: 2; /* Ensure the error message is above other content */
-}
+        .is-invalid~.invalid-feedback {
+            display: block;
+            position: absolute;
+            bottom: 250px
+                /* Position next to the error icon */
+                top: 50%;
+            /* Adjust position as needed */
+            transform: translateY(-50%);
+            background-color: white;
+            color: black;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: none;
+            border: 1px solid black;
+            z-index: 2;
+            /* Ensure the error message is above other content */
+        }
 
-.is-invalid:hover + .invalid-feedback {
-    display: block; /* Show message on hover over the error icon */
-}
-
+        .is-invalid:hover+.invalid-feedback {
+            display: block;
+            /* Show message on hover over the error icon */
+        }
     </style>
 </head>
 
@@ -164,22 +173,23 @@ mysqli_close($conn);
                         <div class="group">
                             <div class="userProfile-input-label">Last Name</div>
                             <input type="text" id="lastName" name="lastName" value="<?php echo $last_name_value; ?>"
-                                autocomplete="off" required pattern="^[A-Za-z\s'-]+$" class="form-control">
+                                autocomplete="off" required class="form-control">
                             <div class="invalid-feedback">Last name must not contain numbers, special characters, or
                                 double spaces.</div>
                         </div>
                         <div class="group">
                             <div class="userProfile-input-label">First Name</div>
                             <input type="text" id="firstName" name="firstName" value="<?php echo $first_name_value; ?>"
-                                autocomplete="off" required pattern="^[A-Za-z\s'-]+$" class="form-control">
-                            <div class="invalid-feedback is-invalid">First name must not contain numbers, special characters, or
+                                autocomplete="off" required class="form-control">
+                            <div class="invalid-feedback is-invalid">First name must not contain numbers, special
+                                characters, or
                                 double spaces.</div>
                         </div>
                         <div class="group">
                             <div class="userProfile-input-label">Middle Name</div>
                             <input type="text" id="middleName" name="middleName"
                                 value="<?php echo $middle_name_value; ?>" autocomplete="off" required
-                                pattern="^[A-Za-z\s'-]+$" class="form-control">
+                                class="form-control">
                             <div class="invalid-feedback">Middle name must not contain numbers, special characters, or
                                 double spaces.</div>
                         </div>
@@ -188,10 +198,9 @@ mysqli_close($conn);
                         <div class="group">
                             <div class="userProfile-input-label">Email</div>
                             <input type="email" id="email" name="email" value="<?php echo $email_value; ?>"
-                                autocomplete="off" required
-                                pattern="^[a-zA-Z0-9._%+-]+@(gmail\.com|iskolarngbayan\.pup\.edu\.ph)$"
-                                class="form-control">
-                            <div class="invalid-feedback no-wrap">Please enter a valid email address (e.g., example@gmail.com or
+                                autocomplete="off" required class="form-control">
+                            <div class="invalid-feedback no-wrap">Please enter a valid email address (e.g.,
+                                example@gmail.com or
                                 example@iskolarngbayan.pup.edu.ph).</div>
                         </div>
                     </div>
@@ -199,6 +208,7 @@ mysqli_close($conn);
                         <button type="submit" id="submit-form-button" name="record-btn">Save Changes</button>
                     </div>
                 </form>
+
             </div>
         </div>
 
@@ -274,154 +284,161 @@ mysqli_close($conn);
     <script src="scripts/loader.js"></script>
 
     <script>
-    $(document).ready(function () {
-
-// Function to check if any input field is empty
-function checkEmptyInputs() {
-    var isEmpty = false;
-    $('input[required]').each(function () {
-        if ($(this).val().trim() === '') {
-            isEmpty = true;
-            return false; // Exit the loop if any required input field is empty
-        }
-    });
-    return isEmpty;
-}
-
-// Function to check if the input field contains invalid characters or double spaces
-function checkInvalidCharacters(input) {
-    var pattern = /^[A-Za-z\s'-]+$/; // Pattern to allow only letters, spaces, apostrophes, and hyphens
-    var value = input.val();
-    return !pattern.test(value) || /\s\s/.test(value); // Check for invalid characters or double spaces
-}
-
-// Function to check if the email format is valid
-function checkEmailFormat(input) {
-    var pattern = /^[a-zA-Z0-9._%+-]+@(gmail\.com|iskolarngbayan\.pup\.edu\.ph)$/; // Pattern for specific email domains
-    var value = input.val();
-    return pattern.test(value); // Check if the email matches the required pattern
-}
-
-// Function to toggle the button state and display empty field message
-// Function to toggle the button state and display empty field message
-function toggleButtonAndMessage() {
-    var isEmpty = checkEmptyInputs();
-    var hasInvalidFields = false;
-
-    $('input[required]').each(function () {
-        if (!this.checkValidity() || checkInvalidCharacters($(this))) {
-            hasInvalidFields = true;
-            console.log('Invalid field found:', this.id); // Log the ID of the invalid field
-            return false; // Exit the loop if any field is invalid
-        }
-    });
-
-    var disableButton = isEmpty || hasInvalidFields;
-
-    console.log('isEmpty:', isEmpty); 
-    console.log('hasInvalidFields:', hasInvalidFields); 
-    console.log('disableButton:', disableButton);
-    
-    $('#submit-form-button').prop('disabled', disableButton);
-    $('#empty-field-message').toggle(isEmpty && !hasInvalidFields);
-}
-
-// Add event listener to input fields for live validation
-$('input[required]').on('input', function () {
-    // Check if the field is valid
-    if (this.checkValidity() && !checkInvalidCharacters($(this))) {
-        $(this).removeClass('is-invalid');
-    } else {
-        $(this).addClass('is-invalid');
+$(document).ready(function () {
+    // Function to check if any input field is empty
+    function checkEmptyInputs() {
+        var isEmpty = false;
+        $('input[required]').each(function () {
+            if ($(this).val().trim() === '') {
+                isEmpty = true;
+                return false; // Exit the loop if any required input field is empty
+            }
+        });
+        return isEmpty;
     }
 
-    // Additional check for email format
-    if ($(this).attr('id') === 'email') {
-        if (checkEmailFormat($(this))) {
+    // Function to check if the input field contains invalid characters or double spaces
+    function checkInvalidCharacters(input) {
+        var pattern = /^[A-Za-z\s'-]+$/; // Pattern to allow only letters, spaces, apostrophes, and hyphens
+        var value = input.val();
+        return !pattern.test(value) || /\s\s/.test(value); // Check for invalid characters or double spaces
+    }
+
+    // Function to check if the email format is valid
+    function checkEmailFormat(input) {
+        var pattern = /^[a-zA-Z0-9._%+-]+@(gmail\.com|iskolarngbayan\.pup\.edu\.ph)$/; // Pattern for specific email domains
+        var value = input.val();
+        return pattern.test(value); // Check if the email matches the required pattern
+    }
+
+    // Function to check if any changes are made in the form
+    function checkFormChanges() {
+        var changesMade = false;
+        $('input').each(function () {
+            if ($(this).val() !== $(this).attr('value')) {
+                changesMade = true;
+                return false; // Exit the loop if any change is detected
+            }
+        });
+        return changesMade;
+    }
+
+    // Function to toggle the button state and display empty field message
+    function toggleButtonAndMessage() {
+        var isEmpty = checkEmptyInputs();
+        var hasInvalidFields = false;
+
+        $('input[required]').each(function () {
+            var isInvalid = !this.checkValidity() || checkInvalidCharacters($(this));
+            if (this.id === 'email') {
+                isInvalid = !checkEmailFormat($(this));
+            }
+            if (isInvalid) {
+                hasInvalidFields = true;
+                console.log('Invalid field found:', this.id, 'Value:', $(this).val()); // Log the ID of the invalid field and its value
+                return false; // Exit the loop if any field is invalid
+            }
+        });
+
+        var changesMade = checkFormChanges();
+        var disableButton = isEmpty || hasInvalidFields || !changesMade;
+
+        console.log('isEmpty:', isEmpty);
+        console.log('hasInvalidFields:', hasInvalidFields);
+        console.log('changesMade:', changesMade);
+        console.log('disableButton:', disableButton);
+
+        $('#submit-form-button').prop('disabled', disableButton);
+        $('#empty-field-message').toggle(isEmpty && !hasInvalidFields);
+    }
+
+    // Add event listener to input fields for live validation
+    $('input[required]').on('input', function () {
+        // Check if the field is valid
+        if (this.checkValidity() && !checkInvalidCharacters($(this))) {
             $(this).removeClass('is-invalid');
         } else {
             $(this).addClass('is-invalid');
         }
-    }
 
-    // Toggle button state and empty field message
+        // Additional check for email format
+        if ($(this).attr('id') === 'email') {
+            if (checkEmailFormat($(this))) {
+                $(this).removeClass('is-invalid');
+            } else {
+                $(this).addClass('is-invalid');
+            }
+        }
+
+        // Toggle button state and empty field message
+        toggleButtonAndMessage();
+    });
+
+    // Initially validate the form when the page loads
     toggleButtonAndMessage();
-});
 
-// Initially disable the button if any required input field is empty or has invalid input
-toggleButtonAndMessage();
-
-// Show Modal when Submit button is clicked
-$("#submit-form-button").click(function (event) {
-    event.preventDefault(); // Prevent default form submission
-    // Check if any changes are made
-    if (!checkFormChanges()) {
-        // Show error modal if no changes are made
-        $("#error-modal").modal("show");
-    } else {
-        $("#saveChangesModal").modal("show");
-    }
-});
-
-// Function to check if any changes are made in the form
-function checkFormChanges() {
-    var changesMade = false;
-    $('input').each(function () {
-        if ($(this).val() !== $(this).attr('value')) {
-            changesMade = true;
-            return false; // Exit the loop if any change is detected
-        }
-    });
-    return changesMade;
-}
-
-// Handle form submission when user confirms in the modal
-$("#submit-changes-modal").click(function (event) {
-    // Submit the form via AJAX
-    $("#edit-profile-form").submit();
-});
-
-// Handle form submission success
-$("#edit-profile-form").submit(function (event) {
-    event.preventDefault(); // Prevent default form submission
-    var form = $(this);
-
-    $.ajax({
-        type: form.attr('method'),
-        url: form.attr('action'),
-        data: form.serialize(),
-        success: function (response) {
-            // Hide the "Save Changes" modal
-            $("#saveChangesModal").modal("hide");
-            // Show the "Saved Successfully" modal
-            $("#saved-successfully").modal("show");
-
-            // Automatically close the "Saved Successfully" modal after 5 seconds
-            setTimeout(function () {
-                $("#saved-successfully").modal("hide");
-            }, 5000); // 5000 milliseconds = 5 seconds
-        },
-        error: function (xhr, status, error) {
-            // Handle errors if any
-            console.log(xhr.responseText);
+    // Show Modal when Submit button is clicked
+    $("#submit-form-button").click(function (event) {
+        event.preventDefault(); // Prevent default form submission
+        // Check if any changes are made
+        if (!checkFormChanges()) {
+            // Show error modal if no changes are made
             $("#error-modal").modal("show");
+        } else {
+            $("#saveChangesModal").modal("show");
         }
+    });
+
+    // Handle form submission when user confirms in the modal
+    $("#submit-changes-modal").click(function (event) {
+        // Submit the form via AJAX
+        $("#edit-profile-form").submit();
+    });
+
+    // Handle form submission success
+    $("#edit-profile-form").submit(function (event) {
+        event.preventDefault(); // Prevent default form submission
+        var form = $(this);
+
+        $.ajax({
+            type: form.attr('method'),
+            url: form.attr('action'),
+            data: form.serialize(),
+            success: function (response) {
+                // Hide the "Save Changes" modal
+                $("#saveChangesModal").modal("hide");
+                // Show the "Saved Successfully" modal
+                $("#saved-successfully").modal("show");
+
+                // Automatically close the "Saved Successfully" modal after 5 seconds
+                setTimeout(function () {
+                    window.location.href = 'edit-profile.php';
+                }, 3000); // 5000 milliseconds = 5 seconds
+            },
+            error: function (xhr, status, error) {
+                // Handle errors if any
+                console.log(xhr.responseText);
+                $("#error-modal").modal("show");
+            }
+        });
+    });
+
+    // Close the Modal with the close button
+    $("#cancel-saveChanges-modal").click(function (event) {
+        $("#saveChangesModal").modal("hide");
+    });
+
+    // Close the Modal with the close button
+    $("#error-close-modal").click(function (event) {
+        $("#error-modal").modal("hide");
     });
 });
 
-// Close the Modal with the close button
-$("#cancel-saveChanges-modal").click(function (event) {
-    $("#saveChangesModal").modal("hide");
-});
 
-// Close the Modal with the close button
-$("#error-close-modal").click(function (event) {
-    $("#error-modal").modal("hide");
-});
 
-});
 
-</script>
+
+    </script>
 
 
 </body>
