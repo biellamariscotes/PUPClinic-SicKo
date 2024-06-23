@@ -367,11 +367,6 @@ $dataset = [
     ['symptoms' => ['abdominal pain', 'vomiting', 'indigestion'], 'diagnosis' => 'gastritis'],
     ['symptoms' => ['abdominal pain', 'loss of appetite', 'belching'], 'diagnosis' => 'gastritis'],
 
-    // Ebola Virus Disease
-    ['symptoms' => ['fever', 'headache', 'muscle pain'], 'diagnosis' => 'ebola virus disease'],
-    ['symptoms' => ['fever', 'vomiting', 'diarrhea'], 'diagnosis' => 'ebola virus disease'],
-    ['symptoms' => ['fever', 'bleeding', 'bruising'], 'diagnosis' => 'ebola virus disease'],
-
     // Tuberculosis (TB)
     ['symptoms' => ['cough', 'fever', 'night sweats'], 'diagnosis' => 'tuberculosis'],
     ['symptoms' => ['cough', 'weight loss', 'fatigue'], 'diagnosis' => 'tuberculosis'],
@@ -567,11 +562,6 @@ $dataset = [
     ['symptoms' => ['hardening and tightening of skin', 'white or blue fingers or toes in response to cold or stress', 'ulcers on fingertips or toes'], 'diagnosis' => 'scleroderma'],
     ['symptoms' => ['hardening and tightening of skin', 'pain and stiffness in joints', 'shortness of breath'], 'diagnosis' => 'scleroderma'],
 
-    // Contact Dermatitis
-    ['symptoms' => ['red, itchy rash', 'bumps and blisters', 'burning or stinging sensation'], 'diagnosis' => 'contact dermatitis'],
-    ['symptoms' => ['red, itchy rash', 'dry, cracked skin', 'swelling'], 'diagnosis' => 'contact dermatitis'],
-    ['symptoms' => ['red, itchy rash', 'oozing, draining or crusting', 'thickened, dry, scaly skin'], 'diagnosis' => 'contact dermatitis'],
-
     // Muscle Strain
     ['symptoms' => ['muscle pain and tenderness', 'swelling', 'bruising'], 'diagnosis' => 'muscle strain'],
     ['symptoms' => ['muscle pain and tenderness', 'limited range of motion', 'muscle spasms'], 'diagnosis' => 'muscle strain'],
@@ -581,11 +571,6 @@ $dataset = [
     ['symptoms' => ['sharp pain', 'swelling', 'bruising'], 'diagnosis' => 'muscle sprain'],
     ['symptoms' => ['sharp pain', 'limited range of motion', 'muscle weakness'], 'diagnosis' => 'muscle sprain'],
     ['symptoms' => ['sharp pain', 'instability', 'popping sensation'], 'diagnosis' => 'muscle sprain'],
-
-    // Myofascial Pain Syndrome
-    ['symptoms' => ['deep, aching pain', 'muscle stiffness', 'trigger points (tender areas)'], 'diagnosis' => 'myofascial pain syndrome'],
-    ['symptoms' => ['deep, aching pain', 'pain that worsens with activity or stress', 'sleep disturbances'], 'diagnosis' => 'myofascial pain syndrome'],
-    ['symptoms' => ['deep, aching pain', 'headaches', 'fatigue'], 'diagnosis' => 'myofascial pain syndrome'],
 
     // Muscular Dystrophy
     ['symptoms' => ['muscle weakness', 'progressive loss of muscle mass', 'difficulty walking'], 'diagnosis' => 'muscular dystrophy'],
@@ -626,11 +611,6 @@ $dataset = [
     ['symptoms' => ['frequent bone fractures', 'blue tint to the sclera (whites of the eyes)', 'short stature'], 'diagnosis' => 'osteogenesis imperfecta (brittle bone disease)'],
     ['symptoms' => ['weak muscles', 'hearing loss', 'teeth that appear translucent or discolored'], 'diagnosis' => 'osteogenesis imperfecta (brittle bone disease)'],
     ['symptoms' => ['respiratory problems', 'scoliosis', 'brittle teeth'], 'diagnosis' => 'osteogenesis imperfecta (brittle bone disease)'],
-
-    // Bone Infarction (Avascular Necrosis)
-    ['symptoms' => ['joint pain', 'limited range of motion', 'pain that worsens with weight-bearing'], 'diagnosis' => 'bone infarction (avascular necrosis)'],
-    ['symptoms' => ['groin pain', 'shoulder pain', 'knee pain'], 'diagnosis' => 'bone infarction (avascular necrosis)'],
-    ['symptoms' => ['pain that increases over time', 'lack of feeling or reduced range of motion in the affected joint', 'symptoms may increase when walking'], 'diagnosis' => 'bone infarction (avascular necrosis)'],
 
     // Osteochondroma
     ['symptoms' => ['pain or swelling near the affected bone', 'limited range of motion', 'numbness or tingling in the nearby tissues'], 'diagnosis' => 'osteochondroma'],
