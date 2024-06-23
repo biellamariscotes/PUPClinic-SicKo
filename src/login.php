@@ -72,27 +72,27 @@ if (isset($_POST['login_btn'])) {
         <img src="images/loader.gif">
     </div>
 
-        <!-- Log In Failed Modal -->
-        <div class="modal" id="loginFailed" tabindex="-1" role="dialog" data-bs-backdrop="static"
-            data-bs-keyboard="false">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content" style="border-radius: 1.563rem;">
-                    <div class="modal-body">
-                        <div class="modal-middle-icon">
-                            <img src="images/x-mark.gif" style="width: 9rem; height: auto;" alt="Failed Icon">
-                        </div>
-                        <div class="modal-title">Login Failed</div>
-                        <div class="modal-subtitle" style="text-wrap: pretty; ">Authentication failed. Please check your
-                            credentials and try again.</div>
+    <!-- Log In Failed Modal -->
+    <div class="modal" id="loginFailed" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="border-radius: 1.563rem;">
+            <div class="modal-body d-flex flex-column justify-content-center align-items-center">
+                    <div class="modal-middle-icon">
+                        <img src="images/x-mark.gif" style="width: 9rem; height: auto;" alt="Failed Icon">
                     </div>
-                    <div class="modal-buttons">
-                        <button type="button" class="btn btn-secondary" id="login-close-modal" data-dismiss="modal"
-                            style="background-color: #E13F3D; 
-                    font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Close</button>
-                    </div>
+                    <div class="modal-title">Login Failed</div>
+                    <div class="modal-subtitle" style="text-wrap: pretty; ">Authentication failed. Please check your
+                        credentials and try again.</div>
+
+                    <div class="pt-3"></div>
+                    <button type="button" class="btn btn-secondary" id="login-close-modal" data-dismiss="modal"
+                        style="background-color: #E13F3D; 
+                                font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Close</button>
                 </div>
+            
             </div>
         </div>
+    </div>
 
     <!-- Navigation Bar -->
     <div class="main-content">
@@ -116,7 +116,7 @@ if (isset($_POST['login_btn'])) {
                     <div class="container-login-cst">
                         <div class="logo-container d-flex flex-wrap justify-content-center">
                             <div class="d-flex flex-wrap justify-content-center">
-                            <img class=" logo" src="images/heart-logo.png" alt="Sicko Logo">
+                                <img class=" logo" src="images/heart-logo.png" alt="Sicko Logo">
                             </div>
                             <div>
                                 <p class="fw-bold fs-4"><span class="green">Sic</span><span class="red">Ko</span> | Sign

@@ -49,7 +49,7 @@ if (isset($_POST['login_btn'])) {
     <link rel="icon" type="image/png" href="images/heart-logo.png">
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/modals.css">
-    <link rel="stylesheet" href="../vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendors/bootstrap-5.0.2/dist/css/bootstrap.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
@@ -80,30 +80,33 @@ if (isset($_POST['login_btn'])) {
         </div>
     </div>
 
-        <!-- Saved Successfully Modal Button -->
-        <button type="button" class="btn btn-primary" id="saved-successful" data-toggle="modal" data-target="#saved-successfully">
-            Saved Successfully Modal Button
-        </button>
+    <!-- Saved Successfully Modal Button -->
+    <button type="button" class="btn btn-primary" id="saved-successful" data-toggle="modal"
+        data-target="#saved-successfully">
+        Saved Successfully Modal Button
+    </button>
 
     <!-- Saved Successfully Modal -->
-    <div class="modal" id="saved-successfully" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="modal-middle-icon">
-                            <img src="images/check.gif" style="width: 7rem; height: auto;" alt="Check Icon">
-                        </div>
-                        <div class="modal-title" style="color: black;">Saved Successfully</div>
-                        <div class="modal-subtitle" style="justify-content: center;">Your changes have been successfully saved!</div>
+    <div class="modal" id="saved-successfully" tabindex="-1" role="dialog" data-bs-backdrop="static"
+        data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body d-flex flex-column justify-content-center align-items-center">
+                    <div class="modal-middle-icon mb-3">
+                        <img src="images/check.gif" style="width: 7rem; height: auto;" alt="Check Icon">
                     </div>
+                    <div class="modal-title" style="color: black; font-weight: bold;">Saved Successfully</div>
+                    <div class="modal-subtitle mt-2">Your changes have been successfully saved!</div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <script>
-            // Show Modal
-            $(document).ready(function () {
-                $("#saved-successful").click(function (event) {
+
+    <script>
+        // Show Modal
+        $(document).ready(function () {
+            $("#saved-successful").click(function (event) {
                 $("#saved-successfully").modal("show");
             });
 
@@ -111,8 +114,8 @@ if (isset($_POST['login_btn'])) {
             $("#savedSuccessfully-close-modal").click(function (event) {
                 $("#saved-successfully").modal("hide");
             });
-            });
-        </script>
+        });
+    </script>
 
 
 
@@ -131,10 +134,12 @@ if (isset($_POST['login_btn'])) {
                         <i class="bi bi-x-circle-fill" style="color:#E13F3D; font-size:5rem"></i>
                     </div>
                     <div class="modal-title">Login Failed</div>
-                    <div class="modal-subtitle" style="text-wrap: pretty;">Authentication failed. Please check your credentials and try again.</div>
+                    <div class="modal-subtitle" style="text-wrap: pretty;">Authentication failed. Please check your
+                        credentials and try again.</div>
                 </div>
                 <div class="modal-buttons">
-                    <button type="button" class="btn btn-secondary" id="login-close-modal" data-dismiss="modal" style="background-color: #E13F3D; 
+                    <button type="button" class="btn btn-secondary" id="login-close-modal" data-dismiss="modal"
+                        style="background-color: #E13F3D; 
                     font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Close</button>
                 </div>
             </div>
@@ -149,26 +154,30 @@ if (isset($_POST['login_btn'])) {
     <!-- Log out Modal -->
     <div class="modal" id="logOut" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+            <div class="modal-content">
                 <div class="modal-body">
                     <div class="modal-middle-icon">
                         <i class="bi bi-box-arrow-right" style="color:#058789; font-size:5rem"></i>
                     </div>
                     <div class="modal-title" style="color: black;">Are you leaving?</div>
-                    <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to log out?</div>
+                    <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to log out?
+                    </div>
                 </div>
                 <div class="modal-buttons">
-                    <button type="button" class="btn btn-secondary" id="logout-close-modal" data-dismiss="modal" style="background-color: #777777; 
+                    <button type="button" class="btn btn-secondary" id="logout-close-modal" data-dismiss="modal"
+                        style="background-color: #777777; 
                     font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
                     <button type="button" class="btn btn-secondary" id="logout-close-modal" data-dismiss="modal" style="background-color: #058789; 
-                    font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Log Out</button>
+                    font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Log
+                        Out</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Save Changes Modal Button -->
-    <button type="button" class="btn btn-primary" id="saveChanges-modal" data-toggle="modal" data-target="#cancelSaveChanges">
+    <button type="button" class="btn btn-primary" id="saveChanges-modal" data-toggle="modal"
+        data-target="#cancelSaveChanges">
         Save Changes Modal Button
     </button>
 
@@ -176,18 +185,21 @@ if (isset($_POST['login_btn'])) {
     <!-- Save Changes Modal -->
     <div class="modal" id="cancelSaveChanges" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+            <div class="modal-content">
                 <div class="modal-body">
                     <div class="modal-middle-icon">
                         <i class="bi bi-check-circle-fill" style="color:#058789; font-size:5rem"></i>
                     </div>
                     <div class="modal-title" style="color: black;">Save Changes</div>
-                    <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to save your changes?</div>
+                    <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to save your
+                        changes?</div>
                 </div>
                 <div class="modal-buttons">
-                    <button type="button" class="btn btn-secondary" id="cancel-saveChanges-modal" data-dismiss="modal" style="background-color: #777777; 
+                    <button type="button" class="btn btn-secondary" id="cancel-saveChanges-modal" data-dismiss="modal"
+                        style="background-color: #777777; 
                     font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
-                    <button type="button" class="btn btn-secondary" id="logout-close-modal" data-dismiss="modal" style="background-color: #058789; 
+                    <button type="button" class="btn btn-secondary" id="logout-close-modal" data-dismiss="modal"
+                        style="background-color: #058789; 
                     font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Confirm</button>
                 </div>
             </div>
@@ -203,18 +215,21 @@ if (isset($_POST['login_btn'])) {
     <!-- Discard Changes Modal -->
     <div class="modal" id="discardModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+            <div class="modal-content">
                 <div class="modal-body">
                     <div class="modal-middle-icon">
                         <i class="bi bi-exclamation-circle-fill" style="color:#E13F3D; font-size:5rem"></i>
                     </div>
                     <div class="modal-title" style="color: black;">Discard Changes</div>
-                    <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to discard all changes?</div>
+                    <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to discard all
+                        changes?</div>
                 </div>
                 <div class="modal-buttons">
-                    <button type="button" class="btn btn-secondary" id="cancel-discard-modal" data-dismiss="modal" style="background-color: #777777; 
+                    <button type="button" class="btn btn-secondary" id="cancel-discard-modal" data-dismiss="modal"
+                        style="background-color: #777777; 
                     font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
-                    <button type="button" class="btn btn-secondary" id="logout-close-modal" data-dismiss="modal" style="background-color: #E13F3D; 
+                    <button type="button" class="btn btn-secondary" id="logout-close-modal" data-dismiss="modal"
+                        style="background-color: #E13F3D; 
                     font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Discard</button>
                 </div>
             </div>
@@ -222,7 +237,8 @@ if (isset($_POST['login_btn'])) {
     </div>
 
     <!-- Submit Form Modal Button -->
-    <button type="button" class="btn btn-primary" id="cancelConfirm-modal" data-toggle="modal" data-target="#cancelConfirm">
+    <button type="button" class="btn btn-primary" id="cancelConfirm-modal" data-toggle="modal"
+        data-target="#cancelConfirm">
         Submit Form Modal Button
     </button>
 
@@ -230,7 +246,7 @@ if (isset($_POST['login_btn'])) {
     <!-- Submit Form Modal -->
     <div class="modal" id="cancelConfirm" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+            <div class="modal-content">
                 <div class="modal-body">
                     <div class="modal-middle-icon">
                         <i class="bi bi-check-circle-fill" style="color:#058789; font-size:5rem"></i>
@@ -239,9 +255,11 @@ if (isset($_POST['login_btn'])) {
                     <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to submit?</div>
                 </div>
                 <div class="modal-buttons">
-                    <button type="button" class="btn btn-secondary" id="cancel-confirm-modal" data-dismiss="modal" style="background-color: #777777; 
+                    <button type="button" class="btn btn-secondary" id="cancel-confirm-modal" data-dismiss="modal"
+                        style="background-color: #777777; 
                     font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
-                    <button type="button" class="btn btn-secondary" id="logout-close-modal" data-dismiss="modal" style="background-color: #058789; 
+                    <button type="button" class="btn btn-secondary" id="logout-close-modal" data-dismiss="modal"
+                        style="background-color: #058789; 
                     font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Submit</button>
                 </div>
             </div>
@@ -257,18 +275,21 @@ if (isset($_POST['login_btn'])) {
     <!-- Delete Modal -->
     <div class="modal" id="deleteModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+            <div class="modal-content">
                 <div class="modal-body">
                     <div class="modal-middle-icon">
                         <i class="bi bi-trash-fill" style="color:#E13F3D; font-size:5rem"></i>
                     </div>
                     <div class="modal-title" style="color: black;">Confirm Delete?</div>
-                    <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to delete this?</div>
+                    <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to delete this?
+                    </div>
                 </div>
                 <div class="modal-buttons">
-                    <button type="button" class="btn btn-secondary" id="cancel-delete-modal" data-dismiss="modal" style="background-color: #777777; 
+                    <button type="button" class="btn btn-secondary" id="cancel-delete-modal" data-dismiss="modal"
+                        style="background-color: #777777; 
                     font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
-                    <button type="button" class="btn btn-secondary" id="logout-close-modal" data-dismiss="modal" style="background-color: #E13F3D; 
+                    <button type="button" class="btn btn-secondary" id="logout-close-modal" data-dismiss="modal"
+                        style="background-color: #E13F3D; 
                     font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Delete</button>
                 </div>
             </div>

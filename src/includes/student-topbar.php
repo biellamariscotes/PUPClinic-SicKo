@@ -1,10 +1,13 @@
 <div class="row nav-bar px-6">
     <div class="col-md-6 nav-bar-left d-flex align-items-center">
-        <img src="images/sicko-logo.png" class="me-4 my-2">
-        <div class="fw-bold fs-4 d-flex flex-column white" style="padding: 0;">
-            SicKo
-            <!-- <div class="fs-8 fw-light" style="padding: 0;">PUP-SRC CLINIC</div> -->
-        </div>
+    <a href="home.php" class="d-flex align-items-center">
+    <img src="images/sicko-logo.png" class="me-4 my-2">
+    <div class="fw-bold fs-4 d-flex flex-column white" style="padding: 0;">
+        SicKo
+        <!-- <div class="fs-8 fw-light" style="padding: 0;">PUP-SRC CLINIC</div> -->
+    </div>
+</a>
+
     </div>
 
     <div class="col-md-6 d-flex justify-content-end nav-bar-right">

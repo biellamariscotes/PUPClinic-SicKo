@@ -1,7 +1,6 @@
 .modal-middle-icon {
     justify-content: center;
     display: flex;
-    margin-top: 1rem;
 }
 
 .modal-title {
@@ -40,13 +39,35 @@
 }
 
 /* Saved Successfully Modal */
+#loginFailed .modal-content {
+    width: 500px;
+    height: 343.43px;
+    border-radius: 15px; /* Optional: Add border-radius for a rounded appearance */
+    display: flex !important; /* Use flexbox */
+    justify-content: center !important; /* Center content horizontally */
+    align-items: center !important; /* Center content vertically */
+}
+
+#loginFailed .modal-body, .modal-buttons {
+    text-align: center; /* Center align content */
+    width: 100%; /* Ensure full width */
+}
+
+#loginFailed .modal-title {
+    color: black; /* Set title color */
+    font-size: 1.5rem; /* Adjust title font size as needed */
+}
+
+
+
+/* Saved Successfully Modal */
 #saved-successfully .modal-content {
     width: 500px;
     height: 343.43px;
     border-radius: 15px; /* Optional: Add border-radius for a rounded appearance */
-    display: flex; /* Use flexbox */
-    justify-content: center; /* Center content horizontally */
-    align-items: center; /* Center content vertically */
+    display: flex !important; /* Use flexbox */
+    justify-content: center !important; /* Center content horizontally */
+    align-items: center !important; /* Center content vertically */
 }
 
 #saved-successfully .modal-body {
