@@ -97,7 +97,6 @@ function preventSpecialChars(event) {
 }
 
 student_id.addEventListener("keydown", preventSpecialChars);
-last_name.addEventListener("keydown", preventSpecialChars);
 sex.addEventListener("keydown", preventSpecialChars);
 date.addEventListener("keydown", preventSpecialChars);
 course.addEventListener("keydown", preventSpecialChars);
@@ -107,6 +106,9 @@ emergency_no.addEventListener("keydown", preventSpecialChars);
 // ---- SPECIAL CHARACTERS
 
 
+
+
+// ---- ONLY ALLOW LETTERS
 
 // NUMBER VALIDATION
 
@@ -186,6 +188,8 @@ function checkInputs() {
 
 student_id.addEventListener("input", checkInputs);
 last_name.addEventListener("input", checkInputs);
+first_name.addEventListener("input", checkInputs);
+middle_name.addEventListener("input", checkInputs);
 sex.addEventListener("input", checkInputs);
 date.addEventListener("input", checkInputs);
 course.addEventListener("input", checkInputs);

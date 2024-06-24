@@ -110,10 +110,10 @@ function performDiagnosis($symptoms) {
             $suggestedTreatments[] = "acyclovir";
             break;
         case "vertigo":
-            $suggestedTreatments[] = "prochlorperazine, cinnarizine, cyclizine, promethazine";
+            $suggestedTreatments[] = "prochlorperazine, cinnarizine";
             break;
         case "stress":
-            $suggestedTreatments[] = "tranquilizers, beta-blockers, selective serotonin reuptake inhibitors";
+            $suggestedTreatments[] = "beta-blockers, selective serotonin reuptake inhibitors";
             break;
         case "heartburn":
             $suggestedTreatments[] = "Antacids";
@@ -125,7 +125,7 @@ function performDiagnosis($symptoms) {
             $suggestedTreatments[] = "eye drop for cataracts";
             break;
         case "glaucoma":
-            $suggestedTreatments[] = "latanoprost, travoprost, tafluprost, bimatoprost, latanoprostene bunod.";
+            $suggestedTreatments[] = "latanoprost, travoprost";
             break;
         case "colon cancer":
             $suggestedTreatments[] = "Capecitabine, Irinotecan, Oxaliplatin, Lonsurf";

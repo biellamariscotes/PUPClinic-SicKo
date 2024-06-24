@@ -133,16 +133,28 @@ function preventSpecialChars(event) {
 }
 
 student_id.addEventListener("keydown", preventSpecialChars);
-last_name.addEventListener("keydown", preventSpecialChars);
 sex.addEventListener("keydown", preventSpecialChars);
 date.addEventListener("keydown", preventSpecialChars);
 course.addEventListener("keydown", preventSpecialChars);
 section.addEventListener("keydown", preventSpecialChars);
 email.addEventListener("keydown", preventSpecialChars);
-password.addEventListener("keydown", preventSpecialChars);
 emergency_no.addEventListener("keydown", preventSpecialChars);
 // ---- SPECIAL CHARACTERS
 
+
+// ONLY ALLOW LETTERS
+function onlyAllowLetters(event) {
+  const allowedChars = /^[a-zA-Z\s]*$/;
+  if (!allowedChars.test(event.key)) {
+    event.preventDefault();
+  }
+}
+
+first_name.addEventListener("keydown", onlyAllowLetters);
+middle_name.addEventListener("keydown", onlyAllowLetters);
+last_name.addEventListener("keydown", onlyAllowLetters);
+
+// ---- ONLY ALLOW LETTERS
 
 
 // NUMBER VALIDATION
@@ -167,8 +179,10 @@ function ensureStartsWith09() {
 
   if (emergency_no.value.length < 11) {
     emergency_no.classList.add("is-invalid");
+    emergency_no.setAttribute("title", "Invalid number");
   } else {
     emergency_no.classList.remove("is-invalid");
+    emergency_no.removeAttribute("title");
   }
 }
 
