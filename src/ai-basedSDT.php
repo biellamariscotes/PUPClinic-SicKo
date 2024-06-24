@@ -65,8 +65,8 @@ require_once ('includes/connect.php');
             <!-- Keyword Tags Container -->
             <form id="diagnosis-form" method="post" action="generated-diagnosis.php">
                 <div class="symptoms-input-container">
-                    <input type="text" id="symptoms-input" name="symptom" placeholder="Type symptoms keywords..."
-                        autocomplete="off">
+                <input type="text" id="symptoms-input" name="symptom" placeholder="Type symptoms keywords..." autocomplete="off"
+                oninput="this.value = this.value.replace(/[0-9]/g, '')">
                     <input type="hidden" id="hidden-symptoms" name="symptoms">
                     <div class="tags-container" id="tags-container"></div>
                 </div>
