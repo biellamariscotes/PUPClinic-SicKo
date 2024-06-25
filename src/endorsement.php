@@ -5,7 +5,7 @@ require_once('../vendors/tcpdf/tcpdf.php');
 
 $date = date('F j, Y');
 $full_name = isset($_POST['full_name']) ? $_POST['full_name'] : '';
-$diagnosis = isset($_POST['diagnosis']) ? $_POST['diagnosis'] : '';
+$symptoms = isset($_POST['symptoms']) ? $_POST['symptoms'] : '';
 
 $record_id = isset($_POST['record_id']) ? $_POST['record_id'] : '';
     // Update the clearance_letter column to "Yes" in the database
@@ -54,7 +54,7 @@ $html = '
         of the Philippines - Santa Rosa Branch for urgent medical evaluation and treatment at 
     </div>
     <div style="margin-left: 40px; margin-bottom: 10px;">
-        ________________________________. ' . $full_name . ' suffers from ' . $diagnosis . ' , which
+        ________________________________. ' . $full_name . ' suffers from ' . $symptoms . ' , which
     </div>
     <div style="margin-left: 40px; margin-bottom: 10px;">
         significantly impacts their daily life and academic performance. Their condition necessitates
