@@ -6,7 +6,6 @@ require_once('includes/connect.php');
 // Check if the form is submitted for deletion and if the deletion was successful
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmDeleteButton'])) {
     if (!empty($_POST['delete_patient'])) {
-        $deletionSuccessful = true; // Flag to indicate successful deletion
         foreach ($_POST['delete_patient'] as $patient_id) {
             // Prepare a delete statement for treatment records
             $sql_treatment = "DELETE FROM treatment_record WHERE patient_id = ?";
@@ -23,10 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmDeleteButton'])
 
                         if (mysqli_stmt_execute($stmt_patient)) {
                             // Deletion successful
-                            echo "Record deleted successfully: Patient ID " . $patient_id . "<br>";
+                            // echo "Record deleted successfully: Patient ID " . $patient_id . "<br>";
                         } else {
                             // Error handling
-                            $deletionSuccessful = false; // Set flag to false if deletion fails
                             echo "Error deleting patient record: " . mysqli_stmt_error($stmt_patient) . "<br>";
                         }
 
@@ -34,11 +32,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmDeleteButton'])
                         mysqli_stmt_close($stmt_patient);
                     } else {
                         echo "Error preparing statement: " . mysqli_error($conn) . "<br>";
-                        $deletionSuccessful = false; // Set flag to false if preparation fails
                     }
                 } else {
                     // Error handling
-                    $deletionSuccessful = false; // Set flag to false if execution fails
                     echo "Error deleting treatment records: " . mysqli_stmt_error($stmt_treatment) . "<br>";
                 }
 
@@ -46,14 +42,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmDeleteButton'])
                 mysqli_stmt_close($stmt_treatment);
             } else {
                 echo "Error preparing statement: " . mysqli_error($conn) . "<br>";
-                $deletionSuccessful = false; // Set flag to false if preparation fails
             }
         }
         // Redirect to the same page to reflect changes
-        if ($deletionSuccessful) {
-            // Show the delete successful modal if deletion was successful
-            echo "<script>$(document).ready(function() { $('#delete-successful-modal').modal('show'); });</script>";
-        }
+        $currentPage = isset($_POST['current_page']) ? (int)$_POST['current_page'] : 1;
+        $sortCriteria = isset($_POST['sort_criteria']) ? $_POST['sort_criteria'] : 'first_name';
         header("Location: " . $_SERVER['PHP_SELF'] . "?page=$currentPage&sort=$sortCriteria");
         exit;
     }
@@ -97,6 +90,13 @@ $result = mysqli_query($conn, $query);
 </head>
 
 <style>
+    /* Additional CSS to handle disabling links */
+    .disabled-link {
+    pointer-events: none; /* Disable clicking */
+    text-decoration: none;
+    cursor: not-allowed; /* Change cursor to indicate it's disabled */
+    }
+
     .pagination-button.disabled {
         pointer-events: none;
         opacity: 0.5;
@@ -109,15 +109,14 @@ $result = mysqli_query($conn, $query);
     .pagination .page-item .page-link {
         color: #020203;
         border: none;
-        padding: 0.25rem 0.5rem;
-        font-size: 0.500rem; 
-        border-radius: 0.75rem;
+        font-size: 0.25rem; 
+        border-radius: 50%;
     }
     .pagination .page-item.active .page-link {
         background-color: #058789;
         border: none;
         color: #fff;
-        border-radius: 0.75rem;
+        border-radius: 50%;   
     }
     .pagination .page-item .page-link:hover {
         background-color: #058789;
@@ -129,7 +128,7 @@ $result = mysqli_query($conn, $query);
         color: #6c757d;
     }
     .pagination .page-item .page-link {
-        font-size: 1.2rem;
+        font-size: 0.875rem;
     }
 
     .cancel-button {
@@ -251,29 +250,27 @@ $result = mysqli_query($conn, $query);
             <div class="table-container" id="">
                 <form id="deleteForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                     <table class="dashboard-table" style="margin-bottom: 80px;">
-                        <tr>
-                            <th>Patient Name</th>
-                            <th>Course</th>
-                            <th>Section</th>
-                            <th>Gender</th>
-                        </tr>
+                    <tr>
+                    <th>Patient Name</th>
+                    <th>Course</th>
+                    <th>Section</th>
+                    <th>Gender</th>
+                </tr>
                         <?php
-                        // Check if there are any records
-                        if (mysqli_num_rows($result) > 0) {
-                            // Output data of each row
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                echo "<tr>";
-                                echo "<td class='nameColumn'>";
-                                echo "<input type='checkbox' name='delete_patient[]' value='" . $row["patient_id"] . "' style='display:none;'>"; // Checkbox initially hidden
-                                echo "<a href='patients-treatment-record.php?patient_id=" . $row["patient_id"] . "'>" . $row["first_name"] . " " . $row["last_name"] . "</a></td>"; // Patient name
-                                echo "<td>" . $row["course"] . "</td>";
-                                echo "<td>" . $row["section"] . "</td>";
-                                echo "<td>" . $row["sex"] . "</td>";
-                                echo "</tr>";
+                            if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo "<tr>";
+                                    echo "<td class='nameColumn'>";
+                                    echo "<input type='checkbox' name='delete_patient[]' value='" . $row["patient_id"] . "' style='display:none;'>"; // Checkbox initially hidden
+                                    echo "<a href='patients-treatment-record.php?patient_id=" . $row["patient_id"] . "' class='patient-link'>" . $row["first_name"] . " " . $row["last_name"] . "</a></td>"; // Patient name
+                                    echo "<td>" . $row["course"] . "</td>";
+                                    echo "<td>" . $row["section"] . "</td>";
+                                    echo "<td>" . $row["sex"] . "</td>";
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='4'>No records found</td></tr>";
                             }
-                        } else {
-                            echo "<tr><td colspan='4'>No records found</td></tr>";
-                        }
                         ?>
                         <tr>
                             <td colspan="5" style="height: 97px; background-color: white;"> <!-- Use colspan to span across all columns -->
@@ -289,11 +286,28 @@ $result = mysqli_query($conn, $query);
                                     </div>
 
                                     <!-- Delete button with toggle for checkboxes -->
-                                    <div class="button-group" style="justify-content: space-between; gap: 35rem;">
+                                    <div class="button-group" style="justify-content: space-between; gap: 15.7rem;">
                                         <span class="delete-records-link" id="delete-toggle-link" onclick="toggleDeleteMode()" style="color: #D22B2B;">
                                             <i class="bi bi-trash" style="color: #D22B2B; font-size: 1rem; margin-right: 0.625rem; vertical-align: middle;"></i>
                                             Delete Patients
                                         </span>
+
+                                        <!-- Pagination buttons -->
+                                        <nav aria-label="Page navigation">
+                                                <ul class="pagination justify-content-center" style="margin-bottom: 0; gap: 10px;">
+                                                    <li class="page-item <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
+                                                        <a class="page-link" href="?page=<?php echo $currentPage - 1; ?>&sort=<?php echo $sortCriteria; ?>" tabindex="-1"><</a>
+                                                    </li>
+                                                    <?php for ($i = $startPage; $i <= $endPage; $i++) : ?>
+                                                        <li class="page-item <?php echo ($i == $currentPage) ? 'active' : ''; ?>">
+                                                            <a class="page-link" href="?page=<?php echo $i; ?>&sort=<?php echo $sortCriteria; ?>"><?php echo $i; ?></a>
+                                                        </li>
+                                                    <?php endfor; ?>
+                                                    <li class="page-item <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
+                                                        <a class="page-link" href="?page=<?php echo $currentPage + 1; ?>&sort=<?php echo $sortCriteria; ?>">></a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
 
                                         <!-- Sorting and Pagination Container -->
                                         <div class="sorting-pagination-container">
@@ -308,22 +322,6 @@ $result = mysqli_query($conn, $query);
                                                     <option value="sex">Gender</option>
                                                 </select>
                                             </div>
-                                            <!-- Pagination buttons -->
-                                            <nav aria-label="Page navigation">
-                                                <ul class="pagination justify-content-center">
-                                                    <li class="page-item <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
-                                                        <a class="page-link" href="?page=<?php echo $currentPage - 1; ?>&sort=<?php echo $sortCriteria; ?>" tabindex="-1"><</a>
-                                                    </li>
-                                                    <?php for ($i = $startPage; $i <= $endPage; $i++) : ?>
-                                                        <li class="page-item <?php echo ($i == $currentPage) ? 'active' : ''; ?>">
-                                                            <a class="page-link" href="?page=<?php echo $i; ?>&sort=<?php echo $sortCriteria; ?>"><?php echo $i; ?></a>
-                                                        </li>
-                                                    <?php endfor; ?>
-                                                    <li class="page-item <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
-                                                        <a class="page-link" href="?page=<?php echo $currentPage + 1; ?>&sort=<?php echo $sortCriteria; ?>">></a>
-                                                    </li>
-                                                </ul>
-                                            </nav>
                                         </div>
                                     </div>
                                 </div>
@@ -343,6 +341,52 @@ $result = mysqli_query($conn, $query);
     <script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="scripts/script.js"></script>
     <script src="scripts/loader.js"></script>
+
+    <script>
+    var deleteMode = false;
+
+    function toggleDeleteMode() {
+        deleteMode = !deleteMode;
+        var checkboxes = document.querySelectorAll("input[name='delete_patient[]']");
+        var patientLinks = document.querySelectorAll(".patient-link");
+
+        checkboxes.forEach(function (checkbox) {
+            checkbox.style.display = deleteMode ? "inline-block" : "none";
+            checkbox.checked = false;
+        });
+
+        patientLinks.forEach(function (link) {
+            if (deleteMode) {
+                link.classList.add('disabled-link');
+            } else {
+                link.classList.remove('disabled-link');
+            }
+        });
+
+        document.getElementById("delete-selected-link").parentElement.style.display = deleteMode ? "flex" : "none";
+        document.getElementById("delete-toggle-link").style.display = deleteMode ? "none" : "flex";
+    }
+
+    function cancelDeleteMode() {
+        deleteMode = false;
+        var checkboxes = document.querySelectorAll("input[name='delete_patient[]']");
+        var patientLinks = document.querySelectorAll(".patient-link");
+
+        checkboxes.forEach(function (checkbox) {
+            checkbox.style.display = "none";
+            checkbox.checked = false;
+        });
+
+        patientLinks.forEach(function (link) {
+            link.classList.remove('disabled-link');
+        });
+
+        document.getElementById("delete-selected-link").parentElement.style.display = "none";
+        document.getElementById("delete-toggle-link").style.display = "block";
+    }
+
+    document.getElementById("cancel-delete-modal").addEventListener("click", cancelDeleteMode);
+    </script>
 
     <script>
         $(document).ready(function () {
@@ -388,6 +432,38 @@ $result = mysqli_query($conn, $query);
         return false;
     }
 
+        // Function to handle pagination link click
+        $('.page-link').click(function (e) {
+        e.preventDefault();
+        var deleteMode = $('#delete-toggle-link').is(':hidden');
+        var checkedPatients = $('input[name="delete_patient[]"]:checked').map(function () {
+            return this.value;
+        }).get().join(',');
+
+        var href = $(this).attr('href');
+        var separator = href.indexOf('?') !== -1 ? '&' : '?';
+        var newHref = href + separator + 'deleteMode=' + deleteMode + '&checkedPatients=' + checkedPatients;
+        window.location.href = newHref;
+    });
+
+    // Function to initialize the delete mode state
+    function initializeDeleteMode() {
+        var deleteMode = getQueryVariable('deleteMode') === 'true';
+        var checkedPatients = getQueryVariable('checkedPatients');
+
+        if (deleteMode) {
+            toggleDeleteMode();
+            if (checkedPatients) {
+                checkedPatients.split(',').forEach(function (patientId) {
+                    $('input[name="delete_patient[]"][value="' + patientId + '"]').prop('checked', true);
+                });
+            }
+        }
+    }
+
+    // Initializing the delete mode state
+    initializeDeleteMode();
+
     // Set current sort criteria in the dropdown
     var currentSortCriteria = getQueryVariable('sort');
     if (currentSortCriteria) {
@@ -425,6 +501,8 @@ $result = mysqli_query($conn, $query);
         checkboxes.toggle(); // Show or hide checkboxes
         deleteCancelContainer.toggle(); // Show or hide the delete-cancel-container
         deleteToggleLink.toggle(); // Hide or show "Delete Records" link
+
+        $('.patient-link').toggleClass('disabled-link'); // Toggle the class to disable/enable links
 
         // Show the sorting-pagination-container when cancel button is clicked
         if (cancelDeleteLink.is(':visible')) {

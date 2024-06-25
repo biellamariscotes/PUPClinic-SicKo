@@ -1169,7 +1169,7 @@ input[type=number] {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 1.25rem 1.25rem 1.25rem;
+  margin: 0.625rem 1.25rem 0.625rem 1.25rem;
 }
 
 .button-container {
