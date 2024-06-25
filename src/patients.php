@@ -90,6 +90,10 @@ $result = mysqli_query($conn, $query);
 </head>
 
 <style>
+
+    .page-item.active .page-link {
+        z-index: 1;
+    }
     /* Additional CSS to handle disabling links */
     .disabled-link {
     pointer-events: none; /* Disable clicking */
@@ -286,7 +290,7 @@ $result = mysqli_query($conn, $query);
                                     </div>
 
                                     <!-- Delete button with toggle for checkboxes -->
-                                    <div class="button-group" style="justify-content: space-between; gap: 15.7rem;">
+                                    <div class="button-group" style="justify-content: space-between; gap: 14rem;">
                                         <span class="delete-records-link" id="delete-toggle-link" onclick="toggleDeleteMode()" style="color: #D22B2B;">
                                             <i class="bi bi-trash" style="color: #D22B2B; font-size: 1rem; margin-right: 0.625rem; vertical-align: middle;"></i>
                                             Delete Patients
