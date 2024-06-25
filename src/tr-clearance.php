@@ -71,6 +71,29 @@ input, select {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
     transition: border-color 0.3s; /* Added transition for smoother effect */
 }
+
+#generate-clearance-button,
+#generate-endorsement-button {
+    width: 307px;
+    padding: 10px;
+    background-color: #058789;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 20px 0 50px 0;
+}
+
+#generate-clearance-button:hover,
+#generate-endorsement-button:hover {
+    background-color: #1D434E;
+}
+
 </style>
 
 <body>
@@ -92,7 +115,7 @@ input, select {
 
         <!-- Form Container -->
         <div class="form-container">
-            <form id="treatment-form" action="clearance.php" method="post">
+            <form id="treatment-form" action="" method="post">
                 <div class="input-row">
                 <input type="hidden" name="record_id" value="<?php echo htmlspecialchars($record_id); ?>">
                     <input type="text" id="full-name" name="full_name" placeholder="Full Name" autocomplete="off" required value="<?php echo htmlspecialchars($full_name); ?>" >
@@ -126,8 +149,11 @@ input, select {
                     <input type="text" id="diagnosis" name="diagnosis" placeholder="Diagnosis" autocomplete="off" required value="<?php echo htmlspecialchars($diagnosis); ?>" >
                     <input type="text" id="treatments" name="treatments" placeholder="Treatments/Medicines" autocomplete="off" required value="<?php echo htmlspecialchars($treatments); ?>"  >
                 </div>
-                <div class="middle-row">
-                    <button type="submit" id="generate-excuse-letter-button" name="record-btn">Generate Clearance</button>
+                <div class="button-row" style="justify-content: center; gap: 10rem; margin-left: 7  0px;">
+                    <input type="hidden" name="record_id" value="<?php echo htmlspecialchars($record_id); ?>">
+                    <button type="button" id="generate-excuse-letter-button" name="record-btn" onclick="submitForm('excuse-letter.php')">Generate Excuse Letter</button>
+                    <button type="button" id="generate-clearance-button" name="record-btn" onclick="submitForm('clearance.php')">Generate Clearance</button>
+                    <button type="button" id="generate-endorsement-button" name="hello-btn" onclick="submitForm('endorsement.php')">Generate Endorsement</button>
                 </div>
             </form>
         </div>
@@ -172,8 +198,18 @@ input, select {
         }
 
         simulateContentLoading();
+
     </script>
     <!-- END OF LOADER -->
+        
+    <script>
+        function submitForm(action) {
+            const form = document.getElementById('treatment-form');
+            form.action = action;
+            form.method = 'post';
+            form.submit();
+        }
+    </script>
 
 </body>
 </html>

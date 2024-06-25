@@ -135,7 +135,7 @@ $record_id = isset($_GET['record_id']) ? $_GET['record_id'] : '';
                 </div>
                 <div class="button-row" style="justify-content: center; gap: 2rem;">
                     <input type="hidden" name="record_id" value="<?php echo htmlspecialchars($record_id); ?>">
-                    <button type="button" id="generate-excuse-letter-button" name="record-btn" onclick="submitForm('excuse-letter.php')">Generate Clearance</button>
+                    <button type="button" id="generate-excuse-letter-button" name="record-btn" onclick="submitForm('excuse-letter.php')">Generate Excuse Letter</button>
                     <button type="button" id="generate-endorsement-button" name="hello-btn" onclick="submitForm('endorsement.php')">Generate Endorsement</button>
                 </div>
             </form>
