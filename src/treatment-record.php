@@ -345,342 +345,337 @@ mysqli_close($conn);
         });
     </script>
 
-    <script>
-        $(document).ready(function () {
-            const patientList = $('#patient-list');
+<script>
+$(document).ready(function () {
+    const patientList = $('#patient-list');
 
-            function clearAndEnableFields() {
-                $('#age, #sex, #course, #section').removeClass('grayed-out').removeAttr('readonly').val('');
-            }
-
-            $('#full-name').on('input', function () {
-                clearAndEnableFields();
-                let fullName = $(this).val();
-                if (fullName.length >= 2) {
-                    $.ajax({
-                        url: 'get_patient_info.php',
-                        method: 'GET',
-                        data: { full_name: fullName },
-                        success: function (data) {
-                            patientList.empty();
-                            if (data.length > 0) {
-                                data.forEach(patient => {
-                                    patientList.append(`<li data-id="${patient.patient_id}" data-age="${patient.age}" data-sex="${patient.sex}" data-course="${patient.course}" data-section="${patient.section}">${patient.full_name}</li>`);
-                                });
-                                patientList.show();
-                            } else {
-                                patientList.hide();
-                            }
-                        }
-                    });
-                } else {
-                    patientList.hide();
-                }
-            });
-
-            patientList.on('click', 'li', function () {
-                let patientId = $(this).data('id');
-                let age = $(this).data('age');
-                let sex = $(this).data('sex');
-                let course = $(this).data('course');
-                let section = $(this).data('section');
-
-                $('#patient-id').val(patientId);
-                $('#age').val(age);
-                $('#sex').val(sex);
-                $('#course').val(course);
-                $('#section').val(section);
-
-                patientList.hide();
-                $('#patient-info-confirm-button').removeAttr('disabled');
-            });
-
-            // Show Modal when Submit button is clicked
-            $("#submit-form-button").click(function (event) {
-                event.preventDefault(); // Prevent default form submission
-                populatePreviewModal(); // Populate the preview modal with form data
-                $("#previewModal").modal("show"); // Show the preview modal
-            });
-
-            // Function to populate the preview modal with form data
-            function populatePreviewModal() {
-                // Fetch input values from form fields
-                var fullName = $("#full-name").val();
-                var sex = $("#sex").val();
-                var age = $("#age").val();
-                var course = $("#course").val();
-                var section = $("#section").val();
-                var symptoms = $("#symptoms").val();
-                var diagnosis = $("#diagnosis").val();
-                var treatments = $("#treatments").val();
-
-                // Populate the preview modal with the fetched data
-                $("#preview-full-name").text(fullName);
-                $("#preview-sex").text(sex);
-                $("#preview-age").text(age);
-                $("#preview-course").text(course);
-                $("#preview-section").text(section);
-                $("#preview-symptoms").text(symptoms);
-                $("#preview-diagnosis").text(diagnosis);
-                $("#preview-treatment").text(treatments);
-            }
-
-            // Close the Modal with the close button
-            $("#cancel-confirm-modal").click(function (event) {
-                $("#previewModal").modal("hide");
-            });
-
-            // Handle form submission when user confirms in the modal
-            $("#submit-form-modal").click(function (event) {
-                $("#treatment-form").submit(); // Submit the form
-                logActivity();
-            });
-
-            // Function to log activity
-            function logActivity() {
-                    var fullName = document.getElementById('user-fullname').value.trim();
-                    var action = " created a new Treatment Record";
-
-                    // AJAX call to log activity
-                    $.ajax({
-                        type: 'POST',
-                        url: 'log_activity.php', // Create a PHP file to handle logging
-                        data: { fullname: fullName, action: action },
-                        success: function(response) {
-                            console.log('Activity logged successfully.');
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Error logging activity:', error);
-                        }
-                    });
-                }
-        });
-    </script>
-
-    <script>
-    function selectPatient(patient_id, fullName, gender, age, course, section) {
-        document.getElementById("full-name").value = fullName;
-        document.getElementById("sex").value = gender;
-        document.getElementById("age").value = age;
-        document.getElementById("course").value = course;
-        document.getElementById("section").value = section;
-        document.getElementById("patient_id").value = patient_id;
-
-        // Add 'grayed-out' class to the fields
-        document.getElementById("sex").classList.add('grayed-out');
-        document.getElementById("age").classList.add('grayed-out');
-        document.getElementById("course").classList.add('grayed-out');
-        document.getElementById("section").classList.add('grayed-out');
+    // Function to clear and enable fields
+    function clearAndEnableFields() {
+        $('#age, #sex, #course, #section').val('').removeClass('grayed-out').removeAttr('readonly');
+        checkFormCompletion();
     }
-    </script>
 
-    <script>
-        function validateForm() {
-            // Validate Full Name
-            var fullName = document.getElementById("full-name").value.trim();
-            if (fullName.length === 0 || fullName.length > 30 || /^\s+$/.test(fullName)) {
-                alert("Please enter a valid full name (up to 30 characters without leading or trailing spaces).");
-                return false;
-            }
+    // Function to check form completion and enable/disable the submit button
+    function checkFormCompletion() {
+        var fullName = $("#full-name").val().trim();
+        var sex = $("#sex").val().trim();
+        var age = $("#age").val().trim();
+        var course = $("#course").val().trim();
+        var section = $("#section").val().trim();
+        var symptoms = $("#symptoms").val().trim();
+        var diagnosis = $("#diagnosis").val().trim();
+        var treatments = $("#treatments").val().trim();
 
-            // Validate Age
-            var age = document.getElementById("age").value.trim();
-            if (!/^\d{2}$/.test(age) || parseInt(age) < 17 || parseInt(age) > 65) {
-                alert("Please enter a valid age (between 17 and 65 years old).");
-                return false;
-            }
+        var allFieldsCompleted = fullName !== '' && sex !== '' && age !== '' && course !== '' && section !== '' &&
+            symptoms !== '' && diagnosis !== '' && treatments !== '';
 
-            return true; // Form is valid
-        }
+        $("#submit-form-button").prop('disabled', !allFieldsCompleted);
+    }
 
-        // Add event listener to form submission
-        document.getElementById("treatment-form").addEventListener("submit", function (event) {
-            if (!validateForm()) {
-                event.preventDefault(); // Prevent form submission if validation fails
-            }
-        });
-
-        // JavaScript
-        function searchPatients(input) {
-        if (input.length == 0) {
-            document.getElementById("search-results").innerHTML = "";
-            document.getElementById("search-results").style.display = "none";
-            return;
+    // Event handler for input changes in the full name field
+    $('#full-name').on('input', function () {
+        let fullName = $(this).val();
+        if (fullName.length < 2) {
+            patientList.hide();
         } else {
             $.ajax({
-                type: 'POST',
-                url: 'autocomplete.php',
-                data: { input: input },
+                url: 'get_patient_info.php',
+                method: 'GET',
+                data: { full_name: fullName },
                 success: function (data) {
-                    console.log(data);
-                    try {
-                        var suggestions = JSON.parse(data);
-                        if (Array.isArray(suggestions) && suggestions.length > 0) {
-                            var listHtml = '';
-                            suggestions.forEach(function (person) {
-                                var fullName = person.first_name + ' ' + person.last_name;
-                                listHtml += '<li onclick="selectFullName(\'' + fullName + '\', \'' + person.patient_id + '\')">' + fullName + '</li>';
-                            });
-                            $('#search-results').html(listHtml);
-                            document.getElementById("search-results").style.display = "block";
-                        } else {
-                            document.getElementById("search-results").innerHTML = "";
-                            document.getElementById("search-results").style.display = "none"; // Hide the list box if there are no suggestions
-                        }
-                    } catch (error) {
-                        console.error('Error parsing JSON:', error);
+                    patientList.empty();
+                    if (data.length > 0) {
+                        data.forEach(patient => {
+                            patientList.append(`<li data-id="${patient.patient_id}" data-age="${patient.age}" data-sex="${patient.sex}" data-course="${patient.course}" data-section="${patient.section}">${patient.full_name}</li>`);
+                        });
+                        patientList.show();
+                    } else {
+                        patientList.hide();
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error(xhr.responseText);
                 }
             });
         }
+
+        // Clear and enable fields if full name is changed
+        clearAndEnableFields();
+    });
+
+    // Event handler for selecting a patient from the list
+    patientList.on('click', 'li', function () {
+        let patientId = $(this).data('id');
+        let age = $(this).data('age');
+        let sex = $(this).data('sex');
+        let course = $(this).data('course');
+        let section = $(this).data('section');
+
+        $('#patient-id').val(patientId);
+        $('#age').val(age);
+        $('#sex').val(sex);
+        $('#course').val(course);
+        $('#section').val(section);
+
+        patientList.hide();
+        checkFormCompletion();
+    });
+
+    // Event listeners for all input fields to check form completion
+    $('#full-name, #sex, #age, #course, #section, #symptoms, #diagnosis, #treatments').on('input', checkFormCompletion);
+
+    // Show Modal when Submit button is clicked
+    $("#submit-form-button").click(function (event) {
+        event.preventDefault(); // Prevent default form submission
+        populatePreviewModal(); // Populate the preview modal with form data
+        $("#previewModal").modal("show"); // Show the preview modal
+    });
+
+    // Function to populate the preview modal with form data
+    function populatePreviewModal() {
+        // Fetch input values from form fields
+        var fullName = $("#full-name").val();
+        var sex = $("#sex").val();
+        var age = $("#age").val();
+        var course = $("#course").val();
+        var section = $("#section").val();
+        var symptoms = $("#symptoms").val();
+        var diagnosis = $("#diagnosis").val();
+        var treatments = $("#treatments").val();
+
+        // Populate the preview modal with the fetched data
+        $("#preview-full-name").text(fullName);
+        $("#preview-sex").text(sex);
+        $("#preview-age").text(age);
+        $("#preview-course").text(course);
+        $("#preview-section").text(section);
+        $("#preview-symptoms").text(symptoms);
+        $("#preview-diagnosis").text(diagnosis);
+        $("#preview-treatment").text(treatments);
     }
 
-    function searchPatients(input) {
-        if (input.length == 0) {
-            document.getElementById("search-results").innerHTML = "";
-            document.getElementById("search-results").style.display = "none";
-            return;
-        } else {
-            $.ajax({
-                type: 'POST',
-                url: 'autocomplete.php',
-                data: { input: input },
-                success: function (data) {
-                    console.log(data);
-                    try {
-                        var suggestions = JSON.parse(data);
-                        if (Array.isArray(suggestions) && suggestions.length > 0) {
-                            var listHtml = '';
-                            suggestions.forEach(function (person) {
-                                var fullName = person.first_name + ' ' + person.last_name;
-                                listHtml += '<li onclick="selectFullName(\'' + fullName + '\', \'' + person.patient_id + '\')">' + fullName + '</li>';
-                            });
-                            $('#search-results').html(listHtml);
-                            document.getElementById("search-results").style.display = "block";
-                        } else {
-                            document.getElementById("search-results").innerHTML = "";
-                            document.getElementById("search-results").style.display = "none"; // Hide the list box if there are no suggestions
-                        }
-                    } catch (error) {
-                        console.error('Error parsing JSON:', error);
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
-        }
+    // Close the Modal with the close button
+    $("#cancel-confirm-modal").click(function (event) {
+        $("#previewModal").modal("hide");
+    });
+
+    // Handle form submission when user confirms in the modal
+    $("#submit-form-modal").click(function (event) {
+        $("#treatment-form").submit(); // Submit the form
+        logActivity();
+    });
+
+    // Function to log activity
+    function logActivity() {
+        var fullName = document.getElementById('user-fullname').value.trim();
+        var action = " created a new Treatment Record";
+
+        // AJAX call to log activity
+        $.ajax({
+            type: 'POST',
+            url: 'log_activity.php', // Create a PHP file to handle logging
+            data: { fullname: fullName, action: action },
+            success: function(response) {
+                console.log('Activity logged successfully.');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error logging activity:', error);
+            }
+        });
     }
 
-    function selectFullName(fullName, patientId) {
-        document.getElementById("full-name").value = fullName;
-        document.getElementById("patient_id").value = patientId; // Set the patient_id
-        document.getElementById("search-results").innerHTML = ""; // Clear suggestions
-        document.getElementById("search-results").style.display = "none"; // Hide the search results
-        
-        // Now, fetch additional patient data from the server using patientId
+    // Initial call to set the initial state of the submit button
+    checkFormCompletion();
+});
+</script>
+
+<script>
+function selectPatient(patient_id, fullName, gender, age, course, section) {
+    document.getElementById("full-name").value = fullName;
+    document.getElementById("sex").value = gender;
+    document.getElementById("age").value = age;
+    document.getElementById("course").value = course;
+    document.getElementById("section").value = section;
+    document.getElementById("patient_id").value = patient_id;
+
+    // Add 'grayed-out' class to the fields
+    document.getElementById("sex").classList.add('grayed-out');
+    document.getElementById("age").classList.add('grayed-out');
+    document.getElementById("course").classList.add('grayed-out');
+    document.getElementById("section").classList.add('grayed-out');
+
+    // Trigger the checkFormCompletion function after auto-filling the fields
+    checkFormCompletion();
+}
+</script>
+
+<script>
+function validateForm() {
+    // Validate Full Name
+    var fullName = document.getElementById("full-name").value.trim();
+    if (fullName.length === 0 || fullName.length > 30 || /^\s+$/.test(fullName)) {
+        alert("Please enter a valid full name (up to 30 characters without leading or trailing spaces).");
+        return false;
+    }
+
+    // Validate Age
+    var age = document.getElementById("age").value.trim();
+    if (!/^\d{2}$/.test(age) || parseInt(age) < 17 || parseInt(age) > 65) {
+        alert("Please enter a valid age (between 17 and 65 years old).");
+        return false;
+    }
+
+    return true; // Form is valid
+}
+
+// Add event listener to form submission
+document.getElementById("treatment-form").addEventListener("submit", function (event) {
+    if (!validateForm()) {
+        event.preventDefault(); // Prevent form submission if validation fails
+    }
+});
+
+// JavaScript
+function searchPatients(input) {
+    if (input.length == 0) {
+        document.getElementById("search-results").innerHTML = "";
+        document.getElementById("search-results").style.display = "none";
+        return;
+    } else {
         $.ajax({
             type: 'POST',
             url: 'autocomplete.php',
-            data: { patient_id: patientId },
+            data: { input: input },
             success: function (data) {
-                // Assuming 'data' contains JSON with patient details
+                console.log(data);
                 try {
-                    var patientData = JSON.parse(data);
-                    document.getElementById("sex").value = patientData.sex;
-                    document.getElementById("age").value = patientData.age;
-                    document.getElementById("course").value = patientData.course;
-                    document.getElementById("section").value = patientData.section;
-                    document.getElementById("symptoms").focus(); // Move focus to the next input field
-                    
-                    // Add 'grayed-out' class to the fields
-                    document.getElementById("sex").classList.add('grayed-out');
-                    document.getElementById("age").classList.add('grayed-out');
-                    document.getElementById("course").classList.add('grayed-out');
-                    document.getElementById("section").classList.add('grayed-out');
-
-                    // Trigger the checkFormCompletion function after auto-completing patient credentials
-                    checkFormCompletion();
+                    var suggestions = JSON.parse(data);
+                    if (Array.isArray(suggestions) && suggestions.length > 0) {
+                        var listHtml = '';
+                        suggestions.forEach(function (person) {
+                            var fullName = person.first_name + ' ' + person.last_name;
+                            listHtml += '<li onclick="selectFullName(\'' + fullName + '\', \'' + person.patient_id + '\')">' + fullName + '</li>';
+                        });
+                        $('#search-results').html(listHtml);
+                        document.getElementById("search-results").style.display = "block";
+                    } else {
+                        document.getElementById("search-results").innerHTML = "";
+                        document.getElementById("search-results").style.display = "none"; // Hide the list box if there are no suggestions
+                    }
                 } catch (error) {
                     console.error('Error parsing JSON:', error);
                 }
             },
             error: function (xhr, status, error) {
-                console.error(xhr.responseText); // Log any errors to the console
+                console.error(xhr.responseText);
             }
         });
     }
+}
 
-        // Trigger autocomplete only when input length > 0
-        $(document).ready(function () {
-            $('#full-name').keyup(function () {
-                var input = $(this).val().trim();
-                if (input.length > 0) {
-                    searchPatients(input);
-                }
-            });
-        });
+function selectFullName(fullName, patientId) {
+    document.getElementById("full-name").value = fullName;
+    document.getElementById("patient_id").value = patientId; // Set the patient_id
+    document.getElementById("search-results").innerHTML = ""; // Clear suggestions
+    document.getElementById("search-results").style.display = "none"; // Hide the search results
 
-        // Function to check the completion status of all required fields
-        function checkFormCompletion() {
-            var fullName = document.getElementById("full-name").value.trim();
-            var sex = document.getElementById("sex").value.trim();
-            var age = document.getElementById("age").value.trim();
-            var course = document.getElementById("course").value.trim();
-            var section = document.getElementById("section").value.trim();
-            var symptoms = document.getElementById("symptoms").value.trim();
-            var diagnosis = document.getElementById("diagnosis").value.trim();
-            var treatments = document.getElementById("treatments").value.trim();
+    // Now, fetch additional patient data from the server using patientId
+    $.ajax({
+        type: 'POST',
+        url: 'autocomplete.php',
+        data: { patient_id: patientId },
+        success: function (data) {
+            // Assuming 'data' contains JSON with patient details
+            try {
+                var patientData = JSON.parse(data);
+                document.getElementById("sex").value = patientData.sex;
+                document.getElementById("age").value = patientData.age;
+                document.getElementById("course").value = patientData.course;
+                document.getElementById("section").value = patientData.section;
+                document.getElementById("symptoms").focus(); // Move focus to the next input field
 
-            // Check if all required fields are completed
-            var allFieldsCompleted = fullName !== '' && sex !== '' && age !== '' && course !== '' && section !== '' &&
-                symptoms !== '' && diagnosis !== '' && treatments !== '';
+                // Add 'grayed-out' class to the fields
+                document.getElementById("sex").classList.add('grayed-out');
+                document.getElementById("age").classList.add('grayed-out');
+                document.getElementById("course").classList.add('grayed-out');
+                document.getElementById("section").classList.add('grayed-out');
 
-            // Enable or disable the submit button based on completion status
-            var submitButton = document.getElementById("submit-form-button");
-            submitButton.disabled = !allFieldsCompleted;
+                // Trigger the checkFormCompletion function after auto-completing patient credentials
+                checkFormCompletion();
+            } catch (error) {
+                console.error('Error parsing JSON:', error);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText); // Log any errors to the console
         }
-
-         // Add event listeners to input fields to trigger the checkFormCompletion function
-    document.getElementById("full-name").addEventListener("input", function() {
-        clearAndEnableFields(); // Clear and enable fields when full_name input changes
-        checkFormCompletion(); // Check form completion status after full_name input changes
     });
-    document.getElementById("sex").addEventListener("input", checkFormCompletion);
-    document.getElementById("age").addEventListener("input", checkFormCompletion);
-    document.getElementById("course").addEventListener("input", checkFormCompletion);
-    document.getElementById("section").addEventListener("input", checkFormCompletion);
-    document.getElementById("symptoms").addEventListener("input", checkFormCompletion);
-    document.getElementById("diagnosis").addEventListener("input", checkFormCompletion);
-    document.getElementById("treatments").addEventListener("input", checkFormCompletion);
+}
 
-    // Call the checkFormCompletion function initially to set the initial state of the submit button
-    checkFormCompletion();
-    </script>
+// Trigger autocomplete only when input length > 0
+$(document).ready(function () {
+    $('#full-name').keyup(function () {
+        var input = $(this).val().trim();
+        if (input.length > 0) {
+            searchPatients(input);
+        }
+    });
+});
+
+// Function to check the completion status of all required fields
+function checkFormCompletion() {
+    var fullName = document.getElementById("full-name").value.trim();
+    var sex = document.getElementById("sex").value.trim();
+    var age = document.getElementById("age").value.trim();
+    var course = document.getElementById("course").value.trim();
+    var section = document.getElementById("section").value.trim();
+    var symptoms = document.getElementById("symptoms").value.trim();
+    var diagnosis = document.getElementById("diagnosis").value.trim();
+    var treatments = document.getElementById("treatments").value.trim();
+
+    // Check if all required fields are completed
+    var allFieldsCompleted = fullName !== '' && sex !== '' && age !== '' && course !== '' && section !== '' &&
+        symptoms !== '' && diagnosis !== '' && treatments !== '';
+
+    // Enable or disable the submit button based on completion status
+    var submitButton = document.getElementById("submit-form-button");
+    submitButton.disabled = !allFieldsCompleted;
+}
+
+// Add event listeners to input fields to trigger the checkFormCompletion function
+document.getElementById("full-name").addEventListener("input", function() {
+    clearAndEnableFields(); // Clear and enable fields when full_name input changes
+    checkFormCompletion(); // Check form completion status after full_name input changes
+});
+document.getElementById("sex").addEventListener("input", checkFormCompletion);
+document.getElementById("age").addEventListener("input", checkFormCompletion);
+document.getElementById("course").addEventListener("input", checkFormCompletion);
+document.getElementById("section").addEventListener("input", checkFormCompletion);
+document.getElementById("symptoms").addEventListener("input", checkFormCompletion);
+document.getElementById("diagnosis").addEventListener("input", checkFormCompletion);
+document.getElementById("treatments").addEventListener("input", checkFormCompletion);
+
+// Call the checkFormCompletion function initially to set the initial state of the submit button
+checkFormCompletion();
+</script>
 
 <script>
-        // JavaScript function to clear and enable fields when full_name input changes
-        function clearAndEnableFields() {
-            // Clear the values of the fields
-            document.getElementById("sex").value = "";
-            document.getElementById("age").value = "";
-            document.getElementById("course").value = "";
-            document.getElementById("section").value = "";
+    // JavaScript function to clear and enable fields when full_name input changes
+    function clearAndEnableFields() {
+        // Clear the values of the fields
+        document.getElementById("sex").value = "";
+        document.getElementById("age").value = "";
+        document.getElementById("course").value = "";
+        document.getElementById("section").value = "";
 
-            // Enable the fields
-            document.getElementById("sex").classList.add('grayed-out') = false;
-            document.getElementById("age").classList.add('grayed-out') = false;
-            document.getElementById("course").classList.add('grayed-out') = false;
-            document.getElementById("section").classList.add('grayed-out') = false;
-        }
+        // Enable the fields
+        document.getElementById("sex").classList.remove('grayed-out');
+        document.getElementById("age").classList.remove('grayed-out');
+        document.getElementById("course").classList.remove('grayed-out');
+        document.getElementById("section").classList.remove('grayed-out');
+    }
 
-        // Add event listener to the full_name input field to trigger the clearAndEnableFields function
-        document.getElementById("full-name").addEventListener("input", clearAndEnableFields);
-    </script>
+    // Add event listener to the full_name input field to trigger the clearAndEnableFields function
+    document.getElementById("full-name").addEventListener("input", clearAndEnableFields);
+</script>
 
 </body>
 
-</html>
+</html> 
