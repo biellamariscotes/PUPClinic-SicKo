@@ -73,6 +73,13 @@ function recordActivityLog($conn, $fullname, $action) {
         input::-ms-clear {
             display: none;
         }
+
+        .required {
+            color: red;
+            margin-left: 3px; /* Adjust as needed for spacing */
+        }
+</style>
+
     </style>
 </head>
 <body>
@@ -127,7 +134,7 @@ function recordActivityLog($conn, $fullname, $action) {
                     </div>
 
                     <div class="button-container">
-                        <button type="submit" name="login_btn" id="submitButton" disable>Sign In</button>
+                        <button type="submit" name="login_btn" id="submitButton" disabled>Sign In</button>
                     </div>
                 </form>
             </div>
@@ -147,14 +154,16 @@ function recordActivityLog($conn, $fullname, $action) {
         const passwordInput = document.getElementById('passwordInput');
         const submitButton = document.getElementById('submitButton');
 
+        // Function to prevent typing spaces in input fields
         function preventWhitespaceInput(event) {
-            if (event.key === ' ' || event.code === 'Space') {
+            if (event.key === ' ') {
                 event.preventDefault();
             }
         }
 
         emailInput.addEventListener('keydown', preventWhitespaceInput);
         passwordInput.addEventListener('keydown', preventWhitespaceInput);
+
         // Function to check if any input field is empty
         function checkInputs() {
             const emailValue = emailInput.value.trim();
@@ -163,7 +172,6 @@ function recordActivityLog($conn, $fullname, $action) {
             // If any field is empty, disable the submit button
             if (emailValue === '' || passwordValue === '') {
                 submitButton.disabled = true;
-                console.log("Disabled");
             } else {
                 submitButton.disabled = false;
             }

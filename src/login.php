@@ -63,6 +63,11 @@ if (isset($_POST['login_btn'])) {
         input::-ms-clear {
             display: none;
         }
+
+        .required {
+            color: red;
+            margin-left: 3px; /* Adjust as needed for spacing */
+        }
     </style>
 </head>
 
