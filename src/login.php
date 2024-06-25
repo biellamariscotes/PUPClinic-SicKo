@@ -63,6 +63,11 @@ if (isset($_POST['login_btn'])) {
         input::-ms-clear {
             display: none;
         }
+
+        .required {
+            color: red;
+            margin-left: 3px; /* Adjust as needed for spacing */
+        }
     </style>
 </head>
 
@@ -129,12 +134,12 @@ if (isset($_POST['login_btn'])) {
                             <form method="post" class="needs-validation" novalidate>
                                 <div class="input-container">
                                     <input type="email" name="email" id="emailInput" maxlength="50" required>
-                                    <label for="emailInput">Email</label>
+                                    <label for="emailInput">Email<span class="required">*</span></label>
                                 </div>
                                 <div class="input-container">
                                     <input type="password" name="password" id="passwordInput" maxlength="50" required
                                         class="padding-right: 50px">
-                                    <label for="passwordInput">Password</label>
+                                    <label for="passwordInput">Password<span class="required">*</span></label>
                                     <span class="toggle-password" onclick="togglePassword()">Show</span>
                                 </div>
                                 <div class="button-container">
