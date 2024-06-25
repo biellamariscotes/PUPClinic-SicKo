@@ -54,11 +54,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmDeleteButton'])
             // Show the delete successful modal if deletion was successful
             echo "<script>$(document).ready(function() { $('#delete-successful-modal').modal('show'); });</script>";
         }
-        header("Location: " . $_SERVER['PHP_SELF']);
+        header("Location: " . $_SERVER['PHP_SELF'] . "?page=$currentPage&sort=$sortCriteria");
         exit;
     }
 }
-
 
 $recordsPerPage = 5;
 $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -70,12 +69,17 @@ $totalRecordsRow = mysqli_fetch_assoc($totalRecordsResult);
 $totalRecords = $totalRecordsRow['total'];
 $totalPages = ceil($totalRecords / $recordsPerPage);
 
+// Define the range of pages to display
+$pageRange = 5;
+$startPage = max(1, $currentPage - intval($pageRange / 2));
+$endPage = min($totalPages, $startPage + $pageRange - 1);
+$startPage = max(1, $endPage - $pageRange + 1);
+
 // Sorting criteria
 $sortCriteria = isset($_GET['sort']) ? $_GET['sort'] : 'first_name'; // Default sorting by name if not specified
 // SQL query with sorting
 $query = "SELECT * FROM patient ORDER BY $sortCriteria LIMIT $offset, $recordsPerPage";
 $result = mysqli_query($conn, $query);
-
 ?>
 
 <!DOCTYPE html>
@@ -101,6 +105,33 @@ $result = mysqli_query($conn, $query);
     .pagination-buttons {
         margin-right: 50px;
     }
+
+    .pagination .page-item .page-link {
+        color: #020203;
+        border: none;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.500rem; 
+        border-radius: 0.75rem;
+    }
+    .pagination .page-item.active .page-link {
+        background-color: #058789;
+        border: none;
+        color: #fff;
+        border-radius: 0.75rem;
+    }
+    .pagination .page-item .page-link:hover {
+        background-color: #058789;
+        border: none;
+        color: #fff;
+        opacity: 0.8;
+    }
+    .pagination .page-item.disabled .page-link {
+        color: #6c757d;
+    }
+    .pagination .page-item .page-link {
+        font-size: 1.2rem;
+    }
+
     .cancel-button {
         font-family: 'Poppins';
         font-weight: 600;
@@ -278,16 +309,21 @@ $result = mysqli_query($conn, $query);
                                                 </select>
                                             </div>
                                             <!-- Pagination buttons -->
-                                            <div class="pagination-buttons">
-                                                <!-- Previous button -->
-                                                <a href="?page=<?php echo max(1, $currentPage - 1); ?>" class="pagination-button <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
-                                                    &lt;
-                                                </a>
-                                                <!-- Next button -->
-                                                <a href="?page=<?php echo min($totalPages, $currentPage + 1); ?>" class="pagination-button <?php echo ($currentPage == $totalPages || $totalRecords == 0) ? 'disabled' : ''; ?>">
-                                                    &gt;
-                                                </a>
-                                            </div>
+                                            <nav aria-label="Page navigation">
+                                                <ul class="pagination justify-content-center">
+                                                    <li class="page-item <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
+                                                        <a class="page-link" href="?page=<?php echo $currentPage - 1; ?>&sort=<?php echo $sortCriteria; ?>" tabindex="-1"><</a>
+                                                    </li>
+                                                    <?php for ($i = $startPage; $i <= $endPage; $i++) : ?>
+                                                        <li class="page-item <?php echo ($i == $currentPage) ? 'active' : ''; ?>">
+                                                            <a class="page-link" href="?page=<?php echo $i; ?>&sort=<?php echo $sortCriteria; ?>"><?php echo $i; ?></a>
+                                                        </li>
+                                                    <?php endfor; ?>
+                                                    <li class="page-item <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
+                                                        <a class="page-link" href="?page=<?php echo $currentPage + 1; ?>&sort=<?php echo $sortCriteria; ?>">></a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
                                         </div>
                                     </div>
                                 </div>
@@ -333,7 +369,8 @@ $result = mysqli_query($conn, $query);
     // Function to handle sorting
     function handleSort() {
         var sortCriteria = $('#sortCriteria').val();
-        window.location.href = window.location.pathname + '?sort=' + sortCriteria;
+        var currentPage = getQueryVariable('page') || 1; // Get current page or default to 1
+        window.location.href = window.location.pathname + '?page=' + currentPage + '&sort=' + sortCriteria;
     }
 
     $('#sortCriteria').change(handleSort);
