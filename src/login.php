@@ -127,16 +127,21 @@ if (isset($_POST['login_btn'])) {
 
                         <div class="form-container-cst">
                             <form method="post" class="needs-validation" novalidate>
-                                <div class="input-container">
-                                    <input type="email" name="email" id="emailInput" maxlength="50" required>
-                                    <label for="emailInput">Email</label>
+                            <div class="input-container">
+                                <input type="email" name="email" id="emailInput" maxlength="254" required style="width: 100%;">
+                                <label for="emailInput">Email<span style="color: #E13F3D; padding-left: 0.188rem;">*</span></label>
+                            </div>
+
+                            <div class="input-container">
+                                <input type="password" name="password" id="passwordInput" maxlength="50" required 
+                                style="border-radius: 10px 0 0 10px; padding-right: 5px; width: 75%;">
+                                
+                                <label for="passwordInput">Password<span style="color: #E13F3D; padding-left: 0.188rem;">*</span></label>
+                                <div class="toggle-password" onclick="togglePassword()">
+                                    Show
                                 </div>
-                                <div class="input-container">
-                                    <input type="password" name="password" id="passwordInput" maxlength="50" required
-                                        class="padding-right: 50px">
-                                    <label for="passwordInput">Password</label>
-                                    <span class="toggle-password" onclick="togglePassword()">Show</span>
-                                </div>
+                            </div>
+                            
                                 <div class="button-container">
                                     <button type="submit" name="login_btn" id="submitButton" disable>Sign In</button>
                                 </div>

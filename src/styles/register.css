@@ -170,17 +170,19 @@ input[type="date"]::before {
   /* Email and Password Form */
   .form-container-cst input {
     background-color: #E9E9E9;
-    width: 90%;
+    width: 17rem;
     font-size: medium;
-    padding: 30px 30px 15px 30px ;
+    padding: 30px 20px 15px 20px;
     border: none; /* Remove default border */
     border-radius: 10px;
     font-family: 'Poppins', sans-serif; /* Added font-family rule */
     transition: border-color 0.3s; /* Added transition for smoother effect */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add drop shadow */
   }
 
-  
+  #passwordInput {
+    width: 14rem;
+  }
+
   .form-container-cst input:focus {
     background-color: #D4D4D4; /* Set background color when input is focused */
     outline: none;
@@ -189,6 +191,7 @@ input[type="date"]::before {
   .input-container {
     position: relative;
     margin-bottom: 15px;
+    display: flex;
   }
   
   .input-container label {
@@ -276,12 +279,15 @@ input[type="date"]::before {
   /* EYE TOGGLE BUTTON TO HIDE AND SHOW THE PASSWORD */
   
   .toggle-password {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 60px; /* Adjust as needed */
+    position: relative;
     cursor: pointer;
     color: #999; /* Color for the eye icon */
+    background-color: #E9E9E9;
+    width: 25%;
+    border-radius: 0 10px 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   
