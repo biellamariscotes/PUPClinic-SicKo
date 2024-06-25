@@ -39,22 +39,12 @@ require_once ('includes/connect.php');
         ?>
 
         <div class="content" id="content">
-            <div class="ai-header-content">
-                <div class="ai-header-image-container">
-                    <img src="images/ai-header.svg" alt="AI Header" class="ai-header">
-                </div>
-                <div class="ai-header-text-container">
-                    <div class="ai-header-text">
-                        <div class="ai-text">
-                            <p>AI-Based,<span class="bold"> Symptoms</span></p>
-                            <p class="bold"
-                                style="color: #E13F3D; font-size: 50px; font-family: 'Poppins', sans-serif;">
-                                Diagnostic Tool</p>
-                            <p
-                                style="color: black; font-size: 17px; font-family: 'Poppins', sans-serif; text-align: justify;">
-                                Detects and generates possible diagnosis <br> based on patient symptoms.</p>
-                        </div>
-                    </div>
+        <div class="dashboard-header-container">
+                <img src="images/ai-sdt-header.jpg" alt="Dashboard Header" class="dashboard-header">
+                <div class="dashboard-text" >
+                    <p>AI-Based, <span class="bold">Symptoms</span></p>
+                    <p class="bold" style="color: #E13F3D; font-size: 50px; font-family: 'Poppins', sans-serif;">Diagnostic Tool</p>
+                    <p style="color: black; font-size: 17px; font-family: 'Poppins', sans-serif; text-align: justify;">Detects and generates possible diagnosis<br> based on patient symptoms.</p>
                 </div>
             </div>
 
