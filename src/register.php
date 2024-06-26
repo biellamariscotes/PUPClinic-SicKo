@@ -14,6 +14,7 @@ if (isset($_SESSION['patient_id'])) {
     <link rel="icon" type="image/png" href="images/heart-logo.png">
     <link rel="stylesheet" href="../vendors/bootstrap-5.0.2/dist/css/bootstrap.css">
     <link rel="stylesheet" href="styles/register.css">
+    <link rel="stylesheet" href="styles/modals.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Font Icons -->
@@ -27,6 +28,10 @@ if (isset($_SESSION['patient_id'])) {
     <div class="loader">
         <img src="images/loader.gif">
     </div>
+
+    <?php
+        include('includes/privacy-policy.php');
+    ?>
 
     <div class="main-content">
         <!-- Navigation Bar -->
@@ -192,14 +197,27 @@ if (isset($_SESSION['patient_id'])) {
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="d-flex justify-content-center">
-                                            <button class="register-btn" name="register-btn" id="register-btn"
-                                                disabled>Register</button>
-                                        </div>
+                            <!-- Privacy Policy Checkbox -->
+                            <div class="col-12">
+                                <div class="form-check" style="margin-top: 1rem; display: flex; justify-content: center;">
+                                    <input class="form-check-input" type="checkbox" id="privacyPolicy" required style="margin-right: 1rem;">
+                                    <label class="form-check-label" for="privacyPolicy">
+                                    I agree to the <a id="privacyPolicyLink" target="_blank" style="text-decoration: underline; color: #058789; cursor: pointer;">Privacy Policy</a>
+                                    </label>
+                                    <div class="invalid-feedback">
+                                    You must agree to the privacy policy before submitting.
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="d-flex justify-content-center">
+                                        <button class="register-btn" name="register-btn" id="register-btn" disabled>Register</button>
+                                    </div>
+                                </div>
+                            </div>
+
                             </form>
                         </div>
                     </div>
@@ -220,6 +238,21 @@ if (isset($_SESSION['patient_id'])) {
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
             var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+
+            // Get the privacy policy link and modal elements
+            var privacyPolicyLink = document.getElementById('privacyPolicyLink');
+            var privacyPolicyModal = new bootstrap.Modal(document.getElementById('previewModal'));
+
+            // Add click event listener to the privacy policy link
+            privacyPolicyLink.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent the default action (opening the link)
+                privacyPolicyModal.show(); // Show the modal
+            });
+
+            // Close the Modal with the close button
+            $("#cancel-confirm-modal").click(function (event) {
+                $("#previewModal").modal("hide");
             });
         });
     </script>

@@ -285,3 +285,28 @@ section.addEventListener("input", checkInputs);
 email.addEventListener("input", checkInputs);
 password.addEventListener("input", checkInputs);
 emergency_no.addEventListener("input", checkInputs);
+
+const privacyPolicy = document.getElementById("privacyPolicy");
+
+// Add this function to check if all inputs are valid and the Privacy Policy is checked
+function checkInputs() {
+  const inputFields = [
+    student_id, first_name, last_name, middle_name, sex, date, course, section, email, password, emergency_no
+  ];
+
+  const allValid = inputFields.every(field => field.value.trim() !== "" && !field.classList.contains("is-invalid"));
+  const isPrivacyPolicyChecked = privacyPolicy.checked;
+
+  submitButton.disabled = !(allValid && isPrivacyPolicyChecked);
+}
+
+// Add event listener to the Privacy Policy checkbox
+privacyPolicy.addEventListener("change", checkInputs);
+
+// Call checkInputs function on input changes
+inputFields.forEach(field => {
+  field.addEventListener("input", checkInputs);
+});
+
+// Initial check on page load
+window.addEventListener("DOMContentLoaded", checkInputs);
