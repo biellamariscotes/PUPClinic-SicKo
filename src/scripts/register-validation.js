@@ -203,9 +203,37 @@ emergency_no.addEventListener("input", ensureStartsWith09);
 
 // --- END NUMBER VALIDATION
 
+// Birthday Validation
+function validateBirthday() {
+  const dateInput = document.getElementById('date');
+  const birthday = new Date(dateInput.value);
+  const today = new Date();
+  let age = today.getFullYear() - birthday.getFullYear();
+  const monthDifference = today.getMonth() - birthday.getMonth();
+  const dayDifference = today.getDate() - birthday.getDate();
 
+  if (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0)) {
+      age--;
+  }
 
-// BUTTON DISABLE
+  if (isNaN(birthday.getTime()) || age < 15 || age > 65) {
+      dateInput.classList.add('is-invalid');
+      if (age < 15) {
+          dateInput.setAttribute('title', 'You must be at least 15 years old.');
+      } else if (age > 65) {
+          dateInput.setAttribute('title', 'You must be at most 65 years old.');
+      } else {
+          dateInput.setAttribute('title', 'Invalid date.');
+      }
+  } else {
+      dateInput.classList.remove('is-invalid');
+      dateInput.removeAttribute('title');
+  }
+
+  checkInputs();
+}
+
+// Check if all inputs are valid and enable/disable the submit button accordingly
 function checkInputs() {
   const studentID = student_id.value.trim();
   const firstName = first_name.value.trim();
@@ -219,28 +247,33 @@ function checkInputs() {
   const passwordVal = password.value.trim();
   const emergencyNoVal = emergency_no.value.trim();
 
-  // If any field is empty, disable the submit button
+  // If any field is empty or any field has the class 'is-invalid', disable the submit button
   if (
-    studentID === "" ||
-    firstName === "" ||
-    lastName === "" ||
-    middleName === "" ||
-    sexVal === "" ||
-    birthdayVal === "" ||
-    courseVal === "" ||
-    blockSec === "" ||
-    emailAdd === "" ||
-    passwordVal === "" ||
-    emergencyNoVal === "" ||
-    document.querySelector(".is-invalid") !== null
+      studentID === "" ||
+      firstName === "" ||
+      lastName === "" ||
+      middleName === "" ||
+      sexVal === "" ||
+      birthdayVal === "" ||
+      courseVal === "" ||
+      blockSec === "" ||
+      emailAdd === "" ||
+      passwordVal === "" ||
+      emergencyNoVal === "" ||
+      document.querySelector(".is-invalid") !== null
   ) {
-    submitButton.disabled = true;
-    console.log("Disabled");
+      submitButton.disabled = true;
   } else {
-    submitButton.disabled = false;
+      submitButton.disabled = false;
   }
 }
 
+// Initial state: disable the register button
+document.addEventListener('DOMContentLoaded', (event) => {
+  document.getElementById('register-btn').disabled = true;
+});
+
+// Add event listeners for input validation
 student_id.addEventListener("input", checkInputs);
 first_name.addEventListener("input", checkInputs);
 middle_name.addEventListener("input", checkInputs);

@@ -124,8 +124,8 @@ if (isset($_SESSION['patient_id'])) {
                                     <div class="col-md-6">
                                         <small>Birthday <span class="asterisk">*</span></small>
                                         <div class="input-group mb-3 d-flex flex-wrap justify-content-center">
-                                            <input type="date" class="form-control" name="date" id="date"
-                                                min="yyyy-01-01" max="yyyy-12-31">
+                                        <input type="date" class="form-control" name="date" id="date" 
+                                                min="yyyy-01-01" max="yyyy-12-31" onchange="validateBirthday()">
                                         </div>
                                     </div>
                                 </div>
@@ -208,7 +208,7 @@ if (isset($_SESSION['patient_id'])) {
         </div>
 
         <footer>
-            <img class="vector-green fixed-bottom" src="images/vector-green.png" alt="Green Vector">
+            <img class="vector-green fixed-bottom" src="images/vector-green.png" alt="Green Vector" style="position: relative; height: 7.125rem;">
         </footer>
     </div>
     <script src="scripts/register-validation.js"></script>
