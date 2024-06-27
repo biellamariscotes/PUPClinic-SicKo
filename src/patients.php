@@ -195,7 +195,7 @@ $result = mysqli_query($conn, $query);
 
     <div class="overlay" id="overlay"></div>
 
-    <div class="main-content">
+    <div class="main-content" style="overflow-x: hidden;">
         <?php
         include('includes/sidebar/patients.php');
         ?>

@@ -248,7 +248,7 @@ $nextPage = min($totalPages, $currentPage + 1);
 
     <div class="overlay" id="overlay"></div>
 
-    <div class="main-content">
+    <div class="main-content" style="overflow-x: hidden;">
         <?php include ('includes/sidebar/records.php'); ?>
 
         <!-- Confirm Download Modal -->

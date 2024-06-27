@@ -86,6 +86,7 @@ mysqli_close($conn);
 </head>
 
 <style>
+    
     /* Add custom styles for the autocomplete list */
     .list {
         background-color: white;

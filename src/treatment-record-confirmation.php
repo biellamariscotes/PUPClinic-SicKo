@@ -89,7 +89,7 @@ $record_id = isset($_GET['record_id']) ? $_GET['record_id'] : '';
 
     <?php include ('includes/sidebar/patients-treatment-record.php'); ?>
 
-    <div class="content" id="content">
+    <div class="content" id="content" style="overflow-x: hidden;">
         <div class="left-header">
             <p>
                 <span style="color: #E13F3D;">Treatment</span>
