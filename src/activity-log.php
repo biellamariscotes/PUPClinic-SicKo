@@ -231,7 +231,7 @@ li p {
 
 
 
-    <div class="content" id="content">
+    <div class="content" id="content" style="overflow-x: hidden;">
             <div class="med-reports-header" style="margin-bottom: 1.5rem;">
                 <div class="med-reports-header-box">
                     <div class="medreports-header-text">

@@ -21,7 +21,8 @@ require_once ('includes/connect.php');
         .generate-diagnosis-box[disabled="true"] {
             background-color: #D4D4D4;
             color: #fff !important;
-            cursor: default;
+            cursor: none;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -38,9 +39,9 @@ require_once ('includes/connect.php');
         include ('includes/sidebar/ai-basedSDT.php');
         ?>
 
-        <div class="content" id="content">
+        <div class="content" id="content" style="overflow-x: hidden;">
         <div class="dashboard-header-container">
-                <img src="images/ai-sdt-header.jpg" alt="Dashboard Header" class="dashboard-header">
+                <img src="images/ai-sdt-header.png" alt="Dashboard Header" class="dashboard-header">
                 <div class="dashboard-text" >
                     <p>AI-Based, <span class="bold">Symptoms</span></p>
                     <p class="bold" style="color: #E13F3D; font-size: 50px; font-family: 'Poppins', sans-serif;">Diagnostic Tool</p>
@@ -49,7 +50,13 @@ require_once ('includes/connect.php');
             </div>
 
             <div class="left-header">
-                <p style="color: #E13F3D">Type symptoms...</p>
+                <p style="color: #E13F3D;">Type symptoms...</p>
+            </div>
+
+            <div class="suggestion-row" style="display: flex; justify-content: flex-start; margin: 20px 0 20px 210px; " >
+                    <img src="images/idea-icon.svg" alt="Suggestion Icon" class="idea-icon" style="width: 20px; margin-right: 5px; margin-bottom: 2px;">
+                    <p style="color: gray; font-size: 12px; margin: 0; font-weight: 500;">Provide at least <b>3 symptoms</b> to ensure an accurate diagnosis. 
+                        You can input up to <b>15 symptoms</b> for the most precise results.</p>
             </div>
 
             <!-- Keyword Tags Container -->
@@ -68,52 +75,51 @@ require_once ('includes/connect.php');
                     value="<?php echo htmlspecialchars($_SESSION['full_name']); ?>">
             </form>
 
-<?php
-include ('includes/footer.php');
-?>
-<script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="scripts/script.js"></script>
+            <?php
+            include ('includes/footer.php');
+            ?>
+            <script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="scripts/script.js"></script>
 
-<!-- LOADER -->
-<script>
-    function simulateContentLoading() {
-        showLoader();
-        setTimeout(function () {
-            hideLoader();
-            showContent();
-        }, 3000);
-    }
+            <!-- LOADER -->
+            <script>
+                function simulateContentLoading() {
+                    showLoader();
+                    setTimeout(function () {
+                        hideLoader();
+                        showContent();
+                    }, 3000);
+                }
 
-    function showLoader() {
-        console.log("Showing loader.");
-        document.querySelector('.loader').classList.add('visible');
-    }
+                function showLoader() {
+                    console.log("Showing loader.");
+                    document.querySelector('.loader').classList.add('visible');
+                }
 
-    function hideLoader() {
-        console.log("Hiding loader with transition.");
-        const loader = document.querySelector('.loader');
-        loader.style.transition = 'opacity 0.5s ease-out';
-        loader.style.opacity = '0';
-        loader.addEventListener('transitionend', function (event) {
-            if (event.propertyName === 'opacity') {
-                loader.classList.remove('d-flex');
-                loader.style.display = 'none';
-            }
-        });
-    }
+                function hideLoader() {
+                    console.log("Hiding loader with transition.");
+                    const loader = document.querySelector('.loader');
+                    loader.style.transition = 'opacity 0.5s ease-out';
+                    loader.style.opacity = '0';
+                    loader.addEventListener('transitionend', function (event) {
+                        if (event.propertyName === 'opacity') {
+                            loader.classList.remove('d-flex');
+                            loader.style.display = 'none';
+                        }
+                    });
+                }
 
-    function showContent() {
-        console.log("Showing content.");
-        const content = document.querySelector('.main-content');
-        content.style.visibility = 'visible'; // Use visibility to show content
-    }
-    simulateContentLoading();
-</script>
-<!-- END OF LOADER -->
+                function showContent() {
+                    console.log("Showing content.");
+                    const content = document.querySelector('.main-content');
+                    content.style.visibility = 'visible'; // Use visibility to show content
+                }
+                simulateContentLoading();
+            </script>
 
-<script>
-    
-    function submitForm() {
+            <!-- END OF LOADER -->
+            <script>
+            function submitForm() {
     var input = document.getElementById('symptoms-input').value.trim();
 
     // Remove leading spaces and replace double spaces with single space
@@ -124,13 +130,13 @@ include ('includes/footer.php');
 
     // Push symptoms from tags into the array
     tags.forEach(function(tag) {
-    symptomsArray.push(tag.textContent.trim());
+        symptomsArray.push(tag.textContent.trim());
     });
 
     // Combine input field value with concatenated tags
     var symptomsString = input;
     if (symptomsArray.length > 0) {
-    symptomsString += (input.length > 0 ? ', ' : '') + symptomsArray.join(', ');
+        symptomsString += (input.length > 0 ? ', ' : '') + symptomsArray.join(', ');
     }
 
     // Set the concatenated symptoms string as the value of the hidden input field
@@ -138,79 +144,79 @@ include ('includes/footer.php');
 
     // Submit the form
     document.getElementById('diagnosis-form').submit();
- }
-
-
-    // Event listener for clicking the generate button
-    document.getElementById('generate-diagnosis-btn').addEventListener('click', function () {
-    submitForm(); // Call your form submission function
-    });
-
-
-    // Function to toggle the button state
-function toggleButton() {
-    var input = document.getElementById('symptoms-input').value.trim();
-    var tags = document.querySelectorAll('.tag');
-    var button = document.getElementById('generate-diagnosis-btn');
-    var buttonBox = document.getElementById('generate-diagnosis-box');
-
-
-    // Limit the number of tags to 5
-    if (tags.length >= 5) {
-        // Disable input field if maximum tags are reached
-        document.getElementById('symptoms-input').setAttribute('disabled', true);
-    } else {
-        // Enable input field if less than 5 tags
-        document.getElementById('symptoms-input').removeAttribute('disabled');
-    }
-
-    // Enable the button after 3 symptoms/tags are added
-    if (tags.length < 3) {
-        button.setAttribute('disabled', true);
-        buttonBox.setAttribute('disabled', true);
-    } else {
-        button.removeAttribute('disabled');
-        buttonBox.removeAttribute('disabled');
-    }
 }
 
-// Call toggleButton initially to set button state on page load
-toggleButton();
 
-// Event listener for input field
-document.getElementById('symptoms-input').addEventListener('input', function (event) {
-    var input = this.value;
-    var cursorPosition = this.selectionStart;
+        // Event listener for clicking the generate button
+        document.getElementById('generate-diagnosis-btn').addEventListener('click', function () {
+            submitForm(); // Call your form submission function
+        });
 
-    // Check if the input starts with a space or has consecutive spaces
-    if (input.startsWith(' ') || input.includes('  ')) {
-        // Remove leading spaces and replace consecutive spaces with a single space
-        this.value = input.trim().replace(/\s{2,}/g, ' ');
-        // Adjust cursor position after modification
-        this.setSelectionRange(cursorPosition - 1, cursorPosition - 1);
-    }
+                // Function to log activity
+                function logActivity() {
+                    var fullName = document.getElementById('user-fullname').value.trim();
+                    var action = " used the AI Symptoms Diagnostic Tool.";
 
-    // Check if there are already 5 tags
-    var tags = document.querySelectorAll('.tag');
-    if (tags.length >= 5) {
-        // If there are 5 tags, prevent any further input
-        this.value = ''; // Clear the input value
-        toggleButton(); // Update button state
-    }
+                    // AJAX call to log activity
+                    $.ajax({
+                        type: 'POST',
+                        url: 'log_activity.php', // Create a PHP file to handle logging
+                        data: { fullname: fullName, action: action },
+                        success: function (response) {
+                            console.log('Activity logged successfully.');
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error logging activity:', error);
+                        }
+                    });
+                }
 
-    toggleButton(); // Update button state
-});
+                // Function to toggle the button state
+                function toggleButton() {
+                    var input = document.getElementById('symptoms-input').value.trim();
+                    var tags = document.querySelectorAll('.tag');
+                    var button = document.getElementById('generate-diagnosis-btn');
+                    var buttonBox = document.getElementById('generate-diagnosis-box');
+                    // Check if there's input in the text field or if tags exist
+                    if (input.length > 0 || tags.length > 0) {
+                        // Enable the button if there's input or tags
+                        button.removeAttribute('disabled');
+                        buttonBox.removeAttribute('disabled');
+                        console.log("yet")
+                    } else {
+                        // Disable the button if there's no input or tags
+                        button.setAttribute('disabled', true);
+                        buttonBox.setAttribute('disabled', true);
+                        console.log("not yet")
+                    }
+                }
 
-// Event listener for tags using event delegation
-document.getElementById('tags-container').addEventListener('click', function (event) {
-    if (event.target.classList.contains('tag') || event.target.classList.contains('close')) {
-        // Remove the tag from DOM
-        event.target.parentNode.removeChild(event.target);
-        toggleButton(); // Update button state after tag removal
-    }
-});
+                // Call toggleButton initially to set button state on page load
+                toggleButton();
 
-</script>
+                // Event listener for input field
+                document.getElementById('symptoms-input').addEventListener('input', function (event) {
+                    var input = this.value;
+                    var cursorPosition = this.selectionStart;
+
+                    // Check if the input starts with a space or has consecutive spaces
+                    if (input.startsWith(' ') || input.includes('  ')) {
+                        // Remove leading spaces and replace consecutive spaces with a single space
+                        this.value = input.trim().replace(/\s{2,}/g, ' ');
+                        // Adjust cursor position after modification
+                        this.setSelectionRange(cursorPosition - 1, cursorPosition - 1);
+                    }
+
+                    toggleButton();
+                });
+
+                // Event listener for tags using event delegation
+                document.getElementById('tags-container').addEventListener('click', function (event) {
+                    if (event.target.classList.contains('tag') || event.target.classList.contains('close')) {
+                        toggleButton(); // Call toggleButton when a tag is added or removed
+                    }
+                });
+            </script>
 
 </body>
 

@@ -144,10 +144,10 @@ if ($totalRecordsResult) {
 
     <div class="overlay" id="overlay"></div>
 
-    <div class="main-content">
+    <div class="main-content" style="overflow-x: hidden;">
         <?php include ('includes/sidebar/dashboard.php'); ?>
 
-        <div class="content" id="content">
+        <div class="content" id="content" >
             <div class="dashboard-header-container">
                 <img src="images/dashboard-header.png" alt="Dashboard Header" class="dashboard-header">
                 <div class="dashboard-text">
