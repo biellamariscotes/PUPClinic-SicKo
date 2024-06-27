@@ -72,7 +72,6 @@ if (isset($_POST['login_btn'])) {
 </head>
 
 <body>
-ayoooo
     <div class="loader">
         <img src="images/loader.gif">
     </div>
