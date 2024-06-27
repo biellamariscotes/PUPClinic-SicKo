@@ -63,7 +63,7 @@ $totalRecords = $totalRecordsRow['total'];
 $totalPages = ceil($totalRecords / $recordsPerPage);
 
 // Define the range of pages to display
-$pageRange = 5;
+$pageRange = 3;
 $startPage = max(1, $currentPage - intval($pageRange / 2));
 $endPage = min($totalPages, $startPage + $pageRange - 1);
 $startPage = max(1, $endPage - $pageRange + 1);
@@ -298,20 +298,20 @@ $result = mysqli_query($conn, $query);
 
                                         <!-- Pagination buttons -->
                                         <nav aria-label="Page navigation">
-                                                <ul class="pagination justify-content-center" style="margin-bottom: 0; gap: 10px;">
-                                                    <li class="page-item <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
-                                                        <a class="page-link" href="?page=<?php echo $currentPage - 1; ?>&sort=<?php echo $sortCriteria; ?>" tabindex="-1"><</a>
+                                            <ul class="pagination justify-content-center" style="margin-bottom: 0; gap: 10px;">
+                                                <li class="page-item <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
+                                                    <a class="page-link" href="?page=<?php echo $currentPage - 1; ?>">&lt;</a>
+                                                </li>
+                                                <?php for ($i = $startPage; $i <= $endPage; $i++) : ?>
+                                                    <li class="page-item <?php echo ($i == $currentPage) ? 'active' : ''; ?>">
+                                                        <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
                                                     </li>
-                                                    <?php for ($i = $startPage; $i <= $endPage; $i++) : ?>
-                                                        <li class="page-item <?php echo ($i == $currentPage) ? 'active' : ''; ?>">
-                                                            <a class="page-link" href="?page=<?php echo $i; ?>&sort=<?php echo $sortCriteria; ?>"><?php echo $i; ?></a>
-                                                        </li>
-                                                    <?php endfor; ?>
-                                                    <li class="page-item <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
-                                                        <a class="page-link" href="?page=<?php echo $currentPage + 1; ?>&sort=<?php echo $sortCriteria; ?>">></a>
-                                                    </li>
-                                                </ul>
-                                            </nav>
+                                                <?php endfor; ?>
+                                                <li class="page-item <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
+                                                    <a class="page-link" href="?page=<?php echo $currentPage + 1; ?>">&gt;</a>
+                                                </li>
+                                            </ul>
+                                        </nav>
 
                                         <!-- Sorting and Pagination Container -->
                                         <div class="sorting-pagination-container">
@@ -322,7 +322,7 @@ $result = mysqli_query($conn, $query);
                                                 <select id="sortCriteria" style="font-family: 'Poppins', sans-serif; font-weight: bold;">
                                                     <option value="first_name">Name</option>
                                                     <option value="course">Course</option>
-                                                    <option value="section">Section</option>
+                                                    < option value="section">Section</option>
                                                     <option value="sex">Gender</option>
                                                 </select>
                                             </div>

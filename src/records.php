@@ -117,6 +117,17 @@ $recordsPerPage = 5;
 $currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $offset = ($currentPage - 1) * $recordsPerPage;
 
+$totalRecordsQuery = "SELECT COUNT(*) AS total FROM patient";
+$totalRecordsResult = mysqli_query($conn, $totalRecordsQuery);
+$totalRecordsRow = mysqli_fetch_assoc($totalRecordsResult);
+$totalRecords = $totalRecordsRow['total'];
+$totalPages = ceil($totalRecords / $recordsPerPage);
+
+$pageRange = 3;
+$startPage = max(1, $currentPage - intval($pageRange / 2));
+$endPage = min($totalPages, $startPage + $pageRange - 1);
+$startPage = max(1, $endPage - $pageRange + 1);
+
 // Determine sorting criteria
 $sortingCriteria = isset($_GET['sort']) ? $_GET['sort'] : 'annually';
 $whereClause = '';
@@ -175,13 +186,44 @@ $nextPage = min($totalPages, $currentPage + 1);
 </head>
 
 <style>
+    .page-item.active .page-link {
+        z-index: 1;
+    }
+    .disabled-link {
+        pointer-events: none;
+        text-decoration: none;
+        cursor: not-allowed;
+    }
     .pagination-button.disabled {
         pointer-events: none;
         opacity: 0.5;
     }
-
     .pagination-buttons {
         margin-right: 50px;
+    }
+    .pagination .page-item .page-link {
+        color: #020203;
+        border: none;
+        font-size: 0.25rem; 
+        border-radius: 50%;
+    }
+    .pagination .page-item.active .page-link {
+        background-color: #058789;
+        border: none;
+        color: #fff;
+        border-radius: 50%;   
+    }
+    .pagination .page-item .page-link:hover {
+        background-color: #058789;
+        border: none;
+        color: #fff;
+        opacity: 0.8;
+    }
+    .pagination .page-item.disabled .page-link {
+        color: #6c757d;
+    }
+    .pagination .page-item .page-link {
+        font-size: 0.875rem;
     }
 
     .fixed-width-checkbox {
@@ -398,6 +440,24 @@ $nextPage = min($totalPages, $currentPage + 1);
                                             </a>
                                         </div>
                                     </div>
+                                    <!-- Pagination buttons -->
+                                    <div class="pagination-buttons" style="margin-left: 120px;">
+                                            <nav aria-label="Page navigation">
+                                                <ul class="pagination justify-content-center" style="margin-bottom: 0; gap: 10px;">
+                                                    <li class="page-item <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
+                                                        <a class="page-link" href="<?php echo $_SERVER['PHP_SELF'] . '?page=' . ($currentPage - 1) . $academicYearParam . $sortParam; ?>">&lt;</a>
+                                                    </li>
+                                                    <?php for ($i = $startPage; $i <= $endPage; $i++) : ?>
+                                                        <li class="page-item <?php echo ($i == $currentPage) ? 'active' : ''; ?>">
+                                                            <a class="page-link" href="<?php echo $_SERVER['PHP_SELF'] . '?page=' . $i . $academicYearParam . $sortParam; ?>"><?php echo $i; ?></a>
+                                                        </li>
+                                                    <?php endfor; ?>
+                                                    <li class="page-item <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
+                                                        <a class="page-link" href="<?php echo $_SERVER['PHP_SELF'] . '?page=' . ($currentPage + 1) . $academicYearParam . $sortParam; ?>">&gt;</a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
                                     <!-- Sorting and Pagination Container -->
                                     <div class="sorting-pagination-container">
                                         <!-- Sorting button box -->
@@ -410,19 +470,6 @@ $nextPage = min($totalPages, $currentPage + 1);
                                                 <option value="weekly" <?php echo ($sortingCriteria == 'weekly') ? 'selected' : ''; ?>>Weekly</option>
                                                 <option value="daily" <?php echo ($sortingCriteria == 'daily') ? 'selected' : ''; ?>>Daily</option>
                                             </select>
-                                        </div>
-                                        <!-- Pagination buttons -->
-                                        <div class="pagination-buttons">
-                                            <!-- Previous button -->
-                                            <a href="<?php echo $_SERVER['PHP_SELF'] . '?page=' . $prevPage . $academicYearParam . $sortParam; ?>"
-                                                class="pagination-button <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
-                                                &lt;
-                                            </a>
-                                            <!-- Next button -->
-                                            <a href="<?php echo $_SERVER['PHP_SELF'] . '?page=' . $nextPage . $academicYearParam . $sortParam; ?>"
-                                                class="pagination-button <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
-                                                &gt;
-                                            </a>
                                         </div>
                                     </div>
                                 </div>
