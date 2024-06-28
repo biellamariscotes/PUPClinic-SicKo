@@ -1488,8 +1488,13 @@ input[type=number] {
   border: none;
 }
 
+.history-prev-button:hover {
+  background-color: #777777;
+  color: #D4D4D4 !important;
+}
+
 .history-next-button:hover {
-  color: #3b3b3b !important;
+  color: #D4D4D4 !important;
 }
 
 .history-next-button {

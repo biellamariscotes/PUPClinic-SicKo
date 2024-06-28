@@ -180,11 +180,11 @@ if (isset($_GET['patient_id']) && isset($_GET['record_id'])) {
                     </div>
                     <div class="treatment-history-buttons">
                         <?php if ($prev_record): ?>
-                            <a class="history-prev-button"
+                            <a style="text-decoration: none; background-color: #777777;" class="history-prev-button"
                                 href="patient-record-date.php?patient_id=<?php echo $patient_id; ?>&record_id=<?php echo $prev_record['record_id']; ?>">Previous</a>
                         <?php endif; ?>
                         <?php if ($next_record): ?>
-                            <a class="history-next-button"
+                            <a style="text-decoration: none;" class="history-next-button"
                                 href="patient-record-date.php?patient_id=<?php echo $patient_id; ?>&record_id=<?php echo $next_record['record_id']; ?>">Next</a>
                         <?php endif; ?>
                     </div>
