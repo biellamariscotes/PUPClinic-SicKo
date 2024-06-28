@@ -206,7 +206,7 @@ require_once ('includes/connect.php');
             var input = document.getElementById('symptoms-input').value.trim();
 
             // Remove leading spaces and replace double spaces with single space
-            input = input.replace(/^\s+|\s{2,}/g, ' ');
+            input = input.replace(/^\s+|\s{2,}/g, ' ').replace(/[^a-zA-Z, ]/g, ''); // Remove special characters
 
             var tags = document.querySelectorAll('.tag');
             var symptomsArray = []; // Array to store symptoms
