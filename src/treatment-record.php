@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Insert data into the database
         $sql = "INSERT INTO treatment_record (patient_id, full_name, sex, age, course, section, symptoms, diagnosis, treatments, date, excuse_letter, clearance_letter, referral_letter) 
-                VALUES ('$patient_id', '$full_name', '$sex', '$age', '$course', '$section', '$symptoms','$diagnosis', '$treatments', '$current_date' 'No', 'No', 'No')";
+                VALUES ('$patient_id', '$full_name', '$sex', '$age', '$course', '$section', '$symptoms','$diagnosis', '$treatments', '$current_date', 'No', 'No', 'No')";
 
         if (mysqli_query($conn, $sql)) {
 
