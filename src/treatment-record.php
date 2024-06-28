@@ -2,6 +2,9 @@
 require_once('includes/session-nurse.php');
 require_once('includes/connect.php');
 
+date_default_timezone_set('Asia/Manila');
+$current_date = date('Y-m-d H:i:s');
+
 $symptoms = isset($_GET['symptoms']) ? htmlspecialchars($_GET['symptoms']) : '';
 $diagnosis = isset($_GET['diagnosis']) ? htmlspecialchars($_GET['diagnosis']) : '';
 $treatments = isset($_GET['treatments']) ? htmlspecialchars($_GET['treatments']) : '';
@@ -35,8 +38,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $treatments = mysqli_real_escape_string($conn, $_POST['treatments']);
 
         // Insert data into the database
-        $sql = "INSERT INTO treatment_record (patient_id, full_name, sex, age, course, section, symptoms, diagnosis, treatments, excuse_letter, clearance_letter, referral_letter) 
-                VALUES ('$patient_id', '$full_name', '$sex', '$age', '$course', '$section', '$symptoms', '$diagnosis', '$treatments', 'No', 'No', 'No')";
+        $sql = "INSERT INTO treatment_record (patient_id, full_name, sex, age, course, section, symptoms, diagnosis, treatments, date, excuse_letter, clearance_letter, referral_letter) 
+                VALUES ('$patient_id', '$full_name', '$sex', '$age', '$course', '$section', '$symptoms','$diagnosis', '$treatments', '$current_date' 'No', 'No', 'No')";
 
         if (mysqli_query($conn, $sql)) {
 
