@@ -75,260 +75,260 @@ $query = "SELECT * FROM patient ORDER BY $sortCriteria LIMIT $offset, $recordsPe
 $result = mysqli_query($conn, $query);
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patients</title>
-    <link rel="icon" type="image/png" href="images/heart-logo.png">
-    <link rel="stylesheet" href="styles/dboardStyle.css">
-    <link rel="stylesheet" href="styles/modals.css">
-    <link rel="stylesheet" href="../vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-</head>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Patients</title>
+        <link rel="icon" type="image/png" href="images/heart-logo.png">
+        <link rel="stylesheet" href="styles/dboardStyle.css">
+        <link rel="stylesheet" href="styles/modals.css">
+        <link rel="stylesheet" href="../vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    </head>
 
-<style>
+    <style>
 
-    .page-item.active .page-link {
-        z-index: 1;
-    }
-    /* Additional CSS to handle disabling links */
-    .disabled-link {
-    pointer-events: none; /* Disable clicking */
-    text-decoration: none;
-    cursor: not-allowed; /* Change cursor to indicate it's disabled */
-    }
+        .page-item.active .page-link {
+            z-index: 1;
+        }
+        /* Additional CSS to handle disabling links */
+        .disabled-link {
+        pointer-events: none; /* Disable clicking */
+        text-decoration: none;
+        cursor: not-allowed; /* Change cursor to indicate it's disabled */
+        }
 
-    .pagination-button.disabled {
-        pointer-events: none;
-        opacity: 0.5;
-    }
+        .pagination-button.disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
 
-    .pagination-buttons {
-        margin-right: 50px;
-    }
+        .pagination-buttons {
+            margin-right: 50px;
+        }
 
-    .pagination .page-item .page-link {
-        color: #020203;
-        border: none;
-        font-size: 0.25rem; 
-        border-radius: 50%;
-    }
-    .pagination .page-item.active .page-link {
-        background-color: #058789;
-        border: none;
-        color: #fff;
-        border-radius: 50%;   
-    }
-    .pagination .page-item .page-link:hover {
-        background-color: #058789;
-        border: none;
-        color: #fff;
-        opacity: 0.8;
-    }
-    .pagination .page-item.disabled .page-link {
-        color: #6c757d;
-    }
-    .pagination .page-item .page-link {
-        font-size: 0.875rem;
-    }
+        .pagination .page-item .page-link {
+            color: #020203;
+            border: none;
+            font-size: 0.25rem; 
+            border-radius: 50%;
+        }
+        .pagination .page-item.active .page-link {
+            background-color: #058789;
+            border: none;
+            color: #fff;
+            border-radius: 50%;   
+        }
+        .pagination .page-item .page-link:hover {
+            background-color: #058789;
+            border: none;
+            color: #fff;
+            opacity: 0.8;
+        }
+        .pagination .page-item.disabled .page-link {
+            color: #6c757d;
+        }
+        .pagination .page-item .page-link {
+            font-size: 0.875rem;
+        }
 
-    .cancel-button {
-        font-family: 'Poppins';
-        font-weight: 600;
-        background: #D4D4D4;
-        color: black;
-    }
+        .cancel-button {
+            font-family: 'Poppins';
+            font-weight: 600;
+            background: #D4D4D4;
+            color: black;
+        }
 
-    .dashboard-table tbody tr {
-        border-bottom: 1px solid #D3D3D3; 
-    }
+        .dashboard-table tbody tr {
+            border-bottom: 1px solid #D3D3D3; 
+        }
 
-    .dashboard-table tbody tr:last-child {
-        border-bottom: 1px solid #D3D3D3; 
-    }
+        .dashboard-table tbody tr:last-child {
+            border-bottom: 1px solid #D3D3D3; 
+        }
 
-    .dashboard-table th {
-        padding: 0px;
-    }
+        .dashboard-table th {
+            padding: 0px;
+        }
 
-    .delete-records-link.disabled {
-        opacity: 0.5; /* Reduce opacity to visually indicate it's disabled */
-        cursor: not-allowed; /* Change cursor to indicate it's not clickable */
-        color: #ccc; /* Adjust color to visually indicate disabled state */
-        pointer-events: none; /* Disable pointer events to prevent clicks */
-    }
+        .delete-records-link.disabled {
+            opacity: 0.5; /* Reduce opacity to visually indicate it's disabled */
+            cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+            color: #ccc; /* Adjust color to visually indicate disabled state */
+            pointer-events: none; /* Disable pointer events to prevent clicks */
+        }
 
-    .vertical-bar {
-    display: inline-block;
-    vertical-align: middle;
-    margin: 0 10px; /* Adjust the margin as needed */
-    }
-
-    #delete-selected-link,
-    #cancel-delete-link {
-        margin-left: 0;
-    }
-
-    .button-group span {
+        .vertical-bar {
         display: inline-block;
         vertical-align: middle;
-    }
+        margin: 0 10px; /* Adjust the margin as needed */
+        }
 
-    .delete-cancel-container {
-        display: flex;
-        justify-content: flex-start;
-    }
+        #delete-selected-link,
+        #cancel-delete-link {
+            margin-left: 0;
+        }
 
-    .delete-records-link {
-        cursor: pointer;
-    }
+        .button-group span {
+            display: inline-block;
+            vertical-align: middle;
+        }
 
-</style>
+        .delete-cancel-container {
+            display: flex;
+            justify-content: flex-start;
+        }
 
-<body>
-    <div class="loader">
-        <img src="images/loader.gif">
-    </div>
+        .delete-records-link {
+            cursor: pointer;
+        }
 
-    <div class="overlay" id="overlay"></div>
+    </style>
 
-    <div class="main-content" style="overflow-x: hidden;">
-        <?php
-        include('includes/sidebar/patients.php');
-        ?>
+    <body>
+        <div class="loader">
+            <img src="images/loader.gif">
+        </div>
 
-        <!-- Delete Modal -->
-        <div class="modal" id="deleteModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="modal-middle-icon">
-                            <i class="bi bi-trash-fill" style="color:#E13F3D; font-size:5rem"></i>
+        <div class="overlay" id="overlay"></div>
+
+        <div class="main-content" style="overflow-x: hidden;">
+            <?php
+            include('includes/sidebar/patients.php');
+            ?>
+
+            <!-- Delete Modal -->
+            <div class="modal" id="deleteModal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="modal-middle-icon">
+                                <i class="bi bi-trash-fill" style="color:#E13F3D; font-size:5rem"></i>
+                            </div>
+                            <div class="modal-title" style="color: black;">Confirm Delete?</div>
+                            <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to delete the selected patient?</div>
                         </div>
-                        <div class="modal-title" style="color: black;">Confirm Delete?</div>
-                        <div class="modal-subtitle" style="justify-content: center; ">Are you sure you want to delete the selected patient?</div>
-                    </div>
-                    <div class="modal-buttons" style="padding-bottom: 2rem;">
-                        <button type="button" class="btn btn-secondary" id="cancel-delete-modal" data-bs-dismiss="modal" style="background-color: #777777; 
-                        font-family: 'Poppins'; font-weight: 600; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
-                        <button type="button" class="btn btn-secondary" id="confirmDeleteButton" style="background-color: #E13F3D; 
-                        font-family: 'Poppins'; font-weight: 600; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Delete</button>
+                        <div class="modal-buttons" style="padding-bottom: 2rem;">
+                            <button type="button" class="btn btn-secondary" id="cancel-delete-modal" data-bs-dismiss="modal" style="background-color: #777777; 
+                            font-family: 'Poppins'; font-weight: 600; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-right: 1.25rem;">Cancel</button>
+                            <button type="button" class="btn btn-secondary" id="confirmDeleteButton" style="background-color: #E13F3D; 
+                            font-family: 'Poppins'; font-weight: 600; padding: 0.070rem 1.25rem 0.070rem 1.25rem;">Delete</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Delete Successful Modal 
-        <div class="modal" id="delete-successful-modal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="modal-middle-icon">
-                            <img src="images/check.gif" style="width: 10rem; height: auto;" alt="Check Icon">
+            <!-- Delete Successful Modal 
+            <div class="modal" id="delete-successful-modal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="modal-middle-icon">
+                                <img src="images/check.gif" style="width: 10rem; height: auto;" alt="Check Icon">
+                            </div>
+                            <div class="modal-title" style="color: black;">Deleted Successfully</div>
+                            <div class="modal-subtitle" style="text-wrap: pretty; justify-content: center;">Selected patients has been deleted successfully.</div>
                         </div>
-                        <div class="modal-title" style="color: black;">Deleted Successfully</div>
-                        <div class="modal-subtitle" style="text-wrap: pretty; justify-content: center;">Selected patients has been deleted successfully.</div>
-                    </div>
-                    <div class="modal-buttons">
-                        <button type="button" class="btn btn-secondary" id="delete-successful-close-modal" data-dismiss="modal"
-                            style="background-color: #23B26D; 
-                    font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-top: 1rem;">Close</button>
+                        <div class="modal-buttons">
+                            <button type="button" class="btn btn-secondary" id="delete-successful-close-modal" data-dismiss="modal"
+                                style="background-color: #23B26D; 
+                        font-family: 'Poppins'; font-weight: bold; padding: 0.070rem 1.25rem 0.070rem 1.25rem; margin-top: 1rem;">Close</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        -->
+            -->
 
-        <div class="content" id="content">
-            <div class="left-header" style="margin-top: 40px;">
-                <p>
-                    <span style="color: #E13F3D;">List of</span>
-                    <span style="color: #058789;">Patients</span>
-                </p>
-            </div>
+            <div class="content" id="content">
+                <div class="left-header" style="margin-top: 40px;">
+                    <p>
+                        <span style="color: #E13F3D;">List of</span>
+                        <span style="color: #058789;">Patients</span>
+                    </p>
+                </div>
 
-            <!-- Table Container -->
-            <div class="table-container" id="">
-                <form id="deleteForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                    <table class="dashboard-table" style="margin-bottom: 80px;">
-                    <tr>
-                    <th>Patient Name</th>
-                    <th>Course</th>
-                    <th>Section</th>
-                    <th>Gender</th>
-                </tr>
-                        <?php
-                            if (mysqli_num_rows($result) > 0) {
-                                while ($row = mysqli_fetch_assoc($result)) {
-                                    echo "<tr>";
-                                    echo "<td class='nameColumn'>";
-                                    echo "<input type='checkbox' name='delete_patient[]' value='" . $row["patient_id"] . "' style='display:none;'>"; // Checkbox initially hidden
-                                    echo "<a href='patients-treatment-record.php?patient_id=" . $row["patient_id"] . "' class='patient-link'>" . $row["first_name"] . " " . $row["last_name"] . "</a></td>"; // Patient name
-                                    echo "<td>" . $row["course"] . "</td>";
-                                    echo "<td>" . $row["section"] . "</td>";
-                                    echo "<td>" . $row["sex"] . "</td>";
-                                    echo "</tr>";
-                                }
-                            } else {
-                                echo "<tr><td colspan='4'>No records found</td></tr>";
-                            }
-                        ?>
+                <!-- Table Container -->
+                <div class="table-container" id="">
+                    <form id="deleteForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                        <table class="dashboard-table" style="margin-bottom: 80px;">
                         <tr>
-                            <td colspan="5" style="height: 97px; background-color: white;"> <!-- Use colspan to span across all columns -->
+                        <th>Patient Name</th>
+                        <th>Course</th>
+                        <th>Section</th>
+                        <th>Gender</th>
+                    </tr>
+                            <?php
+                                if (mysqli_num_rows($result) > 0) {
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        echo "<tr>";
+                                        echo "<td class='nameColumn'>";
+                                        echo "<input type='checkbox' name='delete_patient[]' value='" . $row["patient_id"] . "' style='display:none;'>"; // Checkbox initially hidden
+                                        echo "<a href='patients-treatment-record.php?patient_id=" . $row["patient_id"] . "' class='patient-link'>" . $row["first_name"] . " " . $row["last_name"] . "</a></td>"; // Patient name
+                                        echo "<td>" . $row["course"] . "</td>";
+                                        echo "<td>" . $row["section"] . "</td>";
+                                        echo "<td>" . $row["sex"] . "</td>";
+                                        echo "</tr>";
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='4'>No records found</td></tr>";
+                                }
+                            ?>
+                            <tr>
+                                <td colspan="5" style="height: 97px; background-color: white;"> <!-- Use colspan to span across all columns -->
 
-                                <!-- Inside the table button container -->
-                                <div class="table-button-container" id="tableButtonContainer">
+                                    <!-- Inside the table button container -->
+                                    <div class="table-button-container" id="tableButtonContainer">
 
-                                    <!-- Separate container for delete selected and cancel buttons -->
-                                    <div class="delete-cancel-container" style="display: none;">
-                                        <span class="delete-records-link" id="delete-selected-link" style="color: #D22B2B; margin-right: 10px;" onclick="$('#confirmDeleteModal').modal('show');">Delete Selected</span>
-                                        <span class="vertical-bar">|</span>
-                                        <span class="delete-records-link" id="cancel-delete-link" style="margin-left: 0;" onclick="cancelDeleteMode()">Cancel</span>
-                                    </div>
+                                        <!-- Separate container for delete selected and cancel buttons -->
+                                        <div class="delete-cancel-container" style="display: none;">
+                                            <span class="delete-records-link" id="delete-selected-link" style="color: #D22B2B; margin-right: 10px;" onclick="$('#confirmDeleteModal').modal('show');">Delete Selected</span>
+                                            <span class="vertical-bar">|</span>
+                                            <span class="delete-records-link" id="cancel-delete-link" style="margin-left: 0;" onclick="cancelDeleteMode()">Cancel</span>
+                                        </div>
 
-                                    <!-- Delete button with toggle for checkboxes -->
-                                    <div class="button-group" style="justify-content: space-between; gap: 14rem;">
-                                        <span class="delete-records-link" id="delete-toggle-link" onclick="toggleDeleteMode()" style="color: #D22B2B;">
-                                            <i class="bi bi-trash" style="color: #D22B2B; font-size: 1rem; margin-right: 0.625rem; vertical-align: middle;"></i>
-                                            Delete Patients
-                                        </span>
+                                        <!-- Delete button with toggle for checkboxes -->
+                                        <div class="button-group" style="justify-content: space-between; gap: 14rem;">
+                                            <span class="delete-records-link" id="delete-toggle-link" onclick="toggleDeleteMode()" style="color: #D22B2B;">
+                                                <i class="bi bi-trash" style="color: #D22B2B; font-size: 1rem; margin-right: 0.625rem; vertical-align: middle;"></i>
+                                                Delete Patients
+                                            </span>
 
-                                        <!-- Pagination buttons -->
-                                        <nav aria-label="Page navigation">
-                                            <ul class="pagination justify-content-center" style="margin-bottom: 0; gap: 10px;">
-                                                <li class="page-item <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
-                                                    <a class="page-link" href="?page=<?php echo $currentPage - 1; ?>">&lt;</a>
-                                                </li>
-                                                <?php for ($i = $startPage; $i <= $endPage; $i++) : ?>
-                                                    <li class="page-item <?php echo ($i == $currentPage) ? 'active' : ''; ?>">
-                                                        <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                            <!-- Pagination buttons -->
+                                            <nav aria-label="Page navigation">
+                                                <ul class="pagination justify-content-center" style="margin-bottom: 0; gap: 10px;">
+                                                    <li class="page-item <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
+                                                        <a class="page-link" href="?page=<?php echo $currentPage - 1; ?>&sort=<?php echo $sortCriteria; ?>">&lt;</a>
                                                     </li>
-                                                <?php endfor; ?>
-                                                <li class="page-item <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
-                                                    <a class="page-link" href="?page=<?php echo $currentPage + 1; ?>">&gt;</a>
-                                                </li>
-                                            </ul>
-                                        </nav>
+                                                    <?php for ($i = $startPage; $i <= $endPage; $i++) : ?>
+                                                        <li class="page-item <?php echo ($i == $currentPage) ? 'active' : ''; ?>">
+                                                            <a class="page-link" href="?page=<?php echo $i; ?>&sort=<?php echo $sortCriteria; ?>"><?php echo $i; ?></a>
+                                                        </li>
+                                                    <?php endfor; ?>
+                                                    <li class="page-item <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
+                                                        <a class="page-link" href="?page=<?php echo $currentPage + 1; ?>&sort=<?php echo $sortCriteria; ?>">&gt;</a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
 
-                                        <!-- Sorting and Pagination Container -->
-                                        <div class="sorting-pagination-container">
-                                            <!-- Sorting button box -->
-                                            <div class="sorting-button-box" id="sortingButtonBox">
-                                                <!-- Sort text -->
-                                                Sort by:
-                                                <select id="sortCriteria" style="font-family: 'Poppins', sans-serif; font-weight: bold;">
-                                                    <option value="first_name">Name</option>
-                                                    <option value="course">Course</option>
-                                                    < option value="section">Section</option>
-                                                    <option value="sex">Gender</option>
-                                                </select>
+                                            <!-- Sorting and Pagination Container -->
+                                            <div class="sorting-pagination-container">
+                                                <!-- Sorting button box -->
+                                                <div class="sorting-button-box" id="sortingButtonBox">
+                                                    <!-- Sort text -->
+                                                    Sort by:
+                                                    <select id="sortCriteria" name="sort_criteria" style="font-family: 'Poppins', sans-serif; font-weight: bold;" onchange="applySortCriteria()">
+                                                        <option value="first_name" <?php echo ($sortCriteria == 'first_name') ? 'selected' : ''; ?>>Name</option>
+                                                        <option value="course" <?php echo ($sortCriteria == 'course') ? 'selected' : ''; ?>>Course</option>
+                                                        <option value="section" <?php echo ($sortCriteria == 'section') ? 'selected' : ''; ?>>Section</option>
+                                                        <option value="sex" <?php echo ($sortCriteria == 'sex') ? 'selected' : ''; ?>>Gender</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                                 </div>
                             </td>
                         </tr>
@@ -549,6 +549,12 @@ $result = mysqli_query($conn, $query);
         $('#deleteForm').submit();
     });
 });
+
+function applySortCriteria() {
+    var sortCriteria = document.getElementById("sortCriteria").value;
+    var currentPage = <?php echo $currentPage; ?>;
+    window.location.href = "<?php echo $_SERVER['PHP_SELF']; ?>?page=" + currentPage + "&sort=" + sortCriteria;
+}
 </script>
 
 </body>
