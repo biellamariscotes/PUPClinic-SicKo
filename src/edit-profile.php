@@ -171,14 +171,14 @@ mysqli_close($conn);
                     </div>
                     <div class="input-row">
                         <div class="group">
-                            <div class="userProfile-input-label">Last Name</div>
+                            <div class="userProfile-input-label">Last Name <span style="color: #E13F3D; padding-left: 0.188rem;">*</span></div>
                             <input type="text" id="lastName" name="lastName" value="<?php echo $last_name_value; ?>"
                                 autocomplete="off" required class="form-control">
                             <div class="invalid-feedback">Last name must not contain numbers, special characters, or
                                 double spaces.</div>
                         </div>
                         <div class="group">
-                            <div class="userProfile-input-label">First Name</div>
+                            <div class="userProfile-input-label">First Name <span style="color: #E13F3D; padding-left: 0.188rem;">*</span></div>
                             <input type="text" id="firstName" name="firstName" value="<?php echo $first_name_value; ?>"
                                 autocomplete="off" required class="form-control">
                             <div class="invalid-feedback is-invalid">First name must not contain numbers, special
@@ -186,7 +186,7 @@ mysqli_close($conn);
                                 double spaces.</div>
                         </div>
                         <div class="group">
-                            <div class="userProfile-input-label">Middle Name</div>
+                            <div class="userProfile-input-label">Middle Name <span style="color: #E13F3D; padding-left: 0.188rem;">*</span></div>
                             <input type="text" id="middleName" name="middleName"
                                 value="<?php echo $middle_name_value; ?>" autocomplete="off" required
                                 class="form-control">
@@ -196,7 +196,7 @@ mysqli_close($conn);
                     </div>
                     <div class="input-row">
                         <div class="group">
-                            <div class="userProfile-input-label">Email</div>
+                            <div class="userProfile-input-label">Email <span style="color: #E13F3D; padding-left: 0.188rem;">*</span></div>
                             <input type="email" id="email" name="email" value="<?php echo $email_value; ?>"
                                 autocomplete="off" required class="form-control">
                             <div class="invalid-feedback no-wrap">Please enter a valid email address (e.g.,
