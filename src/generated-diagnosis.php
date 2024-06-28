@@ -301,13 +301,26 @@ if (isset($_POST['symptoms'])) {
     <link rel="stylesheet" href="../vendors/bootstrap-5.0.2/dist/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <style>
-        .generate-diagnosis-box[disabled="true"] {
-            background-color: #D4D4D4;
-            color: #fff !important;
-            cursor: default;
-        }
-    </style>
+<style>
+    .generate-diagnosis-box[disabled="true"] {
+        background-color: #D4D4D4;
+        color: #fff !important;
+        cursor: default;
+    }
+
+    .disabled {
+        background-color: #D4D4D4;
+        color: #fff !important;
+        cursor: not-allowed;
+    }
+
+    .disabled:hover {
+        background-color: #D4D4D4;
+        color: #fff !important;
+        cursor: not-allowed;
+    }
+</style>
+
 </head>
 <body>
     <div class="loader d-flex">
@@ -352,32 +365,32 @@ if (isset($_POST['symptoms'])) {
 
         <!-- Diagnosis Container -->
         <?php if (!empty($predictedSickness) && $predictedSickness !== null): ?>
-    <div class="diagnosis-container">
-        <div class="diagnosis-box">
-            <div class="medical-condition">
-                <h2 class="medical-condition-header">Medical Condition: <span style="color: #E13F3D;"><?= ucfirst(htmlspecialchars($predictedSickness)) ?></span></h2>
-                <p class="sub-text"><?= htmlspecialchars(getSicknessMeaning($predictedSickness)) ?></p>
-            </div>
-            <div class="treatment-options-container">
-                <div class="vertical-line"></div>
-                <div class="treatment-options">
-                    <h2 class="treatment-options-header">Treatment Options</h2>
-                    <ul class="options-list">
-                        <?php foreach ($suggestedTreatments as $treatment): ?>
-                            <li><?= htmlspecialchars($treatment) ?></li>
-                        <?php endforeach; ?>
-                    </ul>
+            <div class="diagnosis-container">
+                <div class="diagnosis-box">
+                    <div class="medical-condition">
+                        <h2 class="medical-condition-header">Medical Condition: <span style="color: #E13F3D;"><?= ucfirst(htmlspecialchars($predictedSickness)) ?></span></h2>
+                        <p class="sub-text"><?= htmlspecialchars(getSicknessMeaning($predictedSickness)) ?></p>
+                    </div>
+                    <div class="treatment-options-container">
+                        <div class="vertical-line"></div>
+                        <div class="treatment-options">
+                            <h2 class="treatment-options-header">Treatment Options</h2>
+                            <ul class="options-list">
+                                <?php foreach ($suggestedTreatments as $treatment): ?>
+                                    <li><?= htmlspecialchars($treatment) ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-<?php elseif ($predictedSickness === null): ?>
-    <div class="diagnosis-container">
-        <div class="diagnosis-box">
-            <p><span style="font-weight: bold;">No diagnosis found. Please try inputting different symptoms.</p></span>
-        </div>
-    </div>
-<?php endif; ?>
+        <?php elseif ($predictedSickness === null): ?>
+            <div class="diagnosis-container">
+                <div class="diagnosis-box">
+                    <p><span style="font-weight: bold;">No diagnosis found. Please try inputting different symptoms.</p></span>
+                </div>
+            </div>
+        <?php endif; ?>
 
 
 
@@ -391,7 +404,9 @@ if (isset($_POST['symptoms'])) {
             </div>
 
             <!-- Second box -->
-            <div class="record-treatment-button" onclick="recordTreatment()">
+            <div class="record-treatment-button <?= $predictedSickness === null ? 'disabled' : '' ?>" 
+                <?= $predictedSickness === null ? 'disabled="disabled"' : '' ?> 
+                onclick="handleRecordTreatmentClick(this)">
                 <div class="box-content">
                     <p class="box-text">Record Treatment</p>
                     <img src="images/arrow-icon.svg" alt="Arrow Icon">
@@ -453,6 +468,14 @@ if (isset($_POST['symptoms'])) {
 
             // Redirect to the next page and pass the parameters
             window.location.href = 'treatment-record.php?symptoms=<?= urlencode($symptoms) ?>&diagnosis=<?= urlencode($diagnosis) ?>&treatments=<?= urlencode($treatments) ?>';
+        }
+
+        function handleRecordTreatmentClick(button) {
+            // Check if the button has the 'disabled' class
+            if (button.classList.contains('disabled')) {
+                return; // Do nothing if the button is disabled
+            }
+            recordTreatment();
         }
 
         $(document).ready(function() {
