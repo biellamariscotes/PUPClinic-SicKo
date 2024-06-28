@@ -57,9 +57,9 @@ require_once ('includes/connect.php');
                     You can input up to <b>15 symptoms</b> for the most precise results.</p>
             </div>
 
-            <div style="display: flex; justify-content: center;">
+            <!-- <div style="display: flex; justify-content: center;">
                 <div id="tag-warning" style="color: red; display: none; font-style: 'Poppins'; font-weight: 600;">Please input 3-15 symptoms.</div>
-            </div>
+            </div> -->
 
             <!-- Keyword Tags Container -->
             <form id="diagnosis-form" method="post" action="generated-diagnosis.php">
