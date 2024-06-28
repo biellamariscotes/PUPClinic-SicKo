@@ -109,7 +109,7 @@ if (isset($_GET['patient_id'])) {
                             <!-- New container for patient's other information -->
                             <div class="additional-info-container">
                                 <div class="additional-info">
-                                    <div class="info-label">Email:</div>
+                                    <div class="info-label" style="margin-top: -20px;">Email:</div>
                                     <div class="info-value" class="text-truncate">
                                         <?php echo isset($patient['email']) ? $patient['email'] : 'No data'; ?></div>
                                     <div class="info-label">Course:</div>
@@ -125,8 +125,12 @@ if (isset($_GET['patient_id'])) {
                                     </div>
                                     <div class="info-label">Sex:</div>
                                     <div class="info-value">
-                                        <?php echo isset($patient['sex']) ? $patient['sex'] : 'No data'; ?></div>
-                                    <!-- Add more patient information fields here -->
+                                        <?php echo isset($patient['sex']) ? $patient['sex'] : 'No data'; ?>
+                                    </div>
+                                    <div class="info-label">Emergency no:</div>
+                                    <div class="info-value">
+                                        <?php echo isset($patient['emergency_no']) ? $patient['emergency_no'] : 'No data'; ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>

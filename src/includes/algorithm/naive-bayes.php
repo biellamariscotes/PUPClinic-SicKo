@@ -11,22 +11,43 @@ class NaiveBayesClassifier {
 
     public function predict($symptoms) {
         $predictions = [];
-
+    
+        // Trim each symptom to remove leading and trailing spaces
+        $trimmedSymptoms = array_map('trim', $symptoms);
+    
+        // Check if all trimmed symptoms are present in likelihoods for any diagnosis
+        foreach ($trimmedSymptoms as $symptom) {
+            $symptomFound = false;
+            $lowercaseSymptom = strtolower($symptom); // Convert symptom to lowercase
+            foreach ($this->likelihoods as $diagnosis => $likelihoods) {
+                foreach ($likelihoods as $key => $value) {
+                    $lowercaseKey = strtolower($key); // Convert likelihood key to lowercase
+                    if ($lowercaseKey === $lowercaseSymptom) {
+                        $symptomFound = true;
+                        break 2; // Exit both inner and outer loops
+                    }
+                }
+            }
+            if (!$symptomFound) {
+                return null; // Return null if any symptom is not recognized
+            }
+        }
+    
+        // Calculate predictions if all symptoms are recognized
         foreach ($this->priorProbabilities as $diagnosis => $priorProbability) {
             $likelihood = 1.0;
-            foreach ($symptoms as $symptom) {
-                if (isset($this->likelihoods[$diagnosis][$symptom])) {
-                    $likelihood *= $this->likelihoods[$diagnosis][$symptom];
-                } else {
-                    $likelihood *= 0.000001;
-                }
+            foreach ($trimmedSymptoms as $symptom) {
+                $lowercaseSymptom = strtolower($symptom); // Convert symptom to lowercase
+                $likelihood *= isset($this->likelihoods[$diagnosis][$lowercaseSymptom]) ? $this->likelihoods[$diagnosis][$lowercaseSymptom] : 0.000001;
             }
             $predictions[$diagnosis] = $likelihood * $priorProbability;
         }
-
+    
         arsort($predictions);
         return key($predictions);
     }
+    
+    
 
     private function calculatePriorProbabilities($dataset) {
         $totalSamples = count($dataset);

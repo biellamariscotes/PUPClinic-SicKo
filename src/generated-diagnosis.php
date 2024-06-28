@@ -6,10 +6,16 @@ require_once('includes/algorithm/naive-bayes.php');
 function performDiagnosis($symptoms) {
     global $naiveBayes;
     $predictedSicknesses = [];
+
     $suggestedTreatments = [];
 
     // Predict sickness based on symptoms
     $predictedSickness = $naiveBayes->predict($symptoms);
+    
+    // Check if a valid sickness is predicted
+    if (empty($predictedSickness)) {
+        return [null, []]; // Return null sickness and empty treatments
+    }
     
     // Recommend treatment based on predicted sickness
     switch ($predictedSickness) {
@@ -345,29 +351,35 @@ if (isset($_POST['symptoms'])) {
         </div>
 
         <!-- Diagnosis Container -->
-        <?php if(!empty($predictedSickness)): ?>
-            <div class="diagnosis-container">
-                <div class="diagnosis-box">
-                    <div class="medical-condition">
-                        <h2 class="medical-condition-header">Medical Condition: <span style="color: #E13F3D;"><?= ucfirst(htmlspecialchars($predictedSickness)) ?></span></h2>
-                        <p class="sub-text"><?= htmlspecialchars($meaning) ?></p>
-                    </div>
-                    <div class="treatment-options-container">
-                        <div class="vertical-line"></div>
-                        <div class="treatment-options">
-                            <h2 class="treatment-options-header">Treatment Options</h2>
-                            <ul class="options-list">
-                                <?php foreach ($suggestedTreatments as $treatment): ?>
-                                    <li><?= htmlspecialchars($treatment) ?></li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-                    </div>
+        <?php if (!empty($predictedSickness) && $predictedSickness !== null): ?>
+    <div class="diagnosis-container">
+        <div class="diagnosis-box">
+            <div class="medical-condition">
+                <h2 class="medical-condition-header">Medical Condition: <span style="color: #E13F3D;"><?= ucfirst(htmlspecialchars($predictedSickness)) ?></span></h2>
+                <p class="sub-text"><?= htmlspecialchars(getSicknessMeaning($predictedSickness)) ?></p>
+            </div>
+            <div class="treatment-options-container">
+                <div class="vertical-line"></div>
+                <div class="treatment-options">
+                    <h2 class="treatment-options-header">Treatment Options</h2>
+                    <ul class="options-list">
+                        <?php foreach ($suggestedTreatments as $treatment): ?>
+                            <li><?= htmlspecialchars($treatment) ?></li>
+                        <?php endforeach; ?>
+                    </ul>
                 </div>
             </div>
-        <?php else: ?>
-            <p>No diagnosis found for the given symptoms.</p>
-        <?php endif; ?>
+        </div>
+    </div>
+<?php elseif ($predictedSickness === null): ?>
+    <div class="diagnosis-container">
+        <div class="diagnosis-box">
+            <p><span style="font-weight: bold;">No diagnosis found. Please try inputting different symptoms.</p></span>
+        </div>
+    </div>
+<?php endif; ?>
+
+
 
         <!-- New container for the two boxes -->
         <div class="new-boxes-container">
