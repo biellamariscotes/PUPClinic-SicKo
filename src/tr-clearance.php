@@ -94,6 +94,10 @@ input, select {
     background-color: #1D434E;
 }
 
+select {
+        appearance: none;
+    }
+
 </style>
 
 <body>
@@ -149,7 +153,7 @@ input, select {
                     <input type="text" id="diagnosis" name="diagnosis" placeholder="Diagnosis" autocomplete="off" required value="<?php echo htmlspecialchars($diagnosis); ?>" >
                     <input type="text" id="treatments" name="treatments" placeholder="Treatments/Medicines" autocomplete="off" required value="<?php echo htmlspecialchars($treatments); ?>"  >
                 </div>
-                <div class="button-row" style="justify-content: center; gap: 10rem; margin-left: 7  0px;">
+                <div class="button-row" style="display: flex; justify-content: center; gap: 3rem;">
                     <input type="hidden" name="record_id" value="<?php echo htmlspecialchars($record_id); ?>">
                     <button type="button" id="generate-excuse-letter-button" name="record-btn" onclick="submitForm('excuse-letter.php')">Generate Excuse Letter</button>
                     <button type="button" id="generate-clearance-button" name="record-btn" onclick="submitForm('clearance.php')">Generate Clearance</button>

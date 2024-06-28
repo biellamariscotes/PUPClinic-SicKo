@@ -1,2 +1,1 @@
-# Ignore these files and directories
-includes/connect.php
+src/includes/connect.php
