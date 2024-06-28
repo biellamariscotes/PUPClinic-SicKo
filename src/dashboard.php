@@ -33,6 +33,7 @@ $sql = "SELECT patient.first_name, patient.last_name, patient.course, treatment_
         FROM treatment_record
         JOIN patient ON treatment_record.patient_id = patient.patient_id
         WHERE DATE(treatment_record.date) = '$currentDate'
+        ORDER BY treatment_record.date ASC
         LIMIT $offset, $recordsPerPage";
 
 $result = mysqli_query($conn, $sql);
