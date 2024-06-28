@@ -35,15 +35,17 @@ require_once ('includes/connect.php');
     <div class="main-content">
         <div class="overlay" id="overlay"></div>
 
-        <?php include('includes/sidebar/ai-basedSDT.php'); ?>
+        <?php include ('includes/sidebar/ai-basedSDT.php'); ?>
 
         <div class="content" id="content" style="overflow-x: hidden;">
             <div class="dashboard-header-container">
                 <img src="images/ai-sdt-header.png" alt="Dashboard Header" class="dashboard-header">
                 <div class="dashboard-text">
                     <p>AI-Based, <span class="bold">Symptoms</span></p>
-                    <p class="bold" style="color: #E13F3D; font-size: 50px; font-family: 'Poppins', sans-serif;">Diagnostic Tool</p>
-                    <p style="color: black; font-size: 17px; font-family: 'Poppins', sans-serif; text-align: justify;">Detects and generates possible diagnosis<br> based on patient symptoms.</p>
+                    <p class="bold" style="color: #E13F3D; font-size: 50px; font-family: 'Poppins', sans-serif;">
+                        Diagnostic Tool</p>
+                    <p style="color: black; font-size: 17px; font-family: 'Poppins', sans-serif; text-align: justify;">
+                        Detects and generates possible diagnosis<br> based on patient symptoms.</p>
                 </div>
             </div>
 
@@ -52,20 +54,22 @@ require_once ('includes/connect.php');
             </div>
 
             <div class="suggestion-row" style="display: flex; justify-content: flex-start; margin: 20px 0 20px 210px;">
-                <img src="images/idea-icon.svg" alt="Suggestion Icon" class="idea-icon" style="width: 20px; margin-right: 5px; margin-bottom: 2px;">
-                <p style="color: gray; font-size: 12px; margin: 0; font-weight: 500;">Provide at least <b>3 symptoms</b> to ensure an accurate diagnosis. 
+                <img src="images/idea-icon.svg" alt="Suggestion Icon" class="idea-icon"
+                    style="width: 20px; margin-right: 5px; margin-bottom: 2px;">
+                <p style="color: gray; font-size: 12px; margin: 0; font-weight: 500;">Provide at least <b>3 symptoms</b>
+                    to ensure an accurate diagnosis.
                     You can input up to <b>15 symptoms</b> for the most precise results.</p>
             </div>
 
-            <!-- <div style="display: flex; justify-content: center;">
-                <div id="tag-warning" style="color: red; display: none; font-style: 'Poppins'; font-weight: 600;">Please input 3-15 symptoms.</div>
-            </div> -->
+            <div style="display: flex; justify-content: center;">
+                <div id="tag-warning" style="color: #058789; display: none; font-style: 'Poppins'; font-weight: 600;">The limit has been reached. If you like to type again, please remove a tag.</div>
+            </div>
 
             <!-- Keyword Tags Container -->
             <form id="diagnosis-form" method="post" action="generated-diagnosis.php">
                 <div class="symptoms-input-container">
-                    <input type="text" id="symptoms-input" name="symptom" placeholder="Type symptoms keywords..." autocomplete="off"
-                        oninput="this.value = this.value.replace(/[0-9]/g, '')">
+                    <input type="text" id="symptoms-input" name="symptom" placeholder="Type symptoms keywords..."
+                        autocomplete="off" oninput="this.value = this.value.replace(/[0-9]/g, '')">
                     <input type="hidden" id="hidden-symptoms" name="symptoms">
                     <div class="tags-container" id="tags-container"></div>
                 </div>
@@ -78,13 +82,14 @@ require_once ('includes/connect.php');
                     value="<?php echo htmlspecialchars($_SESSION['full_name']); ?>">
             </form>
 
-            <?php include('includes/footer.php'); ?>
+            <?php include ('includes/footer.php'); ?>
         </div> <!-- End of content -->
 
     </div> <!-- End of main-content -->
 
     <script src="../vendors/bootstrap-5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="scripts/script.js"></script>
+    <script src="scripts/ai-sdt.js"></script>
 
     <!-- LOADER -->
     <script>
@@ -121,139 +126,6 @@ require_once ('includes/connect.php');
         }
         simulateContentLoading();
     </script>
-
-    <!-- Tags and Diagnosis -->
-    <script>
-        // Event listener for tags using event delegation
-        document.getElementById('tags-container').addEventListener('click', function (event) {
-            if (event.target.classList.contains('tag') || event.target.classList.contains('close')) {
-                toggleButton(); // Call toggleButton when a tag is added or removed
-            }
-        });
-
-        document.getElementById('symptoms-input').addEventListener('keydown', function (event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                const input = this.value.trim();
-                if (input) {
-                    if (document.querySelectorAll('.tag').length < 15) {  // Ensure maximum tag count
-                        createTag(input);
-                        this.value = '';
-                    } else {
-                        // Display a message or prevent further input if maximum is reached
-                    }
-                }
-            }
-        });
-
-        // Function to create a tag
-        function createTag(text) {
-            const tagContainer = document.getElementById('tags-container');
-            const tag = document.createElement('div');
-            tag.className = 'tag';
-            tag.textContent = text;
-
-            const closeBtn = document.createElement('span');
-            closeBtn.className = 'close';
-            closeBtn.innerHTML = '&times;';
-            closeBtn.onclick = function () {
-                tag.remove();
-                toggleButton(); // Update button state after removing tag
-            };
-
-            tag.appendChild(closeBtn);
-            tagContainer.appendChild(tag);
-
-            toggleButton(); // Update button state after adding tag
-        }
-
-        // Function to toggle the button state
-        function toggleButton() {
-            const tags = document.querySelectorAll('.tag');
-            const button = document.getElementById('generate-diagnosis-btn');
-            const buttonBox = document.getElementById('generate-diagnosis-box');
-            const tagWarning = document.getElementById('tag-warning');
-
-            if (tags.length >= 3 && tags.length <= 15) {
-                button.removeAttribute('disabled');
-                buttonBox.removeAttribute('disabled');
-                tagWarning.style.display = 'none';
-            } else {
-                button.setAttribute('disabled', true);
-                buttonBox.setAttribute('disabled', true);
-                tagWarning.style.display = 'block';
-            }
-        }
-
-        // Event listener for input field
-        document.getElementById('symptoms-input').addEventListener('input', function (event) {
-            var input = this.value;
-            var cursorPosition = this.selectionStart;
-
-            // Check if the input starts with a space or has consecutive spaces
-            if (input.startsWith(' ') || input.includes('  ')) {
-                // Remove leading spaces and replace consecutive spaces with a single space
-                this.value = input.trim().replace(/\s{2,}/g, ' ');
-                // Adjust cursor position after modification
-                this.setSelectionRange(cursorPosition - 1, cursorPosition - 1);
-            }
-
-            toggleButton();
-        });
-
-        // Function to submit the form
-        function submitForm() {
-            var input = document.getElementById('symptoms-input').value.trim();
-
-            // Remove leading spaces and replace double spaces with single space
-            input = input.replace(/^\s+|\s{2,}/g, ' ').replace(/[^a-zA-Z, ]/g, ''); // Remove special characters
-
-            var tags = document.querySelectorAll('.tag');
-            var symptomsArray = []; // Array to store symptoms
-
-            // Push symptoms from tags into the array
-            tags.forEach(function(tag) {
-                symptomsArray.push(tag.textContent.trim());
-            });
-
-            // Combine input field value with concatenated tags
-            var symptomsString = input;
-            if (symptomsArray.length > 0) {
-                symptomsString += (input.length > 0 ? ', ' : '') + symptomsArray.join(', ');
-            }
-
-            // Set the concatenated symptoms string as the value of the hidden input field
-            document.getElementById('hidden-symptoms').value = symptomsString;
-
-            // Submit the form
-            document.getElementById('diagnosis-form').submit();
-        }
-
-        // Event listener for clicking the generate button
-        document.getElementById('generate-diagnosis-btn').addEventListener('click', function () {
-            submitForm(); // Call your form submission function
-        });
-
-        // Function to log activity
-        function logActivity() {
-            var fullName = document.getElementById('user-fullname').value.trim();
-            var action = " used the AI Symptoms Diagnostic Tool.";
-
-            // AJAX call to log activity
-            $.ajax({
-                type: 'POST',
-                url: 'log_activity.php', // Create a PHP file to handle logging
-                data: { fullname: fullName, action: action },
-                success: function (response) {
-                    console.log('Activity logged successfully.');
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error logging activity:', error);
-                }
-            });
-        }
-    </script>
-    <!-- End of Tags and Diagnosis -->
 
 </body>
 
