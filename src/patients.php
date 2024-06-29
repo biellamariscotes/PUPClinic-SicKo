@@ -150,10 +150,6 @@ $result = mysqli_query($conn, $query);
             border-bottom: 1px solid #D3D3D3; 
         }
 
-        .dashboard-table th {
-            padding: 0px;
-        }
-
         .delete-records-link.disabled {
             opacity: 0.5; /* Reduce opacity to visually indicate it's disabled */
             cursor: not-allowed; /* Change cursor to indicate it's not clickable */
@@ -186,6 +182,29 @@ $result = mysqli_query($conn, $query);
             cursor: pointer;
         }
 
+        .dashboard-table th, .dashboard-table td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .nameColumn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .nameColumn input[type="checkbox"] {
+            position: absolute;
+            left: 50px; 
+            bottom: 9px;
+            transform: translateY(-50%);
+            margin: 0;
+        }
+
+        .nameColumn .patient-link {
+            margin-left: 30px;
+        }
     </style>
 
     <body>
@@ -272,9 +291,6 @@ $result = mysqli_query($conn, $query);
                                         echo "<td>" . $row["sex"] . "</td>";
                                         echo "</tr>";
                                     }
-                                } else {
-                                    echo "<tr><td colspan='4'>No records found</td></tr>";
-                                }
                             ?>
                             <tr>
                                 <td colspan="5" style="height: 97px; background-color: white;"> <!-- Use colspan to span across all columns -->
@@ -332,6 +348,16 @@ $result = mysqli_query($conn, $query);
                                 </div>
                             </td>
                         </tr>
+                        <?php
+                        } else {
+                            echo "<tr><td colspan='4' style='text-align: center; position: relative;'>";
+                            echo "<div>";
+                            echo "<img src='images/empty-state.png' alt='Empty State' style='width: 6.688rem; height: 6.688rem;'>";
+                            echo "</div>";
+                            echo "<p style='margin-top: 0.938rem;'>There are no patients on the list.</p>";
+                            echo "</td></tr>";
+                        }
+                        ?>
                     </table>
                     <input type="hidden" name="confirmDeleteButton" value="1">
                 </form>
