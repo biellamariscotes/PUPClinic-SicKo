@@ -2,6 +2,7 @@
 require_once('includes/session-nurse.php');
 require_once('includes/connect.php');
 
+mysqli_query($conn, "SET time_zone = '+08:00'");
 date_default_timezone_set('Asia/Manila');
 $current_date = date('Y-m-d H:i:s');
 

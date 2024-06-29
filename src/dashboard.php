@@ -4,15 +4,24 @@ require_once('includes/connect.php');
 
 $first_name = $row['first_name'];
 
-// Set timezone to Philippine Time
 date_default_timezone_set('Asia/Manila');
+
+// Get the current date in Asia/Manila timezone
+
+// Set the MySQL session timezone to Asia/Manila
+mysqli_query($conn, "SET time_zone = '+08:00'"); // Manila time zone is UTC+8
+
+$currentDate = date("Y-m-d");
 
 // Pagination variables
 $recordsPerPage = 5;
 $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($currentPage - 1) * $recordsPerPage;
 
-$totalRecordsQuery = "SELECT COUNT(*) AS total FROM treatment_record WHERE DATE(date) = CURDATE()";
+// Query to count the total number of records for the current date
+$totalRecordsQuery = "SELECT COUNT(*) AS total 
+                      FROM treatment_record 
+                      WHERE DATE(date) = CURDATE()";
 $totalRecordsResult = mysqli_query($conn, $totalRecordsQuery);
 $totalRecordsRow = mysqli_fetch_assoc($totalRecordsResult);
 $totalRecords = $totalRecordsRow['total'];
@@ -24,15 +33,12 @@ $startPage = max(1, $currentPage - intval($pageRange / 2));
 $endPage = min($totalPages, $startPage + $pageRange - 1);
 $startPage = max(1, $endPage - $pageRange + 1);
 
-// Get current date
-$currentDate = date("Y-m-d");
-
 // Query to fetch records for the current day
 $sql = "SELECT patient.first_name, patient.last_name, patient.course, treatment_record.diagnosis, 
                treatment_record.date AS treatment_datetime
         FROM treatment_record
         JOIN patient ON treatment_record.patient_id = patient.patient_id
-        WHERE DATE(treatment_record.date) = '$currentDate'
+        WHERE DATE(date) = CURDATE()
         ORDER BY treatment_record.date ASC
         LIMIT $offset, $recordsPerPage";
 
@@ -144,6 +150,9 @@ if ($totalRecordsResult) {
     </div>
 
     <div class="overlay" id="overlay"></div>
+    
+    <?php echo "Current Timezone: " . $current_timezone . "\n";
+echo "Current Date: " . $currentDate; ?>
 
     <div class="main-content" style="overflow-x: hidden;">
         <?php include ('includes/sidebar/dashboard.php'); ?>
