@@ -68,6 +68,23 @@ if (isset($_GET['patient_id'])) {
         margin-top: 220px;
         font-size: 30px;
     }
+
+    .empty-state-container {
+        text-align: center;
+        padding: 20px;
+    }
+
+    .empty-state-img {
+        width: 10.688rem; 
+        height: 10.688rem;
+        margin: 20px 0;
+        margin-top: 70px;
+    }
+
+    .empty-state-text {
+        margin-top: 0.938rem;
+    }
+
 </style>
 
 <body>
@@ -172,9 +189,16 @@ if (isset($_GET['patient_id'])) {
                             <?php
                             endfor;
                         } else {
-                            echo "<div class='no-records-found'><p>No Records Found</p></div>";
+                            echo "<div class='empty-state-container'>";
+                            echo "<div>";
+                            echo "<img src='images/empty-state.png' alt='Empty State' class='empty-state-img'>";
+                            echo "</div>";
+                            echo "<p class='empty-state-text'>No treatment records found.</p>";
+                            echo "</div>";
                         }
                         ?>
+                        
+                        
 
                         <div class="treatment-history-buttons">
                             <?php if ($currentPage > 1): ?>

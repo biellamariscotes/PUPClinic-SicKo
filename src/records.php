@@ -252,10 +252,6 @@ $nextPage = min($totalPages, $currentPage + 1);
         border-bottom: none;
     }
 
-    .dashboard-table th {
-        padding: 0px;
-    }
-
     select:focus {
         outline: none;
         transition: border 0.3s, box-shadow 0.3s;
@@ -281,6 +277,40 @@ $nextPage = min($totalPages, $currentPage + 1);
         pointer-events: none;
         color: #aaa;
     }
+
+    .dashboard-table th, .dashboard-table td {
+        padding: 8px;
+        text-align: center;
+    }
+
+    .fixed-width-checkbox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    .fixed-width-checkbox input[type="checkbox"] {
+        position: absolute;
+        left: 20px;
+        bottom: 8px;
+        transform: translateY(-50%);
+        margin: 0;
+        display: none;
+    }
+
+    .delete-mode .fixed-width-checkbox input[type="checkbox"] {
+        display: inline-block;
+    }
+
+    .fixed-width-checkbox .patient-link {
+    margin-left: 150px; /* Adjust to provide space for the checkbox */
+    white-space: nowrap; /* Prevent text from wrapping to the next line */
+    text-align: center; /* Center the text of the link */
+    display: inline-block; /* Ensure the link displays as an inline-block element */
+    flex-grow: 1; /* Allow the link to take up the remaining space */
+}
+
 </style>
 
 <body>
@@ -400,20 +430,21 @@ $nextPage = min($totalPages, $currentPage + 1);
                             <th>Date</th>
                         </tr>
                         <?php
-                        if (mysqli_num_rows($result) > 0) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                echo "<tr>";
-                                echo "<td><a href='tr-clearance.php?record_id=" . urlencode($row["record_id"]) . "' class='view-link'>View</a></td>";
-                                echo "<td class='fixed-width-checkbox'>";
-                                echo "<input type='checkbox' name='delete_record[]' id='delete_record_" . $row["record_id"] . "' value='" . $row["record_id"] . "' onchange='toggleDeleteButton()'>";
-                                echo $row["full_name"] . "</td>";
-                                echo "<td>" . $row["course"] . " " . $row["section"] . "</td>";
-                                echo "<td>" . $row["diagnosis"] . "</td>";
-                                $formattedDate = date('M d, Y', strtotime($row["date"]));
-                                echo "<td>" . $formattedDate . "</td>";
-                                echo "</tr>";
-                            }
-                            ?>
+                            if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo "<tr>";
+                                    echo "<td><a href='tr-clearance.php?record_id=" . urlencode($row["record_id"]) . "' class='view-link'>View</a></td>";
+                                    echo "<td class='fixed-width-checkbox'>";
+                                    echo "<input type='checkbox' name='delete_record[]' id='delete_record_" . $row["record_id"] . "' value='" . $row["record_id"] . "' onchange='toggleDeleteButton()'>";
+                                    echo "<a href='patients-treatment-record.php?patient_id=" . $row["patient_id"] . "' class='patient-link'>" . $row["full_name"] . "</a>";
+                                    echo "</td>";
+                                    echo "<td>" . $row["course"] . " " . $row["section"] . "</td>";
+                                    echo "<td>" . $row["diagnosis"] . "</td>";
+                                    $formattedDate = date('M d, Y', strtotime($row["date"]));
+                                    echo "<td>" . $formattedDate . "</td>";
+                                    echo "</tr>";
+                                }
+                        ?>
                         <tr>
                             <td colspan="5" style="background-color: white;">
                                 <div class="table-button-container">
